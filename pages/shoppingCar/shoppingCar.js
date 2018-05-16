@@ -135,6 +135,21 @@ Page({
 			datalist:allArr
 		})	
 	},
+	//底部删除点击事件
+	bottomDelete(){
+		//未选中item数组数组
+		var seleArr = [];
+		var nowArr = this.data.datalist,len = nowArr.length;
+		for(let i=0;i<len;i++){
+			if(!nowArr[i].isSelect){
+				seleArr.push(nowArr[i])
+			}
+		};
+		this.setData({
+			datalist:seleArr
+		})
+
+	},
   /**
    * 生命周期函数--监听页面加载
    */
