@@ -1,0 +1,22 @@
+<!--pages/recommend/recommend.wxml-->
+<view class='recommend_container'>
+	<!-- recommend products  -->
+	<view class='recommend_products'>
+		<view class='recommend_item'>
+			<view class='item_box' wx:for="{{produList}}" wx:key="{{index}}" bindtap='goDetail'>
+				<image src='{{item.imgurl}}'></image>
+				<text class='item_text'>{{item.proName}}</text>
+				<view class='item_text_view'>
+					<text>￥</text><text>{{item.price}}</text><text>销量{{item.saleNum}}件</text>
+				</view>
+			</view>
+		</view>
+	</view>
+
+	<view class='bottom_text'>到底啦，去别处逛逛吧</view>
+
+	<!--up button  -->
+	<view class='recommend_up'>
+		<image src='/imgs/Stick@2x.png'></image>
+	</view>
+</view>

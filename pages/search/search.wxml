@@ -1,0 +1,14 @@
+<!--pages/search/search.wxml-->
+<view class='container'>
+    <view class='search'>
+      <image class='fangdajing' src='/imgs/fangfajing.png'></image>
+      <input bindinput='searchKey' placeholder='{{searchKey}}' focus='true' confirm-type="搜索" bindconfirm='confirmEvent'></input>
+      <image class='clearKey' src='/imgs/clear.png' bindtap='clearKey'></image>
+    </view>
+    <view class='searchList'>
+			<navigator url="/pages/result/result">白球鞋</navigator>
+			<navigator url="/pages/result/result">白衣服</navigator>
+			<navigator url="/pages/result/result">小白兔</navigator>
+			<navigator url="/pages/result/result">大白兔</navigator>
+    </view>
+</view>

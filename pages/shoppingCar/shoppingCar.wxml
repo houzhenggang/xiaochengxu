@@ -1,0 +1,42 @@
+<view class='container' wx:if="{{isShow==2}}">
+      <image src='/imgs/emptyCar.png'></image>
+      <view>购物车竟然是空的</view>
+      <text>"快买点东西犒劳自己吧"</text>
+      <navigator url='/pages/index/index' hover-class='none'>
+      去看看
+      </navigator>
+</view>
+<view class='content' wx:else='{{isShow==1}}'>
+    <view wx:for="{{datalist}}" bindtouchstart='touchStart' bindtouchend='touchEnd' wx:for-index="index" wx:key="id" class='carInfo'>
+      <image class='select' bindtap='select' data-id="{{index}}" wx:if='{{item.isSelect}}' src='/imgs/checked.png'></image>
+      <image class='select'  bindtap='select' data-id="{{index}}"  wx:else='{{item.isSelect}}' src='/imgs/unchecked.png'></image>
+      <image class='goodImg' src='{{item.img}}'></image>
+      <view class='goodsInfo'>
+          <navigator url='/pages/details/details' hover-class='none'>        
+              <view>{{item.title}}</view>
+              <label>{{item.size}}</label>
+          </navigator>
+          <view class='infoBottom'>
+                  <label>￥{{item.price}}</label>
+                  <view class='changNum'>
+                    <label data-id="{{index}}" class='btn' bindtap='subtraction'>-</label>
+                    <text>{{item.num}}</text>
+                    <label class='btn' data-id="{{index}}" bindtap='add'>+</label>
+                  </view>
+              </view>
+      </view>
+      <view class='delete' bindtap='delete' data-id='{{index}}'>
+        删除
+      </view>
+    </view>
+
+		<!-- 删除/全选  -->
+		<view class='bottom'>
+			<image class='select' bindtap='selectAll' wx:if='{{!selectAll}}' src='/imgs/unchecked.png'></image>
+      <image class='selected'  bindtap='selectAll' wx:else='{{selectAll}}' src='/imgs/checked.png'></image>
+			<view class='total_text'>
+				<text>全选</text><text bindtap='bottomDelete'>删除</text><text>合计：￥132</text>
+			</view>
+			<view class='balance' bindtap='balance'>结算</view>
+		</view>
+</view>

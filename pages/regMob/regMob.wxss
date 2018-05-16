@@ -1,0 +1,109 @@
+.container {
+  width:750rpx;
+  height: 312rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 156rpx;
+  height: 156rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  line-height: 56rpx;
+  margin-top: 14rpx;
+  font-family: PingFangSC-Semibold;
+  font-size: 36rpx;
+  color: #333333;
+}
+.content{
+  width: 100%;
+  padding:0 26rpx 0 82rpx;
+  box-sizing: border-box;
+  /* display: flex;
+  align-items: center; */
+  position: relative;
+}
+.content view{
+  display: flex;
+  align-items: center; 
+  border-bottom: 1rpx solid #e5e5e5;
+  padding-bottom:8rpx;
+}
+.content .regMob{
+  width: 24rpx;
+  height: 38rpx;
+  position: absolute;
+  top:9rpx;
+  left:42rpx;
+}
+.yzm_icon{
+  width:32rpx;
+  height: 34rpx;
+  position: absolute;
+  top:10rpx;
+  left:38rpx;
+}
+.lst{
+  margin-top:60rpx;
+}
+input{
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color: #999999;
+  padding-left:16rpx;
+}
+.phcolor{
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color: #999999;
+}
+button{
+    background: #fff;
+    display: flex;
+    align-items: center;
+    width: 50%; 
+    justify-content: flex-end;
+    padding:0;
+    padding-right: 20rpx;
+    margin:0;
+    text-align: right;
+    line-height: 40rpx;
+    font-family:PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #3A3A3A;
+}
+button::after{  
+  border:none; 
+  border-radius: none;
+  line-height: 40rpx;
+
+}  
+
+.sub{
+  width: 680rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+
+  border-radius:6rpx;
+  font-family: PingFangSC-Semibold;
+  font-size: 28rpx;
+  color: #FFFFFF;
+  margin:0 auto;
+  margin-top:82rpx;
+}
+.allow{
+    background: #B4B0B1;
+}
+.notAllow{
+  background: #EA2534;
+}

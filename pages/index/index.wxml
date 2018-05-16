@@ -1,0 +1,86 @@
+<!--index.wxml-->
+<view class="index_container">
+
+	<!--search button  -->
+	<view class='container_search'>
+		<navigator class='container_search_navi' url="/pages/search/search">大量好物等你发现
+			<icon type='search' size='12' color='#999999'></icon>
+		</navigator>
+	</view>
+
+	<!--banner  -->
+	<image class='index_banner1' src='/imgs/Home_img_banner@2x.png'></image>
+	
+	<!--classify  -->
+	<view class='index_classify'>
+		<view wx:for="{{ulList}}" wx:key="{{index}}" data-idx="{{index}}" bindtap='switchCate'>
+			<image src='{{item.imgurl}}'></image>
+			<text>{{item.text}}</text>
+		</view>
+	</view>
+
+	<view class='index_current'>
+		<view></view>
+		<view></view>
+		<view></view>
+	</view>
+
+	<!--contact  -->
+	<view class="index_contact">
+		<text class='contact_h4'>Hi 亲爱的小主</text>
+		<text class='contact_p'>欢迎光临本店,我是店主潘多拉。本店
+		24小时不打烊,可以随时咨询我们哦</text>
+		<button open-type='contact'><image src='/imgs/Content_icon_WeChat@2x.png'></image></button>
+		<image bindtap='contactPhone' src='/imgs/Content_icon_phone@2x.png'></image>
+	</view>
+
+	<!--recommend products  -->
+	<view class='index_recommend'>
+		<text>精品</text>
+		<text>推荐</text>
+		<text data-type='recommend' bindtap='showMore'>查看更多</text>
+		<image src='/imgs/Group 3@2x.png'></image>
+		<image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image>
+	</view>
+
+	<view class='index_re_produ' bindtap='bindDetail'>
+		<image class='re_produ_img' src='/imgs/Mask@2x(2).png'></image>
+		<text class='re_produ_text'>复古宽松甜美韩版泡泡袖卫衣</text>
+		<view class='re_text_view'>
+			<text>￥</text><text>123.00</text><text>销量23万件</text>
+		</view>
+		 <view class='buy_button'>立即购买</view> 
+	</view>
+
+	<view class='index_item'>
+		<view class='item_box' wx:for="{{produList}}"  wx:key="{{index}}" bindtap='bindDetail'>
+			<image src='{{item.imgurl}}'></image>
+			<text class='item_text'>{{item.proName}}</text>
+			<view class='item_text_view'>
+				<text>￥</text><text>{{item.price}}</text><text>销量{{item.saleNum}}件</text>
+			</view>
+		</view>
+	</view>
+
+	<!--special  -->
+	<view class='index_recommend index_special'>
+		<text>特价</text>
+		<text>促销</text>
+		<text data-type='special' bindtap='showMore'>查看更多</text>
+		<image src='/imgs/Group 3@2x.png'></image>
+		<image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image>
+	</view>
+
+	<view class='index_item'>
+		<view class='item_box' wx:key="{{index}}" wx:for="{{produList}}">
+			<image src='{{item.imgurl}}'></image>
+			<text class='item_text'>{{item.proName}}</text>
+			<view class='item_text_view special_item'>
+				<text>￥</text><text>{{item.price}}</text><text>{{item.prePrice}}</text>
+			</view>
+		</view>
+	</view>
+
+	<!--bottom  -->
+	<view class='bottom'>到底啦，去别处逛逛吧</view>
+</view>

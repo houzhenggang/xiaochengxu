@@ -1,0 +1,21 @@
+<!--pages/special/special.wxml-->
+<view class='special_container'>
+	<view class='special_item'>
+		<view class='item_box' wx:for="{{produList}}" wx:key="{{index}}" bindtap='goDetail'>
+			<image class='product' src='{{item.imgurl}}'></image>
+			<text class='item_text'>{{item.proName}}</text>
+			<view class='item_text_view special_price'>
+				<text>￥</text><text>{{item.price}}</text><text>{{item.prePrice}}</text>
+			</view>
+		</view>
+
+		<!-- bottom  -->
+		<view class='bottom_text'>到底啦，去别处逛逛吧</view>
+
+		<!--up button  -->
+		<view class='recommend_up'>
+			<image src='/imgs/Stick@2x.png'></image>
+		</view>
+	</view>
+</view>
+

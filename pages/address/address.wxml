@@ -1,0 +1,11 @@
+<view class='container'>
+  <view class='userInfo'><label>姓名：丽离吴</label><label>15549322190</label></view>
+  <view class='userAddr'>地址：上海市徐汇区宜山路8888号我一个人的公寓延长
+字符</view>
+  <view class='contentBtm'>
+    <label><image src='/imgs/checked.png'></image>以设为默认</label>
+    <label><image src='/imgs/updataAddr.png'></image>编辑</label>
+    <label><image src='/imgs/del.png'></image>删除</label>
+  </view>
+</view>
+<view class='address' bindtap='address'>新增收货地址</view>

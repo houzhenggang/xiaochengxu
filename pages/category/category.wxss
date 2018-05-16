@@ -1,0 +1,126 @@
+/* pages/category/category.wxss */
+page{
+	height: 100%;
+}
+.category_container{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+.container_search_navi{
+	padding-left: 58rpx;
+	position: relative;
+	background: #EDEDED;
+	font-size: 22rpx;
+	line-height: 56rpx;
+	width: 652rpx;
+	height: 56rpx;
+	margin: 0 auto;
+	border-radius: 56rpx;
+	color: #999999;
+	letter-spacing: 1rpx;
+}
+.container_search icon{
+	display: block;
+	width: 24rpx;
+	height: 24rpx;
+	position: absolute;
+	top: 12rpx;
+	left: 20rpx;
+}
+
+/* swiper  */
+.category_swiper{
+	flex: 1;
+	margin-top: 16rpx;
+	border-top: 1rpx solid #E3E3E3;
+}
+.selected{
+	color: #FF4D77;
+	background: #FFFFFF;
+}
+.left{
+	width: 180rpx;
+	height: 100%;
+	position: fixed;
+	background: #F6F7F7;
+}
+.left_cell{
+	width: 180rpx;
+	height: 100rpx;
+	text-align: center;
+	font-size: 28rpx;
+	line-height: 100rpx;
+}
+
+.right{
+	width: 570rpx;
+	float: right;
+	padding-top: 34rpx;
+}
+.right_flex{
+	display: flex;
+	align-items: center;
+	justify-content: space-around;	
+	flex-wrap: wrap;
+}
+.right_cell{
+	display: flex;
+	width: 33%;
+	margin-bottom: 16rpx;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+.right_cell image{
+	width: 104rpx;
+	height: 114rpx;
+}
+.right_cell text{
+	font-size: 24rpx;
+	line-height: 34rpx;
+}
+
+/* second:false style  */
+.goods{
+	padding-left: 30rpx;
+}
+.goods_item{
+	margin-bottom: 30rpx;
+	overflow: hidden;
+}
+.goods_item image{
+	display: block;
+	width: 180rpx;
+	height: 180rpx;
+	float: left;
+}
+.goods_item .descriptions{
+	float: left;
+	height: 194rpx;
+	width: 312rpx;
+	margin-left: 18rpx;
+}
+.descriptions text:first-child{
+	font-size: 26rpx;
+	color: #333333;
+	display: block;
+	line-height: 36rpx;
+}
+.descriptions text:nth-child(2){
+	font-size: 22rpx;
+	color: #999999;
+	line-height: 22rpx;
+	display: block;
+	margin-top: 34rpx;
+}
+.descriptions text:nth-child(3){
+	font-size: 24rpx;
+	color: #EA2534;
+}
+.descriptions text:nth-child(4){
+	font-size: 22rpx;
+	color: #999999;
+	text-decoration: line-through;
+	margin-left: 7.8rpx;
+}
