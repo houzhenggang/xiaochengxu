@@ -1,7 +1,6 @@
 {
   "pages": [
     "pages/user/user",
-    "pages/details/details",
     "pages/index/index",
     "pages/shoppingCar/shoppingCar",
     "pages/detail/detail",

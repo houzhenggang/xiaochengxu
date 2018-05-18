@@ -10,9 +10,9 @@
     <view wx:for="{{datalist}}" bindtouchstart='touchStart' bindtouchend='touchEnd' wx:for-index="index" wx:key="id" class='carInfo'>
       <image class='select' bindtap='select' data-id="{{index}}" wx:if='{{item.isSelect}}' src='/imgs/checked.png'></image>
       <image class='select'  bindtap='select' data-id="{{index}}"  wx:else='{{item.isSelect}}' src='/imgs/unchecked.png'></image>
-      <image class='goodImg' src='{{item.img}}'></image>
+      <image class='goodImg' src='{{item.img}}' bindtap='goDetail'></image>
       <view class='goodsInfo'>
-          <navigator url='/pages/details/details' hover-class='none'>        
+          <navigator url='/pages/detail/detail' hover-class='none'>        
               <view>{{item.title}}</view>
               <label>{{item.size}}</label>
           </navigator>

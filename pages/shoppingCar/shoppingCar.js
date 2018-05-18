@@ -61,6 +61,12 @@ Page({
     ]
    
   },
+	//订单详情
+	goDetail(){
+		wx.navigateTo({
+			url: '/pages/detail/detail',
+		})
+	},
   /*减少数量*/
   subtraction(e){  
     var _this=this;
