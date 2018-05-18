@@ -137,8 +137,8 @@ Page({
 	},
 	//点击购物车
 	goCart(){
-		wx.switchTab({
-			url: '/pages/shoppingCar/shoppingCar',
+		wx.navigateTo({
+			url: '/pages/cart/cart',
 		})
 	},
   /**

@@ -9,7 +9,7 @@
 	</view>
 
 	<!--banner  -->
-	<image class='index_banner1' src='/imgs/Home_img_banner@2x.png'></image>
+	<image class='index_banner1' src='{{description.banner}}'></image>
 	
 	<!--classify  -->
 	<view class='index_classify'>
@@ -28,8 +28,7 @@
 	<!--contact  -->
 	<view class="index_contact">
 		<text class='contact_h4'>Hi 亲爱的小主</text>
-		<text class='contact_p'>欢迎光临本店,我是店主潘多拉。本店
-		24小时不打烊,可以随时咨询我们哦</text>
+		<text class='contact_p'>{{description.shop.description}}</text>
 		<button open-type='contact'><image src='/imgs/Content_icon_WeChat@2x.png'></image></button>
 		<image bindtap='contactPhone' src='/imgs/Content_icon_phone@2x.png'></image>
 	</view>
@@ -72,7 +71,7 @@
 	</view>
 
 	<view class='index_item'>
-		<view class='item_box' wx:key="{{index}}" wx:for="{{produList}}">
+		<view class='item_box' wx:key="{{index}}" wx:for="{{produList}}" bindtap='bindDetail'>
 			<image src='{{item.imgurl}}'></image>
 			<text class='item_text'>{{item.proName}}</text>
 			<view class='item_text_view special_item'>

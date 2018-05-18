@@ -6,10 +6,15 @@ Page({
    */
   data: {
     searchKey:'搜索品牌或商品',
-
+		suggest:["白T恤","白鞋"]
   },
+	//input事件
+	searchKey(e){
+		console.log(e.detail.value)
+	},
 	//处理点击完成按钮函数
 	confirmEvent:(e)=>{
+		console.log(e.detail.value)
 		wx.navigateTo({
 			url: '/pages/result/result',
 		})

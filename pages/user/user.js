@@ -7,12 +7,25 @@ Page({
   },
   onLoad: function () {
     wx.login({
-      success: res => {
+      success(res){
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+				console.log(res)
+				wx.request({
+					url: 'http://192.168.10.99/mpa/wechat',
+					method:'POST',
+					data:{
+						code:res.code
+					},
+					success:function(res){
+						console.log(1111)
+						console.log(res)
+					}
+				})
       }
-    }),
+    });
     wx.getSetting({
       success:res=> {
+				console.log(res)
           if(!res.authSetting['scope.userInfo']){
           wx.authorize({
             scope: 'scope.userInfo',

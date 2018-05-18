@@ -46,7 +46,17 @@ Page({
 			"price": "123.00",
 			"saleNum": "23万",
 			"prePrice":"￥233.00"
-		}]
+		}],
+		//banner及店铺信息
+		description:{
+			"banner":"/imgs/Home_img_banner@2x.png",
+			"shop":{
+				"id":1,
+				"name":"我的小店",
+				"description": "欢迎光临本店,我是店主巴拉巴拉巴拉安拉阿巴拉澳巴啦啦巴拉巴拉巴拉巴拉",
+				"customer_service_mobile":"13547831113"
+			}
+		}
   },
   //事件处理函数
   bindViewTap: function() {
@@ -60,9 +70,10 @@ Page({
 			url: '/pages/detail/detail',
 		})
 	},
-	contactPhone:()=>{
+	contactPhone(){
+		var phoneNumber = this.data.description.shop.customer_service_mobile;
 		wx.makePhoneCall({
-			phoneNumber: '13882054964',
+			phoneNumber: phoneNumber,
 		})
 		// wx.scanCode({
 		// 	scanType:"qrCode",
@@ -79,14 +90,26 @@ Page({
 			url: '/pages/category/category',
 		})
 	},
-	showMore(event){
-		var path = event.target.dataset.type;
+	//查看更多点击事件
+	showMore(e){
+		var path = e.target.dataset.type;
 		wx.navigateTo({
 			url: '/pages/'+path+"/"+path,
 		})
 	},
   onLoad: function () {
-    
+		//获取店家描述数据
+		// wx.request({
+		// 	url: 'http://192.168.10.99/mpa/index',
+		// 	method: 'GET',
+		// 	success(res){
+		// 		console.log(res)
+		// 	},
+		// })
+		var title = this.data.description.shop.name;
+    wx.setNavigationBarTitle({
+			title: title,
+		})
   },
   
 })

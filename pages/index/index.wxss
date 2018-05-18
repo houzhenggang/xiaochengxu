@@ -83,6 +83,7 @@
 	background: #EDEDED;
 	overflow: hidden;
 	letter-spacing: 1rpx;
+	border-radius: 10rpx;
 }
 .index_contact .contact_h4{
 	display: block;

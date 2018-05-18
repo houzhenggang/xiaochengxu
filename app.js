@@ -5,12 +5,10 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
-    // 登录
-    
   },
   globalData: {
     userInfo: null,
+		url:"localhost:8090",
 		classIdx:0
   }
 })
