@@ -19,6 +19,36 @@ Page({
 					success:function(res){
 						console.log(1111)
 						console.log(res)
+						wx.getSetting({
+							success: res => {
+								console.log(res)
+								if (!res.authSetting['scope.userInfo']) {
+									wx.authorize({
+										scope: 'scope.userInfo',
+										success: () => {
+											// 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+											wx.getUserInfo({
+												success: res => {
+													console.log(res)
+													this.setData({
+														userInfo: res.userInfo
+													})
+												}
+											})
+										}
+									})
+								} else {
+									wx.getUserInfo({
+										success: res => {
+											this.setData({
+												userInfo: res.userInfo
+											})
+											console.log(this.data.userInfo)
+										}
+									})
+								}
+							}
+						})
 					}
 				})
       }
@@ -33,6 +63,7 @@ Page({
               // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
               wx.getUserInfo({
                 success:res=>{
+									console.log(res)
                     this.setData({
                       userInfo:res.userInfo
                     })
@@ -46,6 +77,7 @@ Page({
                 this.setData({
                   userInfo: res.userInfo
                 })
+								console.log(this.data.userInfo)
               }
           })
         }

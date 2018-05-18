@@ -1,9 +1,10 @@
 {
   "pages": [
-    "pages/user/user",
+		"pages/user/user",
+		
+		"pages/detail/detail",		
     "pages/index/index",
     "pages/shoppingCar/shoppingCar",
-    "pages/detail/detail",
     "pages/result/result",
     "pages/category/category",
     "pages/search/search",
