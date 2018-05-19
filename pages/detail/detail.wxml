@@ -2,9 +2,17 @@
 <view class='detail_container'>
 	
 	<!-- detail images  -->
-	<view class='detail_imgs'>
-		<image src='/imgs/detail/product details@2x.png'></image>
-	</view>
+	<swiper
+		autoplay='{{true}}' interval='{{3500}}' duration='{{700}}' circular='{{true}}'>
+		<block wx:for='{{imgs}}'>
+			<swiper-item>
+				<view class='detail_imgs'>
+					<image src='{{item}}'></image>
+				</view>
+			</swiper-item>
+		</block>
+	</swiper>
+	
 
 	<!-- description  -->
 	<view class='detail_description'>
@@ -42,8 +50,8 @@
 	</view>
 
 	<!-- 规格选择  -->
-	<view class='mask' style='display:{{chooseModal}}'></view>
-	<view class='choose' style='display:{{chooseModal}}'>
+	<view class='mask' wx:if='{{chooseModal}}' bindtap='closeModal'></view>
+	<view class='choose' wx:if='{{chooseModal}}' animation="{{animationData}}">
 		
 		<view class='choose_price'>
 			<image src='/imgs/detail/Bitmap@2x(1).png'></image>

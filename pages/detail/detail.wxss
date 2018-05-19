@@ -11,6 +11,10 @@ image{
 	height: 100%;
 	overflow: scroll;
 }
+swiper{
+	width:750rpx;
+	height:672rpx;
+}
 .detail_imgs image{
 	width: 750rpx;
 	height: 672rpx;
@@ -169,7 +173,6 @@ image{
 
 /* choose  */
 .choose{
-	display: none;
 	position: fixed;
 	z-index: 100;
 	height: 900rpx;

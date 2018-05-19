@@ -6,12 +6,13 @@ Page({
    */
   data: {
 		//使用data数据控制类名
-		chooseModal:"none",
+		chooseModal:false,
 		//动态控制“-”号类名
 		minusStatus:"disabled",
 		//是否已选颜色规格
 		selectedArr:[],
 		isSelected:true,
+		imgs: ["/imgs/detail/ product details@2x(3).png", "/imgs/detail/product details@2x.png"],
 		//颜色、规格数据
 		color:[{
 			"color":"四季版-橘黄色",
@@ -58,18 +59,55 @@ Page({
 			"isSelected": false
 		}],
 		//初始数量
-		num:1
+		num:1,
+		//定义动画
+		animationData:{}
   },
 	/* 规格选择弹出事件 */
 	modalShow(e){
-		this.setData({
-			chooseModal: "block"
+		var that = this;
+		//创建一个动画实例
+		var animation = wx.createAnimation({
+			//动画持续事件
+			duration: 400,
+			//定义动画效果
+			timingFunction:'linear'
 		})
+		//将该变量赋值给当前动画
+		that.animation = animation;
+		//现在Y轴偏移，然后用step()完成一个动画
+		animation.translateY(450).step();
+		that.setData({
+			animationData:animation.export(),
+			chooseModal: true
+		})
+		//设置setTimeout改变Y轴偏移量
+		setTimeout(function(){
+			animation.translateY(0).step();
+			that.setData({
+				animationData:animation.export()
+			})
+		}, 100)
 	},
 	closeModal(){
-		this.setData({
-			chooseModal:"none"
+		var that = this;
+		var animation = wx.createAnimation({
+			duration: 500,
+			timingFunction: 'linear'
 		})
+		that.animation = animation
+		animation.translateY(450).step()
+		that.setData({
+			animationData: animation.export()
+
+		})
+		setTimeout(function () {
+			animation.translateY(0).step()
+			that.setData({
+				animationData: animation.export(),
+				chooseModal: false
+			})
+		}, 500)
 	},
 	/* 点击减号 */
 	bindMinus(){
