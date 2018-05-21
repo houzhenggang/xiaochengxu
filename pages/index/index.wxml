@@ -9,7 +9,7 @@
 	</view>
 
 	<!--banner  -->
-	<image class='index_banner1' src='{{description.banner}}'></image>
+	<image class='index_banner1' src='{{description.logo_url}}'></image>
 	
 	<!--classify  -->
 	<view class='index_classify'>
@@ -28,7 +28,7 @@
 	<!--contact  -->
 	<view class="index_contact">
 		<text class='contact_h4'>Hi 亲爱的小主</text>
-		<text class='contact_p'>{{description.shop.description}}</text>
+		<text class='contact_p'>{{description.description}}</text>
 		<button open-type='contact'><image src='/imgs/Content_icon_WeChat@2x.png'></image></button>
 		<image bindtap='contactPhone' src='/imgs/Content_icon_phone@2x.png'></image>
 	</view>
@@ -42,21 +42,21 @@
 		<image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image>
 	</view>
 
-	<view class='index_re_produ' bindtap='bindDetail'>
-		<image class='re_produ_img' src='/imgs/Mask@2x(2).png'></image>
-		<text class='re_produ_text'>复古宽松甜美韩版泡泡袖卫衣</text>
+	<view class='index_re_produ' data-id='{{recommend_first[0].goods_id}}' bindtap='bindDetail'>
+		<image class='re_produ_img' src='{{recommend_first[0].cover_url}}'></image>
+		<text class='re_produ_text'>{{recommend_first[0].name}}</text>
 		<view class='re_text_view'>
-			<text>￥</text><text>123.00</text><text>销量23万件</text>
+			<text>￥</text><text>{{recommend_first[0].price}}</text><text>销量{{recommend_first[0].sales_count}}件</text>
 		</view>
 		 <view class='buy_button'>立即购买</view> 
 	</view>
 
 	<view class='index_item'>
-		<view class='item_box' wx:for="{{produList}}"  wx:key="{{index}}" bindtap='bindDetail'>
-			<image src='{{item.imgurl}}'></image>
-			<text class='item_text'>{{item.proName}}</text>
+		<view class='item_box' wx:for="{{recommend_goods}}" data-id='{{item.goods_id}}'  wx:key="{{index}}" bindtap='bindDetail'>
+			<image src='{{item.cover_url}}'></image>
+			<text class='item_text'>{{item.name}}</text>
 			<view class='item_text_view'>
-				<text>￥</text><text>{{item.price}}</text><text>销量{{item.saleNum}}件</text>
+				<text>￥</text><text>{{item.price}}</text><text>销量{{item.sales_count}}件</text>
 			</view>
 		</view>
 	</view>
@@ -71,11 +71,11 @@
 	</view>
 
 	<view class='index_item'>
-		<view class='item_box' wx:key="{{index}}" wx:for="{{produList}}" bindtap='bindDetail'>
-			<image src='{{item.imgurl}}'></image>
-			<text class='item_text'>{{item.proName}}</text>
+		<view class='item_box' wx:key="{{index}}" wx:for="{{special_goods}}" data-id='{{item.goods_id}}' bindtap='bindDetail'>
+			<image src='{{item.cover_url}}'></image>
+			<text class='item_text'>{{item.name}}</text>
 			<view class='item_text_view special_item'>
-				<text>￥</text><text>{{item.price}}</text><text>{{item.prePrice}}</text>
+				<text>￥</text><text>{{item.price}}</text><text>{{item.display_price}}</text>
 			</view>
 		</view>
 	</view>

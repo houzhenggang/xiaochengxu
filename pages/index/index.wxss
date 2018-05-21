@@ -297,6 +297,7 @@
 .special_item text:nth-child(3){
 	position: static;
 	text-decoration:line-through;
+	margin-left:8rpx;
 }
 
 .bottom{

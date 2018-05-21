@@ -8,7 +8,7 @@ App({
   },
   globalData: {
     userInfo: null,
-		url:"localhost:8090",
+		url:"",
 		classIdx:0
   }
 })

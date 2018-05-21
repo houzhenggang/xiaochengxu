@@ -10,11 +10,13 @@ Page({
       success(code){
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
 				console.log(code)
+				//获取用户信息，拿到userInfo
 				wx.getUserInfo({
 					withCredentials: true,
 					success:function(res){
 						console.log(res);
 						var userInfo = res.userInfo;
+						//向后台发起请求，传code
 						wx.request({
 							url: 'http://192.168.10.99/mpa/wechat/auth',
 							method: 'POST',
@@ -24,8 +26,28 @@ Page({
 							success: function (res) {
 								console.log(222222)
 								console.log(res)
+								//保存响应头信息
 								var apiKey = res.header["Api-Key"],
 									apiSecret = res.header["Api-Secret"];
+									//设置storage
+									//获取时间戳保存storage
+									let timestamp = Date.parse(new Date());
+									wx.setStorage({
+										key: 'Api-Key',
+										data: apiKey
+									})
+									wx.setStorage({
+										key: 'timestamp',
+										data: timestamp,
+									})
+									wx.setStorage({
+										key: 'Api-Secret',
+										data: apiSecret
+									})
+									wx.setStorage({
+										key: 'user-id',
+										data: res.data.id,
+									})
 									wx.request({
 										url: 'http://192.168.10.99/mpa/wechat/'+res.data.id,
 										method:"PUT",
@@ -56,7 +78,6 @@ Page({
     });
     wx.getSetting({
       success:res=> {
-				console.log(res)
           if(!res.authSetting['scope.userInfo']){
 						console.log(1111)
           wx.authorize({

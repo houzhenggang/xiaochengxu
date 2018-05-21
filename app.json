@@ -1,15 +1,15 @@
 {
   "pages": [
-		"pages/index/index",
-		"pages/detail/detail",		
+		"pages/index/index",		
 		"pages/user/user",		
+		"pages/regMob/regMob",		
+		"pages/detail/detail",		
     "pages/shoppingCar/shoppingCar",
     "pages/result/result",
     "pages/category/category",
     "pages/search/search",
     "pages/special/special",
     "pages/recommend/recommend",
-    "pages/regMob/regMob",
     "pages/introdution/introdution",
     "pages/address/address",
     "pages/orders/orders",

@@ -1,8 +1,10 @@
 //index.js
 //获取应用实例
 const app=getApp();
+const url = "http://192.168.20.140";
 Page({
   data: {
+		//分类
 		ulList:[{
 			"text":"裙装",
 			"imgurl":"/imgs/Home_icon_skirt@2x.png"
@@ -22,41 +24,14 @@ Page({
 			"text": "T恤",
 			"imgurl": "/imgs/Home_icon_Tshirt@2x@2x.png"
 		}],
-		produList:[{
-			"imgurl":"/imgs/Rectangle 10@2x(1).png",
-			"proName":"复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-			"price":"123.00",
-			"saleNum":"23万",
-			"prePrice":"￥233.00"
-		}, {
-			"imgurl": "/imgs/Rectangle 10@2x(1).png",
-			"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-			"price": "123.00",
-			"saleNum": "23万",
-			"prePrice":"￥233.00"
-			}, {
-				"imgurl": "/imgs/Rectangle 10@2x(1).png",
-				"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-				"price": "123.00",
-				"saleNum": "23万",
-				"prePrice":"￥233.00"
-		}, {
-			"imgurl": "/imgs/Rectangle 10@2x(1).png",
-			"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-			"price": "123.00",
-			"saleNum": "23万",
-			"prePrice":"￥233.00"
-		}],
-		//banner及店铺信息
-		description:{
-			"banner":"/imgs/Home_img_banner@2x.png",
-			"shop":{
-				"id":1,
-				"name":"我的小店",
-				"description": "欢迎光临本店,我是店主巴拉巴拉巴拉安拉阿巴拉澳巴啦啦巴拉巴拉巴拉巴拉",
-				"customer_service_mobile":"13547831113"
-			}
-		}
+		//店铺描述信息
+		description: {},
+		//推荐商品
+		//不参与遍历的第一件推荐商品
+		recommend_first:[],
+		recommend_goods:[],
+		//特价商品
+		special_goods:[]
   },
   //事件处理函数
   bindViewTap: function() {
@@ -71,7 +46,7 @@ Page({
 		})
 	},
 	contactPhone(){
-		var phoneNumber = this.data.description.shop.customer_service_mobile;
+		var phoneNumber = this.data.description.customer_service_mobile;
 		wx.makePhoneCall({
 			phoneNumber: phoneNumber,
 		})
@@ -98,18 +73,44 @@ Page({
 		})
 	},
   onLoad: function () {
+		let that = this;
 		//获取店家描述数据
-		// wx.request({
-		// 	url: 'http://192.168.10.99/mpa/index',
-		// 	method: 'GET',
-		// 	success(res){
-		// 		console.log(res)
-		// 	},
-		// })
-		var title = this.data.description.shop.name;
-    wx.setNavigationBarTitle({
-			title: title,
+		wx.request({
+			url: url + '/mpa/index/1',
+			method: 'GET',
+			success(res){
+				that.setData({
+					description: res.data
+				},function(){
+					//异步成功之后设置title
+					wx.setNavigationBarTitle({
+						title: that.data.description.name,
+					})
+				})
+			},
 		})
-  },
-  
+		//获取推荐商品列表
+		wx.request({
+			url: url + '/mpa/recommend_goods/1?page=1&order_by=created_at&pre_page=7',
+			method: 'GET',
+			success(res){
+				//截取第一件商品
+				let firstGood = res.data.splice(0,1);
+				that.setData({
+					recommend_first:firstGood,
+					recommend_goods:res.data
+				})
+			}
+		})
+		//获取特价商品列表
+		wx.request({
+			url: url + '/mpa/special_goods/1?page=1&order_by=price desc&pre_page=6',
+			method: 'GET',
+			success(res){
+				that.setData({
+					special_goods:res.data
+				})
+			}
+		})
+  }
 })
