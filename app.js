@@ -8,7 +8,7 @@ App({
   },
   globalData: {
     userInfo: null,
-		url:"",
+		url: "http://192.168.20.140",
 		classIdx:0
   }
 })

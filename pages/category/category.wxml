@@ -10,14 +10,14 @@
 
 	<view class='category_swiper'>
 		<scroll-view class='tab left'>
-			<view wx:for="{{leftTapArray}}" wx:key="{{index}}" data-idx='{{index}}' bindtap='leftCellTap' class="left_cell {{ item.selected ? 'selected' : ''}}">{{item.text}}</view>
+			<view wx:for="{{leftTapArray}}" wx:key="{{index}}" data-idx='{{index}}' bindtap='leftCellTap' class="left_cell {{ index == select ? 'selected' : ''}}">{{item.name}}</view>
 		</scroll-view>
 		<scroll-view class='tab right'>
 			<block wx:if="{{second}}">
 				<view class='right_flex'>
-					<view wx:for="{{classify}}" wx:key="{{index}}" data-idx='{{index}}' class='right_cell'>
-						<image src='{{item.url}}'></image>
-						<text>{{item.class}}</text>
+					<view wx:for="{{category}}" wx:key="{{index}}" data-idx='{{index}}' class='right_cell'>
+						<image src='{{item.icon_url}}'></image>
+						<text>{{item.name}}</text>
 					</view>
 				</view>
 			</block>

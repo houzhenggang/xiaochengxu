@@ -1,29 +1,11 @@
 //index.js
 //获取应用实例
 const app=getApp();
-const url = "http://192.168.20.140";
+const requestUrl = app.globalData.url;
 Page({
   data: {
 		//分类
-		ulList:[{
-			"text":"裙装",
-			"imgurl":"/imgs/Home_icon_skirt@2x.png"
-		}, {
-			"text": "外套",
-			"imgurl": "/imgs/Home_icon_coat@2x.png"
-			}, {
-				"text": "鞋靴",
-				"imgurl": "/imgs/Home_icon_booties@2x.png"
-		}, {
-			"text": "箱包",
-			"imgurl": "/imgs/Home_icon_luggage@2x.png"
-			}, {
-				"text": "内衣",
-				"imgurl": "/imgs/Home_icon_neiyi@2x.png"
-		}, {
-			"text": "T恤",
-			"imgurl": "/imgs/Home_icon_Tshirt@2x@2x.png"
-		}],
+		categoryList:[],
 		//店铺描述信息
 		description: {},
 		//推荐商品
@@ -61,6 +43,7 @@ Page({
 		//当前点击索引,保存到globalData
 		var index = e.currentTarget.dataset.idx;
 		app.globalData.classIdx = index;
+		console.log(app.globalData.classIdx);
 		wx.switchTab({
 			url: '/pages/category/category',
 		})
@@ -74,9 +57,19 @@ Page({
 	},
   onLoad: function () {
 		let that = this;
+		//获取一级分类信息列表
+		wx.request({
+			url: requestUrl + '/mpa/category/1',
+			success(res) {
+				console.log("一级分类请求完成")
+				that.setData({
+					categoryList:res.data
+				})
+			}
+		})
 		//获取店家描述数据
 		wx.request({
-			url: url + '/mpa/index/1',
+			url: requestUrl + '/mpa/index/1',
 			method: 'GET',
 			success(res){
 				that.setData({
@@ -91,7 +84,7 @@ Page({
 		})
 		//获取推荐商品列表
 		wx.request({
-			url: url + '/mpa/recommend_goods/1?page=1&order_by=created_at&pre_page=7',
+			url: requestUrl + '/mpa/recommend_goods/1?page=1&order_by=created_at&pre_page=7',
 			method: 'GET',
 			success(res){
 				//截取第一件商品
@@ -104,7 +97,7 @@ Page({
 		})
 		//获取特价商品列表
 		wx.request({
-			url: url + '/mpa/special_goods/1?page=1&order_by=price desc&pre_page=6',
+			url: requestUrl + '/mpa/special_goods/1?page=1&order_by=price desc&pre_page=6',
 			method: 'GET',
 			success(res){
 				that.setData({
