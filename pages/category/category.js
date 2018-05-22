@@ -40,8 +40,9 @@ Page({
   },
 	//处理左侧楼层点击事件
 	leftCellTap(e){
+		let that = this;
 		var select = e.currentTarget.dataset.idx;
-		this.setData({
+		that.setData({
 			select:select
 		});
 		//请求二级分类，设置data数据
