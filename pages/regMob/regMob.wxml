@@ -1,0 +1,24 @@
+<view class="container">
+  <view class="userinfo">
+    <block>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+</view>
+<view class='content'>
+  <image class='regMob' src='/imgs/regMob_icon.png'></image>
+  <view>
+      <input placeholder='请输入手机号' placeholder-class='phcolor'></input>
+  </view>
+  
+</view>
+<view class='content lst'>
+  <image class='yzm_icon' src='/imgs/yzm_icon.png'></image>
+  <view>
+      <input placeholder-class='phcolor' placeholder='请输入验证码'></input>
+      <button hover-class="none" >获取验证码</button>
+  </view>
+</view>
+
+<view class='sub {{!check?"allow":"notAllow"}}' >立即验证</view>

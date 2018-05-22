@@ -1,0 +1,122 @@
+.swiper-tab{  
+    width: 100%;  
+    display: flex;
+    border-bottom: 20rpx solid #F6F7F7;  
+    text-align: center;  
+    line-height: 82rpx;
+    justify-content: space-around;
+    align-items:center;
+  border-top:1rpx solid #E3E3E3;
+    }  
+.swiper-tab-list{ 
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #666666;  
+}  
+.on{ color: #EA2534;  
+  }  
+  
+.swiper-box{ display: block; height: 100%; width: 100%; overflow: hidden; }   
+.container{
+  width: 750rpx;
+}
+.container image{
+  width: 266rpx;
+  height:204rpx;
+  margin:0 auto;
+  margin-top: 50rpx;
+  margin-bottom:26rpx;  
+}
+.container view{
+  font-family: PingFangSC-Regular;
+  font-size: 32rpx;
+  color: #333333;
+}
+.container text{
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #999999;
+  margin-top: 32rpx;
+}
+view.carInfo{
+  margin-top: 18rpx; 
+  background: #fff;
+  height: 234rpx;
+}
+.content{
+  width:750rpx;
+}
+navigator{
+   width:750rpx;
+  padding:0 20rpx;
+  box-sizing: border-box;
+  border-bottom:20rpx solid  #F6F7F7;
+}
+.top{
+  display: flex;
+  align-items: center;
+  height: 76rpx;
+  justify-content: space-between;
+  border-bottom:1rpx solid  #E3E3E3;
+
+}
+.top label{
+  display: block;
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #333333;
+  line-height: 24rpx;
+
+}
+.goodImg{
+  width: 164rpx;
+  height: 164rpx;
+}
+.title{
+  font-family: PingFangSC-Regular;
+  font-size: 26rpx;
+  color: #333333;
+}
+.goodsInfo{
+  margin-left:20rpx;
+}
+.goodsInfo label{
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #151515;
+}
+.orderList{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 194rpx;
+  border-bottom:1rpx solid #e3e3e3;
+}
+.infoBottom{
+  display: flex;
+  justify-content: space-between;
+  margin-top:16rpx;
+}
+.infoBottom label:nth-child(1){
+  font-family: PingFangSC-Regular;
+  font-size: 26rpx;
+  color: #999999;
+  line-height: 32rpx;
+}
+.infoBottom label:nth-child(2){
+  font-family: PingFangSC-Regular;
+font-size: 26rpx;
+color: #151515;
+line-height: 40rpx;
+}
+.bottom{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height:86rpx;
+}
+.bottom label{
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #333333;
+}

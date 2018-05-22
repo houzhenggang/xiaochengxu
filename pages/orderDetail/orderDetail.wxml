@@ -1,0 +1,62 @@
+<view class='address'>
+    <image src='/imgs/position.png'></image>
+    <view  class='name'>
+      <label>收货人：凌达琳</label>
+      <label>13628776098</label>
+    </view>
+    <view class='addr'>
+        收货地址：上海市上海市松江区xxxxxx53号-234室
+    </view>
+</view>
+<view class='detail'>
+    <view  class='menus'>
+        <image src='/imgs/menus.png'></image>
+        <view class='desc'>
+            <label>蕾丝衫2018新款春季显瘦淑女风上衣吊带
+两件套装长袖春夏款</label>
+            <label>颜色:白色   尺码:M</label>
+            <label>x1</label>
+            <label>￥235.00</label>
+        </view>
+    </view>
+    <view class='info'>
+      <view>
+        <label>商品总价</label> 
+        <label>￥235.00</label>
+      </view>
+      <view>
+        <label>运费（快递）</label> 
+        <label>￥0.00</label>
+      </view>
+      <view>
+        <label>订单总价</label> 
+        <label>￥235.00</label>
+      </view>
+    </view>
+    <view class='info'>
+         <view>
+            <label>订单编号</label> 
+            <label>239298764895489473</label>
+          </view>
+          <view>
+            <label>创建时间</label> 
+            <label>2018-02-23 12:09:34</label>
+          </view>
+          <text>退货未审核</text>    
+    </view>
+</view>
+
+<view class='contact'>
+    <button open-type='contact' session-from="weapp">
+          <image src='/imgs/Wechat_icon.png'></image>
+          <label>微信联系</label>
+    </button>
+    <!-- <view bindtap='callWechat'>
+      <image src='/imgs/Wechat_icon.png'></image>
+      <label>微信联系</label>
+    </view> -->
+     <view bindtap='callPhone'>
+        <image src='/imgs/phone_icon.png'></image>
+        <label>电话联系</label>
+    </view>
+</view>

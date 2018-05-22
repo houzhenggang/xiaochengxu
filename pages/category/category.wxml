@@ -1,0 +1,40 @@
+<!--pages/category/category.wxml-->
+<view class='category_container'>
+
+	<!-- category search   -->
+	<view class='container_search'>
+		<navigator class='container_search_navi' url="/pages/search/search">输入关键字进行搜索
+			<icon type='search' size='12' color='#999999'></icon>
+		</navigator>
+	</view>
+
+	<view class='category_swiper'>
+		<scroll-view class='tab left'>
+			<view wx:for="{{leftTapArray}}" wx:key="{{index}}" data-idx='{{index}}' bindtap='leftCellTap' class="left_cell {{ index == select ? 'selected' : ''}}">{{item.name}}</view>
+		</scroll-view>
+		<scroll-view class='tab right'>
+			<block wx:if="{{second}}">
+				<view class='right_flex'>
+					<view wx:for="{{category}}" wx:key="{{index}}" data-idx='{{index}}' class='right_cell'>
+						<image src='{{item.icon_url}}'></image>
+						<text>{{item.name}}</text>
+					</view>
+				</view>
+			</block>
+			<block wx:else>
+				<view class='goods'>
+					<view wx:for="{{goods}}" wx:key="{{index}}" class='goods_item' bindtap='goDetail'>
+						<image src='/imgs/category/Search_img@2x.png'></image>
+						<view class='descriptions'>
+							<text>{{item.name}}</text>
+							<text>销量{{item.saleNum}}件</text>
+							<text>￥{{item.prevPrice}}</text>
+							<text>￥{{item.newPrice}}</text>
+						</view>
+					</view>					
+				</view>
+			</block>
+		</scroll-view>
+	</view>
+
+</view>

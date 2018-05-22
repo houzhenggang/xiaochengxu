@@ -1,0 +1,92 @@
+<!--pages/detail/detail.wxml-->
+<view class='detail_container'>
+	
+	<!-- detail images  -->
+	<swiper
+		autoplay='{{true}}' interval='{{3500}}' duration='{{700}}' circular='{{true}}'>
+		<block wx:for='{{imgs}}'>
+			<swiper-item>
+				<view class='detail_imgs'>
+					<image src='{{item}}'></image>
+				</view>
+			</swiper-item>
+		</block>
+	</swiper>
+	
+
+	<!-- description  -->
+	<view class='detail_description'>
+		<view class='name_share padding'>
+			<text class='des_name'>Chaber巧帛2018夏新款针织背心刺绣花纹图案闺蜜双人装</text>
+			<view>
+				<button open-type='share'>
+					<image src='/imgs/detail/product_btn_share@2x.png'></image>
+					<text>分享</text>
+				</button>
+			</view>	
+		</view>
+		<view class='detail_price padding'>
+			<text>￥102.0</text><text>￥310.0</text>
+		</view>
+		<view class='detail_info'>
+			<text>月销99笔</text><text>快递:0.00</text><text>浙江杭州</text>
+		</view>
+		<view class='detail_promise padding'>
+			<view><image src='/imgs/detail/product_icon_sign@2x.png'></image><text>全场包邮</text></view>
+			<view><image src='/imgs/detail/product_icon_sign@2x.png'></image><text>7天退还</text></view>
+			<view><image src='/imgs/detail/product_icon_sign@2x.png'></image><text>24小时发货</text></view>
+			<view><image src='/imgs/detail/product_icon_sign@2x.png'></image><text>假一赔十</text></view>		
+		</view>
+	</view>
+
+	<!-- bottom button  -->
+	<view class='detail_bottom'>
+		<view class='detail_cart' bindtap='goCart'>
+			<image src='/imgs/detail/product_btn_shop cart@2x.png'></image>
+			<text>购物车</text>
+		</view>
+		<view class='addCart' bindtap='modalShow' data-flag='1'>加入购物车</view>
+		<view class='buy' bindtap='modalShow' data-flag='2'>立即购买</view>
+	</view>
+
+	<!-- 规格选择  -->
+	<view class='mask' wx:if='{{chooseModal}}' bindtap='closeModal'></view>
+	<view class='choose' wx:if='{{chooseModal}}' animation="{{animationData}}">
+		
+		<view class='choose_price'>
+			<image src='/imgs/detail/Bitmap@2x(1).png'></image>
+			<view>
+				<text>￥59</text>
+				<text>请选择 颜色 尺码</text>
+			</view>
+			<image src='/imgs/detail/classification_btn_close@2x.png' data-id='0' bindtap='closeModal'></image>
+		</view>
+
+		<view class='color_size'>
+			<view class='choose_color'>
+				<text class='title'>颜色</text>
+				<view class='color'>
+					<text wx:for='{{color}}' class='select {{item.isSelected ? "active" : ""}}' wx:key='{{index}}' data-attr-index="{{index}}" data-type="color" bindtap='chooseSpec'>
+						{{item.color}}
+					</text>
+				</view>
+			</view>
+			<view class='choose_size'>
+				<text class='title'>尺寸</text>
+				<view class='size'>
+					<text wx:for='{{size}}' class='select {{item.isSelected ? "active" : ""}}' wx:key='{{index}}' data-attr-index="{{index}}" data-type="size" bindtap='chooseSpec'>{{item.size}}</text>
+				</view>
+			</view>
+		</view>
+		
+		<view class='count'>
+				<text class='number'>数量</text>
+				<view>
+					<text class='{{minusStatus}}' bindtap='bindMinus'>-</text>
+					<text class='num'>{{num}}</text>
+					<text class='add' bindtap='bindPlus'>+</text>
+				</view>
+		</view>
+		<view class='confirm' data-id='1' bindtap='closeModal'>确认</view> 
+	</view>
+</view>

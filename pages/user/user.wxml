@@ -1,0 +1,51 @@
+  <view class="container">
+  <view class="userinfo">
+    <block>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+  </view>
+</view>
+<view class='orderinfo'> 
+    <navigator url='/pages/orders/orders?type=0' class='myorder' hover-class="none">
+        <view>我的订单</view>
+        <view><label>所有订单</label><image class='icon' src='/imgs/right.png'></image></view>
+    </navigator>
+    <view class='orderList'>
+        <navigator url='/pages/orders/orders?type=1' hover-class="none">
+          <image src='/imgs/daifukuan.png'></image>
+          <label>待付款</label>
+          <text>1</text>
+        </navigator>
+
+        <navigator url='/pages/orders/orders?type=2' hover-class="none">
+          <image src='/imgs/daifahuo.png'></image>
+          <label>待发货</label>
+          <text>2</text>
+        </navigator>
+
+        <navigator url='/pages/orders/orders?type=3' hover-class="none">
+          <image src='/imgs/daifahuo.png'></image>
+          <label>待收货</label>
+          <text>3</text>
+        </navigator>
+
+        <navigator url='/pages/orders/orders?type=5' hover-class="none">
+          <image src='/imgs/shouhou.png'></image>
+          <label>售后</label>
+          <text>4</text>
+        </navigator>
+    </view>
+</view>
+<view class='otherInfo'>
+    <navigator url='/pages/address/address' hover-class="none">
+          <view>我的地址</view>
+          <image class='icon' src='/imgs/right.png'></image>
+    </navigator>  
+      
+    <!-- <navigator>
+          <view>联系商家</view>
+          <image class='icon' src='/imgs/right.png'></image>
+    </navigator> -->
+</view>
+
