@@ -2,10 +2,7 @@
 <view class='container'>
     <view class='search'>
       <image class='fangdajing' src='/imgs/fangfajing.png'></image>
-      <input bindinput='searchKey' placeholder='{{searchKey}}' focus='true' confirm-type="搜索" bindconfirm='confirmEvent'></input>
+      <input bindinput='searchKey' placeholder='搜索品牌或商品' focus='true' value='{{value}}' confirm-type="搜索" bindconfirm='confirmEvent'></input>
       <image class='clearKey' src='/imgs/clear.png' bindtap='clearKey'></image>
-    </view>
-    <view class='searchList'>
-			<navigator url="/pages/result/result" wx:for="{{suggest}}">{{item}}</navigator>
     </view>
 </view>

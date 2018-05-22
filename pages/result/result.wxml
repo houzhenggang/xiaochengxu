@@ -3,7 +3,7 @@
 
 	<!--search  -->
 	<view class='container_search'>
-		<navigator open-type='navigateBack' class='container_search_navi' url="/pages/search/search">上衣
+		<navigator open-type='navigateBack' class='container_search_navi' url="/pages/search/search">{{inputValue}}
 			<icon class='search_icon1' type='search' size='12' color='#999999'></icon>
 			<icon class='search_icon2' type='clear' size='12' color='#999999'></icon>
 		</navigator>
@@ -11,9 +11,9 @@
 
 	<!--family  -->
 	<view class='search_family'>
-		<view class='new {{rank[0]}}' data-id='0' bindtap='bindRank'>新品</view>
-		<view class='sale_num {{rank[1]}}' data-id='1' bindtap='bindRank'>销量</view>
-		<view class='family_arrow {{rank[2]}}' data-id='2' bindtap='bindRank'>
+		<view class='new {{rank == 0 ? "selected" : "normal"}}' data-id='0' bindtap='bindRank'>新品</view>
+		<view class='sale_num {{rank == 1 ? "selected" : "normal"}}' data-id='1' bindtap='bindRank'>销量</view>
+		<view class='family_arrow {{rank == 2 ? "selected" : "normal"}}' data-id='2' bindtap='bindRank'>
 			<text>价格</text>
 			<view class='arrows'>
 				<text class='arrow_up {{flag==1?"up":""}}'></text><text class='arrow_down {{flag==2?"down":""}}'></text>

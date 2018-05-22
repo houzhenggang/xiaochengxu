@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+		inputValue:"上衣",
 		produList: [{
 			"imgurl": "/imgs/Rectangle 10@2x(1).png",
 			"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
@@ -30,8 +31,8 @@ Page({
 			"saleNum": "23万",
 			"prePrice": "￥233.00"
 		}],
-		//排序方式数组,控制排序方式类名
-		rank:["normal","selected","normal"],
+		//排序方式
+		rank: 0,
 		//flag控制上下箭头类名
 		flag: 0
   },
@@ -43,7 +44,6 @@ Page({
 	},
 	//排序方式点击
 	bindRank(e){
-		console.log(e);
 		//当前所点击排序方式
 		var currIndex = e.currentTarget.dataset.id;
 		var flag = this.data.flag;
@@ -57,18 +57,11 @@ Page({
 		}else{
 			flag = 0
 		}
-		//遍历rank数组
-		var newArr = this.data.rank.map(function(item,index,arr){
-			arr[index] = "normal";
-			return arr[index];
-		})
-		newArr[currIndex] = "selected";
 		//存入data
 		this.setData({
-			rank:newArr,
+			rank:currIndex,
 			flag:flag
 		})
-		console.log(this.data.flag)
 	},
   /**
    * 生命周期函数--监听页面加载
