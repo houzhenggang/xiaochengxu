@@ -7,7 +7,7 @@
       </view>
 </view>
 <view class='content' wx:else='{{isShow==1}}'>
-    <view wx:for="{{datalist}}" bindtouchstart='touchStart' bindtouchend='touchEnd' wx:for-index="index" wx:key="id" class='carInfo'>
+    <view wx:for="{{datalist}}" bindtouchstart='touchStart' bindtouchmove='touchMove' bindtouchend='touchEnd' wx:for-index="index" wx:key="id" class='carInfo'>
       <image class='select' bindtap='select' data-index="{{index}}" data-id="{{item.id}}" wx:if='{{item.isSelect}}' src='/imgs/checked.png'></image>
       <image class='select'  bindtap='select' data-index="{{index}}" data-id="{{item.id}}"  wx:else='{{item.isSelect}}' src='/imgs/unchecked.png'></image>
       <image class='goodImg' src='{{item.cover_url}}' bindtap='goDetail'></image>
