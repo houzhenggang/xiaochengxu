@@ -51,11 +51,28 @@ Page({
 				tempArr = that.data.leftTapArray,
 				second = tempArr[select].code,
 				category = tempArr[select].children;
+				console.log(second);
 		if(second == 1){
 			that.setData({
+				second:second,
 				category:category,
 				select: select
 			});
+		}else{
+			wx.request({
+				url: requestUrl + '/mpa/goods/search',
+				data:{
+					category_id:tempArr[select].id
+				},
+				success(res){
+					console.log(res)
+					that.setData({
+						second:second,
+						select:select,
+						goods:res.data
+					})
+				}
+			})
 		}
 		//请求二级分类，设置data数据
 		// wx.request({

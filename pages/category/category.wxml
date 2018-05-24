@@ -23,13 +23,13 @@
 			</block>
 			<block wx:else>
 				<view class='goods'>
-					<view wx:for="{{goods}}" wx:key="{{index}}" class='goods_item' bindtap='goDetail'>
-						<image src='/imgs/category/Search_img@2x.png'></image>
+					<view wx:for="{{goods}}" data-id='{{item.id}}' wx:key="{{index}}" class='goods_item' bindtap='goDetail'>
+						<image src='{{item.cover_url}}'></image>
 						<view class='descriptions'>
 							<text>{{item.name}}</text>
-							<text>销量{{item.saleNum}}件</text>
-							<text>￥{{item.prevPrice}}</text>
-							<text>￥{{item.newPrice}}</text>
+							<text>销量{{item.sales_count}}件</text>
+							<text>￥{{item.price}}</text>
+							<text>￥{{item.display_price}}</text>
 						</view>
 					</view>					
 				</view>

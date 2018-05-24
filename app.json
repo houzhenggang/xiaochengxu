@@ -1,12 +1,12 @@
 {
   "pages": [
-		"pages/index/index",
+		"pages/category/category",
 		
+		"pages/shoppingCar/shoppingCar",		
+		"pages/index/index",
 		"pages/user/user",		
-		"pages/category/category",		
 		"pages/regMob/regMob",		
 		"pages/detail/detail",		
-    "pages/shoppingCar/shoppingCar",
     "pages/result/result",
     "pages/search/search",
     "pages/special/special",
