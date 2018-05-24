@@ -14,36 +14,10 @@ Page({
 		//是否存在二级分类
 		second:1,
 		//不存在二级分类的商品详情
-		goods:[{
-			"name": "学院风显瘦宽松纯色短袖纯棉T恤夏季",
-			"saleNum":"23",
-			"prevPrice":"123.00",
-			"newPrice":"233.00"
-		}, {
-			"name": "学院风显瘦宽松纯色短袖纯棉T恤夏季",
-			"saleNum": "23",
-			"prevPrice": "123.00",
-			"newPrice": "233.00"
-			}, {
-				"name": "学院风显瘦宽松纯色短袖纯棉T恤夏季",
-				"saleNum": "23",
-				"prevPrice": "123.00",
-				"newPrice": "233.00"
-		}, {
-			"name": "学院风显瘦宽松纯色短袖纯棉T恤夏季",
-			"saleNum": "23",
-			"prevPrice": "123.00",
-			"newPrice": "233.00"
-		}],
+		goods:[],
 		//存在二级分类
 		category: []
   },
-	//点击二级分类
-	goList(){
-		wx.navigateTo({
-			url: '/pages/categoryList/categoryList',
-		})
-	},
 	//处理左侧楼层点击事件
 	leftCellTap(e){
 		let that = this,
@@ -74,34 +48,20 @@ Page({
 				}
 			})
 		}
-		//请求二级分类，设置data数据
-		// wx.request({
-		// 	url: requestUrl + '/mpa/category/1/1',
-		// 	success(res) {
-		// 		console.log("二级分类请求完成")
-		// 		console.log(res)
-		// 		let category = res.data.category,
-		// 			goods = res.data.goods,
-		// 			second;
-		// 		if (res.data.code == 1) {
-		// 			second = true;
-		// 		} else if (res.data.code == 2) {
-		// 			second = false;
-		// 		}
-		// 		that.setData({
-		// 			second: second,
-		// 			goods: goods,
-		// 			category: category
-		// 		})
-		// 		console.log(that.data)
-		// 	}
-		// })
+	},
+	//点击二级分类
+	goList(e) {
+		console.log(e)
+		wx.navigateTo({
+			url: '/pages/categoryList/categoryList?category_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
+		})
 	},
 	//点击商品跳转商品详情
 	goDetail(e){
-		wx.navigateTo({
-			url: '/pages/detail/detail',
-		})
+		console.log(e)
+		// wx.navigateTo({
+		// 	url: '/pages/detail/detail',
+		// })
 	},
   /**
    * 生命周期函数--监听页面加载
@@ -113,11 +73,9 @@ Page({
 		})
 		//请求一级分类，设置data数据
 		wx.request({
-			url: requestUrl + '/mpa/category?merchant_id=1',
+			url: requestUrl + '/mpa/category',
 			success(res){
 				let leftSelectedIdx = app.globalData.classIdx;
-				console.log("一级分类请求完成")
-				console.log(res)
 				res.data[leftSelectedIdx].selected = true;
 				that.setData({
 					category:res.data[leftSelectedIdx].children,
@@ -142,28 +100,6 @@ Page({
 		that.setData({
 			select: select
 		})
-		// //请求二级分类，设置data数据
-		// wx.request({
-		// 	url: requestUrl + '/mpa/category/1/1',
-		// 	success(res) {
-		// 		console.log("二级分类请求完成")
-		// 		console.log(res)
-		// 		let category = res.data.category,
-		// 			goods = res.data.goods,
-		// 			second;
-		// 		if (res.data.code == 1) {
-		// 			second = true;
-		// 		} else if (res.data.code == 2) {
-		// 			second = false;
-		// 		}
-		// 		that.setData({
-		// 			second: second,
-		// 			goods: goods,
-		// 			category: category
-		// 		})
-		// 		console.log(that.data)
-		// 	}
-		// })
 		app.globalData.classIdx = 0;
   },
 

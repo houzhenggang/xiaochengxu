@@ -1,18 +1,32 @@
 // pages/detail/detail.js
+const app = getApp();
+const requestUrl = app.globalData.url;
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
+		//商品详情数据
+		goods:{},
 		//使用data数据控制类名
 		chooseModal:false,
 		//动态控制“-”号类名
 		minusStatus:"disabled",
+		//规格选择初始数量
+		num: 1,
+		//加入购物车/立即购买flag
+		flag: 1,
+		//定义动画
+		animationData: {},
+		//商品规格数据
+		spec:{},
 		//是否已选颜色规格
+		seleIdx:0,
 		selectedArr:[],
 		isSelected:true,
-		imgs: ["/imgs/detail/ product details@2x(3).png", "/imgs/detail/product details@2x.png"],
+		imgs: {},
 		//颜色、规格数据
 		color:[{
 			"color":"四季版-橘黄色",
@@ -57,15 +71,14 @@ Page({
 		}, {
 			"size": "38【真牛皮】",
 			"isSelected": false
-		}],
-		//初始数量
-		num:1,
-		//定义动画
-		animationData:{}
+		}]
   },
 	/* 规格选择弹出事件 */
 	modalShow(e){
 		var that = this;
+		//修改flag标识
+		let flag = e.currentTarget.dataset.flag;
+
 		//创建一个动画实例
 		var animation = wx.createAnimation({
 			//动画持续事件
@@ -79,6 +92,7 @@ Page({
 		animation.translateY(450).step();
 		that.setData({
 			animationData:animation.export(),
+			flag:flag,
 			chooseModal: true
 		})
 		//设置setTimeout改变Y轴偏移量
@@ -88,7 +102,18 @@ Page({
 				animationData:animation.export()
 			})
 		}, 100)
+
+		//获取商品规格详情
+		wx.request({
+			url: requestUrl + '/mpa/goods/1/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
+			success(res){
+				that.setData({
+					spec:res.data
+				})
+			}
+		})
 	},
+	//点击确认，关闭弹出框
 	closeModal(){
 		var that = this;
 		var animation = wx.createAnimation({
@@ -99,7 +124,6 @@ Page({
 		animation.translateY(450).step()
 		that.setData({
 			animationData: animation.export()
-
 		})
 		setTimeout(function () {
 			animation.translateY(0).step()
@@ -134,31 +158,9 @@ Page({
 	},
 	//选择规格事件
 	chooseSpec(e){
-		var currIndex = e.currentTarget.dataset.attrIndex;
-		var type = e.currentTarget.dataset.type;
-		if(type == "color"){
-			//选择颜色规格
-			var newArray = this.data.color.map(function (item, index, arr) {
-				arr[index].isSelected = false;
-				return arr[index];
-			});
-			newArray[currIndex].isSelected = true;
-			//重新设置data值
 			this.setData({
-				color: newArray
+				seleIdx: e.currentTarget.dataset.attrIndex
 			})
-		}else{
-			//选择尺寸规格
-			var newArray = this.data.size.map(function (item, index, arr) {
-				arr[index].isSelected = false;
-				return arr[index];
-			});
-			newArray[currIndex].isSelected = true;
-			//重设data
-			this.setData({
-				size: newArray
-			})
-		}
 	},
 	//定义分享转发
 	onShareAppMessage:function(res){
@@ -183,8 +185,20 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+		let that = this;
+		console.log(options)
+		wx.request({
+			url: requestUrl + '/mpa/goods/1',/////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
+			success(res){
+				console.log(res);
+				that.setData({
+					goods:res.data,
+					imgs:res.data.images
+				})
+			}
+		})
 		wx.setNavigationBarTitle({
-			title: '商品详情',
+			title: options.name,
 		})
   },
 

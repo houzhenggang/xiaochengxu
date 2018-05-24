@@ -221,6 +221,7 @@ swiper{
 .color_size{
 	height: 528rpx;
 	padding: 0 20rpx;
+	overflow: scroll;
 }
 
 /* choose color  */

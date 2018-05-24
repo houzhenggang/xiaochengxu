@@ -1,4 +1,6 @@
 // pages/search/search.js
+const app = getApp();
+const requestUrl = app.globalData.url;
 Page({
 
   /**
@@ -66,8 +68,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+		console.log(options)
+		let taht = this;
 		wx.setNavigationBarTitle({
-			title: '上衣',
+			title: options.name,
+		})
+		wx.request({
+			url: requestUrl + '/mpa/goods/search',
+			data:{
+				category_id:9
+			},
+			success(res){
+				console.log(1111111)
+				console.log(res)
+
+			}
 		})
   },
 

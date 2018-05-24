@@ -24,9 +24,9 @@ Page({
 	//跳转商品详情页
 	bindDetail(e){
 		console.log(e)
-		// wx.navigateTo({
-		// 	url: '/pages/detail/detail',
-		// })
+		wx.navigateTo({
+			url: '/pages/detail/detail?goods_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
+		})
 	},
 	//跳转订单页
 	bindOrder(e){
