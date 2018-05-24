@@ -95,13 +95,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-		let that = this;
-		let select = app.globalData.classIdx;
-		app.globalData.classIdx = 0;		
-		that.setData({
-			select: select,
-			second:that.data.leftTapArray[0].second
-		})
   },
 
   /**

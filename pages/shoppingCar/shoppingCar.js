@@ -30,7 +30,7 @@ Page({
     var index = e.target.dataset.index;
 		var id = e.target.dataset.id;
     var num = 'datalist['+index+'].count';
-    if (parseInt(_this.data.datalist[index].count)>1){
+    if (parseInt(_this.data.datalist[index].count)>0){
       var newNum = parseInt(_this.data.datalist[index].count)-1;
 			//PUT，用户修改购物车数量
 			wx.request({

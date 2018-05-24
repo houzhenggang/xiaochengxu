@@ -1,9 +1,9 @@
 {
   "pages": [
+		"pages/shoppingCar/shoppingCar",		
 		"pages/index/index",		
 		"pages/detail/detail",		
 		"pages/category/category",
-		"pages/shoppingCar/shoppingCar",		
 		"pages/user/user",		
 		"pages/regMob/regMob",		
     "pages/result/result",
