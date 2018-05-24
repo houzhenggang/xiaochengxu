@@ -32,7 +32,7 @@ view.carInfo{
   background: #fff;
   height: 234rpx;
 }
-.container navigator{
+.container .switch_index{
     background: #F02417;
     border-radius: 4rpx;
     width:268rpx;

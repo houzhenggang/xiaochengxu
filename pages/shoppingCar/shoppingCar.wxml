@@ -2,9 +2,9 @@
       <image src='/imgs/emptyCar.png'></image>
       <view>购物车竟然是空的</view>
       <text>"快买点东西犒劳自己吧"</text>
-      <navigator url='/pages/index/index' hover-class='none'>
+      <view class='switch_index' hover-class='none' bindtap='goIndex'>
       去看看
-      </navigator>
+      </view>
 </view>
 <view class='content' wx:else='{{isShow==1}}'>
     <view wx:for="{{datalist}}" bindtouchstart='touchStart' bindtouchend='touchEnd' wx:for-index="index" wx:key="id" class='carInfo'>

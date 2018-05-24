@@ -18,6 +18,12 @@ Page({
 			url: '/pages/detail/detail',
 		})
 	},
+	//跳转首页
+	goIndex(){
+		wx.switchTab({
+			url: '/pages/index/index',
+		})
+	},
   /*减少数量*/
   subtraction(e){  
     var _this=this;
