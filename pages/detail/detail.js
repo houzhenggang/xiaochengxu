@@ -23,55 +23,13 @@ Page({
 		//商品规格数据
 		spec:{},
 		//是否已选颜色规格
-		seleIdx:0,
-		selectedArr:[],
-		isSelected:true,
-		imgs: {},
-		//颜色、规格数据
-		color:[{
-			"color":"四季版-橘黄色",
-			"isSelected":true
-		}, {
-			"color": "四季版-橘黄色",
-			"isSelected": false
-			}, {
-				"color": "四季版-橘黄色",
-				"isSelected": false
-		}, {
-			"color": "四季版-青灰色推荐",
-			"isSelected": false
-			}, {
-				"color": "四季版-橘黄色",
-				"isSelected": false
-		}, {
-			"color": "四季版-橘黄色",
-			"isSelected": false
-		}],
-		size:[{
-			"size":"38【真牛皮】",
-			"isSelected":true
-		}, {
-			"size": "38【真牛皮】",
-			"isSelected": false
-			}, {
-				"size": "38【真牛皮】",
-				"isSelected": false
-		}, {
-			"size": "38【真牛皮】",
-			"isSelected": false
-			}, {
-				"size": "38【真牛皮】",
-				"isSelected": false
-		}, {
-			"size": "38【真牛皮】",
-			"isSelected": false
-			}, {
-				"size": "38【真牛皮】",
-				"isSelected": false
-		}, {
-			"size": "38【真牛皮】",
-			"isSelected": false
-		}]
+		seleIdxA:-1,
+		seleIdxB:-1,
+		//具体规格商品
+		good:{},
+		goodPrice:0,
+		goodUrl:"",
+		imgs: {}
   },
 	/* 规格选择弹出事件 */
 	modalShow(e){
@@ -114,8 +72,10 @@ Page({
 		})
 	},
 	//点击确认，关闭弹出框
-	closeModal(){
+	closeModal(e){
 		var that = this;
+
+		//动画效果
 		var animation = wx.createAnimation({
 			duration: 500,
 			timingFunction: 'linear'
@@ -132,6 +92,38 @@ Page({
 				chooseModal: false
 			})
 		}, 500)
+
+		//跳转页面,携带参数
+		let clickId = e.currentTarget.dataset.id;
+
+		//如果来源为加入购物车，即flag为1
+		let flag = that.data.flag;
+		
+		if(clickId == 1 && flag == 1){
+			wx.request({
+				url: 'http://192.168.10.158/mpa/cart',
+				method:"POST",
+				data:{
+					goods_sku_id:1,/////////////////////////////////固定商品ID，需改动
+					count:that.data.num
+				},
+				success(res){
+					wx.showToast({
+						title: '加入购物车成功',
+						icon: "success"
+					})
+				}
+			})
+		}else if(clickId == 1 && flag == 2){
+			console.log(111111)
+			//将商品信息、数量保存到app
+			let good = that.data.good;
+			good.num = that.data.num;
+			app.globalData.good = good;
+			wx.navigateTo({
+				url: '/pages/surePay/surePay',
+			})
+		}
 	},
 	/* 点击减号 */
 	bindMinus(){
@@ -158,9 +150,43 @@ Page({
 	},
 	//选择规格事件
 	chooseSpec(e){
-			this.setData({
-				seleIdx: e.currentTarget.dataset.attrIndex
+		let that = this;
+		if (e.currentTarget.dataset.aIndex > -1){
+			that.setData({
+				seleIdxA: e.currentTarget.dataset.aIndex
 			})
+		}else{
+			that.setData({
+				seleIdxB: e.currentTarget.dataset.bIndex
+			})
+		}
+		//已选择规格索引
+		let aIndex = that.data.seleIdxA,
+				bIndex = that.data.seleIdxB;
+		//已选择规格数组
+		let aArr = that.data.spec.spec_a.propertis,
+				bArr = that.data.spec.spec_b.propertis;
+		if (that.data.seleIdxA > -1 && that.data.seleIdxB > -1){
+			console.log(222222222)
+			wx.request({
+				url: requestUrl + '/mpa/goods/1/skus',//////////////////////////////////////请求路径需改动
+				method:"GET",
+				success(res){
+					let good;
+					res.data.map(function(item){
+						if (item.property_a == aArr[aIndex] && item.property_b == bArr[bIndex]){
+							good = item;
+						}
+					})
+					console.log(good)
+					that.setData({
+						good:good,
+						goodUrl:good.cover_url,
+						goodPrice:good.price
+					})
+				}
+			})
+		}
 	},
 	//定义分享转发
 	onShareAppMessage:function(res){
@@ -193,6 +219,8 @@ Page({
 				console.log(res);
 				that.setData({
 					goods:res.data,
+					goodUrl:res.data.cover_url,
+					goodPrice:res.data.price,
 					imgs:res.data.images
 				})
 			}

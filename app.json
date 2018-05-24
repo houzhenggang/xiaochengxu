@@ -1,7 +1,7 @@
 {
   "pages": [
-		"pages/detail/detail",		
 		"pages/index/index",		
+		"pages/detail/detail",		
 		"pages/category/category",
 		"pages/shoppingCar/shoppingCar",		
 		"pages/user/user",		
@@ -9,7 +9,6 @@
     "pages/result/result",
     "pages/search/search",
     "pages/special/special",
-    "pages/recommend/recommend",
     "pages/introdution/introdution",
     "pages/address/address",
     "pages/orders/orders",

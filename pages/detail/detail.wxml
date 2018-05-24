@@ -54,9 +54,9 @@
 	<view class='choose' wx:if='{{chooseModal}}' animation="{{animationData}}">
 		
 		<view class='choose_price'>
-			<image src='/imgs/detail/Bitmap@2x(1).png'></image>
+			<image src='{{goodUrl}}'></image>
 			<view>
-				<text>￥59</text>
+				<text>￥{{goodPrice}}</text>
 				<text>请选择 {{goods.spec_a}} {{goods.spec_b}}</text>
 			</view>
 			<image src='/imgs/detail/classification_btn_close@2x.png' data-id='0' bindtap='closeModal'></image>
@@ -66,7 +66,7 @@
 			<view class='choose_color'>
 				<text class='title'>{{goods.spec_a}}</text>
 				<view class='color'>
-					<text wx:for='{{spec.spec_a.propertis}}' class='select {{index == seleIdx ? "active" : ""}}' wx:key='{{index}}' data-attr-index="{{index}}" data-type="{{goods.spec_a}}" bindtap='chooseSpec'>
+					<text wx:for='{{spec.spec_a.propertis}}' class='select {{index == seleIdxA ? "active" : ""}}' wx:key='{{index}}' data-a-index="{{index}}" data-type="{{goods.spec_a}}" bindtap='chooseSpec'>
 						{{item}}
 					</text>
 				</view>
@@ -74,7 +74,7 @@
 			<view class='choose_size'>
 				<text class='title'>{{goods.spec_b}}</text>
 				<view class='size'>
-					<text wx:for='{{spec.spec_b.propertis}}' class='select {{item.isSelected ? "active" : ""}}' wx:key='{{index}}' data-attr-index="{{index}}" data-type="goods.spec_b" bindtap='chooseSpec'>{{item}}</text>
+					<text wx:for='{{spec.spec_b.propertis}}' class='select {{index == seleIdxB ? "active" : ""}}' wx:key='{{index}}' data-b-index="{{index}}" data-type="goods.spec_b" bindtap='chooseSpec'>{{item}}</text>
 				</view>
 			</view>
 		</view>

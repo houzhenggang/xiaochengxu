@@ -1,4 +1,7 @@
 // pages/recommend/recommend.js
+const app = getApp();
+const requestUrl = app.globalData.url;
+
 Page({
 
   /**
@@ -41,6 +44,17 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+		wx.request({
+			url: requestUrl + '/mpa/goods/recommend',
+			data:{
+				page:1,
+				pre_page:5,
+				order_by:"creat_at",
+			},
+			success(res){
+				console.log(res)
+			}
+		})
 		wx.setNavigationBarTitle({
 			title: '推荐',
 		})
