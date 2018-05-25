@@ -18,6 +18,10 @@ Page({
 			url: '/pages/detail/detail',
 		})
 	},
+	//点击结算
+	balance(){
+
+	},
 	//跳转首页
 	goIndex(){
 		wx.switchTab({
@@ -47,12 +51,13 @@ Page({
 						_this.setData({
 							[num]: newNum
 						})
-					}
-					//计算合计金额
-					if (_this.data.datalist[index].isSelect) {
-						total += (_this.data.datalist[index].price) * (_this.data.datalist[index].count)
-					} else {
-						total -= (_this.data.datalist[index].price) * (_this.data.datalist[index].count)
+						//计算合计金额，单选情况
+						if (_this.data.datalist[index].isSelect) {
+							total -= _this.data.datalist[index].price
+						}
+						_this.setData({
+							totalPrice: total
+						})
 					}
 				}
 			})
@@ -79,12 +84,13 @@ Page({
 					_this.setData({
 						[num]: newNum
 					})
-				}
-				//计算合计金额
-				if (_this.data.datalist[index].isSelect) {
-					total += (_this.data.datalist[index].price) * (_this.data.datalist[index].count)
-				} else {
-					total -= (_this.data.datalist[index].price) * (_this.data.datalist[index].count)
+					//计算合计金额
+					if (_this.data.datalist[index].isSelect) {
+						total += _this.data.datalist[index].price
+					}
+					_this.setData({
+						totalPrice:total
+					})
 				}
 			}
 		})

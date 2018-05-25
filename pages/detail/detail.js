@@ -61,15 +61,7 @@ Page({
 			})
 		}, 100)
 
-		//获取商品规格详情
-		wx.request({
-			url: requestUrl + '/mpa/goods/1/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
-			success(res){
-				that.setData({
-					spec:res.data
-				})
-			}
-		})
+		
 	},
 	//点击确认，关闭弹出框
 	closeModal(e){
@@ -114,15 +106,29 @@ Page({
 					})
 				}
 			})
-		}else if(clickId == 1 && flag == 2){
+		}else if(clickId == 1 && flag == 2){//来源为立即购买，即flag为2
 			console.log(111111)
 			//将商品信息、数量保存到app
 			let good = that.data.good;
-			good.num = that.data.num;
-			app.globalData.good = good;
-			wx.navigateTo({
-				url: '/pages/surePay/surePay',
-			})
+			good.count = that.data.num;
+			//如果app.globalData中已存在该商品，修改数量
+			let gloGood = app.globalData.good;
+			//标记是否存在该商品
+			let flag = false;
+			for(let i = 0; i < gloGood.length; i++){
+				if(gloGood[i].id == good.id){
+					gloGood[i] = good
+					flag = true
+				}
+			}
+			if(flag == false){
+				gloGood.push(good)
+			}
+			app.globalData.good = gloGood;
+			console.log(app.globalData.good)
+			// wx.navigateTo({
+			// 	url: '/pages/surePay/surePay',
+			// })
 		}
 	},
 	/* 点击减号 */
@@ -213,6 +219,7 @@ Page({
   onLoad: function (options) {
 		let that = this;
 		console.log(options)
+		//获取商品详情
 		wx.request({
 			url: requestUrl + '/mpa/goods/1',/////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
 			success(res){
@@ -222,6 +229,15 @@ Page({
 					goodUrl:res.data.cover_url,
 					goodPrice:res.data.price,
 					imgs:res.data.images
+				})
+			}
+		})
+		//获取商品规格详情
+		wx.request({
+			url: requestUrl + '/mpa/goods/1/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
+			success(res) {
+				that.setData({
+					spec: res.data
 				})
 			}
 		})

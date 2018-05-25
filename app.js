@@ -11,6 +11,6 @@ App({
     userInfo: null,
 		url: "http://192.168.20.140",
 		classIdx:0,
-		good:{}
+		good:[]
   }
 })
