@@ -20,7 +20,47 @@ Page({
 	},
 	//点击结算
 	balance(){
-
+		let that = this;
+		//如果没有选择商品,总价格为0，提示
+		if(that.data.totalPrice == 0){
+			wx.showToast({
+				title: '请选择商品',
+				icon:"none"
+			})
+		}else{
+			//购物车商品信息
+			let good = that.data.datalist;
+			//已选择商品数组
+			let seleArr = [];
+			for(let i=0; i<good.length; i++){
+				if(good[i].isSelect){
+					seleArr.push(good[i])
+				}
+			}
+			//读取app.globalData.good
+			let gloGood = app.globalData.good;
+			let newArr = [];
+			console.log(gloGood)
+			//标记是否存在该商品
+			let flag = false;
+			for (let i = 0; i < gloGood.length; i++) {
+				for(let j=0; j < seleArr.length; j++){
+					if (gloGood[i].id == seleArr[j].id) {
+						gloGood[i] = seleArr[j]
+						flag = true
+					}
+				}
+			}
+			if(!flag){
+				newArr = gloGood.concat(seleArr);
+			}
+			app.globalData.good = newArr;
+			console.log(app.globalData.good);
+			/////////////////////////////////////////////////////////////////////////////////执行跳转
+			// wx.navigateTo({
+			// 	url: '',
+			// })
+		}
 	},
 	//跳转首页
 	goIndex(){
@@ -220,6 +260,7 @@ Page({
 			content: '确定删除？',
 			success(res){
 				if(res.confirm){
+					//单个商品删除请求
 					if (deleArr.length == 1) {
 						wx.request({
 							url: requestUrl + '/mpa/cart/' + deleArr[0],
@@ -233,6 +274,7 @@ Page({
 							}
 						})
 					} else {
+						//批量删除请求
 						wx.request({
 							url: requestUrl + '/mpa/cart/batch',
 							method: "DELETE",

@@ -18,13 +18,65 @@ Page({
 			url: '/pages/detail/detail',
 		})
 	},
+	//点击结算
+	balance(){
+		let that = this;
+		//如果没有选择商品,总价格为0，提示
+		if(that.data.totalPrice == 0){
+			wx.showToast({
+				title: '请选择商品',
+				icon:"none"
+			})
+		}else{
+			//购物车商品信息
+			let good = that.data.datalist;
+			//已选择商品数组
+			let seleArr = [];
+			for(let i=0; i<good.length; i++){
+				if(good[i].isSelect){
+					seleArr.push(good[i])
+				}
+			}
+			//读取app.globalData.good
+			let gloGood = app.globalData.good;
+			let newArr = [];
+			console.log(gloGood)
+			//标记是否存在该商品
+			let flag = false;
+			for (let i = 0; i < gloGood.length; i++) {
+				for(let j=0; j < seleArr.length; j++){
+					if (gloGood[i].id == seleArr[j].id) {
+						gloGood[i] = seleArr[j]
+						flag = true
+					}
+				}
+			}
+			if(!flag){
+				newArr = gloGood.concat(seleArr);
+			}
+			app.globalData.good = newArr;
+			console.log(app.globalData.good);
+			/////////////////////////////////////////////////////////////////////////////////执行跳转
+			// wx.navigateTo({
+			// 	url: '',
+			// })
+		}
+	},
+	//跳转首页
+	goIndex(){
+		wx.switchTab({
+			url: '/pages/index/index',
+		})
+	},
   /*减少数量*/
   subtraction(e){  
     var _this=this;
     var index = e.target.dataset.index;
+		var total = _this.data.totalPrice;		
 		var id = e.target.dataset.id;
     var num = 'datalist['+index+'].count';
-    if (parseInt(_this.data.datalist[index].count)>1){
+		//当删除数量不小于1时，调用PUT接口减少数量
+    if(parseInt(_this.data.datalist[index].count)>1){
       var newNum = parseInt(_this.data.datalist[index].count)-1;
 			//PUT，用户修改购物车数量
 			wx.request({
@@ -40,16 +92,53 @@ Page({
 						_this.setData({
 							[num]: newNum
 						})
+						//计算合计金额，单选情况
+						if (_this.data.datalist[index].isSelect) {
+							total -= _this.data.datalist[index].price
+						}
+						_this.setData({
+							totalPrice: total
+						})
 					}
 				}
 			})
-    }
+		}else if(parseInt(_this.data.datalist[index].count) == 1){//当删除数量等于1时，调用DELETE接口删除所选
+			wx.showModal({
+				title: '删除',
+				content: '确定删除该商品？',
+				success(res) {
+					// 当用户点击确定按钮
+					if(res.confirm){
+						wx.request({
+							url: requestUrl + '/mpa/cart/' + _this.data.datalist[index].id,
+							method:"DELETE",
+							success(res){
+								console.log(res)
+								//如果删除成功
+								if(res.statusCode == 200){
+									_this.data.datalist.splice(index,1);
+									_this.setData({
+										datalist:_this.data.datalist
+									})
+								}else{
+									wx.showToast({
+										title: '请重新尝试',
+										icon:"none"
+									})
+								}
+							}
+						})
+					}
+				}
+			})
+		}
    
   },
   /*增加数量*/
   add(e) {
     var _this = this;
     var index = e.target.dataset.index;
+		var total = _this.data.totalPrice;		
 		var id = e.target.dataset.id;
 		var newNum = parseInt(_this.data.datalist[index].count) + 1;
 		//PUT，用户修改购物车数量
@@ -64,6 +153,13 @@ Page({
 					var num = 'datalist[' + index + '].count';
 					_this.setData({
 						[num]: newNum
+					})
+					//计算合计金额
+					if (_this.data.datalist[index].isSelect) {
+						total += _this.data.datalist[index].price
+					}
+					_this.setData({
+						totalPrice:total
 					})
 				}
 			}
@@ -141,7 +237,7 @@ Page({
 	bottomDelete(){
 		let that = this;
 		let isShow = that.data.isShow;
-		//未选中item数组数组
+		//未选中item数组
 		var seleArr = [],deleArr=[];
 		var nowArr = this.data.datalist,
 				len = nowArr.length;
@@ -158,35 +254,45 @@ Page({
 		}else{
 			isShow = 1
 		}
-		if(deleArr.length == 1){
-			wx.request({
-				url: requestUrl + '/mpa/cart/' + deleArr[0],
-				method:"DELETE",
-				success(res){
-					console.log(res)
-					that.setData({
-						datalist: seleArr,
-						isShow:isShow
-					})
+		//点击删除提示信息
+		wx.showModal({
+			title: '删除',
+			content: '确定删除？',
+			success(res){
+				if(res.confirm){
+					//单个商品删除请求
+					if (deleArr.length == 1) {
+						wx.request({
+							url: requestUrl + '/mpa/cart/' + deleArr[0],
+							method: "DELETE",
+							success(res) {
+								console.log(res)
+								that.setData({
+									datalist: seleArr,
+									isShow: isShow
+								})
+							}
+						})
+					} else {
+						//批量删除请求
+						wx.request({
+							url: requestUrl + '/mpa/cart/batch',
+							method: "DELETE",
+							data: {
+								ids: deleArr
+							},
+							success(res) {
+								console.log(res)
+								that.setData({
+									datalist: seleArr,
+									isShow: isShow
+								})
+							}
+						})
+					}
 				}
-			})
-		}else{
-			wx.request({
-				url: requestUrl + '/mpa/cart/batch',
-				method: "DELETE",
-				data:{
-					ids:deleArr
-				},
-				success(res){
-					console.log(res)
-					that.setData({
-						datalist: seleArr,
-						isShow: isShow
-					})
-				}
-			})
-		}
-
+			}
+		})
 	},
   /**
    * 生命周期函数--监听页面加载
