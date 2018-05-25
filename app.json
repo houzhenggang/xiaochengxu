@@ -1,7 +1,7 @@
 {
   "pages": [
-		"pages/shoppingCar/shoppingCar",		
 		"pages/index/index",		
+		"pages/shoppingCar/shoppingCar",		
 		"pages/detail/detail",		
 		"pages/category/category",
 		"pages/user/user",		
@@ -11,6 +11,7 @@
     "pages/special/special",
     "pages/introdution/introdution",
     "pages/address/address",
+		"pages/recommend/recommend",
     "pages/orders/orders",
     "pages/cart/cart",
 		"pages/categoryList/categoryList"

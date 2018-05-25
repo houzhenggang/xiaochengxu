@@ -87,7 +87,7 @@ Page({
 		})
 		//获取推荐商品列表
 		wx.request({
-			url: requestUrl + '/mpa/goods/recommend?page=1&order_by=created_at&pre_page=7&merchant_id=1',
+			url: requestUrl + '/mpa/goods/recommend?page=1&order_by=created_at&pre_page=7',
 			method: 'GET',
 			success(res){
 				console.log(res)
