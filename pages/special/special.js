@@ -1,4 +1,6 @@
 // pages/special/special.js
+const app = getApp();
+const requestUrl = app.globalData.url;
 Page({
 
   /**
@@ -38,7 +40,7 @@ Page({
 	//跳转商品详情
 	goDetail(e){
 		wx.navigateTo({
-			url: '/pages/detail/detail',
+			url: '/pages/detail/detail?goods_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
 	},
   /**
@@ -46,6 +48,22 @@ Page({
    */
   onLoad: function (options) {
     console.log(11111);
+		let that = this;
+		wx.request({
+			url: requestUrl + '/mpa/goods/special',
+			data: {
+				page: 1,
+				pre_page: 5,
+				order_by: "created_at",
+			},
+			method: "GET",
+			success(res) {
+				console.log(res)
+				that.setData({
+					produList: res.data
+				})
+			}
+		})
 		wx.setNavigationBarTitle({
 			title: '特价',
 		})

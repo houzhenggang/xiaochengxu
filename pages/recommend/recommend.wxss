@@ -107,7 +107,7 @@ page{
 .recommend_up{
 	width: 60rpx;
 	height: 60rpx;
-	position: absolute;
+	position: fixed;
 	right: 20rpx;
 	bottom: 78rpx;
 }
