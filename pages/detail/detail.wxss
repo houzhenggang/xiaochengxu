@@ -145,7 +145,7 @@ swiper{
 	width: 316rpx;
 	height: 100rpx;
 	background: #FFEEEE;
-	font-size: 36rpx;
+	font-size: 28rpx;
 	color: #FB4F4F;
 	text-align: center;
 	line-height: 100rpx;
@@ -154,7 +154,7 @@ swiper{
 	width: 316rpx;
 	height: 100rpx;
 	background: #EA2534;
-	font-size: 36rpx;
+	font-size: 28rpx;
 	text-align: center;
 	line-height: 100rpx;
 	color: #FFFFFF;
