@@ -26,6 +26,7 @@ Page({
 				second = tempArr[select].code,
 				category = tempArr[select].children;
 				console.log(second);
+		//存在二级分类
 		if(second == 1){
 			that.setData({
 				second:second,
@@ -33,20 +34,33 @@ Page({
 				select: select
 			});
 		}else{
-			wx.request({
-				url: requestUrl + '/mpa/goods/search',
-				data:{
-					category_id:tempArr[select].id
-				},
-				success(res){
-					console.log(res)
-					that.setData({
-						second:second,
-						select:select,
-						goods:res.data
-					})
-				}
-			})
+			//不存在二级分类
+			//判断是否goods是否已存在
+			if(that.data.goods.length !== 0){
+				that.setData({
+					second: second,
+					select: select
+				})
+			}else{
+				wx.showLoading({
+					title: '加载中',
+				})
+				wx.request({
+					url: requestUrl + '/mpa/goods/search',
+					data: {
+						category_id: tempArr[select].id
+					},
+					success(res) {
+						console.log(res)
+						that.setData({
+							second: second,
+							select: select,
+							goods: res.data
+						})
+						wx.hideLoading();
+					}
+				})
+			}
 		}
 	},
 	//点击二级分类

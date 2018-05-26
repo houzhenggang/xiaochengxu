@@ -217,6 +217,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+		wx.showLoading({
+			title: '加载中',
+		})
 		let that = this;
 		console.log(options)
 		//获取商品详情
@@ -230,6 +233,7 @@ Page({
 					goodPrice:res.data.price,
 					imgs:res.data.images
 				})
+				wx.hideLoading();
 			}
 		})
 		//获取商品规格详情

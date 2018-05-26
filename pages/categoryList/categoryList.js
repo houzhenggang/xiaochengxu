@@ -7,31 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-		produList: [{
-			"imgurl": "/imgs/Rectangle 10@2x(1).png",
-			"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-			"price": "123.00",
-			"saleNum": "23万",
-			"prePrice": "￥233.00"
-		}, {
-			"imgurl": "/imgs/Rectangle 10@2x(1).png",
-			"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-			"price": "123.00",
-			"saleNum": "23万",
-			"prePrice": "￥233.00"
-		}, {
-			"imgurl": "/imgs/Rectangle 10@2x(1).png",
-			"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-			"price": "123.00",
-			"saleNum": "23万",
-			"prePrice": "￥233.00"
-		}, {
-			"imgurl": "/imgs/Rectangle 10@2x(1).png",
-			"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-			"price": "123.00",
-			"saleNum": "23万",
-			"prePrice": "￥233.00"
-		}],
+		produList: [],
 		//排序方式
 		rank: 0,
 		//flag控制上下箭头类名
@@ -40,12 +16,16 @@ Page({
 	//商品点击
 	goDetail(e){
 		wx.navigateTo({
-			url: '/pages/detail/detail',
+			url: '/pages/detail/detail?goods_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
 	},
 	//排序方式点击
 	bindRank(e){
 		//当前所点击排序方式
+		wx.showLoading({
+			title: '加载中',
+		});
+		var that = this;
 		var currIndex = e.currentTarget.dataset.id;
 		var flag = this.data.flag;
 		//判断价格排序方式
@@ -65,6 +45,7 @@ Page({
 						that.setData({
 							produList: res.data
 						})
+						wx.hideLoading();
 					}
 				})
 			}else if(flag == 1){
@@ -82,6 +63,7 @@ Page({
 						that.setData({
 							produList: res.data
 						})
+						wx.hideLoading();
 					}
 				})
 			}
@@ -91,7 +73,7 @@ Page({
 				url: requestUrl + '/mpa/goods/search',
 				data: {///////////////////////////////////////////////////////id需改动
 					category_id: 9,
-					order_by:"sales_count"
+					order_by:"sales_count desc"
 				},
 				success(res) {
 					console.log(2222222222)
@@ -99,6 +81,7 @@ Page({
 					that.setData({
 						produList: res.data
 					})
+					wx.hideLoading();
 				}
 			})
 			flag = 0
@@ -108,7 +91,7 @@ Page({
 				url: requestUrl + '/mpa/goods/search',
 				data: {///////////////////////////////////////////////////////id需改动
 					category_id: 9,
-					order_by: "created_at"
+					order_by: "created_at desc"
 				},
 				success(res) {
 					console.log(1111111)
@@ -116,6 +99,7 @@ Page({
 					that.setData({
 						produList: res.data
 					})
+					wx.hideLoading();
 				}
 			})
 			flag = 0
@@ -131,7 +115,10 @@ Page({
    */
   onLoad: function (options) {
 		console.log(options)
-		let taht = this;
+		wx.showLoading({
+			title: '加载中',
+		});
+		let that = this;
 		wx.setNavigationBarTitle({
 			title: options.name,
 		})
@@ -146,6 +133,7 @@ Page({
 				that.setData({
 					produList: res.data
 				})
+				wx.hideLoading();
 			}
 		})
   },
