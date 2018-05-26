@@ -328,6 +328,7 @@ Page({
 						isShow:2
 					})
 				}
+				wx.hideLoading();
 			}
 		})
   },
