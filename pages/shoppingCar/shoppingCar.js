@@ -13,9 +13,9 @@ Page({
    	totalPrice:0
   },
 	//订单详情
-	goDetail(){
+	goDetail(e){
 		wx.navigateTo({
-			url: '/pages/detail/detail',
+			url: '/pages/detail/detail?goods_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
 	},
 	//点击结算
@@ -38,23 +38,24 @@ Page({
 				}
 			}
 			//读取app.globalData.good
-			let gloGood = app.globalData.good;
-			let newArr = [];
-			console.log(gloGood)
-			//标记是否存在该商品
-			let flag = false;
-			for (let i = 0; i < gloGood.length; i++) {
-				for(let j=0; j < seleArr.length; j++){
-					if (gloGood[i].id == seleArr[j].id) {
-						gloGood[i] = seleArr[j]
-						flag = true
-					}
-				}
-			}
-			if(!flag){
-				newArr = gloGood.concat(seleArr);
-			}
-			app.globalData.good = newArr;
+			//app.globalData.good = [];
+			// let gloGood = app.globalData.good;
+			// let newArr = [];
+			// console.log(gloGood)
+			// //标记是否存在该商品
+			// let flag = false;
+			// for (let i = 0; i < gloGood.length; i++) {
+			// 	for(let j=0; j < seleArr.length; j++){
+			// 		if (gloGood[i].id == seleArr[j].id) {
+			// 			gloGood[i] = seleArr[j]
+			// 			flag = true
+			// 		}
+			// 	}
+			// }
+			// if(!flag){
+			// 	newArr = gloGood.concat(seleArr);
+			// }
+			app.globalData.good = seleArr;
 			console.log(app.globalData.good);
 			/////////////////////////////////////////////////////////////////////////////////执行跳转
 			// wx.navigateTo({

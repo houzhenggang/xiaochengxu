@@ -111,20 +111,10 @@ Page({
 			//将商品信息、数量保存到app
 			let good = that.data.good;
 			good.count = that.data.num;
-			//如果app.globalData中已存在该商品，修改数量
-			let gloGood = app.globalData.good;
-			//标记是否存在该商品
-			let flag = false;
-			for(let i = 0; i < gloGood.length; i++){
-				if(gloGood[i].id == good.id){
-					gloGood[i] = good
-					flag = true
-				}
-			}
 			if(flag == false){
 				gloGood.push(good)
 			}
-			app.globalData.good = gloGood;
+			app.globalData.good = good;
 			console.log(app.globalData.good)
 			// wx.navigateTo({
 			// 	url: '/pages/surePay/surePay',
