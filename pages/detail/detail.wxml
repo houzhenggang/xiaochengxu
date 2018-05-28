@@ -4,10 +4,10 @@
 	<!-- detail images  -->
 	<swiper
 		autoplay='{{true}}' interval='{{3500}}' duration='{{700}}' circular='{{true}}'>
-		<block wx:for='{{imgs}}'>
+		<block wx:for='{{imgs}}' wx:key="{{index}}">
 			<swiper-item>
 				<view class='detail_imgs'>
-					<image src='{{item}}'></image>
+					<image src='{{item.url}}'></image>
 				</view>
 			</swiper-item>
 		</block>
@@ -17,7 +17,7 @@
 	<!-- description  -->
 	<view class='detail_description'>
 		<view class='name_share padding'>
-			<text class='des_name'>Chaber巧帛2018夏新款针织背心刺绣花纹图案闺蜜双人装</text>
+			<text class='des_name'>{{goods.name}}</text>
 			<view>
 				<button open-type='share'>
 					<image src='/imgs/detail/product_btn_share@2x.png'></image>
@@ -26,10 +26,10 @@
 			</view>	
 		</view>
 		<view class='detail_price padding'>
-			<text>￥102.0</text><text>￥310.0</text>
+			<text>￥{{goods.price}}</text><text>￥{{goods.display_price}}</text>
 		</view>
 		<view class='detail_info'>
-			<text>月销99笔</text><text>快递:0.00</text><text>浙江杭州</text>
+			<text>月销{{goods.sales_count}}笔</text><text>快递:{{goods.free_express_price}}</text><text>浙江杭州</text>
 		</view>
 		<view class='detail_promise padding'>
 			<view><image src='/imgs/detail/product_icon_sign@2x.png'></image><text>全场包邮</text></view>
@@ -54,27 +54,27 @@
 	<view class='choose' wx:if='{{chooseModal}}' animation="{{animationData}}">
 		
 		<view class='choose_price'>
-			<image src='/imgs/detail/Bitmap@2x(1).png'></image>
+			<image src='{{goodUrl}}'></image>
 			<view>
-				<text>￥59</text>
-				<text>请选择 颜色 尺码</text>
+				<text>￥{{goodPrice}}</text>
+				<text>请选择 {{goods.spec_a}} {{goods.spec_b}}</text>
 			</view>
 			<image src='/imgs/detail/classification_btn_close@2x.png' data-id='0' bindtap='closeModal'></image>
 		</view>
 
 		<view class='color_size'>
 			<view class='choose_color'>
-				<text class='title'>颜色</text>
+				<text class='title'>{{goods.spec_a}}</text>
 				<view class='color'>
-					<text wx:for='{{color}}' class='select {{item.isSelected ? "active" : ""}}' wx:key='{{index}}' data-attr-index="{{index}}" data-type="color" bindtap='chooseSpec'>
-						{{item.color}}
+					<text wx:for='{{spec.spec_a.propertis}}' class='select {{index == seleIdxA ? "active" : ""}}' wx:key='{{index}}' data-a-index="{{index}}" data-type="{{goods.spec_a}}" bindtap='chooseSpec'>
+						{{item}}
 					</text>
 				</view>
 			</view>
 			<view class='choose_size'>
-				<text class='title'>尺寸</text>
+				<text class='title'>{{goods.spec_b}}</text>
 				<view class='size'>
-					<text wx:for='{{size}}' class='select {{item.isSelected ? "active" : ""}}' wx:key='{{index}}' data-attr-index="{{index}}" data-type="size" bindtap='chooseSpec'>{{item.size}}</text>
+					<text wx:for='{{spec.spec_b.propertis}}' class='select {{index == seleIdxB ? "active" : ""}}' wx:key='{{index}}' data-b-index="{{index}}" data-type="goods.spec_b" bindtap='chooseSpec'>{{item}}</text>
 				</view>
 			</view>
 		</view>

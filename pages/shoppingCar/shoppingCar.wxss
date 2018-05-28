@@ -10,6 +10,7 @@ page{
   height:204rpx;
   margin-top: 84rpx;
   margin:0 auto;
+	display: block;
 }
 .container view{
   font-family: PingFangSC-Regular;
@@ -31,7 +32,7 @@ view.carInfo{
   background: #fff;
   height: 234rpx;
 }
-.container navigator{
+.container .switch_index{
     background: #F02417;
     border-radius: 4rpx;
     width:268rpx;
@@ -159,7 +160,11 @@ view.carInfo{
 	float: left;
 	height: 100rpx;
 	line-height: 100rpx;
-	width: 452rpx;
+	width: 464rpx;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+
 }
 .total_text text:nth-child(1){
 	font-size: 28rpx;
@@ -173,7 +178,7 @@ view.carInfo{
 .total_text text:nth-child(3){
 	font-size: 32rpx;
 	color: #F02417;
-	margin-left: 110rpx;
+	margin-left: 80rpx;
 }
 .bottom .balance{
 	float: right;

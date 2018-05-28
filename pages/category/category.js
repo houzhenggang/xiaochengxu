@@ -12,87 +12,93 @@ Page({
 		select:0,
 		leftTapArray:[],
 		//是否存在二级分类
-		second:false,
+		second:1,
 		//不存在二级分类的商品详情
-		goods:[{
-			"name": "学院风显瘦宽松纯色短袖纯棉T恤夏季",
-			"saleNum":"23",
-			"prevPrice":"123.00",
-			"newPrice":"233.00"
-		}, {
-			"name": "学院风显瘦宽松纯色短袖纯棉T恤夏季",
-			"saleNum": "23",
-			"prevPrice": "123.00",
-			"newPrice": "233.00"
-			}, {
-				"name": "学院风显瘦宽松纯色短袖纯棉T恤夏季",
-				"saleNum": "23",
-				"prevPrice": "123.00",
-				"newPrice": "233.00"
-		}, {
-			"name": "学院风显瘦宽松纯色短袖纯棉T恤夏季",
-			"saleNum": "23",
-			"prevPrice": "123.00",
-			"newPrice": "233.00"
-		}],
+		goods:[],
 		//存在二级分类
 		category: []
   },
 	//处理左侧楼层点击事件
 	leftCellTap(e){
-		var select = e.currentTarget.dataset.idx;
-		this.setData({
-			select:select
-		});
-		//请求二级分类，设置data数据
-		wx.request({
-			url: requestUrl + '/mpa/category/1/1',
-			success(res) {
-				console.log("二级分类请求完成")
-				console.log(res)
-				let category = res.data.category,
-					goods = res.data.goods,
-					second;
-				if (res.data.code == 1) {
-					second = true;
-				} else if (res.data.code == 2) {
-					second = false;
-				}
+		let that = this,
+				select = e.currentTarget.dataset.idx,
+				tempArr = that.data.leftTapArray,
+				second = tempArr[select].code,
+				category = tempArr[select].children;
+				console.log(second);
+		//存在二级分类
+		if(second == 1){
+			that.setData({
+				second:second,
+				category:category,
+				select: select
+			});
+		}else{
+			//不存在二级分类
+			//判断是否goods是否已存在
+			if(that.data.goods.length !== 0){
 				that.setData({
 					second: second,
-					goods: goods,
-					category: category
+					select: select
 				})
-				console.log(that.data)
+			}else{
+				wx.showLoading({
+					title: '加载中',
+				})
+				wx.request({
+					url: requestUrl + '/mpa/goods/search',
+					data: {
+						category_id: tempArr[select].id
+					},
+					success(res) {
+						console.log(res)
+						that.setData({
+							second: second,
+							select: select,
+							goods: res.data
+						})
+						wx.hideLoading();
+					}
+				})
 			}
+		}
+	},
+	//点击二级分类
+	goList(e) {
+		console.log(e)
+		wx.navigateTo({
+			url: '/pages/categoryList/categoryList?category_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
 	},
 	//点击商品跳转商品详情
 	goDetail(e){
-		wx.navigateTo({
-			url: '/pages/detail/detail',
-		})
+		console.log(e)
+		// wx.navigateTo({
+		// 	url: '/pages/detail/detail',
+		// })
 	},
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+		wx.showLoading({
+			title: '加载中',
+		})
 		let that = this;
 		wx.setNavigationBarTitle({
 			title: '搜索',
 		})
 		//请求一级分类，设置data数据
 		wx.request({
-			url: requestUrl + '/mpa/category/1',
+			url: requestUrl + '/mpa/category',
 			success(res){
 				let leftSelectedIdx = app.globalData.classIdx;
-				console.log("一级分类请求完成")
 				res.data[leftSelectedIdx].selected = true;
 				that.setData({
+					category:res.data[leftSelectedIdx].children,
 					leftTapArray:res.data
-				},function(){
-					console.log("第三次打印" + leftSelectedIdx)
 				})
+				wx.hideLoading();
 			}
 		})
   },
@@ -107,34 +113,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-		let that = this;
-		let select = app.globalData.classIdx;
-		that.setData({
-			select: select
-		})
-		//请求二级分类，设置data数据
-		wx.request({
-			url: requestUrl + '/mpa/category/1/1',
-			success(res) {
-				console.log("二级分类请求完成")
-				console.log(res)
-				let category = res.data.category,
-					goods = res.data.goods,
-					second;
-				if (res.data.code == 1) {
-					second = true;
-				} else if (res.data.code == 2) {
-					second = false;
-				}
-				that.setData({
-					second: second,
-					goods: goods,
-					category: category
-				})
-				console.log(that.data)
-			}
-		})
-		app.globalData.classIdx = 0;
   },
 
   /**

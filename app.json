@@ -1,25 +1,20 @@
 {
   "pages": [
-    "pages/user/user",
-    "pages/orders/orders",
-    "pages/refundDetail/refundDetail", 
-    "pages/index/index",
-    "pages/orderDetail/orderDetail",
-    "pages/surePay/surePay",  
-    "pages/afterSale/afterSale",
-    "pages/logistics/logistics",
-    "pages/address/address",
-    "pages/regMob/regMob",   
-    "pages/category/category",
-    "pages/detail/detail",
-    "pages/shoppingCar/shoppingCar",
+		"pages/index/index",		
+		"pages/shoppingCar/shoppingCar",		
+		"pages/detail/detail",		
+		"pages/category/category",
+		"pages/user/user",		
+		"pages/regMob/regMob",		
     "pages/result/result",
     "pages/search/search",
     "pages/special/special",
-    "pages/recommend/recommend",
     "pages/introdution/introdution",
-    "pages/cart/cart"
-   
+    "pages/address/address",
+		"pages/recommend/recommend",
+    "pages/orders/orders",
+    "pages/cart/cart",
+		"pages/categoryList/categoryList"
   ],
   "window": {
     "backgroundTextStyle": "light",

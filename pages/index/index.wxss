@@ -27,6 +27,7 @@
 	height: 288rpx;
 	margin: 0 auto;
 	margin-top: 22rpx;
+	border-radius: 8rpx;
 }
 
 .index_classify{
@@ -52,6 +53,7 @@
 	display: block;
 	width: 80rpx;
 	height: 80rpx;
+	border-radius: 4rpx;
 }
 
 .index_current{
@@ -221,6 +223,7 @@
 }
 .index_re_produ .buy_button{
 	position: absolute;
+	z-index: 100;
 	bottom: 0;
 	right: 0;
 	height: 50rpx;

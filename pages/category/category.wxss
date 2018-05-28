@@ -61,7 +61,7 @@ page{
 .right_flex{
 	display: flex;
 	align-items: center;
-	justify-content: space-around;	
+	justify-content: flex-start;	
 	flex-wrap: wrap;
 }
 .right_cell{

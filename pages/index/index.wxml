@@ -42,17 +42,17 @@
 		<image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image>
 	</view>
 
-	<view class='index_re_produ' data-id='{{recommend_first[0].goods_id}}' bindtap='bindDetail'>
-		<image class='re_produ_img' src='{{recommend_first[0].cover_url}}'></image>
-		<text class='re_produ_text'>{{recommend_first[0].name}}</text>
-		<view class='re_text_view'>
+	<view class='index_re_produ'>
+		<image class='re_produ_img' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" src='{{recommend_first[0].cover_url}}'  bindtap='bindDetail'></image>
+		<text class='re_produ_text' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindDetail'>{{recommend_first[0].name}}</text>
+		<view class='re_text_view' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindDetail'>
 			<text>￥</text><text>{{recommend_first[0].price}}</text><text>销量{{recommend_first[0].sales_count}}件</text>
 		</view>
-		 <view class='buy_button'>立即购买</view> 
+		 <view class='buy_button' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindOrder'>立即购买</view> 
 	</view>
 
 	<view class='index_item'>
-		<view class='item_box' wx:for="{{recommend_goods}}" data-id='{{item.goods_id}}'  wx:key="{{index}}" bindtap='bindDetail'>
+		<view class='item_box' wx:for="{{recommend_goods}}" data-id='{{item.id}}' data-name="{{item.name}}"  wx:key="{{index}}" bindtap='bindDetail'>
 			<image src='{{item.cover_url}}'></image>
 			<text class='item_text'>{{item.name}}</text>
 			<view class='item_text_view'>
@@ -71,7 +71,7 @@
 	</view>
 
 	<view class='index_item'>
-		<view class='item_box' wx:key="{{index}}" wx:for="{{special_goods}}" data-id='{{item.goods_id}}' bindtap='bindDetail'>
+		<view class='item_box' wx:key="{{index}}" wx:for="{{special_goods}}" data-id='{{item.id}}' data-name="{{item.name}}" bindtap='bindDetail'>
 			<image src='{{item.cover_url}}'></image>
 			<text class='item_text'>{{item.name}}</text>
 			<view class='item_text_view special_item'>

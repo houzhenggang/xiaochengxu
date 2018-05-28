@@ -22,22 +22,24 @@ Page({
     })
   },
 	//跳转商品详情页
-	bindDetail(){
+	bindDetail(e){
+		console.log(e)
 		wx.navigateTo({
-			url: '/pages/detail/detail',
+			url: '/pages/detail/detail?goods_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
+	},
+	//跳转订单页
+	bindOrder(e){
+		console.log(e)
+		// wx.navigateTo({
+		// 	url: '/pages/orders/orders',
+		// })
 	},
 	contactPhone(){
 		var phoneNumber = this.data.description.customer_service_mobile;
 		wx.makePhoneCall({
 			phoneNumber: phoneNumber,
 		})
-		// wx.scanCode({
-		// 	scanType:"qrCode",
-		// 	success:(res)=>{
-		// 		console.log(res)
-		// 	}
-		// })
 	},
 	switchCate(e){
 		//当前点击索引,保存到globalData
@@ -57,19 +59,9 @@ Page({
 	},
   onLoad: function () {
 		let that = this;
-		//获取一级分类信息列表
-		wx.request({
-			url: requestUrl + '/mpa/category/1',
-			success(res) {
-				console.log("一级分类请求完成")
-				that.setData({
-					categoryList:res.data
-				})
-			}
-		})
 		//获取店家描述数据
 		wx.request({
-			url: requestUrl + '/mpa/index/1',
+			url: requestUrl + '/mpa/index',
 			method: 'GET',
 			success(res){
 				that.setData({
@@ -82,11 +74,23 @@ Page({
 				})
 			},
 		})
+		//获取一级分类信息列表
+		wx.request({
+			url: requestUrl + '/mpa/category',
+			success(res) {
+				console.log("一级分类请求完成")
+				console.log(res)
+				that.setData({
+					categoryList: res.data
+				})
+			}
+		})
 		//获取推荐商品列表
 		wx.request({
-			url: requestUrl + '/mpa/recommend_goods/1?page=1&order_by=created_at&pre_page=7',
+			url: requestUrl + '/mpa/goods/recommend?page=1&order_by=created_at desc&pre_page=7',
 			method: 'GET',
 			success(res){
+				console.log(res)
 				//截取第一件商品
 				let firstGood = res.data.splice(0,1);
 				that.setData({
@@ -97,7 +101,7 @@ Page({
 		})
 		//获取特价商品列表
 		wx.request({
-			url: requestUrl + '/mpa/special_goods/1?page=1&order_by=price desc&pre_page=6',
+			url: requestUrl + '/mpa/goods/special?page=1&order_by=price desc&pre_page=6',
 			method: 'GET',
 			success(res){
 				that.setData({
