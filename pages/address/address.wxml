@@ -1,11 +1,21 @@
-<view class='container'>
-  <view class='userInfo'><label>姓名：丽离吴</label><label>15549322190</label></view>
-  <view class='userAddr'>地址：上海市徐汇区宜山路8888号我一个人的公寓延长
-字符</view>
+
+<view class='container' wx-if='address' wx:for='{{address}}' wx:for-item='item' wx:key='index'>
+  <view class='userInfo'>
+      <label>姓名：{{item.name}}</label>
+      <label>{{item.mobile}}</label>
+  </view>
+  <view class='userAddr'>地址：{{item.province}}{{item.city}}{{item.county}}{{item.detail}}</view>
   <view class='contentBtm'>
-    <label><image src='/imgs/checked.png'></image>以设为默认</label>
-    <label><image src='/imgs/updataAddr.png'></image>编辑</label>
-    <label><image src='/imgs/del.png'></image>删除</label>
+    <label bindtap='setDefault' data-key='{{item.status}}'  data-index='{{index}}'  wx:if='{{item.status==1}}'>
+      <image src='/imgs/unchecked.png'></image>
+      设为默认
+    </label>
+    <label bindtap='setDefault'  data-key='{{item.status}}'  data-index='{{index}}'   wx:if='{{item.status==2}}'>
+      <image src='/imgs/checked.png'></image>
+      以设为默认
+    </label>
+    <label bindtap='updateAddr' data-index='{{index}}'><image src='/imgs/updataAddr.png' ></image>编辑</label>
+    <label  bindtap='deleteAddr' data-index='{{index}}'><image src='/imgs/del.png'></image>删除</label>
   </view>
 </view>
 <view class='address' bindtap='address'>新增收货地址</view>

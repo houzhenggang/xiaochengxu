@@ -15,7 +15,7 @@
 }  
 .on{ color: #EA2534;  
   }  
-  
+
 .swiper-box{ display: block; height: 100%; width: 100%; overflow: hidden; }   
 .container{
   width: 750rpx;
@@ -70,7 +70,7 @@ navigator{
 }
 .goodImg{
   width: 164rpx;
-  height: 164rpx;
+  height: 160rpx;
 }
 .title{
   font-family: PingFangSC-Regular;
@@ -79,6 +79,7 @@ navigator{
 }
 .goodsInfo{
   margin-left:20rpx;
+  width:526rpx;
 }
 .goodsInfo label{
   font-family: PingFangSC-Regular;
@@ -87,7 +88,7 @@ navigator{
 }
 .orderList{
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   height: 194rpx;
   border-bottom:1rpx solid #e3e3e3;
@@ -119,4 +120,35 @@ line-height: 40rpx;
   font-family: PingFangSC-Regular;
   font-size: 24rpx;
   color: #333333;
+}
+.bottom .pay{
+  width: 120rpx;
+  height: 50rpx;
+  line-height:50rpx;
+  text-align: center;
+  display: block;
+  background: #EA2534;
+  z-index: 99;
+  color: #fff;
+  font-family: PingFangSC-Regular;
+  border-radius: 3px;
+  margin-left: 46rpx;
+}
+.bottom view{
+  display: flex;
+  justify-content: flex-start
+}
+.bottom .cancel{
+  width: 120rpx;
+  height: 50rpx;
+  z-index: 99;
+  border-radius: 3px;
+  box-sizing: border-box;
+  border: 1rpx solid #EA2534;
+  line-height:48rpx;
+  text-align: center;
+  display: block;
+  color: #EA2534;
+  font-family: PingFangSC-Regular;
+  font-size: 11px;
 }

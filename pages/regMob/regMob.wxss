@@ -26,6 +26,7 @@
 }
 .content{
   width: 100%;
+  margin-top:150rpx;
   padding:0 26rpx 0 82rpx;
   box-sizing: border-box;
   /* display: flex;
@@ -67,7 +68,7 @@ input{
   color: #999999;
 }
 button{
-    background: #fff;
+    background: #fff !important;
     display: flex;
     align-items: center;
     width: 50%; 
@@ -87,7 +88,9 @@ button::after{
   line-height: 40rpx;
 
 }  
-
+.gray{
+  color: #999;
+}
 .sub{
   width: 680rpx;
   height: 88rpx;

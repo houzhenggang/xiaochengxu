@@ -1,39 +1,45 @@
   <view class="container">
   <view class="userinfo">
-    <block>
+    <block wx:if='{{!hasUserInfo}}'>
+         <button  open-type="getUserInfo" bindtap='getInfo' hover-class='none'>
+              <image src='/imgs/userHead.png'></image>
+               <label>点击头像获取信息</label> 
+        </button>
+    </block>
+     <block wx:else='{{hasUserInfo}}'>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
+    </block> 
   </view>
 </view>
 <view class='orderinfo'> 
-    <navigator url='/pages/orders/orders?type=0' class='myorder' hover-class="none">
+    <navigator url='/pages/orders/orders?curTab=1' class='myorder' hover-class="none">
         <view>我的订单</view>
         <view><label>所有订单</label><image class='icon' src='/imgs/right.png'></image></view>
     </navigator>
     <view class='orderList'>
-        <navigator url='/pages/orders/orders?type=1' hover-class="none">
+        <navigator url='/pages/orders/orders?curTab=200' hover-class="none">
           <image src='/imgs/daifukuan.png'></image>
           <label>待付款</label>
-          <text>1</text>
+          <text wx:if='{{count1}}'>{{count1}}</text>
         </navigator>
 
-        <navigator url='/pages/orders/orders?type=2' hover-class="none">
+        <navigator url='/pages/orders/orders?curTab=300' hover-class="none">
           <image src='/imgs/daifahuo.png'></image>
           <label>待发货</label>
-          <text>2</text>
+          <text wx:if='{{count2}}'>{{count2}}</text>
         </navigator>
 
-        <navigator url='/pages/orders/orders?type=3' hover-class="none">
+        <navigator url='/pages/orders/orders?curTab=400' hover-class="none">
           <image src='/imgs/daifahuo.png'></image>
           <label>待收货</label>
-          <text>3</text>
+          <text wx:if='{{count3}}'>{{count3}}</text>
         </navigator>
 
-        <navigator url='/pages/orders/orders?type=5' hover-class="none">
+        <navigator url='/pages/orders/orders?curTab=500' hover-class="none">
           <image src='/imgs/shouhou.png'></image>
           <label>售后</label>
-          <text>4</text>
+          <text wx:if='{{count4}}'>{{count4}}</text>
         </navigator>
     </view>
 </view>
@@ -47,5 +53,6 @@
           <view>联系商家</view>
           <image class='icon' src='/imgs/right.png'></image>
     </navigator> -->
+    <!-- <button open-type="getUserInfo" bindtap='getInfo' >获取授权</button> -->
 </view>
 

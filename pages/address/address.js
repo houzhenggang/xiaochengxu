@@ -5,16 +5,45 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+      address:[],
+      apiKey:'',
+      apiSecret:''
   },
 
-  /**
+  /*
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+      var that = this;
+      var apiKeys = wx.getStorageSync('Api-Key')
+      var apiSecrets = wx.getStorageSync('Api-Secret')
+      this.setData({
+        apiKey: apiKeys,
+        apiSecret: apiSecrets
+      })
+      wx.request({
+        url: 'http://192.168.10.99/mpa/address',
+        method:'get',
+        dataType:'json',
+        header: {
+          "Api-Key": apiKeys,
+          "Api-Secret": apiSecrets
+        },
+        success:function(data){
+          console.log(data);
+          if(data.data.code==0){
+
+          }else{
+            that.setData({
+              address: data.data
+            })
+          }
+            
+        }
+      })
   },
-  address:()=>{
+  address:function(){
+    var that=this
     wx.getSetting({
       success(res) {
         if (!res.authSetting['scope.address']) {
@@ -23,14 +52,26 @@ Page({
             success() {
               wx.chooseAddress({
                 success: function (res) {
-                  console.log(res.userName)
-                  console.log(res.postalCode)
-                  console.log(res.provinceName)
-                  console.log(res.cityName)
-                  console.log(res.countyName)
-                  console.log(res.detailInfo)
-                  console.log(res.nationalCode)
-                  console.log(res.telNumber)
+                    wx.request({
+                      url: 'http://192.168.10.99/mpa/address',
+                      method: 'post',
+                      dataType: 'json',
+                      data:{
+                        name: res.userName,
+                        mobile:res.telNumber,
+                        post_code: res.postalCode,
+                        province: res.provinceName,
+                        city: res.cityName,
+                        county: res.countyName,
+                        detail: res.detailInfo
+                      },
+                      header: {
+                        "Api-Key": that.data.apiKey,
+                        "Api-Secret": that.data.apiSecret
+                      },
+                      success: function (data) {
+                      } 
+                    })
                 }
               })
             }
@@ -38,59 +79,161 @@ Page({
         }else{
           wx.chooseAddress({
             success: function (res) {
-              alert(res)
+              wx.request({
+                url: 'http://192.168.10.99/mpa/address',
+                method: 'post',
+                dataType: 'json',
+                data: {
+                  name: res.userName,
+                  mobile: res.telNumber,
+                  post_code: res.postalCode,
+                  province: res.provinceName,
+                  city: res.cityName,
+                  county: res.countyName,
+                  detail: res.detailInfo
+                },
+                header: {
+                  "Api-Key": that.data.apiKey,
+                  "Api-Secret": that.data.apiSecret
+                },
+                success: function (data) {
+                }
+              })
             }
           })
         }
       }
     })
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
 
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
+  deleteAddr:function(event){
+    var that=this;
+    var index= event.target.dataset.index;
+    wx.request({
+      url: 'http://192.168.10.99/mpa/address/' + that.data.address[index].id,
+      method: 'delete',
+      dataType: 'json',
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret
+      },
+      success: function (data) {
+        console.log(data)
+        if (data.statusCode==200){
+          that.data.address.splice(index,1)
+          that.setData({
+            address: that.data.address
+          })
+          wx.showToast({
+            title: '删除成功',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
+  updateAddr: function (event){
+    var that = this
+    var index = event.target.dataset.index;
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.address']) {
+          wx.authorize({
+            scope: 'scope.address',
+            success() {
+              wx.chooseAddress({
+                success: function (res) {
+                  wx.request({
+                    url: 'http://192.168.10.99/mpa/address/'+that.data.address[index].id,
+                    method: 'PUT',
+                    dataType: 'json',
+                    data: {
+                      name: res.userName,
+                      mobile: res.telNumber,
+                      post_code: res.postalCode,
+                      province: res.provinceName,
+                      city: res.cityName,
+                      county: res.countyName,
+                      detail: res.detailInfo
+                    },
+                    header: {
+                      "Api-Key": that.data.apiKey,
+                      "Api-Secret": that.data.apiSecret
+                    },
+                    success: function (data) {
+                      
+                    }
+                  })
+                }
+              })
+            }
+          })
+        } else {
+          wx.chooseAddress({
+            success: function (res) {
+              wx.request({
+                url: 'http://192.168.10.99/mpa/address/' + that.data.address[index].id,
+                method: 'PUT',
+                dataType: 'json',
+                data: {
+                  name: res.userName,
+                  mobile: res.telNumber,
+                  post_code: res.postalCode,
+                  province: res.provinceName,
+                  city: res.cityName,
+                  county: res.countyName,
+                  detail: res.detailInfo
+                },
+                header: {
+                  "Api-Key": that.data.apiKey,
+                  "Api-Secret": that.data.apiSecret
+                },
+                success: function (data) {
+                }
+              })
+            }
+          })
+        }
+      }
+    })
   },
+  setDefault:function(event){
+      var that=this
+      var key=event.target.dataset.key
+      var index = event.target.dataset.index;
+      that.data.address
+      var num = 'address[' + index + '].status'
+      wx.request({
+        url: 'http://192.168.10.99/mpa/address/' + that.data.address[index].id,
+        method: 'PUT',
+        dataType: 'json',
+        data: {
+          status:key
+        },
+        header: {
+          "Api-Key": that.data.apiKey,
+          "Api-Secret": that.data.apiSecret
+        },
+        success: function (data) {
+            if(key===1){
+              that.data.address.forEach(function(v,i){
+                  if(v.status===2){
+                    var nums = 'address[' + i + '].status'
+                  }
+              })
+                that.setData({
+                    [num]:2,
+                    [nums]:1
+                })
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+            }else{
+              that.setData({
+                [num]: 1
+              })
+            }
+        }
+      })
   }
 })
