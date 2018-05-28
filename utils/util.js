@@ -8,7 +8,7 @@ const formatTime = date => {
 
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
-function login(res){
+function login(res,code){
     var userInfo = res.userInfo;
     //向后台发起请求，传code
     wx.request({
@@ -37,9 +37,9 @@ function login(res){
             data: apiSecret
           })
           //判断是否又userid
-          if(user-id){
+          if(res.data.id){
               wx.setStorage({
-                key: 'user-id',
+                key: 'userId',
                 data: res.data.id,
               })
               wx.request({
@@ -86,7 +86,7 @@ const checkLogin= () =>{
       } 
     })
     console.log(111)
-    if(timestamp+6*60*60*1000>newTimestamp){}
+    if (timestamp && timestamp+6*60*60*1000>newTimestamp){}
     else{
        wx.login({
           success(code){
@@ -102,16 +102,19 @@ const checkLogin= () =>{
                   console.log(666)
                   wx.authorize({
                     scope: 'scope.userInfo',
-                    success:()=> {
+                    success:function(data) {
+                      console.log(data)
                       // 用户已经同意小程序获取用户信息
                       wx.getUserInfo({
                         withCredentials: true,
                         success:function(res){
-                            login(res)
+                          console.log(res)
+                            login(res,code)
                         }
                       })
                     },
-                    fail:() =>{
+                    fail:function(data){
+                      console.log(data)
                     }
 
                   })
@@ -119,7 +122,7 @@ const checkLogin= () =>{
                     wx.getUserInfo({
                       withCredentials: true,
                       success:function(res){
-                        login(res)
+                        login(res,code)
                       }
                     })
                 }

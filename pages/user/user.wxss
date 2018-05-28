@@ -16,7 +16,31 @@ page{
   flex-direction: column;
   align-items: center;
 }
-
+button{
+    background: transparent;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    padding:0;
+}
+button::after{  
+  border:none; 
+  border-radius: none;
+}  
+button image{
+  width: 156rpx;
+  height: 156rpx;
+  border-radius: 50%;
+  display: block;
+}
+button label{
+  font-family: PingFangSC-Semibold;
+  font-size: 24rpx;
+  color: #FFFFFF;
+  margin-top: 26rpx;
+}
 .userinfo-avatar {
   width: 156rpx;
   height: 156rpx;

@@ -6,6 +6,11 @@
   padding-left:60rpx;
 
 }
+page{
+  width: 100%;
+  min-height:100%;
+  position: relative;
+}
 .address image{
   width: 24rpx;
   height: 30rpx;
@@ -17,6 +22,7 @@
   font-family: PingFangSC-Medium;
   font-size: 24rpx;
   color: #333333;
+  font-weight: bold;
 }
 .name label:nth-child(2){
   font-family: PingFangSC-Regular;
@@ -89,44 +95,110 @@ text-align: right;
   display: flex;
   justify-content: space-between
 }
-.info label{
+.info view label:first-child{
   font-family: PingFangSC-Regular;
   font-size: 26rpx;
   color: #666666;
   line-height: 36rpx;
   margin-top:18rpx;
 }
+.info view label:last-child{
+  font-family: PingFangSC-Regular;
+  font-size: 26rpx;
+  color: #333;
+  line-height: 36rpx;
+  margin-top:18rpx;
+}
 .info view:last-child{
   margin-bottom: 18rpx;
 }
-.contact{
+.btnBottom{
   width: 100%;
-  position: fixed;
-  bottom: 0;
-  left:0;
-  height: 94rpx;
-  padding:8rpx 0;
+  position: absolute;
+  bottom: 30rpx;
+  left:0; 
+  padding:0 20rpx;
   font-family: PingFangSC-Regular;
   font-size: 26px;
   color: #666666;
   display: flex;
-  justify-content: space-between;
   box-sizing: border-box;
-  border-top:1rpx solid #e3e3e3;
+  justify-content: flex-end;
 }
-.contact  view{
+.btnBottom view{
+  margin-left: 30rpx;
+}
+.btnBottom .pay{
+  width: 120rpx;
+  height: 50rpx;
+  line-height:50rpx;
+  text-align: center;
+  display: block;
+  background: #EA2534;
+  color: #fff;
+  font-family: PingFangSC-Regular;
+  border-radius: 3px;
+  font-size: 22rpx;
+}
+.btnBottom .cancel{
+  width: 120rpx;
+  height: 50rpx;
+  border-radius: 3px;
+  box-sizing: border-box;
+  border: 1rpx solid #EA2534;
+  line-height:48rpx;
+  text-align: center;
+  display: block;
+  color: #EA2534;
+  font-family: PingFangSC-Regular;
+  font-size: 22rpx;
+}
+.shade{
+  width: 100%;
+  position: fixed;
+  height: 100%;
+  z-index: 999;
+  background: rgba(4, 4, 4, 0.4);
+  top: 0;
+  left:0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.contact{
+  background: #fff;
+  width: 460rpx;
+  border-radius: 6rpx;
+  position: relative;
+  padding: 0 14rpx;
+  box-sizing: border-box;
+}
+.contact .title{
+    font-family: PingFangSC-Regular;
+    font-size: 30rpx;
+    height: 84rpx;
+    line-height: 84rpx;
+    text-align: center;
+    color: #333333;
+    border-bottom: 1rpx solid #E3E3E3;
+}
+.contact  .iphone{
     display: flex;
     align-items: center;
-     width: 50%; 
-    justify-content: center;
-    border-left: 1rpx solid #e3e3e3;
+    width: 100%; 
+    justify-content: flex-start;
+    height: 72rpx;
+    font-size: 26rpx;
+    border-top: 1rpx solid #E3E3E3;
 }
 .contact  button{
     background: #fff;
     display: flex;
     align-items: center;
-    width: 50%; 
-    justify-content: center;
+    width: 100%; 
+    height: 72rpx;
+    font-size: 26rpx;
+    justify-content: flex-start;
     padding:0;
 }
 .contact  button::after{  
@@ -134,34 +206,52 @@ text-align: right;
   border-radius: none;
 }  
 .contact button image{
- margin-right: 20rpx;
+  padding-left: 6rpx;
+  margin-right: 20rpx;
   width: 48rpx;
-    height: 40rpx;
-    display: block;
+  height: 40rpx;
+  display: block;
 }
-.contact view image{
+.contact .iphone image{
+   padding-left: 14rpx;
  margin-right: 16rpx;
   width: 44rpx;
     height: 46rpx;
     display: block;
 }
-/* .contact view:nth-child(1){
-  border-right: 1rpx solid #e3e3e3;
-}
-.contact view:nth-child(1) image{
- margin-right: 20rpx;
-  width: 48rpx;
-    height: 40rpx;
-    display: block;
-}
-.contact view:nth-child(2) image{
- margin-right: 16rpx;
-  width: 44rpx;
-    height: 46rpx;
-    display: block;
-} */
 .contact label{
   font-family: PingFangSC-Regular;
   font-size: 26rpx;
   color: #666666;
+}
+
+.contact .clear{
+  width: 78rpx;
+  height: 78rpx;
+  position: absolute;
+  padding-left: 0;
+  top: 0;
+  right: 0;
+}
+.contact .clear::before{
+  content:'';
+  display: block;
+  position: absolute;
+  width: 30rpx;
+  background: #999999;
+  height: 2rpx;
+  top:50%;
+  left: 35%;
+  transform: rotate(45deg);
+}
+.contact .clear::after{
+  content:'';
+  display: block;
+  position: absolute;
+  background: #999999;
+  top:50%;
+  left: 35%;
+  width: 30rpx;
+  height: 2rpx;
+  transform: rotate(-45deg);
 }

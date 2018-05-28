@@ -1,62 +1,80 @@
 <view class='address'>
     <image src='/imgs/position.png'></image>
     <view  class='name'>
-      <label>收货人：凌达琳</label>
-      <label>13628776098</label>
+      <label>收货人：{{info.address.name}}</label>
+      <label>{{info.address.mobile}}</label>
     </view>
     <view class='addr'>
-        收货地址：上海市上海市松江区xxxxxx53号-234室
+        收货地址：{{info.address.province}}{{info.address.city}}{{info.address.county}}{{info.address.detail}}
     </view>
 </view>
 <view class='detail'>
-    <view  class='menus'>
-        <image src='/imgs/menus.png'></image>
+    <view  class='menus' wx:for='{{info.items}}' wx:for-item='items' wx:key='index'>
+        <image src='{{items.cover_url}}'></image>
         <view class='desc'>
-            <label>蕾丝衫2018新款春季显瘦淑女风上衣吊带
-两件套装长袖春夏款</label>
-            <label>颜色:白色   尺码:M</label>
-            <label>x1</label>
-            <label>￥235.00</label>
+            <label>{{items.name}}</label>
+            <label>{{items.sku_description}}</label>
+            <label>x{{items.count}}</label>
+            <label>￥{{items.price}}</label>
         </view>
     </view>
     <view class='info'>
       <view>
         <label>商品总价</label> 
-        <label>￥235.00</label>
+        <label>￥{{info.goods_amount}}</label>
       </view>
       <view>
         <label>运费（快递）</label> 
-        <label>￥0.00</label>
+        <label>￥{{info.express_amount}}</label>
       </view>
       <view>
         <label>订单总价</label> 
-        <label>￥235.00</label>
+        <label>￥{{info.amount}}</label>
       </view>
     </view>
     <view class='info'>
          <view>
             <label>订单编号</label> 
-            <label>239298764895489473</label>
+            <label>{{info.no}}</label>
           </view>
           <view>
             <label>创建时间</label> 
-            <label>2018-02-23 12:09:34</label>
+            <label>{{info.created_at}}</label>
           </view>
-          <text>退货未审核</text>    
+          <view>
+            <label>状态</label> 
+             <label wx:if='{{info.status==200}}'>待付款</label>
+            <label wx:elif='{{info.status==205}}'>已支付</label>
+            <label wx:elif='{{info.status==300}}'>待发货</label>
+            <label wx:elif='{{info.status==305}}'>已发货</label>
+            <label wx:elif='{{info.status==400}}'>待收货</label>
+            <label wx:elif='{{info.status==500}}'>退货中</label>
+            <label wx:elif='{{info.status==405}}'>已收货</label>
+          </view> 
     </view>
 </view>
 
-<view class='contact'>
-    <button open-type='contact' session-from="weapp">
-          <image src='/imgs/Wechat_icon.png'></image>
-          <label>微信联系</label>
-    </button>
-    <!-- <view bindtap='callWechat'>
-      <image src='/imgs/Wechat_icon.png'></image>
-      <label>微信联系</label>
-    </view> -->
-     <view bindtap='callPhone'>
-        <image src='/imgs/phone_icon.png'></image>
-        <label>电话联系</label>
+<view class='btnBottom'>
+    <view  wx:if='{{info.status==405}}' bindtap='cancelOrder' class='cancel'>申请售后</view>
+    <view  wx:if='{{info.status==400 || info.status==305}}' bindtap='confirm'  data-sure='405' class='cancel'>确认收货</view>
+    <view  wx:if='{{info.status==300 || info.status==405 || info.status==400 || info.status==305}}' class='cancel' bindtap='contacts' >联系商家</view>
+    <view  wx:if='{{info.status==405 || info.status==400 || info.status==305}}'  class='pay' bindtap='checkLogistics'>查看物流</view>
+    <view  wx:if='{{info.status==200}}' data-sure='207' bindtap='confirm' class='cancel'>取消订单</view>
+    <view  wx:if='{{info.status==200}}' class='pay'>立即支付</view>
+</view>
+
+<view class='shade' hidden='{{show}}'>
+     <view class='contact'>
+        <view class='clear' bindtap='close'></view>
+        <view class='title'>请选择联系方式</view>
+        <button open-type='contact' session-from="weapp">
+              <image src='/imgs/Wechat_icon.png'></image>
+              <label>微信联系</label>
+        </button>
+        <view class='iphone' bindtap='callPhone'>
+            <image src='/imgs/phone_icon.png'></image>
+            <label>电话联系</label>
+        </view> 
     </view>
 </view>
+

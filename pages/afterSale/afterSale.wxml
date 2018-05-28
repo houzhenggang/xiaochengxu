@@ -1,0 +1,34 @@
+<view class='container'>
+    <view class='orderID'>订单编号：239298764895489473</view>
+    <view class='clearfix' wx:for='{{info}}' wx:for-index='index' wx:key='index'>
+         <image class='select' bindtap='select' data-index="{{index}}"  wx:if='{{item.isSelect}}'src='/imgs/checked.png'></image>
+        <image class='select' data-index="{{index}}"   bindtap='select'  wx:else='{{item.isSelect}}'src='/imgs/unchecked.png'></image>
+        <image src='{{item.cover_url}}' class='img'></image>
+        <view class='info'>
+            <label class='title'>{{item.name}}</label>
+            <label class='size'>{{item.sku_description}}</label>
+            <label class='price'>￥{{item.price}}</label>
+        </view>
+    </view>
+    <view class='desc'>
+      <label>退货数量</label> 
+      <label>{{num}}</label>
+    </view>
+    <view  class='desc' bindtap='selectReason'>
+      <label>退货理由</label> 
+      <label>{{reasonText}}</label>
+    </view>
+    <view class='reason'>
+      <label>退货备注</label> 
+      <textarea maxlength='500'  bindconfirm='remark' value='{{value}}'></textarea>  
+    </view>
+</view>
+<view class='afterReason' hidden='{{isShow}}'>
+    <view class='selectReason'>
+        <view class='clear' bindtap='closeReason'></view>
+        <view class='name'>请选择退货理由</view>
+        <view wx:for='{{reason}}' data-reasonID='{{index}}' wx:key='index'  bindtap='chooseReason' wx:for-index='index'>{{item}}</view>
+    </view>
+</view>
+<view class='submit' bindtap='submit'>下一步</view>
+

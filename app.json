@@ -1,20 +1,25 @@
 {
   "pages": [
-		"pages/index/index",		
-		"pages/category/category",		
-		"pages/user/user",		
-		"pages/regMob/regMob",		
-		"pages/detail/detail",		
+    "pages/user/user",
+    "pages/orders/orders",
+    "pages/refundDetail/refundDetail", 
+    "pages/index/index",
+    "pages/orderDetail/orderDetail",
+    "pages/surePay/surePay",  
+    "pages/afterSale/afterSale",
+    "pages/logistics/logistics",
+    "pages/address/address",
+    "pages/regMob/regMob",   
+    "pages/category/category",
+    "pages/detail/detail",
     "pages/shoppingCar/shoppingCar",
     "pages/result/result",
     "pages/search/search",
     "pages/special/special",
-    "pages/orderDetail/orderDetail",
     "pages/recommend/recommend",
     "pages/introdution/introdution",
-    "pages/address/address",
-    "pages/orders/orders",
     "pages/cart/cart"
+   
   ],
   "window": {
     "backgroundTextStyle": "light",
