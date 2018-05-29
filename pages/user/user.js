@@ -116,9 +116,9 @@ Page({
                     }
                   })
                 } else {
-                  // wx.navigateTo({
-                  //   url: "/pages/regMob/regMob"
-                  // })
+                  wx.navigateTo({
+                    url: "/pages/regMob/regMob"
+                  })
                 }
               }
             })

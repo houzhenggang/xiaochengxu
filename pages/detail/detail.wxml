@@ -57,7 +57,7 @@
 		<view class='choose_price'>
 			<image src='{{goodUrl}}'></image>
 			<view>
-				<text>￥{{filter.toFix(goodPrice/100)}}</text>
+				<text>￥{{filters.toFix(goodPrice/100)}}</text>
 				<text>请选择 {{goods.spec_a}} {{goods.spec_b}}</text>
 			</view>
 			<image src='/imgs/detail/classification_btn_close@2x.png' data-id='0' bindtap='closeModal'></image>
