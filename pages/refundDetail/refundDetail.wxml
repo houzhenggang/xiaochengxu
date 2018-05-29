@@ -1,3 +1,4 @@
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class='container'>
     <view class='top'>
         <view class='title'>退货进度</view>

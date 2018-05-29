@@ -1,4 +1,5 @@
 // pages/address/address.js
+var app=getApp()
 Page({
 
   /**
@@ -15,6 +16,9 @@ Page({
    */
   onLoad: function (options) {
       var that = this;
+      wx.showLoading({
+        title: '加载中',
+      })
       var apiKeys = wx.getStorageSync('Api-Key')
       var apiSecrets = wx.getStorageSync('Api-Secret')
       this.setData({
@@ -30,7 +34,7 @@ Page({
           "Api-Secret": apiSecrets
         },
         success:function(data){
-          console.log(data);
+          wx.hideLoading()
           if(data.data.code==0){
 
           }else{
@@ -199,18 +203,31 @@ Page({
       }
     })
   },
+  chooseAddress:function(event){
+    var index = event.currentTarget.dataset.index
+      app.globalData.address = this.data.address[index];
+      wx.navigateBack({
+        url:'/pages/surePay/surePay'
+      })
+  },
   setDefault:function(event){
       var that=this
       var key=event.target.dataset.key
-      var index = event.target.dataset.index;
-      that.data.address
+      var keys
+      if (key===1){
+        keys=2
+      }else{
+        keys=1
+      }
+      var index = event.target.dataset.index
+      var nums 
       var num = 'address[' + index + '].status'
       wx.request({
         url: 'http://192.168.10.99/mpa/address/' + that.data.address[index].id,
         method: 'PUT',
         dataType: 'json',
         data: {
-          status:key
+          status:keys
         },
         header: {
           "Api-Key": that.data.apiKey,
@@ -220,7 +237,7 @@ Page({
             if(key===1){
               that.data.address.forEach(function(v,i){
                   if(v.status===2){
-                    var nums = 'address[' + i + '].status'
+                      nums = 'address[' + i + '].status'
                   }
               })
                 that.setData({

@@ -1,16 +1,21 @@
 {
   "pages": [
-		"pages/index/index",		
+    "pages/user/user",
+    "pages/search/search",
+    "pages/index/index",
+    "pages/address/address",    
+    "pages/surePay/surePay",			
 		"pages/shoppingCar/shoppingCar",		
 		"pages/detail/detail",		
 		"pages/category/category",
-		"pages/user/user",		
+				
 		"pages/regMob/regMob",		
-    "pages/result/result",
-    "pages/search/search",
+    "pages/result/result", 
+    "pages/afterSale/afterSale",
+    "pages/refundDetail/refundDetail",
+    "pages/logistics/logistics",
+    "pages/orderDetail/orderDetail",
     "pages/special/special",
-    "pages/introdution/introdution",
-    "pages/address/address",
 		"pages/recommend/recommend",
     "pages/orders/orders",
     "pages/cart/cart",
@@ -19,7 +24,6 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "潘多拉的衣柜",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {

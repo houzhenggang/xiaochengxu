@@ -1,4 +1,4 @@
-<!--pages/search/search.wxml-->
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class='search_container'>
 
 	<!--family  -->
@@ -20,7 +20,7 @@
 				<image src='{{item.cover_url}}'></image>
 				<text class='item_text'>{{item.name}}</text>
 				<view class='item_text_view'>
-					<text>￥</text><text>{{item.price}}</text><text>销量{{item.sales_count}}件</text>
+					<text>￥</text><text>{{filters.toFix(item.price/100)}}</text><text>销量{{item.sales_count}}件</text>
 				</view>
 			</view>
 		</view>

@@ -114,7 +114,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
 	onLoad: function (options) {
-		console.log(options)
+    var id=options.id
 		wx.showLoading({
 			title: '加载中',
 		});
@@ -125,11 +125,9 @@ Page({
 		wx.request({
 			url: requestUrl + '/mpa/goods/search',
 			data: {///////////////////////////////////////////////////////id需改动
-				category_id: 9,
+				category_id: id,
 			},
 			success(res) {
-				console.log(1111111)
-				console.log(res)
 				that.setData({
 					produList: res.data
 				})

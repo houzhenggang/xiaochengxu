@@ -1,42 +1,51 @@
-<view class='address'>
-    <image src='/imgs/position.png'></image>
-    <view  class='name'>
-      <label>收货人：凌达琳</label>
-      <label>13628776098</label>
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
+<navigator url='/pages/address/address' hover-class='none'>
+     <view class='address' wx:if='{{address!==1}}'>
+        <image src='/imgs/position.png'></image>
+        <view  class='name'>
+          <label>收货人：{{address.name}}</label>
+          <label>{{address.mobile}}</label>
+        </view>
+        <view class='addr'>
+            收货地址：{{address.province}} {{address.city}} {{address.county}} {{address.detail}}
+        </view>
+    </view> 
+    <view class='chooseAddress' wx:if='{{address===1}}'>
+        <view></view>
+        <view>新增收货地址</view>
     </view>
-    <view class='addr'>
-        收货地址：上海市上海市松江区xxxxxx53号-234室
-    </view>
-</view>
+
+</navigator>
+
+
 <view class='detail'>
-    <view  class='menus'>
-        <image src='/imgs/menus.png'></image>
+    <view  class='menus' wx:for='{{dataList}}' wx:key='index'>
+        <image src='{{item.cover_url}}'></image>
         <view class='desc'>
-            <label>蕾丝衫2018新款春季显瘦淑女风上衣吊带
-两件套装长袖春夏款</label>
-            <label>颜色:白色   尺码:M</label>
+            <label>{{item.name}}</label>
+            <label>{{item.sku_description}}</label>
             <view>
-                <label>￥235.00</label>
-                <label>x1</label>
+                <label>￥{{filters.toFix(item.price/100)}}</label>
+                <label>x{{item.count}}</label>
             </view>
         </view>
     </view>
     <view class='info'>
       <view>
         <label>商品总价</label> 
-        <label>￥235.00</label>
+        <label>￥{{filters.toFix(totalMoney/100)}}</label>
       </view>
       <view>
         <label>运费（快递）</label> 
-        <label>￥0.00</label>
+        <label>￥{{filters.toFix(carriage/100)}}</label>
       </view>
       <view>
         <label>订单总价</label> 
-        <label>￥235.00</label>
+        <label>￥{{filters.toFix(totalOrder/100)}}</label>
       </view>
     </view>
 </view>
 <view class='confirmPay'>
-    <view>合计：<label>470.00</label></view>
+    <view>合计：<label>{{filters.toFix(totalOrder/100)}}</label></view>
     <view>立即支付</view>
 </view>

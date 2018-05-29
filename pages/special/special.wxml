@@ -1,11 +1,12 @@
 <!--pages/special/special.wxml-->
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class='special_container'>
 	<view class='special_item'>
 		<view class='item_box' wx:for="{{produList}}" wx:key="{{index}}" data-id='{{item.id}}' bindtap='goDetail'>
 			<image class='product' src='{{item.cover_url}}'></image>
 			<text class='item_text'>{{item.name}}</text>
 			<view class='item_text_view special_price'>
-				<text>￥</text><text>{{item.price}}</text><text>{{item.display_price}}</text>
+				<text>￥</text><text>{{filters.toFix(item.price/100)}}</text><text>{{item.display_price}}</text>
 			</view>
 		</view>
 

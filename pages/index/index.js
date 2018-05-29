@@ -64,6 +64,7 @@ Page({
 			url: requestUrl + '/mpa/index',
 			method: 'GET',
 			success(res){
+        app.globalData.mobile = res.data.customer_service_mobile
 				that.setData({
 					description: res.data
 				},function(){
@@ -83,7 +84,7 @@ Page({
 				that.setData({
 					categoryList: res.data
 				})
-			}
+      }
 		})
 		//获取推荐商品列表
 		wx.request({

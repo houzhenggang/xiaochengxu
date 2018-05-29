@@ -1,4 +1,4 @@
-// pages/details/details.js
+var app=getApp()
 Page({
 
   /**
@@ -38,6 +38,7 @@ Page({
   },
 /*联系商家*/
   contacts:function(){
+
     this.setData({
       show:false
     })
@@ -92,7 +93,7 @@ Page({
       show:true
     })
     wx.makePhoneCall({
-      phoneNumber: '13547831113'
+      phoneNumber: app.globalData.mobile
     })
   }
 })

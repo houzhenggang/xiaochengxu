@@ -16,6 +16,7 @@ Page({
 		minusStatus:"disabled",
 		//规格选择初始数量
 		num: 1,
+    name:'',
 		//加入购物车/立即购买flag
 		flag: 1,
 		//定义动画
@@ -111,14 +112,16 @@ Page({
 			//将商品信息、数量保存到app
 			let good = that.data.good;
 			good.count = that.data.num;
+      good.name=that.data.name;
+      good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a
 			if(flag == false){
 				gloGood.push(good)
 			}
-			app.globalData.good = good;
-			console.log(app.globalData.good)
-			// wx.navigateTo({
-			// 	url: '/pages/surePay/surePay',
-			// })
+      app.globalData.good=[]
+			app.globalData.good.push(good)
+			wx.navigateTo({
+				url: '/pages/surePay/surePay',
+			})
 		}
 	},
 	/* 点击减号 */
@@ -211,81 +214,33 @@ Page({
 			title: '加载中',
 		})
 		let that = this;
-		console.log(options)
 		//获取商品详情
 		wx.request({
-			url: requestUrl + '/mpa/goods/1',/////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
+			url: requestUrl + '/mpa/goods/1', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
 			success(res){
 				console.log(res);
 				that.setData({
 					goods:res.data,
 					goodUrl:res.data.cover_url,
 					goodPrice:res.data.price,
-					imgs:res.data.images
+					imgs:res.data.images,
+          name: res.data.name
 				})
+        wx.setNavigationBarTitle({
+          title: res.data.name,
+        })
 				wx.hideLoading();
 			}
 		})
 		//获取商品规格详情
 		wx.request({
-			url: requestUrl + '/mpa/goods/1/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
+      url: requestUrl + '/mpa/goods/1/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
 			success(res) {
 				that.setData({
 					spec: res.data
 				})
 			}
 		})
-		wx.setNavigationBarTitle({
-			title: options.name,
-		})
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+		
   }
 })

@@ -1,21 +1,21 @@
 
-<view class='container' wx-if='address' wx:for='{{address}}' wx:for-item='item' wx:key='index'>
+<view class='container' bindtap='chooseAddress'  data-index='{{index}}' wx:for='{{address}}' wx:for-item='item' wx:key='index'>
   <view class='userInfo'>
       <label>姓名：{{item.name}}</label>
       <label>{{item.mobile}}</label>
   </view>
   <view class='userAddr'>地址：{{item.province}}{{item.city}}{{item.county}}{{item.detail}}</view>
   <view class='contentBtm'>
-    <label bindtap='setDefault' data-key='{{item.status}}'  data-index='{{index}}'  wx:if='{{item.status==1}}'>
-      <image src='/imgs/unchecked.png'></image>
+    <label catchtap='setDefault' data-key='{{item.status}}'  data-index='{{index}}'  wx:if='{{item.status==1}}'>
+      <image src='/imgs/unchecked.png' data-key='{{item.status}}' catchtap='setDefault'   data-index='{{index}}'></image>
       设为默认
     </label>
-    <label bindtap='setDefault'  data-key='{{item.status}}'  data-index='{{index}}'   wx:if='{{item.status==2}}'>
-      <image src='/imgs/checked.png'></image>
+    <label catchtap='setDefault'  data-key='{{item.status}}'  data-index='{{index}}'   wx:if='{{item.status==2}}'>
+      <image src='/imgs/checked.png'  data-key='{{item.status}}' catchtap='setDefault'   data-index='{{index}}' ></image>
       以设为默认
     </label>
-    <label bindtap='updateAddr' data-index='{{index}}'><image src='/imgs/updataAddr.png' ></image>编辑</label>
-    <label  bindtap='deleteAddr' data-index='{{index}}'><image src='/imgs/del.png'></image>删除</label>
+    <label catchtap='updateAddr' data-index='{{index}}'><image src='/imgs/updataAddr.png' ></image>编辑</label>
+    <label  catchtap='deleteAddr' data-index='{{index}}'><image src='/imgs/del.png'></image>删除</label>
   </view>
 </view>
-<view class='address' bindtap='address'>新增收货地址</view>
+<view class='address' catchtap='address'>新增收货地址</view>

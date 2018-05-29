@@ -5,18 +5,35 @@ Page({
    * 页面的初始数据
    */
   data: {
-		value:""
+		value:"",
+    dataList:[]
   },
 	//input事件
-	searchKey(e){
+	searchKey:function(e){
+    var that=this
 		this.setData({
 			value:e.detail.value
 		})
+    wx.request({
+      url:'http://192.168.20.140/mpa/goods/search/suggest',
+      data:{
+        keywords: e.detail.value
+      },
+      dataType:'json',
+      method:'GET',
+      success:function(data){
+        that.setData({
+          dataList:data.data
+        })
+      } 
+    })
+
 	},
 	//清除input输入
 	clearKey(){
 		this.setData({
-			value:""
+			value:"",
+      dataList:[]
 		})
 	},
 	//处理点击完成按钮函数

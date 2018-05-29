@@ -139,6 +139,7 @@ page{
 	padding: 0 14rpx 0 18rpx;
 	margin-top: 14rpx;
 	color: #333333;
+  height:72rpx;
 	line-height: 36rpx;
 }
 .item_box .item_text_view{

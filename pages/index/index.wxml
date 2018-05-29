@@ -1,4 +1,5 @@
 <!--index.wxml-->
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class="index_container">
 
 	<!--search button  -->
@@ -46,7 +47,7 @@
 		<image class='re_produ_img' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" src='{{recommend_first[0].cover_url}}'  bindtap='bindDetail'></image>
 		<text class='re_produ_text' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindDetail'>{{recommend_first[0].name}}</text>
 		<view class='re_text_view' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindDetail'>
-			<text>￥</text><text>{{recommend_first[0].price}}</text><text>销量{{recommend_first[0].sales_count}}件</text>
+			<text>￥</text><text>{{filters.toFix(recommend_first[0].price/100)}}</text><text>销量{{recommend_first[0].sales_count}}件</text>
 		</view>
 		 <view class='buy_button' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindOrder'>立即购买</view> 
 	</view>
@@ -56,7 +57,7 @@
 			<image src='{{item.cover_url}}'></image>
 			<text class='item_text'>{{item.name}}</text>
 			<view class='item_text_view'>
-				<text>￥</text><text>{{item.price}}</text><text>销量{{item.sales_count}}件</text>
+				<text>￥</text><text>{{filters.toFix(item.price/100)}}</text><text>销量{{item.sales_count}}件</text>
 			</view>
 		</view>
 	</view>
@@ -75,7 +76,7 @@
 			<image src='{{item.cover_url}}'></image>
 			<text class='item_text'>{{item.name}}</text>
 			<view class='item_text_view special_item'>
-				<text>￥</text><text>{{item.price}}</text><text>{{item.display_price}}</text>
+				<text>￥</text><text>{{filters.toFix(item.price/100)}}</text><text>{{item.display_price}}</text>
 			</view>
 		</view>
 	</view>

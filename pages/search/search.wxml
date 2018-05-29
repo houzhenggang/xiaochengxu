@@ -5,4 +5,7 @@
       <input bindinput='searchKey' placeholder='搜索品牌或商品' focus='true' value='{{value}}' confirm-type="搜索" bindconfirm='confirmEvent'></input>
       <image class='clearKey' src='/imgs/clear.png' bindtap='clearKey'></image>
     </view>
+    <view class='searchList'>
+        <navigator url='/pages/result/result?id={{item.id}}' hover-class='none' wx:key='index' wx:for='{{dataList}}'>{{item.name}}</navigator>
+    </view>
 </view>

@@ -82,6 +82,7 @@ view.carInfo{
   font-size: 28rpx;
   color: #3A3A3A;
   line-height: 36rpx;
+  height: 72rpx;
 }
 .goodsInfo label{
   font-family: PingFangSC-Regular;

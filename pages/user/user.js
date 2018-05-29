@@ -24,7 +24,7 @@ Page({
         hasUserInfo:true
       })
       wx.request({
-        url: 'http://192.168.10.158/mpa/order/status/count',
+        url: 'http://192.168.10.99/mpa/order/status/count',
         method: 'GET',
         dataType: 'json',
         // header: {
@@ -61,7 +61,7 @@ Page({
             
             //向后台发起请求，传code
             wx.request({
-              url: 'http://192.168.10.158/mpa/wechat/auth',
+              url: 'http://192.168.10.99/mpa/wechat/auth',
               method: 'POST',
               data: {
                 code: code.code
@@ -95,7 +95,7 @@ Page({
                     data: res.data.id,
                   })
                   wx.request({
-                    url: 'http://192.168.10.158/mpa/wechat/' + res.data.id,
+                    url: 'http://192.168.10.99/mpa/wechat/' + res.data.id,
                     method: "PUT",
                     data: {
                       "nick_name": userInfo.nickName,

@@ -1,3 +1,4 @@
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class='container' wx:if="{{isShow==2}}">
       <image src='/imgs/emptyCar.png'></image>
       <view>购物车竟然是空的</view>
@@ -17,7 +18,7 @@
               <label>{{item.sku_description}}</label>
           </navigator>
           <view class='infoBottom'>
-                  <label>￥{{item.price}}</label>
+                  <label>￥{{filters.tofix(item.price/100)}}</label>
                   <view class='changNum'>
                     <label data-index="{{index}}" data-id="{{item.id}}" class='btn' bindtap='subtraction'>-</label>
                     <text>{{item.count}}</text>
@@ -35,7 +36,7 @@
 			<image class='select' bindtap='selectAll' wx:if='{{!selectAll}}' src='/imgs/unchecked.png'></image>
       <image class='selected'  bindtap='selectAll' wx:else='{{selectAll}}' src='/imgs/checked.png'></image>
 			<view class='total_text'>
-				<view><text>全选</text><text bindtap='bottomDelete'>删除</text></view><text>合计：￥{{totalPrice}}</text>
+				<view><text>全选</text><text bindtap='bottomDelete'>删除</text></view><text>合计：￥{{filters.toFix(totalPrice/100)}}</text>
 			</view>
 			<view class='balance' bindtap='balance'>结算</view>
 		</view>

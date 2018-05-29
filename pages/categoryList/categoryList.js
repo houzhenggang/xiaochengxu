@@ -40,8 +40,6 @@ Page({
 						order_by: "price desc"
 					},
 					success(res) {
-						console.log(44444444)
-						console.log(res)
 						that.setData({
 							produList: res.data
 						})
@@ -58,8 +56,6 @@ Page({
 						order_by: "price asc"
 					},
 					success(res) {
-						console.log(44444444)
-						console.log(res)
 						that.setData({
 							produList: res.data
 						})
@@ -128,8 +124,6 @@ Page({
 				category_id:9,
 			},
 			success(res){
-				console.log(1111111)
-				console.log(res)
 				that.setData({
 					produList: res.data
 				})

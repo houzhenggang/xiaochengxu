@@ -1,3 +1,4 @@
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class="swiper-tab">  
     <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">全部</view>  
     <view class="swiper-tab-list {{currentTab==200 ? 'on' : ''}}" data-current="200" bindtap="swichNav">待付款</view>  
@@ -35,13 +36,13 @@
                                 <label>{{items.sku_description}}</label> <label>x{{items.count}}</label>
                                 </view>
                                 <label>￥
-                                {{items.price}}
+                                {{filters.toFix(items.price/100)}}
                                 </label>
 
                       </view>
                   </view>
                   <view class='bottom'>
-                      <label>实付：￥{{item.amount}}</label>
+                      <label>实付：￥{{filters.toFix(item.amount)}}</label>
                       <view wx:if='{{item.status==200}}'>
                         <label class='cancel' data-OrderID='{{item.id}}' data-sure='207'  catchtap='confirm'>取消订单</label>
                         <label class='pay' data-OrderID='{{item.id}}' catchtap='payMoney'>立即付款</label>

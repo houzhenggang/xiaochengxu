@@ -1,3 +1,4 @@
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class='address'>
     <image src='/imgs/position.png'></image>
     <view  class='name'>
@@ -15,21 +16,21 @@
             <label>{{items.name}}</label>
             <label>{{items.sku_description}}</label>
             <label>x{{items.count}}</label>
-            <label>￥{{items.price}}</label>
+            <label>￥{{filters.toFix(items.price/100)}}</label>
         </view>
     </view>
     <view class='info'>
       <view>
         <label>商品总价</label> 
-        <label>￥{{info.goods_amount}}</label>
+        <label>￥{{filters.toFix(info.goods_amount)}}</label>
       </view>
       <view>
         <label>运费（快递）</label> 
-        <label>￥{{info.express_amount}}</label>
+        <label>￥{{filters.toFix(info.express_amount)}}</label>
       </view>
       <view>
         <label>订单总价</label> 
-        <label>￥{{info.amount}}</label>
+        <label>￥{{filters.toFix(info.amount)}}</label>
       </view>
     </view>
     <view class='info'>

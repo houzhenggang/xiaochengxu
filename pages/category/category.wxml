@@ -1,4 +1,4 @@
-<!--pages/category/category.wxml-->
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class='category_container'>
 
 	<!-- category search   -->
@@ -28,8 +28,8 @@
 						<view class='descriptions'>
 							<text>{{item.name}}</text>
 							<text>销量{{item.sales_count}}件</text>
-							<text>￥{{item.price}}</text>
-							<text>￥{{item.display_price}}</text>
+							<text>￥{{filters.toFix(item.price/100)}}</text>
+							<text>￥{{filters.toFix(item.display_price/100)}}</text>
 						</view>
 					</view>					
 				</view>

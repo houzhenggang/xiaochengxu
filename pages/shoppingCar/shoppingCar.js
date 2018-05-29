@@ -7,7 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isShow: 2,
+    isShow:'',
 		selectAll:false,
     datalist:[],
    	totalPrice:0
@@ -58,9 +58,9 @@ Page({
 			app.globalData.good = seleArr;
 			console.log(app.globalData.good);
 			/////////////////////////////////////////////////////////////////////////////////执行跳转
-			// wx.navigateTo({
-			// 	url: '',
-			// })
+			wx.navigateTo({
+        url: '/pages/surePay/surePay',
+			})
 		}
 	},
 	//跳转首页
