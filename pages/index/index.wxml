@@ -28,19 +28,25 @@
 
 	<!--contact  -->
 	<view class="index_contact">
-		<text class='contact_h4'>Hi 亲爱的小主</text>
-		<text class='contact_p'>{{description.description}}</text>
-		<button open-type='contact'><image src='/imgs/Content_icon_WeChat@2x.png'></image></button>
-		<image bindtap='contactPhone' src='/imgs/Content_icon_phone@2x.png'></image>
+    <image src='{{description.logo_url}}'></image>
+    <view class='desc'>
+      	<text class='contact_h4'>Hi 亲爱的小主</text>
+		    <text class='contact_p'>{{description.description}}</text>
+    </view>
+    <view class='contacts'>
+        <button open-type='contact'><image src='/imgs/Content_icon_WeChat@2x.png'></image></button>
+        <image bindtap='contactPhone' src='/imgs/Content_icon_phone@2x.png'></image>
+    </view>
+		
 	</view>
 
 	<!--recommend products  -->
 	<view class='index_recommend'>
 		<text>精品</text>
 		<text>推荐</text>
-		<text data-type='recommend' bindtap='showMore'>查看更多</text>
+		<text data-type='recommend' data-type='special' bindtap='showMore' bindtap='showMore'>查看更多 ></text>
 		<image src='/imgs/Group 3@2x.png'></image>
-		<image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image>
+		<!-- <image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image> -->
 	</view>
 
 	<view class='index_re_produ'>
@@ -66,9 +72,9 @@
 	<view class='index_recommend index_special'>
 		<text>特价</text>
 		<text>促销</text>
-		<text data-type='special' bindtap='showMore'>查看更多</text>
+		<text data-type='special' bindtap='showMore'>查看更多 ></text>
 		<image src='/imgs/Group 3@2x.png'></image>
-		<image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image>
+		<!-- <image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image> -->
 	</view>
 
 	<view class='index_item'>

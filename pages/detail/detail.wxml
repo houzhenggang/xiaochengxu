@@ -58,6 +58,7 @@
 			<image src='{{goodUrl}}'></image>
 			<view>
 				<text>￥{{filters.toFix(goodPrice/100)}}</text>
+        <text>库存：{{good.stock_count}}</text>
 				<text>请选择 {{goods.spec_a}} {{goods.spec_b}}</text>
 			</view>
 			<image src='/imgs/detail/classification_btn_close@2x.png' data-id='0' bindtap='closeModal'></image>
@@ -67,15 +68,15 @@
 			<view class='choose_color'>
 				<text class='title'>{{goods.spec_a}}</text>
 				<view class='color'>
-					<text wx:for='{{spec.spec_a.propertis}}' class='select {{index == seleIdxA ? "active" : ""}}' wx:key='{{index}}' data-a-index="{{index}}" data-type="{{goods.spec_a}}" bindtap='chooseSpec'>
+					<label wx:for='{{spec.spec_a.propertis}}' class='select {{index == seleIdxA ? "active" : ""}}' wx:key='{{index}}' data-a-index="{{index}}" data-type="{{goods.spec_a}}" bindtap='chooseSpec'>
 						{{item}}
-					</text>
+					</label>
 				</view>
 			</view>
 			<view class='choose_size'>
 				<text class='title'>{{goods.spec_b}}</text>
 				<view class='size'>
-					<text wx:for='{{spec.spec_b.propertis}}' class='select {{index == seleIdxB ? "active" : ""}}' wx:key='{{index}}' data-b-index="{{index}}" data-type="goods.spec_b" bindtap='chooseSpec'>{{item}}</text>
+					<label wx:for='{{spec.spec_b.propertis}}' class='select {{index == seleIdxB ? "active" : ""}}' wx:key='{{index}}' data-b-index="{{index}}" data-type="goods.spec_b" bindtap='chooseSpec'>{{item}}</label>
 				</view>
 			</view>
 		</view>

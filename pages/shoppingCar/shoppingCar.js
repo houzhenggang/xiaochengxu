@@ -65,7 +65,7 @@ Page({
 	},
 	//跳转首页
 	goIndex(){
-		wx.switchTab({
+		wx.navigateTo({
 			url: '/pages/index/index',
 		})
 	},
@@ -105,7 +105,7 @@ Page({
 			})
 		}else if(parseInt(_this.data.datalist[index].count) == 1){//当删除数量等于1时，调用DELETE接口删除所选
 			wx.showModal({
-				title: '删除',
+				// title: '删除',
 				content: '确定删除该商品？',
 				success(res) {
 					// 当用户点击确定按钮
@@ -257,7 +257,7 @@ Page({
 		}
 		//点击删除提示信息
 		wx.showModal({
-			title: '删除',
+			// title: '删除',
 			content: '确定删除？',
 			success(res){
 				if(res.confirm){

@@ -84,25 +84,29 @@
 	position: relative;
 	background: #EDEDED;
 	overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 	letter-spacing: 1rpx;
 	border-radius: 10rpx;
 }
 .index_contact .contact_h4{
 	display: block;
-	margin-top: 32rpx;
 	font-family: PingFangSC-Light;
 	font-size: 28rpx;
 	color: #333333;
 	line-height: 40rpx;
-	padding-left: 48rpx;
 }
+.index_contact>image{
+  width: 193rpx;
+  height: 156rpx;
+  margin: 0 20rpx;
+  }
 .index_contact .contact_p{
 	display: block;
 	font-size: 26rpx;
 	margin-top: 10rpx;
-	width: 440rpx;
-	height: 132rpx;
-	margin-left: 46rpx;
+	width: 330rpx;
 	font-family: PingFangSC-Regular;
 	color: #333333;
 	line-height: 44rpx;
@@ -111,25 +115,25 @@
 	width: 66rpx;
 	height: 64rpx;
 	padding: 0;
-	position: absolute;
-	top: 46rpx;
-	right: 52rpx;
 	border-radius: 64rpx 66rpx;
 	background: #EDEDED;
+  margin-bottom: 20rpx;
 }
 .index_contact button image{
 	width: 66rpx;
 	height: 64rpx;
+  
 }
 .index_contact button::after{
 	border: none;
 }
-.index_contact image:nth-child(4){
-	top: 130rpx;
-	right: 52rpx;
+.contacts{
+  padding:0 20rpx;
+}
+.contacts>image{
 	width: 66rpx;
 	height: 64rpx;
-	position: absolute;
+  display: block;
 }
 
 .index_recommend{
@@ -159,7 +163,7 @@
 	font-family: PingFangSC-Regular;
 	margin-left: 162rpx;
 	color: #999999;
-	line-height: 36rpx;
+	line-height: 44rpx;
 }
 .index_recommend image:nth-child(4){
 	position: absolute;

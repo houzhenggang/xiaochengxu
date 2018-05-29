@@ -12,8 +12,10 @@
     font-family: PingFangSC-Regular;
     font-size: 28rpx;
     color: #666666;  
+    padding: 0 10rpx;
 }  
 .on{ color: #EA2534;  
+    border-bottom: 3rpx solid #EA2534;
   }  
 
 .swiper-box{ display: block; height: 100%; width: 100%; overflow: hidden; }   
