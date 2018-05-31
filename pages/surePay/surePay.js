@@ -10,7 +10,8 @@ Page({
       totalMoney:'0.00',
       carriage:'0.00',
       totalOrder:'0.00',
-      sku_ids:[]
+      sku_ids: {},
+      sku_idd:[]
   },
 
   /**
@@ -18,13 +19,24 @@ Page({
    */
   onLoad: function (options) { 
     var data =app.globalData.good
-    var sku_id=[]
+    var sku_id={}
+    var sku_idss=[]
     var that=this
     var sum=0
     data.forEach(function(v,i){
       sum += parseFloat(v.price) * parseFloat(v.count)
-      sku_id.push(v.id)
+      var obj={
+        [v.goods_sku_id]:v.count
+      }
+      Object.assign(sku_id,obj)
+      sku_idss.push(v.goods_sku_id)
     })
+    that.setData({
+      sku_ids: sku_id,
+      sku_idd: sku_idss
+    })
+
+
     var apiKeys = wx.getStorageSync('Api-Key')
     var apiSecrets = wx.getStorageSync('Api-Secret')
     var address
@@ -48,11 +60,10 @@ Page({
       }
     })
 
-    this.setData({
+    that.setData({
       dataList: app.globalData.good,
       totalMoney: sum,
       totalOrder:sum,
-      sku_ids: sku_id
     })
   },
   /**
@@ -74,16 +85,53 @@ Page({
       })
     }   
   },
+
+  // 立即支付
+  confirm:function(){
+    wx.request({
+      url: 'http://172.81.209.201:8303/mpa/order',
+      method: "post",
+      dataType: 'json',
+      data: {
+        goods: this.data.sku_ids,
+        address_id:1,
+        remarks:""
+      },
+      success: function (data) {
+        console.log(data)
+        if (data.statusCode===200){
+          wx.request({
+            url: 'http://172.81.209.201:8303/mpa/payment/' + data.data.order.id,
+            method: "put",
+            dataType: 'json',
+            success:function(res){
+              var time = res.data.timeStamp
+              time=time.toString()
+              wx.requestPayment({
+                'timeStamp': time,
+                'nonceStr': data.data.order.no,
+                'package': 'prepay_id=' + res.data.result.prepay_id,
+                'signType': 'MD5',
+                'paySign': res.data.paySign,
+                'success': function () {
+                }
+              })
+            } 
+          })
+        }
+      }
+    })
+  },
 /*获取运费*/
   getCarriage:function(){
     var that=this;
       wx.request({
-        url: 'http://192.168.10.158/mpa/order/express/free',
+        url: 'http://172.81.209.201:8303/mpa/order/express/free',
         method:"post",
         dataType:'json',
         data:{
           address_id:this.data.address.id,
-          sku_ids: this.data.sku_ids
+          sku_ids: this.data.sku_idd
         },
         success:function(data){
             that.setData({
@@ -92,39 +140,5 @@ Page({
             })
         } 
       })
-  },
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
   }
 })

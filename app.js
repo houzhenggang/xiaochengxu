@@ -8,6 +8,6 @@ App({
 		classIdx:0,
     mobile:'',
 		good:[],
-    address:1
+    address:1,
   }
 })

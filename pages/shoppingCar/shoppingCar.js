@@ -1,6 +1,6 @@
 // pages/shoppingCar/shoppingCar.js
 const app = getApp()
-const requestUrl = "http://homestead.yqx.com";
+const requestUrl = "http://172.81.209.201:8303";
 Page({
 
   /**

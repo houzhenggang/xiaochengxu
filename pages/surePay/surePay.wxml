@@ -47,5 +47,5 @@
 </view>
 <view class='confirmPay'>
     <view>合计：<label>{{filters.toFix(totalOrder/100)}}</label></view>
-    <view>立即支付</view>
+    <view bindtap='confirm'>立即支付</view>
 </view>

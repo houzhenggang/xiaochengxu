@@ -1,12 +1,13 @@
 {
   "pages": [
+    "pages/shoppingCar/shoppingCar",
     "pages/index/index",
     "pages/user/user",
     "pages/search/search",
     
     "pages/address/address",    
     "pages/surePay/surePay",			
-		"pages/shoppingCar/shoppingCar",		
+				
 		"pages/detail/detail",		
 		"pages/category/category",
 				
