@@ -9,5 +9,6 @@ App({
     mobile:'',
 		good:[],
     address:1,
+    http:'http://172.81.209.201:8303'
   }
 })

@@ -113,7 +113,8 @@ Page({
                 'package': 'prepay_id=' + res.data.result.prepay_id,
                 'signType': 'MD5',
                 'paySign': res.data.paySign,
-                'success': function () {
+                'success': function (data) {
+                  console.log(data)
                 }
               })
             } 
@@ -126,7 +127,7 @@ Page({
   getCarriage:function(){
     var that=this;
       wx.request({
-        url: 'http://172.81.209.201:8303/mpa/order/express/free',
+        url: 'http://172.81.209.201:8303/mpa/order/express/fee',
         method:"post",
         dataType:'json',
         data:{
