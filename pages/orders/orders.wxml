@@ -20,8 +20,7 @@
                   <view class='top'>
                       <label>下单时间：{{item.created_at}}</label>
                       <label wx:if='{{item.status==200}}'>待付款</label>
-                      <label wx:elif='{{item.status==205}}'>已支付</label>
-                      <label wx:elif='{{item.status==300}}'>待发货</label>
+                      <label wx:elif='{{item.status==205}}'>待发货</label>
                       <label wx:elif='{{item.status==305}}'>已发货</label>
                       <label wx:elif='{{item.status==400}}'>待收货</label>
                       <label wx:elif='{{item.status==500}}'>退货中</label>

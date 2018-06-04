@@ -1,3 +1,4 @@
+var app=getApp()
 Page({
   data: {
     /** 
@@ -9,33 +10,37 @@ Page({
     currentTab: 0,
     index:0,
     allOrder:[],
-    apiKey:'',
-    apiSecret:''
+    apiSecret:'',
+    apiKey:''
   },
   onLoad: function (options) {
     var that = this;
-    var apiKeys = wx.getStorageSync('Api-Key')
-    var apiSecrets = wx.getStorageSync('Api-Secret')
+    var apiKey = wx.getStorageSync(apiKey)
+    var apiSecret = wx.getStorageSync(apiSecret)
       that.setData({
         currentTab: options.curTab,
-        apiKey: apiKeys,
-        apiSecret: apiSecrets
+        apiKey:apiKey,
+        apiSecret: apiSecret
       })
-
+      wx.showLoading({
+        title: '加载中',
+      })
       wx.request({
-        url: 'http://192.168.10.158/mpa/order',
+        url: app.globalData.http +'/mpa/order',
         data:{
           page:this.data.index,
-          per_page:20,
+          per_page:15,
           status: this.data.currentTab
         },
+
         method:'get',
         dataType:'json',
         header: {
-          "Api-Key": apiKeys,
-          "Api-Secret": apiSecrets
+          "Api-Key": that.data.apiKey,
+          "Api-Secret": that.data.apiSecret
         },
         success:function(data){
+          wx.hideLoading()
           that.setData({
             allOrder:data.data
           })
@@ -98,7 +103,7 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: 'http://192.168.10.158/mpa/order/' + id,
+            url: app.globalData.http +'/mpa/order/' + id,
             data:{
               status:idx
             },
@@ -145,12 +150,15 @@ Page({
     var that=this;
     var indexs=this.data.index;
     indexs++;
+    wx.showLoading({
+      title: '加载中',
+    })
     that.setData({ index: indexs});
     wx.request({
-      url: 'http://192.168.10.158/mpa/order',
+      url: app.globalData.http +'/mpa/order',
       data: {
         page: this.data.index,
-        per_page: 20,
+        per_page: 15,
         status: this.data.currentTab
       },
       method: 'get',
@@ -160,8 +168,9 @@ Page({
       },
       dataType: 'json',
       success: function (data) {
+        wx.hideLoading()
         var order = that.data.allOrder
-        order.concat(data.data)
+        order=order.concat(data.data)
         that.setData({
           allOrder: order
         })
@@ -185,7 +194,7 @@ Page({
     }
     console.log(this.data.currentTab);
     wx.request({
-      url: 'http://192.168.10.158/mpa/order',
+      url: app.globalData.http +'/mpa/order',
       data: {
         page: this.data.index,
         per_page: 20,

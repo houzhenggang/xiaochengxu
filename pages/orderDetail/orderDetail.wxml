@@ -45,8 +45,7 @@
           <view>
             <label>状态</label> 
              <label wx:if='{{info.status==200}}'>待付款</label>
-            <label wx:elif='{{info.status==205}}'>已支付</label>
-            <label wx:elif='{{info.status==300}}'>待发货</label>
+            <label wx:elif='{{info.status==205}}'>待发货</label>
             <label wx:elif='{{info.status==305}}'>已发货</label>
             <label wx:elif='{{info.status==400}}'>待收货</label>
             <label wx:elif='{{info.status==500}}'>退货中</label>

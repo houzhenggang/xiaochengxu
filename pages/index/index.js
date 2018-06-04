@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 const app=getApp();
-const requestUrl = app.globalData.url;
 Page({
   data: {
 		//分类
@@ -37,6 +36,7 @@ Page({
 	},
 	contactPhone(){
 		var phoneNumber = this.data.description.customer_service_mobile;
+    app.globalData.mobile = phoneNumber
 		wx.makePhoneCall({
 			phoneNumber: phoneNumber,
 		})
@@ -61,7 +61,7 @@ Page({
 		let that = this;
 		//获取店家描述数据
 		wx.request({
-			url: requestUrl + '/mpa/index',
+      url: app.globalData.http + '/mpa/index',
 			method: 'GET',
 			success(res){
         app.globalData.mobile = res.data.customer_service_mobile
@@ -77,7 +77,7 @@ Page({
 		})
 		//获取一级分类信息列表
 		wx.request({
-			url: requestUrl + '/mpa/category',
+      url: app.globalData.http +'/mpa/category',
 			success(res) {
 				console.log("一级分类请求完成")
 				console.log(res)
@@ -88,21 +88,24 @@ Page({
 		})
 		//获取推荐商品列表
 		wx.request({
-			url: requestUrl + '/mpa/goods/recommend?page=1&order_by=created_at desc&pre_page=7',
+      url: app.globalData.http + '/mpa/goods/recommend?page=1&order_by=created_at desc&pre_page=7',
 			method: 'GET',
 			success(res){
 				console.log(res)
-				//截取第一件商品
-				let firstGood = res.data.splice(0,1);
-				that.setData({
-					recommend_first:firstGood,
-					recommend_goods:res.data
-				})
+        if(res.data){
+          //截取第一件商品
+          let firstGood = res.data.splice(0, 1);
+          that.setData({
+            recommend_first: firstGood,
+            recommend_goods: res.data
+          })
+        }
+			
 			}
 		})
 		//获取特价商品列表
 		wx.request({
-			url: requestUrl + '/mpa/goods/special?page=1&order_by=price desc&pre_page=6',
+      url: app.globalData.http + '/mpa/goods/special?page=1&order_by=price desc&pre_page=6',
 			method: 'GET',
 			success(res){
 				that.setData({

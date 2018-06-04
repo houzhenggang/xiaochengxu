@@ -1,17 +1,13 @@
 {
   "pages": [
-   
+    "pages/index/index",    
     "pages/shoppingCar/shoppingCar",
-    "pages/index/index",
     "pages/user/user",
-    "pages/search/search",
-    
+    "pages/search/search",    
     "pages/address/address",    
-    "pages/surePay/surePay",			
-				
+    "pages/surePay/surePay",						
 		"pages/detail/detail",		
-		"pages/category/category",
-				
+		"pages/category/category",				
 		"pages/regMob/regMob",		
     "pages/result/result", 
     "pages/afterSale/afterSale",

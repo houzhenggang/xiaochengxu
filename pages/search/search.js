@@ -1,4 +1,5 @@
 // pages/search/search.js
+var app=getApp()
 Page({
 
   /**
@@ -15,7 +16,7 @@ Page({
 			value:e.detail.value
 		})
     wx.request({
-      url:'http://192.168.20.140/mpa/goods/search/suggest',
+      url: app.globalData.http +'/mpa/goods/search/suggest',
       data:{
         keywords: e.detail.value
       },

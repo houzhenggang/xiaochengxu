@@ -1,6 +1,6 @@
 // pages/shoppingCar/shoppingCar.js
-const app = getApp()
-const requestUrl = "http://172.81.209.201:8303";
+var  app = getApp()
+
 Page({
 
   /**
@@ -10,14 +10,13 @@ Page({
     isShow:'',
 		selectAll:false,
     datalist:[],
-   	totalPrice:0
+   	totalPrice:0,
+    page:0,
+    startX: 0, //开始坐标
+    startY: 0,
+    apiKey:'',
+    apiSecret:''
   },
-	//订单详情
-	goDetail(e){
-		wx.navigateTo({
-			url: '/pages/detail/detail?goods_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
-		})
-	},
 	//点击结算
 	balance(){
 		let that = this;
@@ -37,31 +36,55 @@ Page({
 					seleArr.push(good[i])
 				}
 			}
-			//读取app.globalData.good
-			//app.globalData.good = [];
-			// let gloGood = app.globalData.good;
-			// let newArr = [];
-			// console.log(gloGood)
-			// //标记是否存在该商品
-			// let flag = false;
-			// for (let i = 0; i < gloGood.length; i++) {
-			// 	for(let j=0; j < seleArr.length; j++){
-			// 		if (gloGood[i].id == seleArr[j].id) {
-			// 			gloGood[i] = seleArr[j]
-			// 			flag = true
-			// 		}
-			// 	}
-			// }
-			// if(!flag){
-			// 	newArr = gloGood.concat(seleArr);
-			// }
-			app.globalData.good = seleArr;
-			console.log(app.globalData.good);
-			/////////////////////////////////////////////////////////////////////////////////执行跳转
-			wx.navigateTo({
-        url: '/pages/surePay/surePay',
-			})
-		}
+      var nowTimeStamp = Date.parse(new Date());
+      var timeStamp = wx.getStorageSync('timeStamp')
+      var userId = wx.getStorageSync('userId')
+      if (timeStamp + 24 * 60 * 60 * 1000 > nowTimeStamp && userId) {
+        app.globalData.good = seleArr;
+        wx.navigateTo({
+          url: '/pages/surePay/surePay',
+        })
+      }else{
+          wx.login({
+            success(code) {       
+            //向后台发起请求，传code
+              wx.request({
+                url: app.globalData.http +'/mpa/wechat/auth',
+                method: 'POST',
+                data: {
+                  code: code.code
+                },
+                success: function (res) {
+                  //保存响应头信息
+                  var apiKey = res.header["Api-Key"],
+                    apiSecret = res.header["Api-Secret"];
+                  //设置storage
+                  //获取时间戳保存storage
+                  let timestamp = Date.parse(new Date());
+                  wx.setStorage({
+                    key: 'apiKey',
+                    data: apiKey,
+                  })
+                  wx.setStorage({
+                    key: 'timestamp',
+                    data: timestamp,
+                  })
+
+                  wx.setStorage({
+                    key: 'apiSecret',
+                    data: apiSecret,
+                  })
+                  if (!res.data.user_id) {
+                    wx.navigateTo({
+                        url: "/pages/regMob/regMob"
+                    })
+                  }
+                }
+              })
+            }
+          })
+		    }
+    }
 	},
 	//跳转首页
 	goIndex(){
@@ -81,13 +104,17 @@ Page({
       var newNum = parseInt(_this.data.datalist[index].count)-1;
 			//PUT，用户修改购物车数量
 			wx.request({
-				url: requestUrl + '/mpa/cart/' + id,
+        url: app.globalData.http +'/mpa/cart/' + id,
 				method: "PUT",
 				data: {
 					count: newNum
 				},
+        header: {
+          "Api-Key": _this.data.apiKey,
+          "Api-Secret": _this.data.apiSecret
+        },
 				success(res) {
-					console.log(res)
+
 					if (res.statusCode == 200) {
 						var num = 'datalist[' + index + '].count';
 						_this.setData({
@@ -111,8 +138,12 @@ Page({
 					// 当用户点击确定按钮
 					if(res.confirm){
 						wx.request({
-							url: requestUrl + '/mpa/cart/' + _this.data.datalist[index].id,
+              url: app.globalData.http + '/mpa/cart/' + _this.data.datalist[index].id,
 							method:"DELETE",
+              header: {
+                "Api-Key": _this.data.apiKey,
+                "Api-Secret": _this.data.apiSecret
+              },
 							success(res){
 								console.log(res)
 								//如果删除成功
@@ -144,11 +175,15 @@ Page({
 		var newNum = parseInt(_this.data.datalist[index].count) + 1;
 		//PUT，用户修改购物车数量
 		wx.request({
-			url: requestUrl + '/mpa/cart/' + id,
+      url: app.globalData.http + '/mpa/cart/' + id,
 			method:"PUT",
 			data:{
 				count:newNum
 			},
+      header: {
+        "Api-Key": _this.data.apiKey,
+        "Api-Secret": _this.data.apiSecret
+      },
 			success(res){
 				if(res.statusCode == 200){
 					var num = 'datalist[' + index + '].count';
@@ -170,7 +205,7 @@ Page({
   select(e){
     var _this = this;
 		var total = _this.data.totalPrice;
-    var index = e.target.dataset.index
+    var index = e.currentTarget.dataset.index
     var num ='datalist[' + index + '].isSelect';
 		//改变选中状态
     var newNum = !_this.data.datalist[index].isSelect;
@@ -198,10 +233,101 @@ Page({
 			totalPrice: total
 		})
   },
-  touchStart(e){
+  touchstart: function (e) {
+    //开始触摸时 重置所有删除
+    var dataList=this.data.datalist
+    dataList.forEach(function (v, i) {
+      if (v.isTouchMove)//只操作为true的
+        v.isTouchMove = false;
+    })
+    this.setData({
+      startX: e.changedTouches[0].clientX,
+      startY: e.changedTouches[0].clientY,
+      datalist: dataList
+    })
   },
-  touchEnd(e){
+  //滑动事件处理
+  touchmove: function (e) {
+    var that = this,
+      index = e.currentTarget.dataset.index,//当前索引
+      startX = that.data.startX,//开始X坐标
+      startY = that.data.startY,//开始Y坐标
+      touchMoveX = e.changedTouches[0].clientX,//滑动变化坐标
+      touchMoveY = e.changedTouches[0].clientY,//滑动变化坐标
+      //获取滑动角度
+      dataList = that.data.datalist,
+      angle = that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY });
+      dataList.forEach(function (v, i) {
+      v.isTouchMove = false
+      //滑动超过30度角 return
+      if (Math.abs(angle) > 30) return;
+      if (i == index) {
+        if (touchMoveX > startX) //右滑
+          v.isTouchMove = false
+        else //左滑
+          v.isTouchMove = true
+      }
+    })
+    //更新数据
+    that.setData({
+      datalist: dataList
+    })
   },
+/**
+  * 计算滑动角度
+  * @param {Object} start 起点坐标
+  * @param {Object} end 终点坐标
+  */
+  angle: function (start, end) {
+    var _X = end.X - start.X,
+      _Y = end.Y - start.Y
+    //返回角度 /Math.atan()返回数字的反正切值
+    return 360 * Math.atan(_Y / _X) / (2 * Math.PI);
+  },
+  //删除事件
+  del: function (e) {
+    var _this=this  
+    wx.showModal({
+      // title: '删除',
+      content: '确定删除该商品？',
+      success(res) {
+        // 当用户点击确定按钮
+        if (res.confirm) {
+          wx.request({
+            url: app.globalData.http + '/mpa/cart/' + _this.data.datalist[index].id,
+            method: "DELETE",
+            header: {
+              "Api-Key": _this.data.apiKey,
+              "Api-Secret": _this.data.apiSecret
+            },
+            success(res) {
+              console.log(res)
+              //如果删除成功
+              if (res.statusCode == 200) {
+                _this.data.datalist.splice(e.currentTarget.dataset.index, 1)
+                var total=0
+                for (let i = 0; i < _this.data.datalist.length; i++) {
+                  total += _this.data.datalist[i].price * _this.data.datalist[i].count
+                }
+                _this.setData({
+                  datalist: _this.data.datalist,
+                  totalPrice: total
+                })
+
+              } else {
+                wx.showToast({
+                  title: '请重新尝试',
+                  icon: "none"
+                })
+              }
+            }
+          })
+        }
+      }
+    })
+
+  },
+
 	//点击全选
 	selectAll(e){
 		var selectAll = this.data.selectAll;
@@ -264,8 +390,12 @@ Page({
 					//单个商品删除请求
 					if (deleArr.length == 1) {
 						wx.request({
-							url: requestUrl + '/mpa/cart/' + deleArr[0],
+              url: app.globalData.http + '/mpa/cart/' + deleArr[0],
 							method: "DELETE",
+              header: {
+                "Api-Key": that.data.apiKey,
+                "Api-Secret": that.data.apiSecret
+              },
 							success(res) {
 								console.log(res)
 								that.setData({
@@ -277,11 +407,15 @@ Page({
 					} else {
 						//批量删除请求
 						wx.request({
-							url: requestUrl + '/mpa/cart/batch',
+              url: app.globalData.http + '/mpa/cart/batch',
 							method: "DELETE",
 							data: {
 								ids: deleArr
 							},
+              header: {
+                "Api-Key": that.data.apiKey,
+                "Api-Secret": that.data.apiSecret
+              },
 							success(res) {
 								console.log(res)
 								that.setData({
@@ -298,87 +432,71 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
+  getData:function(){
+    var that=this
+    wx.showLoading({
+      title: '加载中',
+    })
+    let isShow = that.data.isShow;
+    //获取用户购物车列表
+    wx.request({
+      url: app.globalData.http + '/mpa/cart',
+      data: {
+        page: that.data.page
+      },
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret
+      },
+      success(res) {
+        if (res.data != "") {
+          let list = res.data.forEach(function (item, index) {
+            item.isSelect = false;
+            item.isTouchMove = false 
+          })
+          if (list.length == 0 && that.data.page==0) {
+            isShow = 2
+          } else {
+            isShow = 1
+          }
+          var datalists = that.data.datalist.concat(list)
+          that.setData({
+            datalist: datalists,
+            isShow: isShow
+          })
+        } else if (!res.data&&that.data.page == 0){
+          that.setData({
+            isShow: 2
+          })
+        }
+        wx.hideLoading();
+      },
+      fail:function(){
+        that.setData({
+          isShow: 2
+        })
+        wx.hideLoading();
+      }
+    })
+  },
   onLoad: function (options) {
-		wx.showLoading({
-			title: '加载中',
-		})
-		let that = this;
-		let isShow = that.data.isShow;
-		//获取用户购物车列表
-		wx.request({
-			url: requestUrl + '/mpa/cart',
-			success(res){
-				console.log(res)
-				if(res.data != ""){
-					let list = res.data.map(function (item, index, arr) {
-						item.isSelect = false;
-						return item
-					})
-					console.log(list)
-					if (list.length == 0) {
-						isShow = 2
-					} else {
-						isShow = 1
-					}
-					that.setData({
-						datalist: list,
-						isShow: isShow
-					})
-				}else{
-					that.setData({
-						isShow:2
-					})
-				}
-				wx.hideLoading();
-			}
-		})
+    var apiKey = wx.getStorageSync('apiKey')
+    var apiSecret = wx.getStorageSync('apiSecret')
+    this.setData({
+      apiKey: apiKey,
+      apiSecret: apiSecret
+    })
+    this.getData()
   },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
+  /*
+ * 页面上拉触底事件的处理函数
+ */
   onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+      var pages=this.data.page;
+      pages=pages+1
+      this.setData({
+        page:pages
+      })
+      this.getData()
   }
 })

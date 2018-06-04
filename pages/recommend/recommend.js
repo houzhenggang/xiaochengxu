@@ -1,6 +1,5 @@
 // pages/recommend/recommend.js
 const app = getApp();
-const requestUrl = app.globalData.url;
 
 Page({
 
@@ -22,7 +21,7 @@ Page({
   onLoad: function (options) {
 		let that = this;
 		wx.request({
-			url: requestUrl + '/mpa/goods/recommend',
+      url: app.globalData.http + '/mpa/goods/recommend',
 			data:{
 				page:1,
 				pre_page:5,

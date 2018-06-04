@@ -80,11 +80,15 @@ Page({
       var newNum = parseInt(_this.data.datalist[index].count)-1;
 			//PUT，用户修改购物车数量
 			wx.request({
-				url: requestUrl + '/mpa/cart/' + id,
+        url: app.globalData.http + '/mpa/cart/' + id,
 				method: "PUT",
 				data: {
 					count: newNum
 				},
+        header: {
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret
+        },
 				success(res) {
 					console.log(res)
 					if (res.statusCode == 200) {
@@ -110,8 +114,12 @@ Page({
 					// 当用户点击确定按钮
 					if(res.confirm){
 						wx.request({
-							url: requestUrl + '/mpa/cart/' + _this.data.datalist[index].id,
+              url: app.globalData.http +'/mpa/cart/' + _this.data.datalist[index].id,
 							method:"DELETE",
+              header: {
+                "Api-Key": app.globalData.apiKey,
+                "Api-Secret": app.globalData.apiSecret
+              },
 							success(res){
 								console.log(res)
 								//如果删除成功
@@ -143,11 +151,15 @@ Page({
 		var newNum = parseInt(_this.data.datalist[index].count) + 1;
 		//PUT，用户修改购物车数量
 		wx.request({
-			url: requestUrl + '/mpa/cart/' + id,
+      url: app.globalData.http +'/mpa/cart/' + id,
 			method:"PUT",
 			data:{
 				count:newNum
 			},
+      header: {
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret
+      },
 			success(res){
 				if(res.statusCode == 200){
 					var num = 'datalist[' + index + '].count';
@@ -263,8 +275,12 @@ Page({
 					//单个商品删除请求
 					if (deleArr.length == 1) {
 						wx.request({
-							url: requestUrl + '/mpa/cart/' + deleArr[0],
+              url: app.globalData.http + '/mpa/cart/' + deleArr[0],
 							method: "DELETE",
+              header: {
+                "Api-Key": app.globalData.apiKey,
+                "Api-Secret": app.globalData.apiSecret
+              },
 							success(res) {
 								console.log(res)
 								that.setData({
@@ -276,11 +292,15 @@ Page({
 					} else {
 						//批量删除请求
 						wx.request({
-							url: requestUrl + '/mpa/cart/batch',
+              url: app.globalData.http +'/mpa/cart/batch',
 							method: "DELETE",
 							data: {
 								ids: deleArr
 							},
+              header: {
+                "Api-Key": app.globalData.apiKey,
+                "Api-Secret": app.globalData.apiSecret
+              },
 							success(res) {
 								console.log(res)
 								that.setData({
@@ -302,7 +322,7 @@ Page({
 		let isShow = that.data.isShow;
 		//获取用户购物车列表
 		wx.request({
-			url: requestUrl + '/mpa/cart',
+      url: app.globalData.http + '/mpa/cart',
 			success(res){
 				console.log(res)
 				if(res.data != ""){

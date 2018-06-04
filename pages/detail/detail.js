@@ -1,6 +1,5 @@
 // pages/detail/detail.js
 const app = getApp();
-const requestUrl = app.globalData.url;
 
 Page({
 
@@ -71,7 +70,7 @@ Page({
       success(code) {
             //向后台发起请求，传code
         wx.request({
-          url: 'http://192.168.10.99/mpa/wechat/auth',
+          url: app.globalData.http +'/mpa/wechat/auth',
           method: 'POST',
           data: {
             code: code.code
@@ -142,7 +141,7 @@ Page({
 		
 		if(clickId == 1 && flag == 1){
 			wx.request({
-				url: 'http://192.168.10.158/mpa/cart',
+        url: app.globalData.http +'/mpa/cart',
 				method:"POST",
 				data:{
 					goods_sku_id:1,/////////////////////////////////固定商品ID，需改动
@@ -216,7 +215,7 @@ Page({
 		if (that.data.seleIdxA > -1 && that.data.seleIdxB > -1){
 			console.log(222222222)
 			wx.request({
-				url: requestUrl + '/mpa/goods/1/skus',//////////////////////////////////////请求路径需改动
+        url: app.globalData.http + '/mpa/goods/1/skus',//////////////////////////////////////请求路径需改动
 				method:"GET",
 				success(res){
 					let good;
@@ -264,7 +263,7 @@ Page({
 		let that = this;
 		//获取商品详情
 		wx.request({
-			url: requestUrl + '/mpa/goods/1', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
+      url: app.globalData.http + '/mpa/goods/1', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
 			success(res){
 				console.log(res);
 				that.setData({
@@ -282,7 +281,7 @@ Page({
 		})
 		//获取商品规格详情
 		wx.request({
-      url: requestUrl + '/mpa/goods/1/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
+      url: app.globalData.http + '/mpa/goods/1/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
 			success(res) {
 				that.setData({
 					spec: res.data

@@ -10,28 +10,27 @@ Page({
       apiKey:'',
       apiSecret:''
   },
-
   /*
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var apiKey = wx.getStorageSync(apiKey)
+    var apiSecret = wx.getStorageSync(apiSecret)
       var that = this;
+      that.setData({
+        apiKey: apiKey,
+        apiSecret: apiSecret
+      })
       wx.showLoading({
         title: '加载中',
       })
-      var apiKeys = wx.getStorageSync('Api-Key')
-      var apiSecrets = wx.getStorageSync('Api-Secret')
-      this.setData({
-        apiKey: apiKeys,
-        apiSecret: apiSecrets
-      })
       wx.request({
-        url: 'http://192.168.10.99/mpa/address',
+        url: app.globalData.http +'/mpa/address',
         method:'get',
         dataType:'json',
         header: {
-          "Api-Key": apiKeys,
-          "Api-Secret": apiSecrets
+          "Api-Key":apiKey,
+          "Api-Secret":apiSecret
         },
         success:function(data){
           wx.hideLoading()
@@ -57,7 +56,7 @@ Page({
               wx.chooseAddress({
                 success: function (res) {
                     wx.request({
-                      url: 'http://192.168.10.99/mpa/address',
+                      url: app.globalData.http +'/mpa/address',
                       method: 'post',
                       dataType: 'json',
                       data:{
@@ -84,7 +83,7 @@ Page({
           wx.chooseAddress({
             success: function (res) {
               wx.request({
-                url: 'http://192.168.10.99/mpa/address',
+                url: app.globalData.http +'/mpa/address',
                 method: 'post',
                 dataType: 'json',
                 data: {
@@ -114,7 +113,7 @@ Page({
     var that=this;
     var index= event.target.dataset.index;
     wx.request({
-      url: 'http://192.168.10.99/mpa/address/' + that.data.address[index].id,
+      url: app.globalData.http +'/mpa/address/' + that.data.address[index].id,
       method: 'delete',
       dataType: 'json',
       header: {
@@ -150,7 +149,7 @@ Page({
               wx.chooseAddress({
                 success: function (res) {
                   wx.request({
-                    url: 'http://192.168.10.99/mpa/address/'+that.data.address[index].id,
+                    url: app.globalData.http +'/mpa/address/'+that.data.address[index].id,
                     method: 'PUT',
                     dataType: 'json',
                     data: {
@@ -178,7 +177,7 @@ Page({
           wx.chooseAddress({
             success: function (res) {
               wx.request({
-                url: 'http://192.168.10.99/mpa/address/' + that.data.address[index].id,
+                url: app.globalData.http +'/mpa/address/' + that.data.address[index].id,
                 method: 'PUT',
                 dataType: 'json',
                 data: {
@@ -223,7 +222,7 @@ Page({
       var nums 
       var num = 'address[' + index + '].status'
       wx.request({
-        url: 'http://192.168.10.99/mpa/address/' + that.data.address[index].id,
+        url: app.globalData.http +'/mpa/address/' + that.data.address[index].id,
         method: 'PUT',
         dataType: 'json',
         data: {

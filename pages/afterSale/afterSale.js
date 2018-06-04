@@ -1,4 +1,4 @@
-// pages/afterSale/afterSale.js
+var app=getApp()
 Page({
 
   /**
@@ -8,6 +8,8 @@ Page({
     isShow:true,
     reasonID:5,
     saleArr:[],
+    apiKey:'',
+    apiSecret:'',
     orderId:'',
     info:'',
     num:0,
@@ -29,13 +31,21 @@ Page({
   onLoad: function (options) {
     var that=this;
     var id=options.id;
+    var apiKey = wx.getStorageSync(apiKey)
+    var apiSecret = wx.getStorageSync(apiSecret)
     this.setData({
-      orderId:id
+      orderId:id,
+      apiKey: apiKey,
+      apiSecret: apiSecret
     })
     wx.request({
-      url: 'http://homestead.yqx.com/mpa/order/' + id,
+      url: app.globalData.http +'/mpa/order/' + id,
       method: 'GET',
       dataType: 'json',
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret
+      },
       success: function (data) {
         var newArr=[]
         var item = data.data.items
@@ -56,7 +66,7 @@ Page({
   },
   callPhone: () => {
     wx.makePhoneCall({
-      phoneNumber: '13547831113'
+      phoneNumber: app.globalData.mobile
     })
   },
   select:function(event){
@@ -93,10 +103,8 @@ Page({
   /*提交申请*/
   submit:function(){
     var that=this;
-    var apiKeys = wx.getStorageSync('Api-Key')
-    var apiSecrets = wx.getStorageSync('Api-Secret')
     wx.request({
-      url: 'http://192.168.10.158/mpa/after_sale',
+      url: app.globalData.http +'/mpa/after_sale',
       method:"POST",
       dataType:'json',
       data:{
@@ -106,8 +114,8 @@ Page({
         order_item_ids:that.data.saleArr
       },
       header: {
-        "Api-Key": apiKeys,
-        "Api-Secret": apiSecrets
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret
       },
       success:function(data){
         console.log(data)

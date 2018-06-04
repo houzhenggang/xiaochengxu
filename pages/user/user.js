@@ -1,4 +1,4 @@
-
+var app=getApp()
 //获取应用实例
 // var utils = require("../../utils/util");
 Page({
@@ -12,25 +12,25 @@ Page({
   },
   onLoad: function () {
     var that=this;
-    
-    var timestamp = wx.getStorageSync('timestamp')
+    var timeStamp = wx.getStorageSync(timeStamp)
     var nowTimeStamp = Date.parse(new Date());
-    if (timestamp + 24 * 60 * 60 * 1000 > nowTimeStamp){
-      var apiKeys = wx.getStorageSync('Api-Key')
-      var apiSecrets = wx.getStorageSync('Api-Secret')
-      var huzan_avatarUrl = wx.getStorageSync('huzan_avatarUrl')
+    var apiKey = wx.getStorageSync('apiKey')
+    var apiSecret = wx.getStorageSync('apiSecret')
+    var info = wx.getStorageSync('huzan_avatarUrl')
+    
+    if (timeStamp + 24 * 60 * 60 * 1000 > nowTimeStamp && apiSecret && apiKey){
       that.setData({
-        userInfo: huzan_avatarUrl,
-        hasUserInfo:true
+        userInfo: info,
+        hasUserInfo: true
       })
       wx.request({
-        url: 'http://192.168.10.99/mpa/order/status/count',
+        url: app.globalData.http+'/mpa/order/status/count',
         method: 'GET',
         dataType: 'json',
-        // header: {
-        //   "Api-Key": apiKeys,
-        //   "Api-Secret": apiSecrets
-        // },
+        header: {
+          "Api-Key": apiKey,
+          "Api-Secret": apiSecret
+        },
         success: function (data) {
           var datas = data.data
           that.setData({
@@ -58,44 +58,49 @@ Page({
               userInfo: res.userInfo,
               hasUserInfo:true
             })
-            
+            wx.setStorage({
+              key: 'huzan_avatarUrl',
+              data: userInfo,
+            })          
             //向后台发起请求，传code
             wx.request({
-              url: 'http://192.168.10.99/mpa/wechat/auth',
+              url: app.globalData.http +'/mpa/wechat/auth',
               method: 'POST',
               data: {
                 code: code.code
               },
               success: function (res) {
+                console.log(res)
                 //保存响应头信息
                 var apiKey = res.header["Api-Key"],
                   apiSecret = res.header["Api-Secret"];
                 //设置storage
                 //获取时间戳保存storage
                 let timestamp = Date.parse(new Date());
+                
                 wx.setStorage({
-                  key: 'Api-Key',
-                  data: apiKey
+                  key: 'apiKey',
+                  data: apiKey,
                 })
                 wx.setStorage({
                   key: 'timestamp',
                   data: timestamp,
                 })
+                
                 wx.setStorage({
-                  key: 'Api-Secret',
-                  data: apiSecret
+                  key: 'apiSecret',
+                  data: apiSecret,
                 })
-                wx.setStorage({
-                  key: 'huzan_avatarUrl',
-                  data: userInfo,
-                })
+              
+
                 if (res.data.user_id) {
                   wx.setStorage({
                     key: 'userId',
                     data: res.data.id,
                   })
+
                   wx.request({
-                    url: 'http://192.168.10.99/mpa/wechat/' + res.data.id,
+                    url: app.globalData.http +'/mpa/wechat/' + res.data.id,
                     method: "PUT",
                     data: {
                       "nick_name": userInfo.nickName,

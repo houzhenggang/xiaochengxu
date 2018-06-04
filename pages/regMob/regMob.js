@@ -22,7 +22,7 @@ Page({
     var that=this;
     if (/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.data.mobile)){
         wx.request({
-          url: 'http://192.168.10.99/mpa/common/send_sms',
+          url: app.globalData.http +'/mpa/common/send_sms',
           method:'post',
           data:{
             mobile: this.data.mobile
@@ -96,7 +96,7 @@ Page({
         })
       }else{
           wx.request({
-            url: 'http://192.168.10.99/mpa/user/login',
+            url: app.globalData.http +'/mpa/user/login',
             method:'post',
             data:{
               mobile: this.data.mobile,

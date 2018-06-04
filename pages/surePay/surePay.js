@@ -11,7 +11,9 @@ Page({
       carriage:'0.00',
       totalOrder:'0.00',
       sku_ids: {},
-      sku_idd:[]
+      sku_idd:[],
+      apiSecret:'',
+      apiKey:''
   },
 
   /**
@@ -19,6 +21,8 @@ Page({
    */
   onLoad: function (options) { 
     var data =app.globalData.good
+    var apiKey = wx.getStorageSync(apiKey)
+    var apiSecret = wx.getStorageSync(apiSecret)
     var sku_id={}
     var sku_idss=[]
     var that=this
@@ -36,17 +40,13 @@ Page({
       sku_idd: sku_idss
     })
 
-
-    var apiKeys = wx.getStorageSync('Api-Key')
-    var apiSecrets = wx.getStorageSync('Api-Secret')
-    var address
     wx.request({
-      url: 'http://192.168.10.99/mpa/address',
+      url: app.globalData.http +'/mpa/address',
       method: 'get',
       dataType: 'json',
       header: {
-        "Api-Key": apiKeys,
-        "Api-Secret": apiSecrets
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret
       },
       success: function (data) {
         if (data.data[0].status===2){
@@ -64,6 +64,8 @@ Page({
       dataList: app.globalData.good,
       totalMoney: sum,
       totalOrder:sum,
+      apiKey:apiKey,
+      apiSecret:apiSecret
     })
   },
   /**
@@ -85,11 +87,54 @@ Page({
       })
     }   
   },
-
+  /* 查询支付状态*/
+  checkPay: function (id) {
+    var that=this
+    var t = 90;
+    var time = setInterval(function () {
+      t--
+      if (t > 1) {
+        wx.request({
+          url: app.globalData.http+'/mpa/order/' + id + '/status',
+          method: "get",
+          dataType: 'json',
+          header: {
+            "Api-Key": that.data.apiKey,
+            "Api-Secret": that.data.apiSecret
+          },
+          success: function () {
+            console.log(111)
+          },
+          fail:function(){
+            wx.showToast({
+              title: '网络错误',
+              icon: 'none',
+              duration: 2000
+            })
+          },
+          complete:function(){
+            wx.hideLoading()
+            wx.navigateTo({
+              url: '/pages/orderDetail/orderDetail?id=' + id,
+            })
+            clearInterval(time)
+          }
+        })
+      } else {
+        clearInterval(time)
+        wx.showToast({
+          title: '网络错误',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    }, 1000)
+  },
   // 立即支付
   confirm:function(){
+    var that=this
     wx.request({
-      url: 'http://172.81.209.201:8303/mpa/order',
+      url: app.globalData.http +'/mpa/order',
       method: "post",
       dataType: 'json',
       data: {
@@ -97,13 +142,23 @@ Page({
         address_id:1,
         remarks:""
       },
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret
+      },
       success: function (data) {
-        console.log(data)
         if (data.statusCode===200){
           wx.request({
-            url: 'http://172.81.209.201:8303/mpa/payment/' + data.data.order.id,
-            method: "put",
+            url: app.globalData.http +'/mpa/payment/payment',
+            method: "post",
             dataType: 'json',
+            data:{
+              order_id: data.data.order.id
+            },
+            header: {
+              "Api-Key": that.data.apiKey,
+              "Api-Secret": that.data.apiSecret
+            },
             success:function(res){
               var time = res.data.timeStamp
               time=time.toString()
@@ -113,8 +168,11 @@ Page({
                 'package': 'prepay_id=' + res.data.result.prepay_id,
                 'signType': 'MD5',
                 'paySign': res.data.paySign,
-                'success': function (data) {
-                  console.log(data)
+                'complete':function(){
+                  wx.showLoading({
+                    title: '加载中',
+                  })
+                  that.checkPay(data.data.order.id)
                 }
               })
             } 
@@ -123,16 +181,21 @@ Page({
       }
     })
   },
+ 
 /*获取运费*/
   getCarriage:function(){
     var that=this;
       wx.request({
-        url: 'http://172.81.209.201:8303/mpa/order/express/fee',
+        url: app.globalData.http +'/mpa/order/express/fee',
         method:"post",
         dataType:'json',
         data:{
           address_id:this.data.address.id,
           sku_ids: this.data.sku_idd
+        },
+        header: {
+          "Api-Key": that.data.apiKey,
+          "Api-Secret": that.data.apiSecret
         },
         success:function(data){
             that.setData({

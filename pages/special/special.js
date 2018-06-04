@@ -1,6 +1,5 @@
 // pages/special/special.js
 const app = getApp();
-const requestUrl = app.globalData.url;
 Page({
 
   /**
@@ -50,7 +49,7 @@ Page({
     console.log(11111);
 		let that = this;
 		wx.request({
-			url: requestUrl + '/mpa/goods/special',
+      url: app.globalData.http + '/mpa/goods/special',
 			data: {
 				page: 1,
 				pre_page: 5,
@@ -67,54 +66,5 @@ Page({
 		wx.setNavigationBarTitle({
 			title: '特价',
 		})
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
   }
 })

@@ -7,7 +7,9 @@ Page({
   data: {
       info:'',
       id:'',
-      show:true
+      show:true,
+      apiKey:'',
+      apiSecret:''
   },
 
   /**
@@ -16,13 +18,21 @@ Page({
   onLoad: function (options) {
     var that=this;
       var id=options.id;
+      var apiKey = wx.getStorageSync(apiKey)
+      var apiSecret = wx.getStorageSync(apiSecret)
       that.setData({
-        id:id
+        id:id,
+        apiKey: apiKey,
+        apiSecret: apiSecret
       })
       wx.request({
-        url: 'http://192.168.10.158/mpa/order/' + id,
+        url: app.globalData.http +'/mpa/order/' + id,
         method:'GET',
         dataType:'json',
+        header: {
+          "Api-Key": that.data.apiKey,
+          "Api-Secret": that.data.apiSecret
+        },
         success:function(data){
           that.setData({
             info:data.data
@@ -73,9 +83,13 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: 'http://192.168.10.158/mpa/order/' + id,
+            url: app.globalData.http +'/mpa/order/' + id,
             data: {
               status: idx
+            },
+            header: {
+              "Api-Key": that.data.apiKey,
+              "Api-Secret": that.data.apiSecret
             },
             method: 'PUT',
             dataType: 'json',

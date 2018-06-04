@@ -1,4 +1,5 @@
 // pages/refundDetail/refundDetail.js
+var app=getApp()
 Page({
 
   /**

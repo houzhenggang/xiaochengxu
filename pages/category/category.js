@@ -1,8 +1,4 @@
-// pages/category/category.js
-const app = getApp();
-let requestUrl = app.globalData.url;
-
-
+const app = getApp()
 Page({
 
   /**
@@ -46,7 +42,7 @@ Page({
 					title: '加载中',
 				})
 				wx.request({
-					url: requestUrl + '/mpa/goods/search',
+          url: app.globalData.http +'/mpa/goods/search',
 					data: {
 						category_id: tempArr[select].id
 					},
@@ -90,7 +86,7 @@ Page({
 		})
 		//请求一级分类，设置data数据
 		wx.request({
-			url: requestUrl + '/mpa/category',
+      url: app.globalData.http + '/mpa/category',
 			success(res){
 				let leftSelectedIdx = app.globalData.classIdx;
 				res.data[leftSelectedIdx].selected = true;
