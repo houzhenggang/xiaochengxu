@@ -1,7 +1,9 @@
   <view class="container">
+   <!-- <open-data type="userAvatarUrl"></open-data>
+  <open-data type="userNickName" lang="zh_CN"></open-data>  -->
   <view class="userinfo">
     <block wx:if='{{!hasUserInfo}}'>
-         <button  open-type="getUserInfo" bindtap='getInfo' hover-class='none'>
+         <button  open-type="getUserInfo" bindgetuserinfo="getInfo" hover-class='none'>
               <image src='/imgs/userHead.png'></image>
                <label>点击头像获取信息</label> 
         </button>

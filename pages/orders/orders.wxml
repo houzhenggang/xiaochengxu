@@ -10,12 +10,12 @@
   
 <scroll-view  current="{{currentTab}}" scroll-y bindscrolltolower="getMore" class="swiper-box"  style="height:{{2*winHeight - 102}}rpx">  
       <view>
-          <view class='container' hidden='{{allOrde!==[]}}'>
+          <view class='container' hidden='{{allOrder}}'>
                 <image src='/imgs/empty_order.png'></image>
                 <view>您的订单空空如也呢</view>
-                <text>去别的页面看看吧</text>
+                <label>去别的页面看看吧</label>
           </view>
-          <view  class='content' hidden='{{allOrder==[]}}' >
+          <view  class='content' hidden='{{!allOrder}}' >
               <navigator url='/pages/orderDetail/orderDetail?id={{item.id}}' hover-class='none' wx:for="{{allOrder}}" wx:for-index="index" wx:key="index">
                   <view class='top'>
                       <label>下单时间：{{item.created_at}}</label>

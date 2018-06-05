@@ -7,18 +7,16 @@ Page({
 		categoryList:[],
 		//店铺描述信息
 		description: {},
+    indicatorDots: false,
+    touch: true,
+    duration: 1000,
+    current:0,
 		//推荐商品
 		//不参与遍历的第一件推荐商品
-		recommend_first:[],
-		recommend_goods:[],
+		recommend_first:'',
+		recommend_goods:'',
 		//特价商品
-		special_goods:[]
-  },
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
+		special_goods:'',
   },
 	//跳转商品详情页
 	bindDetail(e){
@@ -45,9 +43,8 @@ Page({
 		//当前点击索引,保存到globalData
 		var index = e.currentTarget.dataset.idx;
 		app.globalData.classIdx = index;
-		console.log(app.globalData.classIdx);
 		wx.switchTab({
-			url: '/pages/category/category',
+      url: '/pages/category/category',
 		})
 	},
 	//查看更多点击事件
@@ -59,6 +56,12 @@ Page({
 	},
   onLoad: function () {
 		let that = this;
+
+    wx.getExtConfig({
+      success:function(res){
+        console.log(res)
+      }
+    })    
 		//获取店家描述数据
 		wx.request({
       url: app.globalData.http + '/mpa/index',
@@ -79,8 +82,6 @@ Page({
 		wx.request({
       url: app.globalData.http +'/mpa/category',
 			success(res) {
-				console.log("一级分类请求完成")
-				console.log(res)
 				that.setData({
 					categoryList: res.data
 				})
@@ -108,9 +109,11 @@ Page({
       url: app.globalData.http + '/mpa/goods/special?page=1&order_by=price desc&pre_page=6',
 			method: 'GET',
 			success(res){
-				that.setData({
-					special_goods:res.data
-				})
+        if(res.data){
+          that.setData({
+            special_goods: res.data,
+          })
+        }				
 			}
 		})
   }

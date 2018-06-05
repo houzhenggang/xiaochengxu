@@ -12,7 +12,7 @@ Page({
   },
   onLoad: function () {
     var that=this;
-    var timeStamp = wx.getStorageSync(timeStamp)
+    var timeStamp = wx.getStorageSync('timeStamp')
     var nowTimeStamp = Date.parse(new Date());
     var apiKey = wx.getStorageSync('apiKey')
     var apiSecret = wx.getStorageSync('apiSecret')
@@ -48,8 +48,9 @@ Page({
     var that=this;
     wx.login({
       success(code) {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
         //获取用户信息，拿到userInfo
+        // console.log(code)
+        // return false
         wx.getUserInfo({
           withCredentials: true,
           success: function (res) {
@@ -70,7 +71,6 @@ Page({
                 code: code.code
               },
               success: function (res) {
-                console.log(res)
                 //保存响应头信息
                 var apiKey = res.header["Api-Key"],
                   apiSecret = res.header["Api-Secret"];
@@ -83,7 +83,7 @@ Page({
                   data: apiKey,
                 })
                 wx.setStorage({
-                  key: 'timestamp',
+                  key: 'timeStamp',
                   data: timestamp,
                 })
                 
@@ -93,7 +93,7 @@ Page({
                 })
               
 
-                if (res.data.user_id) {
+                if (!res.data.user_id) {
                   wx.setStorage({
                     key: 'userId',
                     data: res.data.id,
@@ -116,13 +116,12 @@ Page({
                       "Api-Secret": apiSecret
                     },
                     success(res) {
+                      wx.navigateTo({
+                        url: "/pages/regMob/regMob"
+                      })
                     },
                     fail(res) {
                     }
-                  })
-                } else {
-                  wx.navigateTo({
-                    url: "/pages/regMob/regMob"
                   })
                 }
               }

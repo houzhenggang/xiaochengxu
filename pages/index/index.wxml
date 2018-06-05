@@ -14,18 +14,26 @@
 	
 	<!--classify  -->
 	<view class='index_classify'>
-		<view wx:for="{{categoryList}}" wx:key="{{index}}" data-idx="{{index}}" bindtap='switchCate'>
+		<view wx:for="{{categoryList}}" wx:key="index" data-idx="{{index}}" bindtap='switchCate'>
 			<image src='{{item.icon_url}}'></image>
 			<text>{{item.name}}</text>
 		</view>
 	</view>
+  <!-- <swiper indicator-dots="{{indicatorDots}}"
+      touch="{{touch}}"  duration="{{duration}}"  current='{{current}}'>
+      <block wx:for="{{categoryList}}" wx:for-item='item' wx:key='index'>
+        <swiper-item>
+          <view wx:for="{{item}}" class='index_classify'  wx:for-item='items'   data-idx="{{index}}" bindtap='switchCate'>
+            <image src='{{items.icon_url}}'></image>
+            <text>{{items.name}}</text>
+          </view>
+        </swiper-item>
+      </block>
+  </swiper> -->
 
-	<view class='index_current'>
-		<view></view>
-		<view></view>
-		<view></view>
-	</view>
-
+  <!-- <view class='index_current'>
+      <view class='{{current===index?"cur":''}}'></view>
+  </view> -->
 	<!--contact  -->
 	<view class="index_contact">
     <image src='{{description.logo_url}}'></image>
@@ -41,7 +49,7 @@
 	</view>
 
 	<!--recommend products  -->
-	<view class='index_recommend'>
+	<view class='index_recommend' wx:if="{{recommend_first}}">
 		<text>精品</text>
 		<text>推荐</text>
 		<text data-type='recommend' data-type='special' bindtap='showMore' bindtap='showMore'>查看更多 ></text>
@@ -49,7 +57,7 @@
 		<!-- <image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image> -->
 	</view>
 
-	<view class='index_re_produ'>
+	<view class='index_re_produ' wx:if="{{recommend_first}}">
 		<image class='re_produ_img' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" src='{{recommend_first[0].cover_url}}'  bindtap='bindDetail'></image>
 		<text class='re_produ_text' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindDetail'>{{recommend_first[0].name}}</text>
 		<view class='re_text_view' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindDetail'>
@@ -59,7 +67,7 @@
 	</view>
 
 	<view class='index_item'>
-		<view class='item_box' wx:for="{{recommend_goods}}" data-id='{{item.id}}' data-name="{{item.name}}"  wx:key="{{index}}" bindtap='bindDetail'>
+		<view class='item_box' wx:for="{{recommend_goods}}" data-id='{{item.id}}' data-name="{{item.name}}"  wx:key="index" bindtap='bindDetail'>
 			<image src='{{item.cover_url}}'></image>
 			<text class='item_text'>{{item.name}}</text>
 			<view class='item_text_view'>
@@ -69,7 +77,7 @@
 	</view>
 
 	<!--special  -->
-	<view class='index_recommend index_special'>
+	<view class='index_recommend index_special' wx:if="{{special_goods}}">
 		<text>特价</text>
 		<text>促销</text>
 		<text data-type='special' bindtap='showMore'>查看更多 ></text>
@@ -77,8 +85,8 @@
 		<!-- <image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image> -->
 	</view>
 
-	<view class='index_item'>
-		<view class='item_box' wx:key="{{index}}" wx:for="{{special_goods}}" data-id='{{item.id}}' data-name="{{item.name}}" bindtap='bindDetail'>
+	<view class='index_item' wx:if="{{special}}">
+		<view class='item_box' wx:key="index" wx:for="{{special_goods}}" data-id='{{item.id}}' data-name="{{item.name}}" bindtap='bindDetail'>
 			<image src='{{item.cover_url}}'></image>
 			<text class='item_text'>{{item.name}}</text>
 			<view class='item_text_view special_item'>

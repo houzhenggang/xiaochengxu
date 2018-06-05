@@ -27,17 +27,22 @@
   height:204rpx;
   margin:0 auto;
   margin-top: 50rpx;
+  display: block;
   margin-bottom:26rpx;  
 }
 .container view{
   font-family: PingFangSC-Regular;
   font-size: 32rpx;
   color: #333333;
+  text-align: center;
 }
-.container text{
+.container label{
   font-family: PingFangSC-Regular;
   font-size: 28rpx;
+  margin: 0 auto;
+  text-align: center;
   color: #999999;
+  display: block;
   margin-top: 32rpx;
 }
 view.carInfo{

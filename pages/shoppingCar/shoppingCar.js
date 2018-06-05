@@ -88,7 +88,7 @@ Page({
 	},
 	//跳转首页
 	goIndex(){
-		wx.navigateTo({
+    wx.switchTab({
 			url: '/pages/index/index',
 		})
 	},
@@ -482,6 +482,8 @@ Page({
   onLoad: function (options) {
     var apiKey = wx.getStorageSync('apiKey')
     var apiSecret = wx.getStorageSync('apiSecret')
+    console.log(apiKey)
+    console.log(apiSecret)
     this.setData({
       apiKey: apiKey,
       apiSecret: apiSecret

@@ -9,14 +9,14 @@ Page({
     // tab切换  
     currentTab: 0,
     index:0,
-    allOrder:[],
+    allOrder:'',
     apiSecret:'',
     apiKey:''
   },
   onLoad: function (options) {
     var that = this;
-    var apiKey = wx.getStorageSync(apiKey)
-    var apiSecret = wx.getStorageSync(apiSecret)
+    var apiKey = wx.getStorageSync('apiKey')
+    var apiSecret = wx.getStorageSync('apiSecret')
       that.setData({
         currentTab: options.curTab,
         apiKey:apiKey,
@@ -40,13 +40,19 @@ Page({
           "Api-Secret": that.data.apiSecret
         },
         success:function(data){
-          wx.hideLoading()
-          that.setData({
-            allOrder:data.data
-          })
+          if(data.data){
+            that.setData({
+              allOrder: data.data
+            })
+          }else{
+            that.setData({
+              allOrder:''
+            })
+          }
+         
         },
-        fail:function(){
-            console.log(网络延迟)
+        complete:function(){
+          wx.hideLoading()
         }
       })
     /** 
@@ -207,9 +213,15 @@ Page({
       },
       dataType: 'json',
       success: function (data) {
-        that.setData({
-          allOrder: data.data
-        })
+        if(data.data){
+          that.setData({
+            allOrder: data.data
+          })
+        }else{
+          that.setData({
+            allOrder: ''
+          })
+        } 
       }
     })
   }

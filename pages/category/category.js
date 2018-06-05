@@ -41,6 +41,9 @@ Page({
 				wx.showLoading({
 					title: '加载中',
 				})
+        that.setData({
+          select: select
+        })
 				wx.request({
           url: app.globalData.http +'/mpa/goods/search',
 					data: {
@@ -49,8 +52,7 @@ Page({
 					success(res) {
 						console.log(res)
 						that.setData({
-							second: second,
-							select: select,
+							second: second,	
 							goods: res.data
 						})
 						wx.hideLoading();
@@ -81,6 +83,9 @@ Page({
 			title: '加载中',
 		})
 		let that = this;
+    that.setData({
+      select: app.globalData.classIdx 
+    })
 		wx.setNavigationBarTitle({
 			title: '搜索',
 		})
@@ -89,13 +94,15 @@ Page({
       url: app.globalData.http + '/mpa/category',
 			success(res){
 				let leftSelectedIdx = app.globalData.classIdx;
-				res.data[leftSelectedIdx].selected = true;
+        Object.assign(res.data[leftSelectedIdx], { selected :true})
 				that.setData({
 					category:res.data[leftSelectedIdx].children,
 					leftTapArray:res.data
 				})
-				wx.hideLoading();
-			}
+			},
+      complete:function(){
+        wx.hideLoading();
+      }
 		})
   }
 })

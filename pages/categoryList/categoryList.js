@@ -10,7 +10,9 @@ Page({
 		//排序方式
 		rank: 0,
 		//flag控制上下箭头类名
-		flag: 0
+		flag: 0,
+    page:0,
+    category_id:''
   },
 	//商品点击
 	goDetail(e){
@@ -35,7 +37,7 @@ Page({
 				wx.request({
           url: app.globalData.http + '/mpa/goods/search',
 					data: {///////////////////////////////////////////////////////id需改动
-						category_id: 9,
+            category_id: that.data.category_id,
 						order_by: "price desc"
 					},
 					success(res) {
@@ -51,7 +53,7 @@ Page({
 				wx.request({
           url: app.globalData.http + '/mpa/goods/search',
 					data: {///////////////////////////////////////////////////////id需改动
-						category_id: 9,
+            category_id: that.data.category_id,
 						order_by: "price asc"
 					},
 					success(res) {
@@ -67,12 +69,10 @@ Page({
 			wx.request({
         url: app.globalData.http + '/mpa/goods/search',
 				data: {///////////////////////////////////////////////////////id需改动
-					category_id: 9,
+          category_id: that.data.category_id,
 					order_by:"sales_count desc"
 				},
 				success(res) {
-					console.log(2222222222)
-					console.log(res)
 					that.setData({
 						produList: res.data
 					})
@@ -85,7 +85,7 @@ Page({
 			wx.request({
         url: app.globalData.http +'/mpa/goods/search',
 				data: {///////////////////////////////////////////////////////id需改动
-					category_id: 9,
+          category_id: that.data.category_id,
 					order_by: "created_at desc"
 				},
 				success(res) {
@@ -109,18 +109,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-		console.log(options)
 		wx.showLoading({
 			title: '加载中',
 		});
 		let that = this;
+    that.setData({
+      category_id: options.category_id
+    })
 		wx.setNavigationBarTitle({
 			title: options.name,
 		})
 		wx.request({
       url: app.globalData.http + '/mpa/goods/search',
 			data: {///////////////////////////////////////////////////////id需改动
-				category_id:9,
+        category_id: options.category_id,
+        page:that.data.page
 			},
 			success(res){
 				that.setData({

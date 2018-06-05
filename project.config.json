@@ -12,8 +12,8 @@
 	},
 	"compileType": "miniprogram",
 	"libVersion": "1.9.98",
-	"appid": "wx32c0fd16eded8f0c",
-	"projectname": "yiqiGit",
+	"appid": "wx0ca7b2f5e9671132",
+	"projectname": "yiqixuan",
 	"isGameTourist": false,
 	"condition": {
 		"search": {
@@ -21,6 +21,10 @@
 			"list": []
 		},
 		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
 			"current": -1,
 			"list": []
 		},
