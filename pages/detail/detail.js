@@ -9,6 +9,7 @@ Page({
   data: {
 		//商品详情数据
 		goods:{},
+    image: 'http://image.yiqixuan.com/',
 		//使用data数据控制类名
 		chooseModal:false,
 		//动态控制“-”号类名

@@ -36,54 +36,49 @@ Page({
 					seleArr.push(good[i])
 				}
 			}
-      var nowTimeStamp = Date.parse(new Date());
-      var timeStamp = wx.getStorageSync('timeStamp')
-      var userId = wx.getStorageSync('userId')
-      if (timeStamp + 24 * 60 * 60 * 1000 > nowTimeStamp && userId) {
-        app.globalData.good = seleArr;
-        wx.navigateTo({
-          url: '/pages/surePay/surePay',
-        })
-      }else{
-          wx.login({
-            success(code) {       
-            //向后台发起请求，传code
-              wx.request({
-                url: app.globalData.http +'/mpa/wechat/auth',
-                method: 'POST',
-                data: {
-                  code: code.code
-                },
-                success: function (res) {
-                  //保存响应头信息
-                  var apiKey = res.header["Api-Key"],
-                    apiSecret = res.header["Api-Secret"];
-                  //设置storage
-                  //获取时间戳保存storage
-                  let timestamp = Date.parse(new Date());
-                  wx.setStorage({
-                    key: 'apiKey',
-                    data: apiKey,
-                  })
-                  wx.setStorage({
-                    key: 'timestamp',
-                    data: timestamp,
-                  })
-
-                  wx.setStorage({
-                    key: 'apiSecret',
-                    data: apiSecret,
-                  })
-                  if (!res.data.user_id) {
-                    wx.navigateTo({
-                        url: "/pages/regMob/regMob"
-                    })
-                  }
-                }
+      wx.login({
+        success(code) {       
+        //向后台发起请求，传code
+          wx.request({
+            url: app.globalData.http +'/mpa/wechat/auth',
+            method: 'POST',
+            data: {
+              code: code.code
+            },
+            success: function (res) { 
+              //保存响应头信息
+              var apiKey = res.header["Api-Key"],
+                apiSecret = res.header["Api-Secret"];
+              //设置storage
+              //获取时间戳保存storage
+              let timestamp = Date.parse(new Date());
+              wx.setStorage({
+                key: 'apiKey',
+                data: apiKey,
               })
+              wx.setStorage({
+                key: 'timestamp',
+                data: timestamp,
+              })
+
+              wx.setStorage({
+                key: 'apiSecret',
+                data: apiSecret,
+              })
+              if (!res.data.user_id) {
+                wx.navigateTo({
+                    url: "/pages/regMob/regMob"
+                })
+              }else{
+                app.globalData.good = seleArr;
+                wx.navigateTo({
+                  url: '/pages/surePay/surePay',
+                })
+              }
             }
           })
-		    }
+        }
+      })
     }
 	},
 	//跳转首页
@@ -450,9 +445,11 @@ Page({
       },
       success(res) {
         if (res.data != "") {
-          let list = res.data.forEach(function (item, index) {
+          var list=[]
+          res.data.forEach(function (item, index) {
             item.isSelect = false;
             item.isTouchMove = false 
+            list.push(item)
           })
           if (list.length == 0 && that.data.page==0) {
             isShow = 2

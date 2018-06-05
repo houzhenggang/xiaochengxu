@@ -15,7 +15,7 @@
 	<!--classify  -->
 	<view class='index_classify'>
 		<view wx:for="{{categoryList}}" wx:key="index" data-idx="{{index}}" bindtap='switchCate'>
-			<image src='{{item.icon_url}}'></image>
+			<image src='{{image}}{{item.icon_url}}'></image>
 			<text>{{item.name}}</text>
 		</view>
 	</view>

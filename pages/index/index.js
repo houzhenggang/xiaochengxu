@@ -4,6 +4,7 @@ const app=getApp();
 Page({
   data: {
 		//分类
+    image: 'http://image.yiqixuan.com/',
 		categoryList:[],
 		//店铺描述信息
 		description: {},

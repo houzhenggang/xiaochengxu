@@ -31,7 +31,6 @@
 }
 
 .index_classify{
-	height: 16.66%;
 	width: 710rpx;
 	margin: 0 auto;
 	margin-top: 32rpx;
@@ -44,7 +43,7 @@
 .index_classify view{
 	display: flex;
 	height: 128rpx;
-	width: 710rpx;
+	width: 16.66%;
 	flex-direction: column;
 	align-items: center;
 	justify-content: space-between
