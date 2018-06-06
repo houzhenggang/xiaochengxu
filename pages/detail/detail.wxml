@@ -1,5 +1,6 @@
 <!--pages/detail/detail.wxml-->
 <wxs module="filters" src="../../utils/method.wxs"></wxs>
+<import src="../../wxParse/wxParse.wxml"/> 
 <view class='detail_container'>
 	
 	<!-- detail images  -->
@@ -8,7 +9,7 @@
 		<block wx:for='{{imgs}}' wx:key="{{index}}">
 			<swiper-item>
 				<view class='detail_imgs'>
-					<image src='{{image}}{{item.url}}'></image>
+					<image src='{{image}}{{item.icon_url}}'></image>
 				</view>
 			</swiper-item>
 		</block>
@@ -27,10 +28,13 @@
 			</view>	
 		</view>
 		<view class='detail_price padding'>
-			<text>￥{{filters.toFix(goods.price/100)}}</text><text>￥{{filter.toFix(goods.display_price/100)}}</text>
+			<text>￥{{filters.toFix(goods.price/100)}}</text><text>￥{{filters.toFix(goods.display_price/100)}}</text>
 		</view>
 		<view class='detail_info'>
-			<text>月销{{goods.sales_count}}笔</text><text>快递:{{filter.toFix(goods.free_express_price/100)}}</text><text>浙江杭州</text>
+			<text>月销{{goods.sales_count}}笔</text>
+      <text wx:if="{{goods.is_free_express==1}}">快递:包邮</text>
+      <text wx:else>快递:{{filter.toFix(goods.free_express_price/100)}}</text>
+      <text>浙江杭州</text>
 		</view>
 		<view class='detail_promise padding'>
 			<view><image src='/imgs/detail/product_icon_sign@2x.png'></image><text>全场包邮</text></view>
@@ -91,4 +95,8 @@
 		</view>
 		<view class='confirm' data-id='1' bindtap='closeModal'>确认</view> 
 	</view>
+  <!-- <view class='description'>{{description}}</view> -->
+   <view class='description'>
+        <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+   </view>  
 </view>

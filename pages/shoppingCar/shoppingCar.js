@@ -41,49 +41,49 @@ Page({
       wx.navigateTo({
         url: '/pages/surePay/surePay',
       })
-      // wx.login({ 
-      //   success(code) {       
-      //   //向后台发起请求，传code
-      //     wx.request({
-      //       url: app.globalData.http +'/mpa/wechat/auth',
-      //       method: 'POST',
-      //       data: {
-      //         code: code.code
-      //       },
-      //       success: function (res) { 
-      //         //保存响应头信息
-      //         var apiKey = res.header["Api-Key"],
-      //           apiSecret = res.header["Api-Secret"];
-      //         //设置storage
-      //         //获取时间戳保存storage
-      //         let timestamp = Date.parse(new Date());
-      //         wx.setStorage({
-      //           key: 'apiKey',
-      //           data: apiKey,
-      //         })
-      //         wx.setStorage({
-      //           key: 'timestamp',
-      //           data: timestamp,
-      //         })
+      wx.login({ 
+        success(code) {       
+        //向后台发起请求，传code
+          wx.request({
+            url: app.globalData.http +'/mpa/wechat/auth',
+            method: 'POST',
+            data: {
+              code: code.code
+            },
+            success: function (res) { 
+              //保存响应头信息
+              var apiKey = res.header["Api-Key"],
+                apiSecret = res.header["Api-Secret"];
+              //设置storage
+              //获取时间戳保存storage
+              let timestamp = Date.parse(new Date());
+              wx.setStorage({
+                key: 'apiKey',
+                data: apiKey,
+              })
+              wx.setStorage({
+                key: 'timestamp',
+                data: timestamp,
+              })
 
-      //         wx.setStorage({
-      //           key: 'apiSecret',
-      //           data: apiSecret,
-      //         })
-      //         if (!res.data.user_id) {
-      //           wx.navigateTo({
-      //               url: "/pages/regMob/regMob"
-      //           })
-      //         }else{
-      //           app.globalData.good = seleArr;
-      //           wx.navigateTo({
-      //             url: '/pages/surePay/surePay',
-      //           })
-      //         }
-      //       }
-      //     })
-      //   }
-      // })
+              wx.setStorage({
+                key: 'apiSecret',
+                data: apiSecret,
+              })
+              if (!res.data.user_id) {
+                wx.navigateTo({
+                    url: "/pages/regMob/regMob"
+                })
+              }else{
+                app.globalData.good = seleArr;
+                wx.navigateTo({
+                  url: '/pages/surePay/surePay',
+                })
+              }
+            }
+          })
+        }
+      })
     }
 	},
 	//跳转首页

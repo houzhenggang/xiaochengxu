@@ -22,6 +22,7 @@ Page({
    */
   onLoad: function (options) { 
     var data =app.globalData.good
+    console.log(app.globalData.good)
     var apiKey = wx.getStorageSync(apiKey)
     var apiSecret = wx.getStorageSync(apiSecret)
     var sku_id={}
@@ -36,6 +37,7 @@ Page({
       Object.assign(sku_id,obj)
       sku_idss.push(v.goods_sku_id)
     })
+    console.log(sku_id)
     that.setData({
       sku_ids: sku_id,
       sku_idd: sku_idss

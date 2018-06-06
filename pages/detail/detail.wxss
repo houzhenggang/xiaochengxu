@@ -1,4 +1,5 @@
 /* pages/detail/detail.wxss */
+@import "/wxParse/wxParse.wxss";
 page{
 	height: 100%;
 	font-family: PingFangSC-Regular;
@@ -14,6 +15,9 @@ image{
 swiper{
 	width:750rpx;
 	height:672rpx;
+}
+.description{
+  font-size: 15rpx;
 }
 .detail_imgs image{
 	width: 750rpx;
@@ -121,6 +125,7 @@ swiper{
 	height: 100rpx;
 	position: fixed;
 	bottom: 0;
+  background: #fff;
 	border-top: 1rpx #D7D7D7 solid;
 	box-sizing: border-box;
 	display: flex;

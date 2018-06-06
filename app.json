@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/category/category",
     "pages/index/index",    
     "pages/shoppingCar/shoppingCar",
     "pages/user/user",
@@ -7,7 +8,7 @@
     "pages/address/address",    
     "pages/surePay/surePay",						
 		"pages/detail/detail",		
-		"pages/category/category",				
+						
 		"pages/regMob/regMob",		
     "pages/result/result", 
     "pages/afterSale/afterSale",

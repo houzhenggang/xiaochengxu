@@ -1,6 +1,6 @@
 // pages/detail/detail.js
 const app = getApp();
-
+var WxParse = require('../../wxParse/wxParse.js');
 Page({
 
   /**
@@ -30,7 +30,8 @@ Page({
 		good:{},
 		goodPrice:0,
 		goodUrl:"",
-		imgs: {}
+		imgs: {},
+    description:''
   },
 	/* 规格选择弹出事件 */
 	modalShow(e){
@@ -70,6 +71,7 @@ Page({
     wx.login({
       success(code) {
             //向后台发起请求，传code
+            console.log(333)
         wx.request({
           url: app.globalData.http +'/mpa/wechat/auth',
           method: 'POST',
@@ -112,6 +114,10 @@ Page({
             }
           }
         })
+      },
+      fail:function(res){
+        console.log(res)
+        return false
       }
     })
 
@@ -145,7 +151,7 @@ Page({
         url: app.globalData.http +'/mpa/cart',
 				method:"POST",
 				data:{
-					goods_sku_id:1,/////////////////////////////////固定商品ID，需改动
+          goods_sku_id: that.data.good.id,
 					count:that.data.num
 				},
 				success(res){
@@ -159,6 +165,7 @@ Page({
 			//将商品信息、数量保存到app
 			let good = that.data.good;
 			good.count = that.data.num;
+      good.goods_sku_id = that.data.good.id;
       good.name=that.data.name;
       good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a
 			if(flag == false){
@@ -213,7 +220,6 @@ Page({
 		let aArr = that.data.spec.spec_a.propertis,
 				bArr = that.data.spec.spec_b.propertis;
 		if (that.data.seleIdxA > -1 && that.data.seleIdxB > -1){
-			console.log(222222222)
 			wx.request({
         url: app.globalData.http + '/mpa/goods/1/skus',//////////////////////////////////////请求路径需改动
 				method:"GET",
@@ -240,10 +246,9 @@ Page({
 			console.log(res.target)
 		}
 		return{
-			title:"我的第一个分享",
-			path:"/pages/detail/detail?id=2",
+      title: this.data.goods.name,
+			path:"/pages/detail/detail?id="+this.data.goods.id,
 			success(res){
-				console.log(1111)
 			}
 		}
 	},
@@ -261,32 +266,37 @@ Page({
 			title: '加载中',
 		})
 		let that = this;
+    var good_id;
 		//获取商品详情
 		wx.request({
       url: app.globalData.http + '/mpa/goods/' + options.id, /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
 			success(res){
+        good_id = res.data.id
+
+       
 				that.setData({
 					goods:res.data,
 					goodUrl:res.data.cover_url,
 					goodPrice:res.data.price,
 					imgs:res.data.images,
           name: res.data.name
+          // description: res.data.detail.content
 				})
         wx.setNavigationBarTitle({
           title: res.data.name,
         })
+        WxParse.wxParse('article', 'html', res.data.detail.content, that, 5);
+        //获取商品规格详情
+        wx.request({
+          url: app.globalData.http + '/mpa/goods/' + res.data.id + '/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
+          success(data) {
+            that.setData({
+              spec: data.data
+            })
+          }
+        })
 				wx.hideLoading();
 			}
-		})
-		//获取商品规格详情
-		wx.request({
-      url: app.globalData.http + '/mpa/goods/1/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
-			success(res) {
-				that.setData({
-					spec: res.data
-				})
-			}
-		})
-		
+		})	
   }
 })

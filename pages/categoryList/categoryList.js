@@ -21,13 +21,37 @@ Page({
 			url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
 	},
+
+  getList: function (order_by){
+    var that=this
+    wx.showLoading({
+      title: '加载中',
+    });
+    wx.request({
+      url: app.globalData.http + '/mpa/goods/search',
+      data: {///////////////////////////////////////////////////////id需改动
+        category_id: that.data.category_id,
+        order_by: order_by,
+        page:that.data.page
+      },
+      success(res) {
+        that.setData({
+          produList: res.data
+        })
+      },
+      fail:function(){
+        wx.hideLoading();
+      }
+    })
+
+  },
 	//排序方式点击
 	bindRank(e){
 		//当前所点击排序方式
-		wx.showLoading({
-			title: '加载中',
-		});
-		var that = this;
+		// wx.showLoading({
+		// 	title: '加载中',
+		// });
+		// var that = this;
 		var currIndex = e.currentTarget.dataset.id;
 		var flag = this.data.flag;
 		//判断价格排序方式
@@ -35,35 +59,37 @@ Page({
 			if(flag == 0 || flag == 2){
 				flag = 1
 				//按价格降序
-				wx.request({
-          url: app.globalData.http + '/mpa/goods/search',
-					data: {///////////////////////////////////////////////////////id需改动
-            category_id: that.data.category_id,
-						order_by: "price desc"
-					},
-					success(res) {
-						that.setData({
-							produList: res.data
-						})
-						wx.hideLoading();
-					}
-				})
+				// wx.request({
+        //   url: app.globalData.http + '/mpa/goods/search',
+				// 	data: {///////////////////////////////////////////////////////id需改动
+        //     category_id: that.data.category_id,
+				// 		order_by: "price desc"
+				// 	},
+				// 	success(res) {
+				// 		that.setData({
+				// 			produList: res.data
+				// 		})
+				// 		wx.hideLoading();
+				// 	}
+				// })
+        this.getList('price desc')
 			}else if(flag == 1){
 				flag = 2
 				//按价格升序
-				wx.request({
-          url: app.globalData.http + '/mpa/goods/search',
-					data: {///////////////////////////////////////////////////////id需改动
-            category_id: that.data.category_id,
-						order_by: "price asc"
-					},
-					success(res) {
-						that.setData({
-							produList: res.data
-						})
-						wx.hideLoading();
-					}
-				})
+				// wx.request({
+        //   url: app.globalData.http + '/mpa/goods/search',
+				// 	data: {///////////////////////////////////////////////////////id需改动
+        //     category_id: that.data.category_id,
+				// 		order_by: "price asc"
+				// 	},
+				// 	success(res) {
+				// 		that.setData({
+				// 			produList: res.data
+				// 		})
+				// 		wx.hideLoading();
+				// 	}
+				// })
+        this.getList('price desc')
 			}
 		}else if(currIndex == 1){
 			//按销量排序
@@ -90,8 +116,6 @@ Page({
 					order_by: "created_at desc"
 				},
 				success(res) {
-					console.log(1111111)
-					console.log(res)
 					that.setData({
 						produList: res.data
 					})
@@ -134,53 +158,27 @@ Page({
 			}
 		})
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
   
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+    // var pages=this.data.page
+    // pages++
+    // this.setData({
+    //   page:pages
+    // })
+    // wx.request({
+    //   url: app.globalData.http + '/mpa/goods/search',
+		// 	data: {///////////////////////////////////////////////////////id需改动
+    //     category_id: options.category_id,
+    //     page:that.data.page
+		// 	},
+		// 	success(res){
+		// 		that.setData({
+		// 			produList: res.data
+		// 		})
+		// 		wx.hideLoading();
+		// 	}
+		// })
   }
 })
