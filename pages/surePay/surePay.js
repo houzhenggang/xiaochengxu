@@ -105,30 +105,47 @@ Page({
             "Api-Key": that.data.apiKey,
             "Api-Secret": that.data.apiSecret
           },
-          success: function () {
-            console.log(111)
+          success: function (data) {
+            if(data.data.status==205){
+              clearInterval(time)
+              wx.showToast({
+                title: '支付成功',
+                icon: 'none',
+                duration: 500
+              },function(){
+                wx.navigateTo({
+                  url: '/pages/orderDetail/orderDetail?id=' + id,
+                })
+              })
+             
+            }
+           
           },
           fail:function(){
+            
             wx.showToast({
-              title: '网络错误',
+              title: '支付失败',
               icon: 'none',
-              duration: 2000
+              duration: 500
+            },function(){
+              clearInterval(time)
+              wx.navigateTo({
+                url: '/pages/orderDetail/orderDetail?id=' + id,
+              })
             })
-          },
-          complete:function(){
-            wx.hideLoading()
-            wx.navigateTo({
-              url: '/pages/orderDetail/orderDetail?id=' + id,
-            })
-            clearInterval(time)
+            
           }
         })
       } else {
-        clearInterval(time)
         wx.showToast({
           title: '网络错误',
           icon: 'none',
-          duration: 2000
+          duration: 500
+        }, function () {
+          clearInterval(time)
+          wx.navigateTo({
+            url: '/pages/orderDetail/orderDetail?id=' + id,
+          })
         })
       }
     }, 1000)
@@ -156,7 +173,7 @@ Page({
             method: "post",
             dataType: 'json',
             data:{
-              order_id: data.data.order.id
+              order_id: data.data.id
             },
             header: {
               "Api-Key": that.data.apiKey,
@@ -165,17 +182,19 @@ Page({
             success:function(res){
               var time = res.data.timeStamp
               time=time.toString()
+              console.log(res)
               wx.requestPayment({
                 'timeStamp': time,
-                'nonceStr': data.data.order.no,
+                'nonceStr': data.data.no,
                 'package': 'prepay_id=' + res.data.result.prepay_id,
                 'signType': 'MD5',
                 'paySign': res.data.paySign,
-                'complete':function(){
+                'complete':function(res){
+                  console.log(res)
                   wx.showLoading({
                     title: '加载中',
                   })
-                  that.checkPay(data.data.order.id)
+                  that.checkPay(data.data.id)
                 }
               })
             } 
