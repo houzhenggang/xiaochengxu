@@ -9,6 +9,7 @@ Page({
       id:'',
       show:true,
       apiKey:'',
+      image: 'http://image.yiqixuan.com/',
       apiSecret:''
   },
 

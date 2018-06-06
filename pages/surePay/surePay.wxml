@@ -20,7 +20,7 @@
 
 <view class='detail'>
     <view  class='menus' wx:for='{{dataList}}' wx:key='index'>
-        <image src='{{item.cover_url}}'></image>
+        <image src='{{image}}{{item.cover_url}}'></image>
         <view class='desc'>
             <label>{{item.name}}</label>
             <label>{{item.sku_description}}</label>

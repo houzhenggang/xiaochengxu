@@ -18,7 +18,7 @@ Page({
 	//商品点击
 	goDetail(e){
 		wx.navigateTo({
-			url: '/pages/detail/detail?goods_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
+			url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
 	},
 	//排序方式点击

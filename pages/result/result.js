@@ -10,7 +10,8 @@ Page({
 		//排序方式,控制类名
 		rank: 0,
 		//flag控制上下箭头类名
-		flag: 0
+		flag: 0,
+    image: 'http://image.yiqixuan.com/',
 	},
 	//商品点击
 	goDetail(e) {

@@ -3,7 +3,7 @@
     <view class='clearfix' wx:for='{{info}}' wx:for-index='index' wx:key='index'>
          <image class='select' bindtap='select' data-index="{{index}}"  wx:if='{{item.isSelect}}'src='/imgs/checked.png'></image>
         <image class='select' data-index="{{index}}"   bindtap='select'  wx:else='{{item.isSelect}}'src='/imgs/unchecked.png'></image>
-        <image src='{{item.cover_url}}' class='img'></image>
+        <image src='{{image}}{{item.cover_url}}' class='img'></image>
         <view class='info'>
             <label class='title'>{{item.name}}</label>
             <label class='size'>{{item.sku_description}}</label>

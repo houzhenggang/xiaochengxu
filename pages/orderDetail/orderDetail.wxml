@@ -11,7 +11,7 @@
 </view>
 <view class='detail'>
     <view  class='menus' wx:for='{{info.items}}' wx:for-item='items' wx:key='index'>
-        <image src='{{items.cover_url}}'></image>
+        <image src='{{image}}{{items.cover_url}}'></image>
         <view class='desc'>
             <label>{{items.name}}</label>
             <label>{{items.sku_description}}</label>

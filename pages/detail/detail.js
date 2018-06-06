@@ -156,7 +156,6 @@ Page({
 				}
 			})
 		}else if(clickId == 1 && flag == 2){//来源为立即购买，即flag为2
-			console.log(111111)
 			//将商品信息、数量保存到app
 			let good = that.data.good;
 			good.count = that.data.num;
@@ -264,9 +263,8 @@ Page({
 		let that = this;
 		//获取商品详情
 		wx.request({
-      url: app.globalData.http + '/mpa/goods/1', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
+      url: app.globalData.http + '/mpa/goods/' + options.id, /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
 			success(res){
-				console.log(res);
 				that.setData({
 					goods:res.data,
 					goodUrl:res.data.cover_url,

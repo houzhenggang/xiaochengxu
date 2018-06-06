@@ -6,6 +6,7 @@ Page({
    */
   data: {
 		select:0,
+    image: 'http://image.yiqixuan.com/',
 		leftTapArray:[],
 		//是否存在二级分类
 		second:1,
@@ -17,60 +18,44 @@ Page({
 	//处理左侧楼层点击事件
 	leftCellTap(e){
 		let that = this,
-				select = e.currentTarget.dataset.idx,
-				tempArr = that.data.leftTapArray,
-				second = tempArr[select].code,
-				category = tempArr[select].children;
-				console.log(second);
+    select = e.currentTarget.dataset.idx,
+    tempArr = that.data.leftTapArray,
+    category = tempArr[select].children;
 		//存在二级分类
-		if(second == 1){
+    that.setData({
+      select: select
+    })
+    if (category.length){      
 			that.setData({
-				second:second,
-				category:category,
-				select: select
+				category:category
 			});
 		}else{
-			//不存在二级分类
-			//判断是否goods是否已存在
-			if(that.data.goods.length !== 0){
-				that.setData({
-					second: second,
-					select: select
-				})
-			}else{
-				wx.showLoading({
-					title: '加载中',
-				})
-        that.setData({
-          select: select
-        })
-				wx.request({
-          url: app.globalData.http +'/mpa/goods/search',
-					data: {
-						category_id: tempArr[select].id
-					},
-					success(res) {
-						console.log(res)
-						that.setData({
-							second: second,	
-							goods: res.data
-						})
-						wx.hideLoading();
-					}
-				})
-			}
+      wx.showLoading({
+        title: '加载中',
+      })
+      wx.request({
+        url: app.globalData.http +'/mpa/goods/search',
+        data: {
+          category_id: tempArr[select].id
+        },
+        success(res) {
+          that.setData({
+            goods: res.data,
+            category: category
+          })
+          wx.hideLoading();
+        }
+      })
 		}
 	},
 	//点击二级分类
 	goList(e) {
-		console.log(e)
 		wx.navigateTo({
 			url: '/pages/categoryList/categoryList?category_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
 	},
 	//点击商品跳转商品详情
 	goDetail(e){
-		console.log(e)
 		wx.navigateTo({
       url: '/pages/detail/detail?id='+e.currentTarget.dataset.id,
 		})
@@ -78,7 +63,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onShow: function (options) {
 		wx.showLoading({
 			title: '加载中',
 		})
@@ -99,6 +84,19 @@ Page({
 					category:res.data[leftSelectedIdx].children,
 					leftTapArray:res.data
 				})
+        if (!res.data[leftSelectedIdx].children.length){
+          wx.request({
+            url: app.globalData.http + '/mpa/goods/search',
+            data: {
+              category_id: res.data[leftSelectedIdx].id,
+            },
+            success(data) {
+              that.setData({
+                goods: data.data
+              })
+            }
+          })
+        }
 			},
       complete:function(){
         wx.hideLoading();

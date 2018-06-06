@@ -14,7 +14,7 @@
               <image class='select'  wx:if='{{item.isSelect}}' src='/imgs/checked.png'></image>
               <image class='select'   wx:else='{{item.isSelect}}' src='/imgs/unchecked.png'></image>
         </view>
-      <image class='goodImg' src='{{item.cover_url}}'></image>
+      <image class='goodImg' src='{{image}}{{item.cover_url}}'></image>
       <view class='goodsInfo'>    
               <view>{{item.name}}</view>
               <label>{{item.sku_description}}</label>

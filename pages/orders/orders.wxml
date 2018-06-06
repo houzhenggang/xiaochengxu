@@ -27,7 +27,7 @@
                       <label wx:elif='{{item.status==405}}'>已收货</label>
                   </view>
                   <view class='orderList' wx:for="{{item.items}}" wx:for-index="id" wx:for-item="items" wx:key="id">
-                          <image class='goodImg' src='{{items.cover_url}}'></image>
+                          <image class='goodImg' src='{{image}}{{items.cover_url}}'></image>
                           <view class='goodsInfo'>     
                               <view class='title'>{{items.name}}</view>
                               

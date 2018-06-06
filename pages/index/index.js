@@ -21,18 +21,17 @@ Page({
   },
 	//跳转商品详情页
 	bindDetail(e){
-		console.log(e)
 		wx.navigateTo({
-			url: '/pages/detail/detail?goods_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
+			url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
 	},
-	//跳转订单页
-	bindOrder(e){
-		console.log(e)
-		// wx.navigateTo({
-		// 	url: '/pages/orders/orders',
-		// })
-	},
+	// //跳转订单页
+	// bindOrder(e){
+	// 	console.log(e)
+	// 	// wx.navigateTo({
+	// 	// 	url: '/pages/orders/orders',
+	// 	// })
+	// },
 	contactPhone(){
 		var phoneNumber = this.data.description.customer_service_mobile;
     app.globalData.mobile = phoneNumber
@@ -58,11 +57,11 @@ Page({
   onLoad: function () {
 		let that = this;
 
-    wx.getExtConfig({
-      success:function(res){
-        console.log(res)
-      }
-    })    
+    // wx.getExtConfig({
+    //   success:function(res){
+    //     console.log(res)
+    //   }
+    // })    
 		//获取店家描述数据
 		wx.request({
       url: app.globalData.http + '/mpa/index',

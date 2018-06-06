@@ -10,6 +10,7 @@ Page({
     currentTab: 0,
     index:0,
     allOrder:'',
+    image: 'http://image.yiqixuan.com/',
     apiSecret:'',
     apiKey:''
   },

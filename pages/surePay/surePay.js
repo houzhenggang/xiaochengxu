@@ -11,6 +11,7 @@ Page({
       carriage:'0.00',
       totalOrder:'0.00',
       sku_ids: {},
+      image: 'http://image.yiqixuan.com/',
       sku_idd:[],
       apiSecret:'',
       apiKey:''

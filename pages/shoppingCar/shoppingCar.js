@@ -10,6 +10,7 @@ Page({
     isShow:'',
 		selectAll:false,
     datalist:[],
+    image: 'http://image.yiqixuan.com/',
    	totalPrice:0,
     page:0,
     startX: 0, //开始坐标
@@ -36,49 +37,53 @@ Page({
 					seleArr.push(good[i])
 				}
 			}
-      wx.login({
-        success(code) {       
-        //向后台发起请求，传code
-          wx.request({
-            url: app.globalData.http +'/mpa/wechat/auth',
-            method: 'POST',
-            data: {
-              code: code.code
-            },
-            success: function (res) { 
-              //保存响应头信息
-              var apiKey = res.header["Api-Key"],
-                apiSecret = res.header["Api-Secret"];
-              //设置storage
-              //获取时间戳保存storage
-              let timestamp = Date.parse(new Date());
-              wx.setStorage({
-                key: 'apiKey',
-                data: apiKey,
-              })
-              wx.setStorage({
-                key: 'timestamp',
-                data: timestamp,
-              })
-
-              wx.setStorage({
-                key: 'apiSecret',
-                data: apiSecret,
-              })
-              if (!res.data.user_id) {
-                wx.navigateTo({
-                    url: "/pages/regMob/regMob"
-                })
-              }else{
-                app.globalData.good = seleArr;
-                wx.navigateTo({
-                  url: '/pages/surePay/surePay',
-                })
-              }
-            }
-          })
-        }
+      app.globalData.good = seleArr;
+      wx.navigateTo({
+        url: '/pages/surePay/surePay',
       })
+      // wx.login({ 
+      //   success(code) {       
+      //   //向后台发起请求，传code
+      //     wx.request({
+      //       url: app.globalData.http +'/mpa/wechat/auth',
+      //       method: 'POST',
+      //       data: {
+      //         code: code.code
+      //       },
+      //       success: function (res) { 
+      //         //保存响应头信息
+      //         var apiKey = res.header["Api-Key"],
+      //           apiSecret = res.header["Api-Secret"];
+      //         //设置storage
+      //         //获取时间戳保存storage
+      //         let timestamp = Date.parse(new Date());
+      //         wx.setStorage({
+      //           key: 'apiKey',
+      //           data: apiKey,
+      //         })
+      //         wx.setStorage({
+      //           key: 'timestamp',
+      //           data: timestamp,
+      //         })
+
+      //         wx.setStorage({
+      //           key: 'apiSecret',
+      //           data: apiSecret,
+      //         })
+      //         if (!res.data.user_id) {
+      //           wx.navigateTo({
+      //               url: "/pages/regMob/regMob"
+      //           })
+      //         }else{
+      //           app.globalData.good = seleArr;
+      //           wx.navigateTo({
+      //             url: '/pages/surePay/surePay',
+      //           })
+      //         }
+      //       }
+      //     })
+      //   }
+      // })
     }
 	},
 	//跳转首页
@@ -439,10 +444,10 @@ Page({
       data: {
         page: that.data.page
       },
-      header: {
-        "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret
-      },
+      // header: {
+      //   "Api-Key": that.data.apiKey,
+      //   "Api-Secret": that.data.apiSecret
+      // },
       success(res) {
         if (res.data != "") {
           var list=[]
@@ -477,14 +482,14 @@ Page({
     })
   },
   onLoad: function (options) {
-    var apiKey = wx.getStorageSync('apiKey')
-    var apiSecret = wx.getStorageSync('apiSecret')
-    console.log(apiKey)
-    console.log(apiSecret)
-    this.setData({
-      apiKey: apiKey,
-      apiSecret: apiSecret
-    })
+    // var apiKey = wx.getStorageSync('apiKey')
+    // var apiSecret = wx.getStorageSync('apiSecret')
+    // console.log(apiKey)
+    // console.log(apiSecret)
+    // this.setData({
+    //   apiKey: apiKey,
+    //   apiSecret: apiSecret
+    // })
     this.getData()
   },
   /*

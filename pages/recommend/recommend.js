@@ -7,7 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-		produList: []
+		produList: [],
+    image: 'http://image.yiqixuan.com/'
   },
 	//跳转商品详情
 	goDetail(e){

@@ -16,7 +16,7 @@
 			<block wx:if="{{second==1}}">
 				<view class='right_flex'>
 					<view wx:for="{{category}}" wx:key="{{index}}" data-idx='{{index}}' data-id='{{item.id}}' data-name='{{item.name}}' class='right_cell' bindtap='goList'>
-						<image src='{{item.icon_url}}'></image>
+						<image src='{{image}}{{item.icon_url}}'></image>
 						<text>{{item.name}}</text>
 					</view>
 				</view>
@@ -24,7 +24,7 @@
 			<block wx:else>
 				<view class='goods'>
 					<view wx:for="{{goods}}" data-id='{{item.id}}' wx:key="{{index}}" class='goods_item' bindtap='goDetail'>
-						<image src='{{item.cover_url}}'></image>
+						<image src='{{image}}{{item.cover_url}}'></image>
 						<view class='descriptions'>
 							<text>{{item.name}}</text>
 							<text>销量{{item.sales_count}}件</text>
