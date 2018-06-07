@@ -22,15 +22,15 @@
     <view class='info'>
       <view>
         <label>商品总价</label> 
-        <label>￥{{filters.toFix(info.goods_amount)}}</label>
+        <label>￥{{filters.toFix(parseFloat(info.goods_amount))}}</label>
       </view>
       <view>
         <label>运费（快递）</label> 
-        <label>￥{{filters.toFix(info.express_amount)}}</label>
+        <label>￥{{filters.toFix(parseFloat(info.express_amount))}}</label>
       </view>
       <view>
         <label>订单总价</label> 
-        <label>￥{{filters.toFix(info.amount)}}</label>
+        <label>￥{{filters.toFix(parseFloat(info.amount))}}</label>
       </view>
     </view>
     <view class='info'>

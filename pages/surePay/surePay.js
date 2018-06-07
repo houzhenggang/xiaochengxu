@@ -107,22 +107,27 @@ Page({
           },
           success: function (data) {
             if(data.data.status==205){
+              console.log(666)             
               clearInterval(time)
-              wx.showToast({
-                title: '支付成功',
-                icon: 'none',
-                duration: 500
-              },function(){
-                wx.navigateTo({
-                  url: '/pages/orderDetail/orderDetail?id=' + id,
-                })
+              wx.navigateTo({
+                url: '/pages/orderDetail/orderDetail?id=' + id,
               })
+              // wx.showToast({
+              //   title: '支付成功',
+              //   icon: 'none',
+              //   duration: 1000,
+              //   complete:function(){
+              //     wx.navigateTo({
+              //       url: '/pages/orderDetail/orderDetail?id=' + id,
+              //     })
+              //   }
+              // })
              
             }
            
           },
           fail:function(){
-            
+            console.log(555)
             wx.showToast({
               title: '支付失败',
               icon: 'none',
@@ -137,6 +142,7 @@ Page({
           }
         })
       } else {
+        console.log(777)       
         wx.showToast({
           title: '网络错误',
           icon: 'none',

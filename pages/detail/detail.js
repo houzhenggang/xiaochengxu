@@ -13,7 +13,8 @@ Page({
 		//使用data数据控制类名
 		chooseModal:false,
 		//动态控制“-”号类名
-		minusStatus:"disabled",
+    minusStatus: "disabled",
+    minusStatuss:"normal",
 		//规格选择初始数量
 		num: 1,
     name:'',
@@ -71,7 +72,7 @@ Page({
     wx.login({
       success(code) {
             //向后台发起请求，传code
-            console.log(333)
+        console.log(333)
         wx.request({
           url: app.globalData.http +'/mpa/wechat/auth',
           method: 'POST',
@@ -138,8 +139,6 @@ Page({
 				chooseModal: false
 			})
 		}, 500)
-
-
 		//跳转页面,携带参数
 		let clickId = e.currentTarget.dataset.id;
 
@@ -189,16 +188,23 @@ Page({
 		var minusStatus = num <= 1 ? "disabled" : "normal";
 		this.setData({
 			num:num,
-			minusStatus
+      minusStatus: minusStatus,
+      minusStatuss: 'normal'
 		})
 	},
 	bindPlus(){
 		var num = this.data.num;
-		num++;
-		var minusStatus = num <= 1 ? "disabled" : "normal";
+    if (num >= this.data.good.stock_count){
+      var minusStatus = 'disabled'
+    }else{
+      num++
+      var minusStatus = 'normal'
+
+    }
 		this.setData({
 			num:num,
-			minusStatus:minusStatus
+      minusStatus: 'normal',
+			minusStatuss:minusStatus
 		})
 	},
 	//选择规格事件
@@ -219,9 +225,10 @@ Page({
 		//已选择规格数组
 		let aArr = that.data.spec.spec_a.propertis,
 				bArr = that.data.spec.spec_b.propertis;
-		if (that.data.seleIdxA > -1 && that.data.seleIdxB > -1){
+    // if (that.data.seleIdxA > -1 && that.data.seleIdxB > -1) {
+		if (that.data.seleIdxA > -1 || that.data.seleIdxB > -1){
 			wx.request({
-        url: app.globalData.http + '/mpa/goods/1/skus',//////////////////////////////////////请求路径需改动
+        url: app.globalData.http + '/mpa/goods/' +that.data.goods.id+'/skus',//////////////////////////////////////请求路径需改动
 				method:"GET",
 				success(res){
 					let good;
@@ -230,7 +237,7 @@ Page({
 							good = item;
 						}
 					})
-					console.log(good)
+          console.log(good)
 					that.setData({
 						good:good,
 						goodUrl:good.cover_url,

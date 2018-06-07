@@ -90,7 +90,7 @@
 				<view>
 					<text class='{{minusStatus}}' bindtap='bindMinus'>-</text>
 					<text class='num'>{{num}}</text>
-					<text class='add' bindtap='bindPlus'>+</text>
+					<text class='add' class='{{minusStatuss}}' bindtap='bindPlus'>+</text>
 				</view>
 		</view>
 		<view class='confirm' data-id='1' bindtap='closeModal'>确认</view> 
