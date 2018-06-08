@@ -8,6 +8,6 @@ App({
     mobile:'',
 		good:[],
     address:1,
-    http:'https://test.yiqixuan.com'
+    http:'https://develop.yiqixuan.com'
   }
 })

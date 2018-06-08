@@ -16,9 +16,11 @@ Page({
 		//推荐商品
 		//不参与遍历的第一件推荐商品
 		recommend_first:'',
+    recommend:'',
 		recommend_goods:'',
 		//特价商品
 		special_goods:'',
+    special:''
   },
   onLoad: function () {
     let that = this;
@@ -26,6 +28,12 @@ Page({
     // wx.getExtConfig({
     //   success:function(res){
     //     console.log(res)
+    //     var i = res.extConfig.merchant_id.toString()
+    //     wx.showToast({
+    //       title: i,
+    //       icon: 'success',
+    //       duration: 210000
+    //     })
     //   }
     // })    
     //获取店家描述数据
@@ -76,7 +84,6 @@ Page({
       url: app.globalData.http + '/mpa/goods/recommend?page=0&order_by=created_at desc&pre_page=7',
       method: 'GET',
       success(res) {
-        console.log(res)
         if (res.data) {
           //截取第一件商品
           let firstGood = res.data.splice(0, 1);

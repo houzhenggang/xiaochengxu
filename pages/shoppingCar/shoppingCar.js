@@ -11,7 +11,7 @@ Page({
 		selectAll:false,
     datalist:[],
     image: 'http://image.yiqixuan.com/',
-   	totalPrice:0,
+   	totalPrice:0.00,
     page:0,
     startX: 0, //开始坐标
     startY: 0,
@@ -22,7 +22,7 @@ Page({
 	balance(){
 		let that = this;
 		//如果没有选择商品,总价格为0，提示
-		if(that.data.totalPrice == 0){
+		if(that.data.totalPrice == '0.00'){
 			wx.showToast({
 				title: '请选择商品',
 				icon:"none"
@@ -415,7 +415,8 @@ Page({
 								console.log(res)
 								that.setData({
 									datalist: seleArr,
-									isShow: isShow
+									isShow: isShow,
+                  totalPrice:0.00
 								})
 							}
 						})
@@ -435,7 +436,8 @@ Page({
 								console.log(res)
 								that.setData({
 									datalist: seleArr,
-									isShow: isShow
+									isShow: isShow,
+                  totalPrice: 0.00
 								})
 							}
 						})
@@ -502,12 +504,13 @@ Page({
       }
     })
   },
-  onLoad: function (options) {
+  onShow: function (options) {
     var apiKey = wx.getStorageSync('apiKey')
     var apiSecret = wx.getStorageSync('apiSecret')
     this.setData({
       apiKey: apiKey,
-      apiSecret: apiSecret
+      apiSecret: apiSecret,
+      datalist:[]
     })
     this.getData()
   },

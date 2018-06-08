@@ -8,25 +8,27 @@
       </view>
 </view>
 <view class='content' wx:else='{{isShow==1}}'>
-    <view wx:for="{{datalist}}" bindtouchstart='touchStart' bindtouchmove='touchMove' bindtouchend='touchEnd' wx:for-index="index" wx:key="id" class='carInfo'>
-      <image class='select' bindtap='select' data-index="{{index}}" data-id="{{item.id}}" wx:if='{{item.isSelect}}' src='/imgs/checked.png'></image>
-      <image class='select'  bindtap='select' data-index="{{index}}" data-id="{{item.id}}"  wx:else='{{item.isSelect}}' src='/imgs/unchecked.png'></image>
-      <image class='goodImg' src='{{item.cover_url}}' bindtap='goDetail'></image>
-      <view class='goodsInfo'>
-          <navigator url='/pages/detail/detail' hover-class='none'>        
+    <view wx:for="{{datalist}}" bindtouchstart='touchStart' bindtouchmove='touchMove'   data-index="{{index}}"   wx:key="index" class="carInfo {{item.isTouchMove ? 'touch-move-active' : ''}}">
+      <navigator class='contents'  url='/pages/detail/detail?id={{item.goods_id}}&&name={{item.name}}' hover-class='none'>
+        <view  catchtap='select' class='sel' data-index="{{index}}" data-id="{{item.id}}">
+              <image class='select'  wx:if='{{item.isSelect}}' src='/imgs/checked.png'></image>
+              <image class='select'   wx:else='{{item.isSelect}}' src='/imgs/unchecked.png'></image>
+        </view>
+      <image class='goodImg' src='{{image}}{{item.cover_url}}'></image>
+      <view class='goodsInfo'>    
               <view>{{item.name}}</view>
               <label>{{item.sku_description}}</label>
-          </navigator>
           <view class='infoBottom'>
-                  <label>￥{{filters.tofix(item.price/100)}}</label>
+                  <label>￥{{filters.toFix(item.price/100)}}</label>
                   <view class='changNum'>
-                    <label data-index="{{index}}" data-id="{{item.id}}" class='btn' bindtap='subtraction'>-</label>
+                    <label data-index="{{index}}" data-id="{{item.id}}" class='btn' catchtap='subtraction'>-</label>
                     <text>{{item.count}}</text>
-                    <label class='btn' data-index="{{index}}" data-id="{{item.id}}" bindtap='add'>+</label>
+                    <label class='btn' data-index="{{index}}" data-id="{{item.id}}" catchtap='add'>+</label>
                   </view>
               </view>
       </view>
-      <view class='delete' bindtap='delete' data-index="{{index}}" data-id='{{item.id}}'>
+      </navigator>
+      <view class='delete' catchtap='del' data-index="{{index}}" data-id='{{item.id}}'>
         删除
       </view>
     </view>

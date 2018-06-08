@@ -80,6 +80,7 @@ page{
 .detail{
   width: 100%;
   padding:0 20rpx;
+  padding-bottom: 100rpx;
   box-sizing: border-box;
 }
 .menus{
@@ -143,6 +144,7 @@ page{
   margin-bottom: 18rpx;
 }
 .confirmPay{
+  background: #fff;
   height: 100rpx;
   width: 100%;
   position: fixed;

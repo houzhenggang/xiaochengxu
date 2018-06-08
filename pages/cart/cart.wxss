@@ -1,16 +1,22 @@
 .container{
   width: 750rpx;
 }
+.content{
+  padding-bottom: 120rpx;
+}
 page{
   height: 100%;
-  background: #F9F9F9;
+  /* background: #F9F9F9; */
 }
 .container image{
   width: 266rpx;
   height:204rpx;
-  margin-top: 84rpx;
   margin:0 auto;
 	display: block;
+  margin-top: 84rpx;
+}
+.carInfo  navigator{
+  height: 100%;
 }
 .container view{
   font-family: PingFangSC-Regular;
@@ -28,7 +34,7 @@ page{
   margin-top: 16rpx;
 }
 view.carInfo{
-  margin-top: 18rpx; 
+  /* margin-top: 18rpx;  */
   background: #fff;
   height: 234rpx;
 }
@@ -53,10 +59,12 @@ view.carInfo{
 */
 
 .carInfo{
-  width:730rpx;
-	padding-right: 20rpx;
+  width:100%;
   align-items: center;
 	overflow: hidden;
+  border-top:20rpx solid #f6f7f7;
+  display: flex;
+  justify-content: flex-start;
 }
 .carInfo .select{
   width: 40rpx;
@@ -65,15 +73,15 @@ view.carInfo{
   margin: 98rpx 18rpx 0 28rpx;
 }
 .goodsInfo{
-  padding-left:16rpx;
+  padding-left:20rpx;
   width: 448rpx;
 	margin-top: 22rpx;
 	float: left;
 }
 .carInfo .goodImg{
-  width: 180rpx;
-  height: 180rpx;
-	margin-top: 28rpx;
+  width: 160rpx;
+  height: 160rpx;
+	margin-top: 48rpx;
 	display: block;
 	float: left;
 }
@@ -82,12 +90,20 @@ view.carInfo{
   font-size: 28rpx;
   color: #3A3A3A;
   line-height: 36rpx;
+  height: 72rpx;
 }
 .goodsInfo label{
   font-family: PingFangSC-Regular;
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #666666;
-  line-height: 0.34rpx;
+  line-height: 34rpx;
+}
+.goodsInfo navigator label{
+  font-family: PingFangSC-Regular;
+  font-size: 26rpx;
+  color: #666666;
+  line-height: 34rpx;
+  margin-top: 10rpx;
 }
 .infoBottom{
   display: flex;
@@ -111,13 +127,14 @@ view.carInfo{
   height: 48rpx;
   line-height: 48rpx;
   text-align: center;
-  border:1rpx solid #979797;
+  border:1rpx solid #d9d9d9;
   border-radius:0;
   font-size: 36rpx;
 }
 .changNum label:nth-child(1){
   border-top-left-radius: 4rpx;
   border-bottom-left-radius: 4rpx;
+  color: #666;
 }
 .changNum label:nth-child(3){
   border-top-right-radius: 4rpx;
@@ -133,15 +150,44 @@ view.carInfo{
   font-size: 24rpx;
   color: #3A3A3A;
   letter-spacing: 0.9px;
-  border-top:1rpx solid #979797; 
-  border-bottom:1rpx solid #979797; 
+  border-top:1rpx solid #d9d9d9; 
+  border-bottom:1rpx solid #d9d9d9; 
   text-align: center;
 }
-
-.delete{
-	display: none
+.contents{
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  -webkit-transform: translateX(120rpx);
+  transform: translateX(120rpx);
+  margin-left: -120rpx;
+  width: 100%;
 }
-
+.sel{
+  width: 86rpx;
+  float:left;
+  height:100%
+}
+.delete{  
+    background-color: #F02417;
+    width: 120rpx;
+    height: 100%;
+	  display: flex;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    -webkit-transform: translateX(120rpx);
+    transform: translateX(120rpx);
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+}
+.touch-move-active .contents,
+.touch-move-active .delete {
+ -webkit-transform: translateX(0);
+ transform: translateX(0);
+}
 /* bottom  */
 .bottom{
 	width: 750rpx;
