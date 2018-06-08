@@ -24,6 +24,8 @@ Page({
 		animationData: {},
 		//商品规格数据
 		spec:{},
+    specType:'',
+    chooseSpec:[],
 		//是否已选颜色规格
 		seleIdxA:-1,
 		seleIdxB:-1,
@@ -66,6 +68,26 @@ Page({
 
 		
 	},
+  closeTips:function(){
+    var that=this
+    //动画效果
+    var animation = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'linear'
+    })
+    that.animation = animation
+    animation.translateY(450).step()
+    that.setData({
+      animationData: animation.export()
+    })
+    setTimeout(function () {
+      animation.translateY(0).step()
+      that.setData({
+        animationData: animation.export(),
+        chooseModal: false
+      })
+    }, 500)
+  },
 	//点击确认，关闭弹出框
 	closeModal(e){
 		var that = this;
@@ -121,7 +143,16 @@ Page({
         return false
       }
     })
-
+    var  chooseAll = that.data.chooseSpec.every(function (val) {
+      return val !== -1
+    })
+    if (!chooseAll){
+      wx.showToast({
+        title: '请选择规格',
+        icon: "none"
+      })
+      return false
+    }
 		//动画效果
 		var animation = wx.createAnimation({
 			duration: 500,
@@ -144,7 +175,6 @@ Page({
 
 		//如果来源为加入购物车，即flag为1
 		let flag = that.data.flag;
-		
 		if(clickId == 1 && flag == 1){
 			wx.request({
         url: app.globalData.http +'/mpa/cart',
@@ -208,44 +238,56 @@ Page({
 		})
 	},
 	//选择规格事件
-	chooseSpec(e){
+	chooseSpecs(e){
 		let that = this;
-		if (e.currentTarget.dataset.aIndex > -1){
-			that.setData({
-				seleIdxA: e.currentTarget.dataset.aIndex
-			})
-		}else{
-			that.setData({
-				seleIdxB: e.currentTarget.dataset.bIndex
-			})
-		}
+    var chooseAll; 
 		//已选择规格索引
-		let aIndex = that.data.seleIdxA,
-				bIndex = that.data.seleIdxB;
-		//已选择规格数组
-		let aArr = that.data.spec.spec_a.propertis,
-				bArr = that.data.spec.spec_b.propertis;
-    // if (that.data.seleIdxA > -1 && that.data.seleIdxB > -1) {
-		if (that.data.seleIdxA > -1 || that.data.seleIdxB > -1){
-			wx.request({
-        url: app.globalData.http + '/mpa/goods/' +that.data.goods.id+'/skus',//////////////////////////////////////请求路径需改动
-				method:"GET",
-				success(res){
-					let good;
-					res.data.map(function(item){
-						if (item.property_a == aArr[aIndex] && item.property_b == bArr[bIndex]){
-							good = item;
-						}
-					})
-          console.log(good)
-					that.setData({
-						good:good,
-						goodUrl:good.cover_url,
-						goodPrice:good.price
-					})
-				}
-			})
-		}
+    var aIndex = e.target.dataset.id,
+        bIndex = e.target.dataset.index;
+    var aArr = that.data.specType,
+        bArr = that.data.spec;
+		//已选择规格种类
+    var textSpec= 'chooseSpec['+aIndex+']'
+    that.setData({
+      [textSpec]: bIndex
+    },function(){
+      chooseAll = that.data.chooseSpec.every(function (val) {
+        return val !== -1
+      })
+      //所有规格都选了
+      if (chooseAll){
+        wx.request({
+          url: app.globalData.http + '/mpa/goods/' + that.data.goods.id + '/skus',//////////////////////////////////////请求路径需改动
+          method: "GET",
+          success(res) {
+            let good;
+            var ress=res.data
+            for (var i = 0; i < that.data.chooseSpec.length;i++){
+              for(var j=0;j<ress.length;j++){
+                if (that.data.chooseSpec.length==1){
+                  if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]] ) {
+                    good = ress[j];
+                  }
+                } else if (that.data.chooseSpec.length == 2){
+                  if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]] && ress[j].property_b == bArr[1]['propertis'][that.data.chooseSpec[1]]) {
+                    good = ress[j];
+                  }
+                }else{
+                  if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]] && ress[j].property_b == bArr[1]['propertis'][that.data.chooseSpec[1]] && ress[j].property_c == bArr[2]['propertis'][that.data.chooseSpec[2]]) {
+                    good = ress[j];
+                  }
+                }
+              }
+            }
+            that.setData({
+              good: good,
+              goodUrl: good.cover_url,
+              goodPrice: good.price
+            })
+          }
+        })
+      }
+    })
 	},
 	//定义分享转发
 	onShareAppMessage:function(res){
@@ -297,8 +339,16 @@ Page({
         wx.request({
           url: app.globalData.http + '/mpa/goods/' + res.data.id + '/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
           success(data) {
+            var specs = Object.values(data.data)
+            var specType=Object.keys(data.data)
+            var chooseSpec=[]
+            specType.forEach(function(v){
+              chooseSpec.push(-1)
+            })
             that.setData({
-              spec: data.data
+              spec: specs,
+              specType: specType,
+              chooseSpec: chooseSpec
             })
           }
         })

@@ -32,21 +32,21 @@ Page({
   onLoad: function (options) {
     var that=this;
     var id=options.id;
-    // var apiKey = wx.getStorageSync(apiKey)
-    // var apiSecret = wx.getStorageSync(apiSecret)
+    var apiKey = wx.getStorageSync(apiKey)
+    var apiSecret = wx.getStorageSync(apiSecret)
     this.setData({
       orderId:id,
-      // apiKey: apiKey,
-      // apiSecret: apiSecret
+      apiKey: apiKey,
+      apiSecret: apiSecret
     })
     wx.request({
       url: app.globalData.http +'/mpa/order/' + id,
       method: 'GET',
       dataType: 'json',
-      // header: {
-      //   "Api-Key": that.data.apiKey,
-      //   "Api-Secret": that.data.apiSecret
-      // },
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret
+      },
       success: function (data) {
         var newArr=[]
         var item = data.data.items
@@ -114,10 +114,10 @@ Page({
         remark: that.data.value,
         order_item_ids:that.data.saleArr
       },
-      // header: {
-      //   "Api-Key": that.data.apiKey,
-      //   "Api-Secret": that.data.apiSecret
-      // },
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret
+      },
       success:function(data){
         console.log(data)
         wx.navigateTo({

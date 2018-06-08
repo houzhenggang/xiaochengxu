@@ -94,6 +94,9 @@ Page({
   checkPay: function (id) {
     var that=this
     var t = 90;
+    wx.showLoading({
+      title: '加载中',
+    })
     var time = setInterval(function () {
       t--
       if (t > 1) {
@@ -188,7 +191,6 @@ Page({
             success:function(res){
               var time = res.data.timeStamp
               time=time.toString()
-              console.log(res)
               wx.requestPayment({
                 'timeStamp': time,
                 'nonceStr': data.data.no,
@@ -197,9 +199,6 @@ Page({
                 'paySign': res.data.paySign,
                 'complete':function(res){
                   console.log(res)
-                  wx.showLoading({
-                    title: '加载中',
-                  })
                   that.checkPay(data.data.id)
                 }
               })

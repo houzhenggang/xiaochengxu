@@ -3,6 +3,7 @@
 page{
 	height: 100%;
 	font-family: PingFangSC-Regular;
+  width: 100%;
 }
 image{
 	display: block;

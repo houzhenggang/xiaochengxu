@@ -13,27 +13,27 @@
 	<image class='index_banner1' src='{{description.logo_url}}'></image>
 	
 	<!--classify  -->
-	<view class='index_classify'>
+	<!-- <view class='index_classify'>
 		<view wx:for="{{categoryList}}" wx:key="index" data-idx="{{index}}" bindtap='switchCate'>
 			<image src='{{image}}{{item.icon_url}}'></image>
 			<text>{{item.name}}</text>
 		</view>
-	</view>
-  <!-- <swiper indicator-dots="{{indicatorDots}}"
-      touch="{{touch}}"  duration="{{duration}}"  current='{{current}}'>
-      <block wx:for="{{categoryList}}" wx:for-item='item' wx:key='index'>
-        <swiper-item>
-          <view wx:for="{{item}}" class='index_classify'  wx:for-item='items'   data-idx="{{index}}" bindtap='switchCate'>
-            <image src='{{items.icon_url}}'></image>
+	</view> -->
+   <swiper indicator-dots="{{indicatorDots}}"
+      touch="{{touch}}"  duration="{{duration}}" bindchange='changeCurrent'   current='{{current}}'>
+      <block wx:for="{{newCate}}" wx:for-item='item' wx:key='index' >
+        <swiper-item class='index_classify'>
+          <view wx:for="{{item}}"  wx:for-item='items' wx:for-index='id' wx:key='id'  data-idx="{{index}}" data-index="{{id}}"  bindtap='switchCate'>
+            <image src='{{image}}{{items.icon_url}}'></image>
             <text>{{items.name}}</text>
           </view>
         </swiper-item>
       </block>
-  </swiper> -->
+  </swiper> 
 
-  <!-- <view class='index_current'>
-      <view class='{{current===index?"cur":''}}'></view>
-  </view> -->
+   <view class='index_current'>
+      <view wx:key='index' wx:for="{{newCate}}" class='{{current===index?"cur":""}}'></view>
+  </view> 
 	<!--contact  -->
 	<view class="index_contact">
     <image src='{{description.logo_url}}'></image>

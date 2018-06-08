@@ -31,7 +31,7 @@ Page({
       url: app.globalData.http + '/mpa/goods/search',
       data: {///////////////////////////////////////////////////////id需改动
         category_id: that.data.category_id,
-        order_by: order_by,
+        order_by:that.data.order_by,
         page:that.data.page
       },
       success(res) {
@@ -39,7 +39,7 @@ Page({
           produList: res.data
         })
       },
-      fail:function(){
+      complete:function(){
         wx.hideLoading();
       }
     })
@@ -48,10 +48,7 @@ Page({
 	//排序方式点击
 	bindRank(e){
 		//当前所点击排序方式
-		// wx.showLoading({
-		// 	title: '加载中',
-		// });
-		// var that = this;
+    var that=this
 		var currIndex = e.currentTarget.dataset.id;
 		var flag = this.data.flag;
 		//判断价格排序方式
@@ -59,69 +56,35 @@ Page({
 			if(flag == 0 || flag == 2){
 				flag = 1
 				//按价格降序
-				// wx.request({
-        //   url: app.globalData.http + '/mpa/goods/search',
-				// 	data: {///////////////////////////////////////////////////////id需改动
-        //     category_id: that.data.category_id,
-				// 		order_by: "price desc"
-				// 	},
-				// 	success(res) {
-				// 		that.setData({
-				// 			produList: res.data
-				// 		})
-				// 		wx.hideLoading();
-				// 	}
-				// })
-        this.getList('price desc')
+        that.setData({
+          order_by: 'price desc',
+          page: 0
+        })
+        this.getList()
+        
 			}else if(flag == 1){
 				flag = 2
 				//按价格升序
-				// wx.request({
-        //   url: app.globalData.http + '/mpa/goods/search',
-				// 	data: {///////////////////////////////////////////////////////id需改动
-        //     category_id: that.data.category_id,
-				// 		order_by: "price asc"
-				// 	},
-				// 	success(res) {
-				// 		that.setData({
-				// 			produList: res.data
-				// 		})
-				// 		wx.hideLoading();
-				// 	}
-				// })
-        this.getList('price desc')
+        that.setData({
+          order_by: 'price asc',
+          page: 0
+        })
+        this.getList()
 			}
 		}else if(currIndex == 1){
 			//按销量排序
-			wx.request({
-        url: app.globalData.http + '/mpa/goods/search',
-				data: {///////////////////////////////////////////////////////id需改动
-          category_id: that.data.category_id,
-					order_by:"sales_count desc"
-				},
-				success(res) {
-					that.setData({
-						produList: res.data
-					})
-					wx.hideLoading();
-				}
-			})
+      that.setData({
+        order_by: 'sales_count desc',
+        page: 0
+      })
+      this.getList()
 			flag = 0
 		}else{
-			//按新品排序
-			wx.request({
-        url: app.globalData.http +'/mpa/goods/search',
-				data: {///////////////////////////////////////////////////////id需改动
-          category_id: that.data.category_id,
-					order_by: "created_at desc"
-				},
-				success(res) {
-					that.setData({
-						produList: res.data
-					})
-					wx.hideLoading();
-				}
-			})
+      that.setData({
+        order_by: 'created_at desc',
+        page:0
+      })
+      this.getList()
 			flag = 0
 		}
 		//存入data
@@ -159,26 +122,19 @@ Page({
 		})
   },
   onPullDownRefresh: function () {
-  
+    var pages=that.data.page
+    pages++
+    that.setData({
+      page:pages
+    })
+    this.getList()
   },
   onReachBottom: function () {
-    // var pages=this.data.page
-    // pages++
-    // this.setData({
-    //   page:pages
-    // })
-    // wx.request({
-    //   url: app.globalData.http + '/mpa/goods/search',
-		// 	data: {///////////////////////////////////////////////////////id需改动
-    //     category_id: options.category_id,
-    //     page:that.data.page
-		// 	},
-		// 	success(res){
-		// 		that.setData({
-		// 			produList: res.data
-		// 		})
-		// 		wx.hideLoading();
-		// 	}
-		// })
+    var pages = that.data.page
+    pages++
+    that.setData({
+      page: pages
+    })
+    this.getList()
   }
 })

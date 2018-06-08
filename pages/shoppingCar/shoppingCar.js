@@ -482,14 +482,12 @@ Page({
     })
   },
   onLoad: function (options) {
-    // var apiKey = wx.getStorageSync('apiKey')
-    // var apiSecret = wx.getStorageSync('apiSecret')
-    // console.log(apiKey)
-    // console.log(apiSecret)
-    // this.setData({
-    //   apiKey: apiKey,
-    //   apiSecret: apiSecret
-    // })
+    var apiKey = wx.getStorageSync('apiKey')
+    var apiSecret = wx.getStorageSync('apiSecret')
+    this.setData({
+      apiKey: apiKey,
+      apiSecret: apiSecret
+    })
     this.getData()
   },
   /*

@@ -2,6 +2,7 @@
 
 page{
 	font-family: PingFangSC-Regular;
+  min-height: 100%;
 }
 image{
 	border-radius: 6rpx;

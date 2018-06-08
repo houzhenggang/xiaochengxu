@@ -22,7 +22,7 @@ Page({
   },
   getSms:function(){
     var that=this;
-    if (/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.data.mobile)){
+    if (/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(this.data.mobile)){
         wx.request({
           url: app.globalData.http +'/mpa/common/send_sms',
           method:'post',
@@ -84,7 +84,7 @@ Page({
   },
   bindMob:function(){
       var that=this;
-      if (!(/^1[3|4|5|8][0-9]\d{4,8}$/.test(this.data.mobile))){
+      if (!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(this.data.mobile))){
         wx.showToast({
           title: '请正确输入11位数字',
           icon: 'none',
@@ -110,9 +110,30 @@ Page({
               'Api-Secret':that.data.apiSecret
             },
             success:function(data){
-              wx.navigateBack({
-                delta: 1
-              })
+              if(data.status==201){
+                wx.showToast({
+                  title: '绑定成功',
+                  icon: 'success',
+                  duration: 1000,
+                  success:function(){
+                    wx.navigateBack({
+                      delta: 1
+                    })
+                  }
+                })
+              }else{
+                wx.showToast({
+                  title: '绑定失败',
+                  icon: 'none',
+                  duration: 1000,
+                  success: function () {
+                    wx.navigateBack({
+                      delta: 1
+                    })
+                  }
+                })
+              }
+              
             }
           })
       }

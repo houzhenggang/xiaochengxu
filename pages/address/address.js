@@ -7,20 +7,20 @@ Page({
    */
   data: {
       address:[],
-      // apiKey:'',
-      // apiSecret:''
+      apiKey:'',
+      apiSecret:''
   },
   /*
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // var apiKey = wx.getStorageSync(apiKey)
-    // var apiSecret = wx.getStorageSync(apiSecret)
+    var apiKey = wx.getStorageSync(apiKey)
+    var apiSecret = wx.getStorageSync(apiSecret)
       var that = this;
-      // that.setData({
-      //   apiKey: apiKey,
-      //   apiSecret: apiSecret
-      // })
+      that.setData({
+        apiKey: apiKey,
+        apiSecret: apiSecret
+      })
       wx.showLoading({
         title: '加载中',
       })
@@ -28,10 +28,10 @@ Page({
         url: app.globalData.http +'/mpa/address',
         method:'get',
         dataType:'json',
-        // header: {
-        //   "Api-Key":apiKey,
-        //   "Api-Secret":apiSecret
-        // },
+        header: {
+          "Api-Key":apiKey,
+          "Api-Secret":apiSecret
+        },
         success:function(data){
          
           if(data.data.code==0){
@@ -72,10 +72,10 @@ Page({
                         county: res.countyName,
                         detail: res.detailInfo
                       },
-                      // header: {
-                      //   "Api-Key": that.data.apiKey,
-                      //   "Api-Secret": that.data.apiSecret
-                      // },
+                      header: {
+                        "Api-Key": that.data.apiKey,
+                        "Api-Secret": that.data.apiSecret
+                      },
                       success: function (data) {
                       } 
                     })
@@ -99,10 +99,10 @@ Page({
                   county: res.countyName,
                   detail: res.detailInfo
                 },
-                // header: {
-                //   "Api-Key": that.data.apiKey,
-                //   "Api-Secret": that.data.apiSecret
-                // },
+                header: {
+                  "Api-Key": that.data.apiKey,
+                  "Api-Secret": that.data.apiSecret
+                },
                 success: function (data) {
                 }
               })
@@ -120,10 +120,10 @@ Page({
       url: app.globalData.http +'/mpa/address/' + that.data.address[index].id,
       method: 'delete',
       dataType: 'json',
-      // header: {
-      //   "Api-Key": that.data.apiKey,
-      //   "Api-Secret": that.data.apiSecret
-      // },
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret
+      },
       success: function (data) {
         console.log(data)
         if (data.statusCode==200){
@@ -165,10 +165,10 @@ Page({
                       county: res.countyName,
                       detail: res.detailInfo
                     },
-                    // header: {
-                    //   "Api-Key": that.data.apiKey,
-                    //   "Api-Secret": that.data.apiSecret
-                    // },
+                    header: {
+                      "Api-Key": that.data.apiKey,
+                      "Api-Secret": that.data.apiSecret
+                    },
                     success: function (data) {
                       
                     }
@@ -193,10 +193,10 @@ Page({
                   county: res.countyName,
                   detail: res.detailInfo
                 },
-                // header: {
-                //   "Api-Key": that.data.apiKey,
-                //   "Api-Secret": that.data.apiSecret
-                // },
+                header: {
+                  "Api-Key": that.data.apiKey,
+                  "Api-Secret": that.data.apiSecret
+                },
                 success: function (data) {
                 }
               })
@@ -232,10 +232,10 @@ Page({
         data: {
           status:keys
         },
-        // header: {
-        //   "Api-Key": that.data.apiKey,
-        //   "Api-Secret": that.data.apiSecret
-        // },
+        header: {
+          "Api-Key": that.data.apiKey,
+          "Api-Secret": that.data.apiSecret
+        },
         success: function (data) {
             if(key===1){
               that.data.address.forEach(function(v,i){
