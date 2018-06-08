@@ -24,8 +24,8 @@ Page({
 		wx.request({
       url: app.globalData.http + '/mpa/goods/recommend',
 			data:{
-				page:1,
-				pre_page:5,
+				page:0,
+				pre_page:15,
 				order_by:"created_at",
 			},
 			method:"GET",

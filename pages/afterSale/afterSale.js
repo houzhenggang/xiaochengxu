@@ -51,11 +51,17 @@ Page({
         var newArr=[]
         var item = data.data.items
         var sale=[]
-        item.forEach(function(v,i){ 
-          Object.assign(v,{isSelect:true})
-          newArr.push(v)
-          sale.push(v.id)
-        })
+        for(var i=0;i<item.length;i++){
+          item[i].isSelect=true
+          newArr.push(item[i])
+          sale.push(item[i].id)
+        }
+
+        // item.forEach(function(v,i){ 
+        //   Object.assign(v,{isSelect:true})
+        //   newArr.push(v)
+        //   sale.push(v.id)
+        // })
         that.setData({
           info:newArr,
           num: newArr.length,
@@ -86,11 +92,17 @@ Page({
 
 
     if (sale.indexOf(that.data.info[index].id)>-1){
-        sale.forEach(function(v,i){
-          if (v !== that.data.info[index].id){
-              newSale.push(v)
+        for(var i=0;i<sale.length;i++){
+          if (sale[i] !== that.data.info[index].id) {
+            newSale.push(sale[i])
           }
-        })
+        }
+
+        // sale.forEach(function(v,i){
+        //   if (v !== that.data.info[index].id){
+        //       newSale.push(v)
+        //   }
+        // })
         sale=newSale
     }else{
         sale.push(that.data.info[index].id)

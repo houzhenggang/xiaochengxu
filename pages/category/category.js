@@ -21,6 +21,7 @@ Page({
     select = e.currentTarget.dataset.idx,
     tempArr = that.data.leftTapArray,
     category = tempArr[select].children;
+    app.globalData.classIdx = select
 		//存在二级分类
     that.setData({
       select: select
@@ -79,7 +80,8 @@ Page({
       url: app.globalData.http + '/mpa/category',
 			success(res){
 				let leftSelectedIdx = app.globalData.classIdx;
-        Object.assign(res.data[leftSelectedIdx], { selected :true})
+        res.data[leftSelectedIdx].selected = true
+        // Object.assign(res.data[leftSelectedIdx], { selected :true})
 				that.setData({
 					category:res.data[leftSelectedIdx].children,
 					leftTapArray:res.data

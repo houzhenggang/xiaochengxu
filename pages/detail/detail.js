@@ -339,12 +339,23 @@ Page({
         wx.request({
           url: app.globalData.http + '/mpa/goods/' + res.data.id + '/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
           success(data) {
-            var specs = Object.values(data.data)
-            var specType=Object.keys(data.data)
+            var specs=[]
+            var specType=[]
+            for(var key in data.data){
+              specs.push(data.data[key])
+              specType.push(key)
+            }
+
+            // var specs = Object.values(data.data)
+            // var specType=Object.keys(data.data)
             var chooseSpec=[]
-            specType.forEach(function(v){
+            for (var i = 0; i < specType.length;i++){
               chooseSpec.push(-1)
-            })
+            }
+
+            // specType.forEach(function(v){
+            //   chooseSpec.push(-1)
+            // })
             that.setData({
               spec: specs,
               specType: specType,

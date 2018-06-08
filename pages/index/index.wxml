@@ -36,7 +36,7 @@
   </view> 
 	<!--contact  -->
 	<view class="index_contact">
-    <image src='{{description.logo_url}}'></image>
+    <image src='{{image}}{{description.logo_url}}'></image>
     <view class='desc'>
       	<text class='contact_h4'>Hi 亲爱的小主</text>
 		    <text class='contact_p'>{{description.description}}</text>

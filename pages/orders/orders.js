@@ -121,12 +121,11 @@ Page({
               "Api-Secret": that.data.apiSecret
             },
             success:function(data){
-              var newArr=[];
-              that.data.allOrder.forEach(function(v,i){
-                if (idx==207){
+              var newArr = that.data.allOrder
+              for (var i = 0; i < newArr.length;i++){
+                if (idx == 207) {
                   /*取消订单*/
-                  if (v.id === id) {
-                    var newArr =that.data.allOrder;
+                  if (newArr[i].id === id) {
                     newArr.splice(i,1);
                     that.setData({
                       allOrder: newArr
@@ -134,14 +133,35 @@ Page({
                   }  
                 }else{
                   /*确认收货*/
-                  if (v.id === id) {
+                  if (newArr[i].id === id) {
                     var num = 'allOrder[' + i + '].status'
                     that.setData({
                       [num]: idx
                     })
                   }  
                 }
-              })
+              }
+
+              // that.data.allOrder.forEach(function(v,i){
+              //   if (idx==207){
+              //     /*取消订单*/
+              //     if (v.id === id) {
+              //       var newArr =that.data.allOrder;
+              //       newArr.splice(i,1);
+              //       that.setData({
+              //         allOrder: newArr
+              //       })
+              //     }  
+              //   }else{
+              //     /*确认收货*/
+              //     if (v.id === id) {
+              //       var num = 'allOrder[' + i + '].status'
+              //       that.setData({
+              //         [num]: idx
+              //       })
+              //     }  
+              //   }
+              // })
             }
           })
         } else if (res.cancel) {

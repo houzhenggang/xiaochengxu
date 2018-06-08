@@ -145,7 +145,6 @@ Page({
                 "Api-Secret": _this.data.apiSecret
               },
 							success(res){
-								console.log(res)
 								//如果删除成功
 								if(res.statusCode == 200){
 									_this.data.datalist.splice(index,1);
@@ -236,10 +235,15 @@ Page({
   touchstart: function (e) {
     //开始触摸时 重置所有删除
     var dataList=this.data.datalist
-    dataList.forEach(function (v, i) {
-      if (v.isTouchMove)//只操作为true的
-        v.isTouchMove = false;
-    })
+    for(var i=0;i<dataList.length;i++){
+      if (dataList[i].isTouchMove)//只操作为true的
+        dataList[i].isTouchMove = false;
+    }
+
+    // dataList.forEach(function (v, i) {
+    //   if (v.isTouchMove)//只操作为true的
+    //     v.isTouchMove = false;
+    // })
     this.setData({
       startX: e.changedTouches[0].clientX,
       startY: e.changedTouches[0].clientY,
@@ -257,17 +261,28 @@ Page({
       //获取滑动角度
       dataList = that.data.datalist,
       angle = that.angle({ X: startX, Y: startY }, { X: touchMoveX, Y: touchMoveY });
-      dataList.forEach(function (v, i) {
-      v.isTouchMove = false
-      //滑动超过30度角 return
-      if (Math.abs(angle) > 30) return;
-      if (i == index) {
-        if (touchMoveX > startX) //右滑
-          v.isTouchMove = false
-        else //左滑
-          v.isTouchMove = true
+      for(var j=0;j<dataList.length;j++){
+        dataList[j].isTouchMove = false
+        //滑动超过30度角 return
+        if (Math.abs(angle) > 30) return;
+        if (j == index) {
+          if (touchMoveX > startX) //右滑
+            dataList[j].isTouchMove = false
+          else //左滑
+            dataList[j].isTouchMove = true
+        }
       }
-    })
+    //   dataList.forEach(function (v, i) {
+    //   v.isTouchMove = false
+    //   //滑动超过30度角 return
+    //   if (Math.abs(angle) > 30) return;
+    //   if (i == index) {
+    //     if (touchMoveX > startX) //右滑
+    //       v.isTouchMove = false
+    //     else //左滑
+    //       v.isTouchMove = true
+    //   }
+    // })
     //更新数据
     that.setData({
       datalist: dataList
@@ -451,11 +466,17 @@ Page({
       success(res) {
         if (res.data != "") {
           var list=[]
-          res.data.forEach(function (item, index) {
-            item.isSelect = false;
-            item.isTouchMove = false 
-            list.push(item)
-          })
+          for(var z=0;z<res.data.length;z++){
+            res.data[z].isSelect = false;
+            res.data[z].isTouchMove = false
+            list.push(res.data[z])
+          }
+
+          // res.data.forEach(function (item, index) {
+          //   item.isSelect = false;
+          //   item.isTouchMove = false 
+          //   list.push(item)
+          // })
           if (list.length == 0 && that.data.page==0) {
             isShow = 2
           } else {

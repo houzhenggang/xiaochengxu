@@ -238,11 +238,17 @@ Page({
         },
         success: function (data) {
             if(key===1){
-              that.data.address.forEach(function(v,i){
-                  if(v.status===2){
+              // that.data.address.forEach(function(v,i){
+              //     if(v.status===2){
+              //         nums = 'address[' + i + '].status'
+              //     }
+              // })
+
+              for (var i = 0; i < that.data.address.length;i++){
+                if (that.data.address[i].status === 2) {
                       nums = 'address[' + i + '].status'
-                  }
-              })
+                }
+              }
                 that.setData({
                     [num]:2,
                     [nums]:1

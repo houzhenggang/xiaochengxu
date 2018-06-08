@@ -22,22 +22,34 @@ Page({
    */
   onLoad: function (options) { 
     var data =app.globalData.good
-    console.log(app.globalData.good)
     var apiKey = wx.getStorageSync(apiKey)
     var apiSecret = wx.getStorageSync(apiSecret)
     var sku_id={}
     var sku_idss=[]
     var that=this
     var sum=0
-    data.forEach(function(v,i){
-      sum += parseFloat(v.price) * parseFloat(v.count)
-      var obj={
-        [v.goods_sku_id]:v.count
-      }
-      Object.assign(sku_id,obj)
-      sku_idss.push(v.goods_sku_id)
-    })
-    console.log(sku_id)
+    console.log(data)
+    for(var i=0;i<data.length;i++){
+      sum += parseFloat(data[i].price) * parseFloat(data[i].count)
+      // var obj = {
+      //   [v.goods_sku_id]: v.count
+      // }
+      sku_id[[data[i].goods_sku_id]]=data[i].count
+
+      // Object.assign(sku_id, obj)
+      sku_idss.push(data[i].goods_sku_id)
+    }
+    // data.forEach(function(v,i){
+    //   sum += parseFloat(v.price) * parseFloat(v.count)
+    //   var obj={
+    //     [v.goods_sku_id]:v.count
+    //   }
+    //   Object.assign(sku_id,obj)
+
+
+    //   sku_idss.push(v.goods_sku_id)
+    // })
+    // console.log(sku_id)
     that.setData({
       sku_ids: sku_id,
       sku_idd: sku_idss

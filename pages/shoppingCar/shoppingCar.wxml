@@ -8,8 +8,8 @@
       </view>
 </view>
 <view class='content' wx:else='{{isShow==1}}'>
-    <view wx:for="{{datalist}}" bindtouchstart='touchStart' bindtouchmove='touchMove'   data-index="{{index}}"   wx:key="id" class="carInfo {{item.isTouchMove ? 'touch-move-active' : ''}}">
-      <navigator class='contents'  url='/pages/detail/detail?goods_id={{item.id}}&&name={{item.name}}' hover-class='none'>
+    <view wx:for="{{datalist}}" bindtouchstart='touchStart' bindtouchmove='touchMove'   data-index="{{index}}"   wx:key="index" class="carInfo {{item.isTouchMove ? 'touch-move-active' : ''}}">
+      <navigator class='contents'  url='/pages/detail/detail?id={{item.goods_id}}&&name={{item.name}}' hover-class='none'>
         <view  catchtap='select' class='sel' data-index="{{index}}" data-id="{{item.id}}">
               <image class='select'  wx:if='{{item.isSelect}}' src='/imgs/checked.png'></image>
               <image class='select'   wx:else='{{item.isSelect}}' src='/imgs/unchecked.png'></image>
