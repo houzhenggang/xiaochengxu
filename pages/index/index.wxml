@@ -84,7 +84,7 @@
 
       <view class='index_item'>
         <view class='item_box' wx:key="index" wx:for="{{special_goods}}" data-id='{{item.id}}' data-name="{{item.name}}" bindtap='bindDetail'>
-          <image src='{{item.cover_url}}'></image>
+          <image src='{{image}}{{item.cover_url}}'></image>
           <text class='item_text'>{{item.name}}</text>
           <view class='item_text_view special_item'>
             <text>￥</text><text>{{filters.toFix(item.price/100)}}</text><text>{{item.display_price}}</text>

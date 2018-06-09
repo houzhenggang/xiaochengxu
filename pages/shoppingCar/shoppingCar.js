@@ -50,6 +50,9 @@ Page({
             data: {
               code: code.code
             },
+            header:{
+              'Api-Ext': app.globalData.apiExt
+            },
             success: function (res) { 
               //保存响应头信息
               var apiKey = res.header["Api-Key"],
@@ -111,7 +114,8 @@ Page({
 				},
         header: {
           "Api-Key": _this.data.apiKey,
-          "Api-Secret": _this.data.apiSecret
+          "Api-Secret": _this.data.apiSecret,
+          'Api-Ext': app.globalData.apiExt
         },
 				success(res) {
 
@@ -142,7 +146,8 @@ Page({
 							method:"DELETE",
               header: {
                 "Api-Key": _this.data.apiKey,
-                "Api-Secret": _this.data.apiSecret
+                "Api-Secret": _this.data.apiSecret,
+                'Api-Ext': app.globalData.apiExt
               },
 							success(res){
 								//如果删除成功
@@ -181,7 +186,8 @@ Page({
 			},
       header: {
         "Api-Key": _this.data.apiKey,
-        "Api-Secret": _this.data.apiSecret
+        "Api-Secret": _this.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
 			success(res){
 				if(res.statusCode == 200){
@@ -313,7 +319,8 @@ Page({
             method: "DELETE",
             header: {
               "Api-Key": _this.data.apiKey,
-              "Api-Secret": _this.data.apiSecret
+              "Api-Secret": _this.data.apiSecret,
+              'Api-Ext': app.globalData.apiExt
             },
             success(res) {
               console.log(res)
@@ -409,7 +416,8 @@ Page({
 							method: "DELETE",
               header: {
                 "Api-Key": that.data.apiKey,
-                "Api-Secret": that.data.apiSecret
+                "Api-Secret": that.data.apiSecret,
+                'Api-Ext': app.globalData.apiExt
               },
 							success(res) {
 								console.log(res)
@@ -430,7 +438,8 @@ Page({
 							},
               header: {
                 "Api-Key": that.data.apiKey,
-                "Api-Secret": that.data.apiSecret
+                "Api-Secret": that.data.apiSecret,
+                'Api-Ext': app.globalData.apiExt
               },
 							success(res) {
 								console.log(res)
@@ -461,10 +470,11 @@ Page({
       data: {
         page: that.data.page
       },
-      // header: {
-      //   "Api-Key": that.data.apiKey,
-      //   "Api-Secret": that.data.apiSecret
-      // },
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
       success(res) {
         if (res.data != "") {
           var list=[]

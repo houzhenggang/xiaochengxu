@@ -200,26 +200,29 @@ swiper{
 	top: -34rpx;
 	left: 20rpx;
 }
-.choose_price view{
+.choose_price .desc{
 	position: absolute;
 	left: 192rpx;
 	top: 12rpx;
 	display: flex;
 	flex-direction: column;
 }
-.choose_price view text:first-child{
+.choose_price .desc view{
+  font-size: 24rpx;
+	color: #3A3A3A;
+	letter-spacing: 1.8rpx;
+}
+.choose_price .desc view text{
+  margin-right: 10rpx;
+}
+.choose_price .desc>text:first-child{
 	color: #F02317;
 	font-size: 36rpx;
 }
-.choose_price view text:nth-child(2){
+.choose_price .desc>text:nth-child(2){
 	color: #999;
 	font-size: 24rpx;
   margin-bottom:6rpx;
-}
-.choose_price view text:last-child{
-	font-size: 24rpx;
-	color: #3A3A3A;
-	letter-spacing: 1.8rpx;
 }
 .choose_price image:last-child{
 	position: absolute;

@@ -34,6 +34,9 @@ Page({
         order_by: that.data.order_by,
         page: that.data.page
       },
+      header: {
+        'Api-Ext': app.globalData.apiExt
+      },
       success(res) {
         that.setData({
           produList: res.data
@@ -112,6 +115,9 @@ Page({
       data: {///////////////////////////////////////////////////////id需改动
         category_id: options.id,
         page: that.data.page
+      },
+      header: {
+        'Api-Ext': app.globalData.apiExt
       },
       success(res) {
         that.setData({

@@ -32,7 +32,8 @@ Page({
         dataType:'json',
         header: {
           "Api-Key": that.data.apiKey,
-          "Api-Secret": that.data.apiSecret
+          "Api-Secret": that.data.apiSecret,
+          'Api-Ext': app.globalData.apiExt
         },
         success:function(data){
           that.setData({
@@ -90,7 +91,8 @@ Page({
             },
             header: {
               "Api-Key": that.data.apiKey,
-              "Api-Secret": that.data.apiSecret
+              "Api-Secret": that.data.apiSecret,
+              'Api-Ext': app.globalData.apiExt
             },
             method: 'PUT',
             dataType: 'json',

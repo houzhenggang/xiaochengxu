@@ -34,39 +34,92 @@ Page({
 		goodPrice:0,
 		goodUrl:"",
 		imgs: {},
-    description:''
+    description:'',
+    //是否又规格
+    isSpec:''
   },
 	/* 规格选择弹出事件 */
 	modalShow(e){
 		var that = this;
 		//修改flag标识
 		let flag = e.currentTarget.dataset.flag;
-
-		//创建一个动画实例
-		var animation = wx.createAnimation({
-			//动画持续事件
-			duration: 400,
-			//定义动画效果
-			timingFunction:'linear'
-		})
-		//将该变量赋值给当前动画
-		that.animation = animation;
-		//现在Y轴偏移，然后用step()完成一个动画
-		animation.translateY(450).step();
-		that.setData({
-			animationData:animation.export(),
-			flag:flag,
-			chooseModal: true
-		})
-		//设置setTimeout改变Y轴偏移量
-		setTimeout(function(){
-			animation.translateY(0).step();
-			that.setData({
-				animationData:animation.export()
-			})
-		}, 100)
-
-		
+    // 有规格
+    if(that.data.isSpec){
+      //创建一个动画实例
+      var animation = wx.createAnimation({
+        //动画持续事件
+        duration: 400,
+        //定义动画效果
+        timingFunction: 'linear'
+      })
+      //将该变量赋值给当前动画
+      that.animation = animation;
+      //现在Y轴偏移，然后用step()完成一个动画
+      animation.translateY(450).step();
+      that.setData({
+        animationData: animation.export(),
+        flag: flag,
+        chooseModal: true
+      })
+      //设置setTimeout改变Y轴偏移量
+      setTimeout(function () {
+        animation.translateY(0).step();
+        that.setData({
+          animationData: animation.export()
+        })
+      }, 100)
+    }
+    else{
+      wx.request({
+        url: app.globalData.http + '/mpa/goods/' + that.data.goods.id + '/skus',//////////////////////////////////////请求路径需改动
+        method: "GET",
+        header: {
+          'Api-Ext': app.globalData.apiExt
+        },
+        success(res) {
+          var good=res.data[0]
+          that.setData({
+            good: good,
+            goodUrl: good.cover_url,
+            goodPrice: good.price
+          },function(){
+            //加入购物车
+            if (flag==1){
+              wx.request({
+                url: app.globalData.http + '/mpa/cart',
+                method: "POST",
+                data: {
+                  goods_sku_id: that.data.good.id,
+                  count: 1
+                },
+                header: {
+                  'Api-Ext': app.globalData.apiExt
+                },
+                success(res) {
+                  wx.showToast({
+                    title: '加入购物车成功',
+                    icon: "success"
+                  })
+                }
+              })
+            }else{
+              good.count = that.data.num;
+              good.goods_sku_id = that.data.good.id;
+              good.name = that.data.name;
+              good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a
+              if (flag == false) {
+                gloGood.push(good)
+              }
+              app.globalData.good = []
+              app.globalData.good.push(good)
+              wx.navigateTo({
+                url: '/pages/surePay/surePay',
+              })
+            }
+          })
+        }
+      })
+    }	
 	},
   closeTips:function(){
     var that=this
@@ -98,6 +151,9 @@ Page({
         wx.request({
           url: app.globalData.http +'/mpa/wechat/auth',
           method: 'POST',
+          header: {
+            'Api-Ext': app.globalData.apiExt
+          },
           data: {
             code: code.code
           },
@@ -179,6 +235,9 @@ Page({
 			wx.request({
         url: app.globalData.http +'/mpa/cart',
 				method:"POST",
+        header: {
+          'Api-Ext': app.globalData.apiExt
+        },
 				data:{
           goods_sku_id: that.data.good.id,
 					count:that.data.num
@@ -259,6 +318,9 @@ Page({
         wx.request({
           url: app.globalData.http + '/mpa/goods/' + that.data.goods.id + '/skus',//////////////////////////////////////请求路径需改动
           method: "GET",
+          header: {
+            'Api-Ext': app.globalData.apiExt
+          },
           success(res) {
             let good;
             var ress=res.data
@@ -319,6 +381,9 @@ Page({
 		//获取商品详情
 		wx.request({
       url: app.globalData.http + '/mpa/goods/' + options.id, /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
+      header: {
+        'Api-Ext': app.globalData.apiExt
+      },
 			success(res){
         good_id = res.data.id
 
@@ -338,6 +403,9 @@ Page({
         //获取商品规格详情
         wx.request({
           url: app.globalData.http + '/mpa/goods/' + res.data.id + '/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
+          header: {
+            'Api-Ext': app.globalData.apiExt
+          },
           success(data) {
             var specs=[]
             var specType=[]
@@ -345,21 +413,22 @@ Page({
               specs.push(data.data[key])
               specType.push(key)
             }
-
-            // var specs = Object.values(data.data)
-            // var specType=Object.keys(data.data)
+            console.log(specs)
             var chooseSpec=[]
             for (var i = 0; i < specType.length;i++){
               chooseSpec.push(-1)
             }
-
-            // specType.forEach(function(v){
-            //   chooseSpec.push(-1)
-            // })
+            var isSpec
+            if (Object.prototype.toString.call(data.data) == '[object Array]'){
+              isSpec=false
+            }else{
+              isSpec = true
+            }
             that.setData({
               spec: specs,
               specType: specType,
-              chooseSpec: chooseSpec
+              chooseSpec: chooseSpec,
+              isSpec: isSpec
             })
           }
         })

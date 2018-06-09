@@ -1,6 +1,8 @@
 {
   "pages": [
-    "pages/index/index",
+      "pages/index/index",
+    "pages/regMob/regMob",
+  
     "pages/category/category",     
     "pages/shoppingCar/shoppingCar",
     "pages/user/user",
@@ -8,7 +10,7 @@
     "pages/address/address",    
     "pages/surePay/surePay",						
 		"pages/detail/detail",							
-		"pages/regMob/regMob",		
+				
     "pages/result/result", 
     "pages/afterSale/afterSale",
     "pages/refundDetail/refundDetail",

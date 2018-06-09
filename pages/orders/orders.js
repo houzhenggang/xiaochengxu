@@ -38,7 +38,8 @@ Page({
         dataType:'json',
         header: {
           "Api-Key": that.data.apiKey,
-          "Api-Secret": that.data.apiSecret
+          "Api-Secret": that.data.apiSecret,
+          'Api-Ext': app.globalData.apiExt
         },
         success:function(data){
           if(data.data){
@@ -118,7 +119,8 @@ Page({
             dataType:'json',
             header: {
               "Api-Key": that.data.apiKey,
-              "Api-Secret": that.data.apiSecret
+              "Api-Secret": that.data.apiSecret,
+              'Api-Ext': app.globalData.apiExt
             },
             success:function(data){
               var newArr = that.data.allOrder
@@ -141,27 +143,6 @@ Page({
                   }  
                 }
               }
-
-              // that.data.allOrder.forEach(function(v,i){
-              //   if (idx==207){
-              //     /*取消订单*/
-              //     if (v.id === id) {
-              //       var newArr =that.data.allOrder;
-              //       newArr.splice(i,1);
-              //       that.setData({
-              //         allOrder: newArr
-              //       })
-              //     }  
-              //   }else{
-              //     /*确认收货*/
-              //     if (v.id === id) {
-              //       var num = 'allOrder[' + i + '].status'
-              //       that.setData({
-              //         [num]: idx
-              //       })
-              //     }  
-              //   }
-              // })
             }
           })
         } else if (res.cancel) {
@@ -191,7 +172,8 @@ Page({
       method: 'get',
       header: {
         "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret
+        "Api-Secret": that.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       dataType: 'json',
       success: function (data) {
@@ -230,7 +212,8 @@ Page({
       method: 'get',
       header: {
         "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret
+        "Api-Secret": that.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       dataType: 'json',
       success: function (data) {

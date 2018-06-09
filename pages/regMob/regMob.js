@@ -29,6 +29,11 @@ Page({
           data:{
             mobile: this.data.mobile
           },
+          header: {
+            "Api-Key": that.data.apiKey,
+            "Api-Secret": that.data.apiSecret,
+            'Api-Ext': app.globalData.apiExt
+          },
           dataType:'json',
           success:function(data){
              var t=60;
@@ -105,9 +110,10 @@ Page({
               vcode : this.data.sms
             },
             dataType:'json',
-            header:{
-              'Api-Key': that.data.apiKey,
-              'Api-Secret':that.data.apiSecret
+            header: {
+              "Api-Key": that.data.apiKey,
+              "Api-Secret": that.data.apiSecret,
+              'Api-Ext': app.globalData.apiExt
             },
             success:function(data){
               if(data.status==201){

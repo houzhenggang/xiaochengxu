@@ -20,6 +20,9 @@ Page({
       data:{
         keywords: e.detail.value
       },
+      header:{
+        'Api-Ext': app.globalData.apiExt
+      },
       dataType:'json',
       method:'GET',
       success:function(data){

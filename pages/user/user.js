@@ -29,7 +29,8 @@ Page({
         dataType: 'json',
         header: {
           "Api-Key": apiKey,
-          "Api-Secret": apiSecret
+          "Api-Secret": apiSecret,
+          'Api-Ext': app.globalData.apiExt
         },
         success: function (data) {
           var datas = data.data
@@ -67,6 +68,9 @@ Page({
             wx.request({
               url: app.globalData.http +'/mpa/wechat/auth',
               method: 'POST',
+              header:{
+                'Api-Ext': app.globalData.apiExt
+              },
               data: {
                 code: code.code
               },
@@ -102,6 +106,9 @@ Page({
                   wx.request({
                     url: app.globalData.http +'/mpa/wechat/' + res.data.id,
                     method: "PUT",
+                    header:{
+                      'Api-Ext': app.globalData.apiExt
+                    },
                     data: {
                       "nick_name": userInfo.nickName,
                       "avatar_url": userInfo.avatarUrl,

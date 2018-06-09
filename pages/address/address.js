@@ -30,7 +30,8 @@ Page({
         dataType:'json',
         header: {
           "Api-Key":apiKey,
-          "Api-Secret":apiSecret
+          "Api-Secret":apiSecret,
+          'Api-Ext': app.globalData.apiExt
         },
         success:function(data){
          
@@ -74,7 +75,8 @@ Page({
                       },
                       header: {
                         "Api-Key": that.data.apiKey,
-                        "Api-Secret": that.data.apiSecret
+                        "Api-Secret": that.data.apiSecret,
+                        'Api-Ext': app.globalData.apiExt
                       },
                       success: function (data) {
                       } 
@@ -101,7 +103,8 @@ Page({
                 },
                 header: {
                   "Api-Key": that.data.apiKey,
-                  "Api-Secret": that.data.apiSecret
+                  "Api-Secret": that.data.apiSecret,
+                  'Api-Ext': app.globalData.apiExt
                 },
                 success: function (data) {
                 }
@@ -122,7 +125,8 @@ Page({
       dataType: 'json',
       header: {
         "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret
+        "Api-Secret": that.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       success: function (data) {
         console.log(data)
@@ -167,7 +171,8 @@ Page({
                     },
                     header: {
                       "Api-Key": that.data.apiKey,
-                      "Api-Secret": that.data.apiSecret
+                      "Api-Secret": that.data.apiSecret,
+                      'Api-Ext': app.globalData.apiExt
                     },
                     success: function (data) {
                       
@@ -195,7 +200,8 @@ Page({
                 },
                 header: {
                   "Api-Key": that.data.apiKey,
-                  "Api-Secret": that.data.apiSecret
+                  "Api-Secret": that.data.apiSecret,
+                  'Api-Ext': app.globalData.apiExt
                 },
                 success: function (data) {
                 }
@@ -234,7 +240,8 @@ Page({
         },
         header: {
           "Api-Key": that.data.apiKey,
-          "Api-Secret": that.data.apiSecret
+          "Api-Secret": that.data.apiSecret,
+          'Api-Ext': app.globalData.apiExt
         },
         success: function (data) {
             if(key===1){

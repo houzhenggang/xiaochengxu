@@ -28,6 +28,9 @@ Page({
 				pre_page:15,
 				order_by:"created_at",
 			},
+      header: {
+        'Api-Ext': app.globalData.apiExt
+      },
 			method:"GET",
 			success(res){
 				console.log(res)

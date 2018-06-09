@@ -33,7 +33,7 @@
 		<view class='detail_info'>
 			<text>月销{{goods.sales_count}}笔</text>
       <text wx:if="{{goods.is_free_express==1}}">快递:包邮</text>
-      <text wx:else>快递:{{filter.toFix(goods.free_express_price/100)}}</text>
+      <text wx:else="{{goods.is_free_express==2}}">快递:{{filters.toFix(goods.free_express_price/100)}}</text>
       <text>浙江杭州</text>
 		</view>
 		<view class='detail_promise padding'>
@@ -55,15 +55,15 @@
 	</view>
 
 	<!-- 规格选择  -->
-	<view class='mask' wx:if='{{chooseModal}}' bindtap='closeModal'></view>
+	<view class='mask' wx:if='{{chooseModal}}' bindtap='closeModal'></view>s
 	<view class='choose' wx:if='{{chooseModal}}' animation="{{animationData}}">
 		
 		<view class='choose_price'>
 			<image src='{{image}}{{goodUrl}}'></image>
-			<view>
+			<view class='desc'>
 				<text>￥{{filters.toFix(goodPrice/100)}}</text>
         <text>库存：{{good.stock_count}}</text>
-				<text>请选择 {{goods.spec_a}} {{goods.spec_b}}</text>
+				<view>请选择 <text  wx:for='{{spec}}' wx:key='{{index}}'>{{item.name}}</text></view>
 			</view>
 			<image src='/imgs/detail/classification_btn_close@2x.png' data-id='0' bindtap='closeTips'></image>
 		</view>

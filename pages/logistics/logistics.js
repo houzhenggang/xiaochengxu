@@ -22,7 +22,8 @@ Page({
       dataType:'json',
       header: {
         'Api-Key': apiKeys,
-        'Api-Secret': apiSecrets
+        'Api-Secret': apiSecrets,
+        'Api-Ext': app.globalData.apiExt
       },
       success:function(data){
         var datas=data.data;

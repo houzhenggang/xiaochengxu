@@ -45,7 +45,8 @@ Page({
       dataType: 'json',
       header: {
         "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret
+        "Api-Secret": that.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       success: function (data) {
         var newArr=[]
@@ -128,7 +129,8 @@ Page({
       },
       header: {
         "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret
+        "Api-Secret": that.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       success:function(data){
         console.log(data)

@@ -36,6 +36,9 @@ Page({
       })
       wx.request({
         url: app.globalData.http +'/mpa/goods/search',
+        header: {
+          'Api-Ext': app.globalData.apiExt
+        },
         data: {
           category_id: tempArr[select].id
         },
@@ -78,6 +81,9 @@ Page({
 		//请求一级分类，设置data数据
 		wx.request({
       url: app.globalData.http + '/mpa/category',
+      header: {
+        'Api-Ext': app.globalData.apiExt
+      },
 			success(res){
 				let leftSelectedIdx = app.globalData.classIdx;
         res.data[leftSelectedIdx].selected = true
@@ -91,6 +97,9 @@ Page({
             url: app.globalData.http + '/mpa/goods/search',
             data: {
               category_id: res.data[leftSelectedIdx].id,
+            },
+            header: {
+              'Api-Ext': app.globalData.apiExt
             },
             success(data) {
               that.setData({

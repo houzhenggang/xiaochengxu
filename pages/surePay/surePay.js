@@ -102,7 +102,8 @@ Page({
           dataType: 'json',
           header: {
             "Api-Key": that.data.apiKey,
-            "Api-Secret": that.data.apiSecret
+            "Api-Secret": that.data.apiSecret,
+            'Api-Ext': app.globalData.apiExt
           },
           success: function (data) {
             if(data.data.status==205){
@@ -169,7 +170,8 @@ Page({
       },
       header: {
         "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret
+        "Api-Secret": that.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       success: function (data) {
         if (data.statusCode===200){
@@ -182,7 +184,8 @@ Page({
             },
             header: {
               "Api-Key": that.data.apiKey,
-              "Api-Secret": that.data.apiSecret
+              "Api-Secret": that.data.apiSecret,
+              'Api-Ext': app.globalData.apiExt
             },
             success:function(res){
               var time = res.data.timeStamp
@@ -218,7 +221,8 @@ Page({
         },
         header: {
           "Api-Key": that.data.apiKey,
-          "Api-Secret": that.data.apiSecret
+          "Api-Secret": that.data.apiSecret,
+          'Api-Ext': app.globalData.apiExt
         },
         success:function(data){
             that.setData({
