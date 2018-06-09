@@ -23,6 +23,7 @@ Page({
    */
   onLoad: function (options) { 
     var data =app.globalData.good
+    console.log(data)
     var apiKey = wx.getStorageSync(apiKey)
     var apiSecret = wx.getStorageSync(apiSecret)
     var sku_id={}

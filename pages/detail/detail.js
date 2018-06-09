@@ -176,10 +176,10 @@ Page({
               key: 'Api-Secret',
               data: apiSecret
             })
-            wx.setStorage({
-              key: 'huzan_avatarUrl',
-              data: userInfo,
-            })
+            // wx.setStorage({
+            //   key: 'huzan_avatarUrl',
+            //   data: userInfo,
+            // })
             if (res.data.user_id) {
               wx.setStorage({
                 key: 'userId',
@@ -255,7 +255,13 @@ Page({
 			good.count = that.data.num;
       good.goods_sku_id = that.data.good.id;
       good.name=that.data.name;
-      good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a
+      if (that.data.chooseSpec.length == 1){
+        good.sku_description =good.spec_a + ':' + good.property_a
+      } else if (that.data.chooseSpec.length == 2){
+        good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a
+      } else if (that.data.chooseSpec.length == 3){
+        good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a + ',' + good.spec_c + ':' + good.property_c
+      }
 			if(flag == false){
 				gloGood.push(good)
 			}
