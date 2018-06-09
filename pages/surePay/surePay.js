@@ -14,7 +14,8 @@ Page({
       image: 'http://image.yiqixuan.com/',
       sku_idd:[],
       apiSecret:'',
-      apiKey:''
+      apiKey:'',
+      disabled:false
   },
 
   /**
@@ -107,33 +108,34 @@ Page({
           },
           success: function (data) {
             if(data.data.status==205){
-              console.log(666)             
+              // console.log(666)             
               clearInterval(time)
-              wx.navigateTo({
-                url: '/pages/orderDetail/orderDetail?id=' + id,
+              wx.hideLoading()
+              wx.showToast({
+                title: '支付成功',
+                icon: 'success',
+                duration: 1000,
+                complete:function(){
+                  wx.navigateTo({
+                    url: '/pages/orderDetail/orderDetail?id=' + id,
+                  })
+                }
               })
-              // wx.showToast({
-              //   title: '支付成功',
-              //   icon: 'none',
-              //   duration: 1000,
-              //   complete:function(){
-              //     wx.navigateTo({
-              //       url: '/pages/orderDetail/orderDetail?id=' + id,
-              //     })
-              //   }
-              // })
              
             }
            
           },
           fail:function(){
-            console.log(555)
+            wx.hideLoading()
             wx.showToast({
               title: '支付失败',
               icon: 'none',
               duration: 500
             },function(){
               clearInterval(time)
+              that.setData({
+                disabled: false
+              })
               wx.navigateTo({
                 url: '/pages/orderDetail/orderDetail?id=' + id,
               })
@@ -142,13 +144,16 @@ Page({
           }
         })
       } else {
-        console.log(777)       
+        wx.hideLoading() 
         wx.showToast({
           title: '网络错误',
           icon: 'none',
           duration: 500
         }, function () {
           clearInterval(time)
+          that.setData({
+            disabled: false
+          })
           wx.navigateTo({
             url: '/pages/orderDetail/orderDetail?id=' + id,
           })
@@ -159,6 +164,9 @@ Page({
   // 立即支付
   confirm:function(){
     var that=this
+    that.setData({
+      disabled:true
+    })
     wx.request({
       url: app.globalData.http +'/mpa/order',
       method: "post",
@@ -196,14 +204,28 @@ Page({
                 'package': 'prepay_id=' + res.data.result.prepay_id,
                 'signType': 'MD5',
                 'paySign': res.data.paySign,
-                'complete':function(res){
-                  console.log(res)
+                'success':function(res){
                   that.checkPay(data.data.id)
+                },
+                'fail':function(){
+                  that.setData({
+                    disabled: false
+                  })
                 }
               })
-            } 
+            },
+            fail: function () {
+              that.setData({
+                disabled: false
+              })
+            }
           })
         }
+      },
+      fail:function(){
+        that.setData({
+          disabled: false
+        })
       }
     })
   },

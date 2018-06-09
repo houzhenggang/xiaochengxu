@@ -22,15 +22,15 @@
     <view class='info'>
       <view>
         <label>商品总价</label> 
-        <label>￥{{filters.toFix(parseFloat(info.goods_amount))}}</label>
+        <label>￥{{filters.toFix(info.goods_amount/100)}}</label>
       </view>
       <view>
         <label>运费（快递）</label> 
-        <label>￥{{filters.toFix(parseFloat(info.express_amount))}}</label>
+        <label>￥{{filters.toFix(info.express_amount/100)}}</label>
       </view>
       <view>
         <label>订单总价</label> 
-        <label>￥{{filters.toFix(parseFloat(info.amount))}}</label>
+        <label>￥{{filters.toFix(info.amount/100)}}</label>
       </view>
     </view>
     <view class='info'>
@@ -60,7 +60,7 @@
     <view  wx:if='{{info.status==300 || info.status==405 || info.status==400 || info.status==305}}' class='cancel' bindtap='contacts' >联系商家</view>
     <view  wx:if='{{info.status==405 || info.status==400 || info.status==305}}'  class='pay' bindtap='checkLogistics'>查看物流</view>
     <view  wx:if='{{info.status==200}}' data-sure='207' bindtap='confirm' class='cancel'>取消订单</view>
-    <view  wx:if='{{info.status==200}}' class='pay'>立即支付</view>
+    <view  wx:if='{{info.status==200}}' bindtap='payMoney' data-no="{{info.no}}" data-orderid='{{info.id}}' class='pay'>立即支付</view>
 </view>
 
 <view class='shade' hidden='{{show}}'>

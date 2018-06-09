@@ -170,7 +170,7 @@ page{
     font-size: 32rpx;
     color: #EA2534;
 }
-.confirmPay view:last-child{
+.confirmPay button{
     width: 40%;
     height: 100rpx;
     line-height: 100rpx;
@@ -179,4 +179,17 @@ page{
     color:#fff;
     font-family: PingFangSC-Regular;
     font-size: 30rpx;
+    border-radius: 0;
+}
+.confirmPay button:after{
+  border-radius: 0;
+}
+
+button[disabled]:not([type]) {
+    color:#fff;
+    background-color: #EA2534;
+}
+
+button[disabled] {
+    color: #EA2534;
 }

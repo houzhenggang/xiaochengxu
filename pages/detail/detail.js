@@ -308,7 +308,8 @@ Page({
 		//已选择规格种类
     var textSpec= 'chooseSpec['+aIndex+']'
     that.setData({
-      [textSpec]: bIndex
+      [textSpec]: bIndex,
+      num:1
     },function(){
       chooseAll = that.data.chooseSpec.every(function (val) {
         return val !== -1
@@ -359,6 +360,7 @@ Page({
 		return{
       title: this.data.goods.name,
 			path:"/pages/detail/detail?id="+this.data.goods.id,
+      imageUrl: this.data.image+this.data.imgs[0].icon_url,
 			success(res){
 			}
 		}

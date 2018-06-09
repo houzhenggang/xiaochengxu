@@ -59,8 +59,126 @@ Page({
   checkLogistics: function () {
     var that=this;
     wx.navigateTo({
-      url: '/pages/logistics/logistics?id=' + that.data.id
+      url: '/pages/logistics/logistics?id=' + that.data.info.id
     })
+  },
+  /* 查询支付状态*/
+  checkPay: function (id) {
+    var that = this
+    var t = 90;
+    wx.showLoading({
+      title: '加载中',
+    })
+    var time = setInterval(function () {
+      t--
+      if (t > 1) {
+        wx.request({
+          url: app.globalData.http + '/mpa/order/' + id + '/status',
+          method: "get",
+          dataType: 'json',
+          header: {
+            "Api-Key": that.data.apiKey,
+            "Api-Secret": that.data.apiSecret,
+            'Api-Ext': app.globalData.apiExt
+          },
+          success: function (data) {
+            if (data.data.status == 205) {
+              // console.log(666)             
+              clearInterval(time)
+              wx.hideLoading()
+              wx.showToast({
+                title: '支付成功',
+                icon: 'success',
+                duration: 1000,
+                complete: function () {
+                  wx.navigateTo({
+                    url: '/pages/orderDetail/orderDetail?id=' + id,
+                  })
+                }
+              })
+
+            }
+
+          },
+          fail: function () {
+            wx.hideLoading()
+            wx.showToast({
+              title: '支付失败',
+              icon: 'none',
+              duration: 500
+            }, function () {
+              clearInterval(time)
+              that.setData({
+                disabled: false
+              })
+              wx.navigateTo({
+                url: '/pages/orderDetail/orderDetail?id=' + id,
+              })
+            })
+
+          }
+        })
+      } else {
+        wx.hideLoading()
+        wx.showToast({
+          title: '网络错误',
+          icon: 'none',
+          duration: 500
+        }, function () {
+          clearInterval(time)
+          that.setData({
+            disabled: false
+          })
+          wx.navigateTo({
+            url: '/pages/orderDetail/orderDetail?id=' + id,
+          })
+        })
+      }
+    }, 1000)
+  },
+  /*立即付款*/
+  payMoney: function (event) {
+    var id = event.target.dataset.orderid
+    var no = event.target.dataset.no
+    var that = this
+    wx.request({
+      url: app.globalData.http + '/mpa/payment/payment',
+      method: "post",
+      dataType: 'json',
+      data: {
+        'order_id': id
+      },
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
+      success: function (res) {
+        var time = res.data.timeStamp
+        time = time.toString()
+        wx.requestPayment({
+          'timeStamp': time,
+          'nonceStr': no,
+          'package': 'prepay_id=' + res.data.result.prepay_id,
+          'signType': 'MD5',
+          'paySign': res.data.paySign,
+          'success': function (res) {
+            that.checkPay(id)
+          },
+          'fail': function () {
+            that.setData({
+              disabled: false
+            })
+          }
+        })
+      },
+      fail: function () {
+        that.setData({
+          disabled: false
+        })
+      }
+    })
+
   },
   /*申请售后*/
   cancelOrder: function () {
