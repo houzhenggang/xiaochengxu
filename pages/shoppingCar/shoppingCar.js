@@ -202,7 +202,13 @@ Page({
 					_this.setData({
 						totalPrice:total
 					})
-				}
+        } else if (res.statusCode == 400){
+          wx.showToast({
+            title: '以达到最大库存',
+            icon: 'none',
+            duration: 1000
+          })
+        }
 			}
 		})
   },

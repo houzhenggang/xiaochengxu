@@ -25,7 +25,7 @@ Page({
       url: app.globalData.http + '/mpa/goods/recommend',
 			data:{
 				page:0,
-				pre_page:15,
+				pre_page:20,
 				order_by:"created_at",
 			},
       header: {

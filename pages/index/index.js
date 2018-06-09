@@ -149,6 +149,7 @@ Page({
 	//查看更多点击事件
 	showMore(e){
 		var path = e.target.dataset.type;
+    console.log(path)
 		wx.navigateTo({
 			url: '/pages/'+path+"/"+path,
 		})

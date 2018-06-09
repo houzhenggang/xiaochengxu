@@ -46,13 +46,12 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(11111);
 		let that = this;
 		wx.request({
       url: app.globalData.http + '/mpa/goods/special',
 			data: {
-				page: 1,
-				pre_page: 5,
+				page: 0,
+				pre_page: 20,
 				order_by: "created_at",
 			},
       header:{

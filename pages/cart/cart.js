@@ -502,7 +502,7 @@ Page({
       }
     })
   },
-  onShow: function (options) {
+  onLoad: function (options) {
     var apiKey = wx.getStorageSync('apiKey')
     var apiSecret = wx.getStorageSync('apiSecret')
     this.setData({
