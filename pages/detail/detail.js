@@ -501,7 +501,7 @@ Page({
         })
 				wx.hideLoading();
 			},
-      complete:function(){
+      fail:function(){
         wx.showToast({
           title: '暂无网络',
           icon:'none'

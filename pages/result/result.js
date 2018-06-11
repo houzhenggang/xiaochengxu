@@ -13,7 +13,8 @@ Page({
     //flag控制上下箭头类名
     flag: 0,
     page: 0,
-    category_id: ''
+    category_id: '',
+    value:''
   },
   //商品点击
   goDetail(e) {
@@ -28,22 +29,19 @@ Page({
       title: '加载中',
     });
     wx.request({
-      url: app.globalData.http + '/mpa/goods/search',
-      data: {///////////////////////////////////////////////////////id需改动
-        category_id: that.data.category_id,
-        order_by: that.data.order_by,
-        page: that.data.page
+      url: app.globalData.http + '/mpa/goods/search/suggest',
+      data: {
+        keywords: that.data.value
       },
       header: {
         'Api-Ext': app.globalData.apiExt
       },
-      success(res) {
+      dataType: 'json',
+      method: 'GET',
+      success: function (data) {
         that.setData({
-          produList: res.data
+          produList: data.data
         })
-      },
-      complete: function () {
-        wx.hideLoading();
       }
     })
 
@@ -105,35 +103,30 @@ Page({
     });
     let that = this;
     that.setData({
-      category_id: options.id
+      value: options.keyword
     })
     wx.setNavigationBarTitle({
-      title: options.name,
+      title: options.keyword,
     })
     wx.request({
-      url: app.globalData.http + '/mpa/goods/search',
-      data: {///////////////////////////////////////////////////////id需改动
-        category_id: options.id,
-        page: that.data.page
+      url: app.globalData.http + '/mpa/goods/search/suggest',
+      data: {
+        keywords: options.keyword
       },
       header: {
         'Api-Ext': app.globalData.apiExt
       },
-      success(res) {
+      dataType: 'json',
+      method: 'GET',
+      success: function (data) {
         that.setData({
-          produList: res.data
+          produList: data.data
         })
-        wx.hideLoading();
+      },
+      complete:function(){
+        wx.showLoading()
       }
     })
-  },
-  onPullDownRefresh: function () {
-    var pages = that.data.page
-    pages++
-    that.setData({
-      page: pages
-    })
-    this.getList()
   },
   onReachBottom: function () {
     var pages = that.data.page

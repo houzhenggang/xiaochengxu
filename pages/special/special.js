@@ -6,12 +6,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-		produList: []
+		produList: [],
+    image: 'http://image.yiqixuan.com/'
   },
 	//跳转商品详情
 	goDetail(e){
 		wx.navigateTo({
-			url: '/pages/detail/detail?goods_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
+			url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
 	},
   //返回顶部
