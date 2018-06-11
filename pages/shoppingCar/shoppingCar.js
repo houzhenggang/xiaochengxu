@@ -534,7 +534,9 @@ Page({
       apiKey: apiKey,
       apiSecret: apiSecret,
       datalist:[],
-      page:0
+      page:0,
+      selectAll:false,
+      totalPrice: 0.00
     })
     var that = this
     wx.showLoading({

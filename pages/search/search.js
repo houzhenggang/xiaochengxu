@@ -36,10 +36,10 @@ Page({
       dataList:[]
 		})
 	},
-	//处理点击完成按钮函数
-	confirmEvent:(e)=>{
-		wx.navigateTo({
-      url: '/pages/result/result?keyword=' + e.detail.value,
-		})
-	}
+	// //处理点击完成按钮函数
+	// confirmEvent:(e)=>{
+	// 	wx.navigateTo({
+  //     url: '/pages/result/result?keyword=' + e.detail.value,
+	// 	})
+	// }
 })

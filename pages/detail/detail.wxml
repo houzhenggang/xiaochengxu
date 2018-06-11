@@ -34,7 +34,7 @@
 			<text>月销{{goods.sales_count}}笔</text>
       <text wx:if="{{goods.is_free_express==1}}">快递:包邮</text>
       <text wx:else="{{goods.is_free_express==2}}">快递:{{filters.toFix(goods.free_express_price/100)}}</text>
-      <text>浙江杭州</text>
+       <text></text> 
 		</view>
 		<view class='detail_promise padding'>
 			<view><image src='/imgs/detail/product_icon_sign@2x.png'></image><text>全场包邮</text></view>

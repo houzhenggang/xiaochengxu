@@ -26,7 +26,7 @@
           <text wx:if='{{count1}}'>{{count1}}</text>
         </navigator>
 
-        <navigator url='/pages/orders/orders?curTab=300' hover-class="none">
+        <navigator url='/pages/orders/orders?curTab=205' hover-class="none">
           <image src='/imgs/daifahuo.png'></image>
           <label>待发货</label>
           <text wx:if='{{count2}}'>{{count2}}</text>

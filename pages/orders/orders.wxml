@@ -2,7 +2,7 @@
 <view class="swiper-tab">  
     <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">全部</view>  
     <view class="swiper-tab-list {{currentTab==200 ? 'on' : ''}}" data-current="200" bindtap="swichNav">待付款</view>  
-    <view class="swiper-tab-list {{currentTab==300 ? 'on' : ''}}" data-current="300" bindtap="swichNav">待发货</view>  
+    <view class="swiper-tab-list {{currentTab==300 ? 'on' : ''}}" data-current="205" bindtap="swichNav">待发货</view>  
     <view class="swiper-tab-list {{currentTab==400 ? 'on' : ''}}" data-current="400" bindtap="swichNav">待收货</view>  
     <view class="swiper-tab-list {{currentTab==405 ? 'on' : ''}}" data-current="405" bindtap="swichNav">已收货</view>  
     <view class="swiper-tab-list {{currentTab==500 ? 'on' : ''}}" data-current="500" bindtap="swichNav">退还/售后</view>  

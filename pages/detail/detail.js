@@ -461,12 +461,11 @@ Page({
 					goodPrice:res.data.price,
 					imgs:res.data.images,
           name: res.data.name
-          // description: res.data.detail.content
 				})
-        // wx.setNavigationBarTitle({
-        //   title: res.data.name,
-        // })
-        WxParse.wxParse('article', 'html', res.data.detail.content, that, 5);
+        if (res.data.detail.content){
+          WxParse.wxParse('article', 'html', res.data.detail.content, that, 5);
+        }
+      
         //获取商品规格详情
         wx.request({
           url: app.globalData.http + '/mpa/goods/' + res.data.id + '/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
