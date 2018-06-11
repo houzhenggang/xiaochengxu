@@ -39,13 +39,8 @@ Page({
     isSpec:'',
     current:0
   },
-  changeCurrent:function(){
-    var cur=this.data.current
-    if (cur < this.data.imgs.length-1){
-        cur++
-    }else{
-        cur=0
-    }
+  changeCurrent:function(e){
+    var cur=e.detail.current
     this.setData({
       current:cur
     })

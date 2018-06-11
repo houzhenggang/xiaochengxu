@@ -29,7 +29,7 @@ Page({
       title: '加载中',
     });
     wx.request({
-      url: app.globalData.http + '/mpa/goods/search/suggest',
+      url: app.globalData.http + '/mpa/goods/search',
       data: {
         keywords: that.data.value
       },
@@ -94,6 +94,12 @@ Page({
       flag: flag
     })
   },
+  goTop: function () {
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 1000
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -103,13 +109,14 @@ Page({
     });
     let that = this;
     that.setData({
-      value: options.keyword
+      value: options.keyword,
+      inputValue: options.keyword
     })
     wx.setNavigationBarTitle({
       title: options.keyword,
     })
     wx.request({
-      url: app.globalData.http + '/mpa/goods/search/suggest',
+      url: app.globalData.http + '/mpa/goods/search',
       data: {
         keywords: options.keyword
       },
@@ -124,7 +131,7 @@ Page({
         })
       },
       complete:function(){
-        wx.showLoading()
+        wx.hideLoading()
       }
     })
   },

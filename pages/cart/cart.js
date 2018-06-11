@@ -7,9 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    isShow: '',
     selectAll: false,
-    datalist: [],
+    datalist: 1,
     image: 'http://image.yiqixuan.com/',
     totalPrice: 0.00,
     page: 0,
@@ -395,7 +394,6 @@ Page({
   //底部删除点击事件
   bottomDelete() {
     let that = this;
-    let isShow = that.data.isShow;
     //未选中item数组
     var seleArr = [], deleArr = [];
     var nowArr = this.data.datalist,
@@ -407,12 +405,6 @@ Page({
         deleArr.push(nowArr[i].id)
       }
     };
-    //控制isShow值
-    if (seleArr.length == 0) {
-      isShow = 2
-    } else {
-      isShow = 1
-    }
     if (deleArr.length == 0) {
       wx.showToast({
         title: '请选择商品',
@@ -440,7 +432,6 @@ Page({
                   console.log(res)
                   that.setData({
                     datalist: seleArr,
-                    isShow: isShow,
                     totalPrice: 0.00
                   })
                 }
@@ -462,7 +453,6 @@ Page({
                   console.log(res)
                   that.setData({
                     datalist: seleArr,
-                    isShow: isShow,
                     totalPrice: 0.00
                   })
                 }
@@ -482,7 +472,6 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    let isShow = that.data.isShow;
     //获取用户购物车列表
     wx.request({
       url: app.globalData.http + '/mpa/cart',
@@ -502,27 +491,14 @@ Page({
             res.data[z].isTouchMove = false
             list.push(res.data[z])
           }
-          if (list.length == 0 && that.data.page == 0) {
-            isShow = 2
-          } else {
-            isShow = 1
-          }
           var datalists = that.data.datalist.concat(list)
           that.setData({
             datalist: datalists,
-            isShow: isShow
-          })
-        } else if (!res.data && that.data.page == 0) {
-          that.setData({
-            isShow: 2
           })
         }
         wx.hideLoading();
       },
       fail: function () {
-        that.setData({
-          isShow: 2
-        })
         wx.hideLoading();
       }
     })
@@ -534,13 +510,14 @@ Page({
       apiKey: apiKey,
       apiSecret: apiSecret,
       datalist: [],
-      page: 0
+      page: 0,
+      selectAll: false,
+      totalPrice: 0.00
     })
     var that = this
     wx.showLoading({
       title: '加载中',
     })
-    let isShow = that.data.isShow;
     //获取用户购物车列表
     wx.request({
       url: app.globalData.http + '/mpa/cart',
@@ -562,19 +539,11 @@ Page({
           }
           that.setData({
             datalist: list,
-            isShow: 1
-          })
-        } else {
-          that.setData({
-            isShow: 2
           })
         }
         wx.hideLoading();
       },
       fail: function () {
-        that.setData({
-          isShow: 2
-        })
         wx.hideLoading();
       }
     })

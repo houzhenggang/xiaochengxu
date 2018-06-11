@@ -9,7 +9,7 @@ Page({
     // tab切换  
     currentTab: 0,
     index:0,
-    allOrder:'',
+    allOrder:1,
     image: 'http://image.yiqixuan.com/',
     apiSecret:'',
     apiKey:'',
@@ -43,16 +43,9 @@ Page({
           'Api-Ext': app.globalData.apiExt
         },
         success:function(data){
-          if(data.data){
             that.setData({
               allOrder: data.data
-            })
-          }else{
-            that.setData({
-              allOrder:''
-            })
-          }
-         
+            })        
         },
         complete:function(){
           wx.hideLoading()

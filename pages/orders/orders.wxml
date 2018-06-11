@@ -2,7 +2,7 @@
 <view class="swiper-tab">  
     <view class="swiper-tab-list {{currentTab==1 ? 'on' : ''}}" data-current="1" bindtap="swichNav">全部</view>  
     <view class="swiper-tab-list {{currentTab==200 ? 'on' : ''}}" data-current="200" bindtap="swichNav">待付款</view>  
-    <view class="swiper-tab-list {{currentTab==300 ? 'on' : ''}}" data-current="205" bindtap="swichNav">待发货</view>  
+    <view class="swiper-tab-list {{currentTab==205 ? 'on' : ''}}" data-current="205" bindtap="swichNav">待发货</view>  
     <view class="swiper-tab-list {{currentTab==400 ? 'on' : ''}}" data-current="400" bindtap="swichNav">待收货</view>  
     <view class="swiper-tab-list {{currentTab==405 ? 'on' : ''}}" data-current="405" bindtap="swichNav">已收货</view>  
     <view class="swiper-tab-list {{currentTab==500 ? 'on' : ''}}" data-current="500" bindtap="swichNav">退还/售后</view>  
@@ -10,12 +10,12 @@
   
 <scroll-view  current="{{currentTab}}" scroll-y bindscrolltolower="getMore" class="swiper-box"  style="height:{{2*winHeight - 102}}rpx">  
       <view>
-          <view class='container' hidden='{{allOrder}}'>
+          <view class='container' wx:if='{{allOrder.length==0}}'>
                 <image src='/imgs/empty_order.png'></image>
                 <view>您的订单空空如也呢</view>
                 <label>去别的页面看看吧</label>
           </view>
-          <view  class='content' hidden='{{!allOrder}}' >
+          <view  class='content' wx:if='{{allOrder.length!=0}}' >
               <navigator url='/pages/orderDetail/orderDetail?id={{item.id}}' hover-class='none' wx:for="{{allOrder}}" wx:for-index="index" wx:key="index">
                   <view class='top'>
                       <label>下单时间：{{item.created_at}}</label>
