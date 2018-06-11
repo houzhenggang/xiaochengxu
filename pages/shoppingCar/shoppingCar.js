@@ -190,6 +190,7 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
 			success(res){
+        console.log(res)
 				if(res.statusCode == 200){
 					var num = 'datalist[' + index + '].count';
 					_this.setData({
@@ -204,7 +205,7 @@ Page({
 					})
         } else if (res.statusCode == 400){
           wx.showToast({
-            title: '以达到最大库存',
+            title: '商品库存不足',
             icon: 'none',
             duration: 1000
           })
@@ -409,57 +410,66 @@ Page({
 		}else{
 			isShow = 1
 		}
-		//点击删除提示信息
-		wx.showModal({
-			// title: '删除',
-			content: '确定删除？',
-			success(res){
-				if(res.confirm){
-					//单个商品删除请求
-					if (deleArr.length == 1) {
-						wx.request({
-              url: app.globalData.http + '/mpa/cart/' + deleArr[0],
-							method: "DELETE",
-              header: {
-                "Api-Key": that.data.apiKey,
-                "Api-Secret": that.data.apiSecret,
-                'Api-Ext': app.globalData.apiExt
-              },
-							success(res) {
-								console.log(res)
-								that.setData({
-									datalist: seleArr,
-									isShow: isShow,
-                  totalPrice:0.00
-								})
-							}
-						})
-					} else {
-						//批量删除请求
-						wx.request({
-              url: app.globalData.http + '/mpa/cart/batch',
-							method: "DELETE",
-							data: {
-								ids: deleArr
-							},
-              header: {
-                "Api-Key": that.data.apiKey,
-                "Api-Secret": that.data.apiSecret,
-                'Api-Ext': app.globalData.apiExt
-              },
-							success(res) {
-								console.log(res)
-								that.setData({
-									datalist: seleArr,
-									isShow: isShow,
-                  totalPrice: 0.00
-								})
-							}
-						})
-					}
-				}
-			}
-		})
+    if (deleArr.length==0){
+      wx.showToast({
+        title: '请选择商品',
+        icon:'none',
+        duration:1000
+      })
+    }else{
+      //点击删除提示信息
+      wx.showModal({
+        // title: '删除',
+        content: '确定删除？',
+        success(res) {
+          if (res.confirm) {
+            //单个商品删除请求
+            if (deleArr.length == 1) {
+              wx.request({
+                url: app.globalData.http + '/mpa/cart/' + deleArr[0],
+                method: "DELETE",
+                header: {
+                  "Api-Key": that.data.apiKey,
+                  "Api-Secret": that.data.apiSecret,
+                  'Api-Ext': app.globalData.apiExt
+                },
+                success(res) {
+                  console.log(res)
+                  that.setData({
+                    datalist: seleArr,
+                    isShow: isShow,
+                    totalPrice: 0.00
+                  })
+                }
+              })
+            } else {
+              //批量删除请求
+              wx.request({
+                url: app.globalData.http + '/mpa/cart/batch',
+                method: "DELETE",
+                data: {
+                  ids: deleArr
+                },
+                header: {
+                  "Api-Key": that.data.apiKey,
+                  "Api-Secret": that.data.apiSecret,
+                  'Api-Ext': app.globalData.apiExt
+                },
+                success(res) {
+                  console.log(res)
+                  that.setData({
+                    datalist: seleArr,
+                    isShow: isShow,
+                    totalPrice: 0.00
+                  })
+                }
+              })
+            }
+          }
+        }
+      })
+    }
+		
 	},
   /**
    * 生命周期函数--监听页面加载
@@ -526,7 +536,8 @@ Page({
     this.setData({
       apiKey: apiKey,
       apiSecret: apiSecret,
-      datalist:[]
+      datalist:[],
+      page:0
     })
     this.getData()
   },

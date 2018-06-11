@@ -40,7 +40,56 @@ Page({
   },
 	/* 规格选择弹出事件 */
 	modalShow(e){
-		var that = this;
+    var that = this;
+    wx.login({
+      success(code) {
+        //向后台发起请求，传code
+        wx.request({
+          url: app.globalData.http + '/mpa/wechat/auth',
+          method: 'POST',
+          header: {
+            'Api-Ext': app.globalData.apiExt
+          },
+          data: {
+            code: code.code
+          },
+          success: function (res) {
+            //保存响应头信息
+            var apiKey = res.header["Api-Key"],
+              apiSecret = res.header["Api-Secret"];
+            //设置storage
+            //获取时间戳保存storage
+            let timestamp = Date.parse(new Date());
+            wx.setStorage({
+              key: 'Api-Key',
+              data: apiKey
+            })
+            wx.setStorage({
+              key: 'timestamp',
+              data: timestamp,
+            })
+            wx.setStorage({
+              key: 'Api-Secret',
+              data: apiSecret
+            })
+            if (res.data.user_id) {
+              wx.setStorage({
+                key: 'userId',
+                data: res.data.id,
+              })
+
+            } else {
+              wx.navigateTo({
+                url: "/pages/regMob/regMob"
+              })
+              return false
+            }
+          }
+        })
+      },
+      fail: function (res) {
+      }
+    })
 		//修改flag标识
 		let flag = e.currentTarget.dataset.flag;
     // 有规格
@@ -144,61 +193,61 @@ Page({
 	//点击确认，关闭弹出框
 	closeModal(e){
 		var that = this;
-    wx.login({
-      success(code) {
-            //向后台发起请求，传code
-        console.log(333)
-        wx.request({
-          url: app.globalData.http +'/mpa/wechat/auth',
-          method: 'POST',
-          header: {
-            'Api-Ext': app.globalData.apiExt
-          },
-          data: {
-            code: code.code
-          },
-          success: function (res) {
-            //保存响应头信息
-            var apiKey = res.header["Api-Key"],
-              apiSecret = res.header["Api-Secret"];
-            //设置storage
-            //获取时间戳保存storage
-            let timestamp = Date.parse(new Date());
-            wx.setStorage({
-              key: 'Api-Key',
-              data: apiKey
-            })
-            wx.setStorage({
-              key: 'timestamp',
-              data: timestamp,
-            })
-            wx.setStorage({
-              key: 'Api-Secret',
-              data: apiSecret
-            })
-            // wx.setStorage({
-            //   key: 'huzan_avatarUrl',
-            //   data: userInfo,
-            // })
-            if (res.data.user_id) {
-              wx.setStorage({
-                key: 'userId',
-                data: res.data.id,
-              })
-            } else {
-              wx.navigateTo({
-                url: "/pages/regMob/regMob"
-              })
-              return false
-            }
-          }
-        })
-      },
-      fail:function(res){
-        console.log(res)
-        return false
-      }
-    })
+    // wx.login({
+    //   success(code) {
+    //         //向后台发起请求，传code
+    //     console.log(333)
+    //     wx.request({
+    //       url: app.globalData.http +'/mpa/wechat/auth',
+    //       method: 'POST',
+    //       header: {
+    //         'Api-Ext': app.globalData.apiExt
+    //       },
+    //       data: {
+    //         code: code.code
+    //       },
+    //       success: function (res) {
+    //         //保存响应头信息
+    //         var apiKey = res.header["Api-Key"],
+    //           apiSecret = res.header["Api-Secret"];
+    //         //设置storage
+    //         //获取时间戳保存storage
+    //         let timestamp = Date.parse(new Date());
+    //         wx.setStorage({
+    //           key: 'Api-Key',
+    //           data: apiKey
+    //         })
+    //         wx.setStorage({
+    //           key: 'timestamp',
+    //           data: timestamp,
+    //         })
+    //         wx.setStorage({
+    //           key: 'Api-Secret',
+    //           data: apiSecret
+    //         })
+    //         // wx.setStorage({
+    //         //   key: 'huzan_avatarUrl',
+    //         //   data: userInfo,
+    //         // })
+    //         if (res.data.user_id) {
+    //           wx.setStorage({
+    //             key: 'userId',
+    //             data: res.data.id,
+    //           })
+    //         } else {
+    //           wx.navigateTo({
+    //             url: "/pages/regMob/regMob"
+    //           })
+    //           return false
+    //         }
+    //       }
+    //     })
+    //   },
+    //   fail:function(res){
+    //     console.log(res)
+    //     return false
+    //   }
+    // })
     var  chooseAll = that.data.chooseSpec.every(function (val) {
       return val !== -1
     })
@@ -404,9 +453,9 @@ Page({
           name: res.data.name
           // description: res.data.detail.content
 				})
-        wx.setNavigationBarTitle({
-          title: res.data.name,
-        })
+        // wx.setNavigationBarTitle({
+        //   title: res.data.name,
+        // })
         WxParse.wxParse('article', 'html', res.data.detail.content, that, 5);
         //获取商品规格详情
         wx.request({

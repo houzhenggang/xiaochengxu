@@ -3,6 +3,7 @@
 page{
 	height: 100%;
 	font-family: PingFangSC-Regular;
+  background: #F6F7F7;
 }
 .search_container{
 	height: 100%;
@@ -43,23 +44,24 @@ page{
 /* family  */
 .search_family{
 	height: 88rpx;
-	width: 710rpx;
+	width: 750rpx;
 	margin: 0 auto;
 	font-size: 28rpx;
 	color: #666666;
+  background: #fff;
 }
 .selected{
 	color: #FF4D77;
 }
 .new{
-	width: 236rpx;
+	width: 33.3%;
 	text-align: center;
 	line-height: 88rpx;
 	height: 88rpx;
 	float: left;
 }
 .sale_num{
-	width: 236rpx;
+	width: 33.3%;
 	line-height: 88rpx;
 	height: 88rpx;
 	text-align: center;
@@ -67,7 +69,7 @@ page{
 }
 .family_arrow{
 	line-height: 88rpx;
-	width: 236rpx;
+  width: 33.3%;
 	height: 88rpx;
 	float: left;
 	display: flex;
@@ -108,13 +110,14 @@ page{
 /* search products  */
 .search_products{
 	width: 750rpx;
-	flex: 1;
-	background: #F6F7F7;
-	overflow: hidden;
+	overflow-x: hidden;
 	position: relative;
 }
 .search_item{
-	width: 710rpx;
+	width: 750rpx;
+  padding: 0 20rpx;
+  box-sizing:border-box;
+  background: #F6F7F7;
 	margin: 0 auto;
 	margin-top: 24rpx;
 	display: flex;

@@ -165,6 +165,14 @@ Page({
   // 立即支付
   confirm:function(){
     var that=this
+    if (Object.prototype.toString.call(that.data.address) == '[object Array]'){
+      wx.showToast({
+        title: '请添加地址',
+        icon: 'none',
+        duration: 1000
+      })
+      return  false
+    }
     that.setData({
       disabled:true
     })
@@ -220,6 +228,12 @@ Page({
                 disabled: false
               })
             }
+          })
+        } else if (data.statusCode === 500){
+          wx.showToast({
+            title: '商品库存不足',
+            icon: 'none',
+            duration: 1000
           })
         }
       },

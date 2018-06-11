@@ -9,6 +9,6 @@ App({
 		good:[],
     address:1,
     apiExt:'',
-    http:'https://test.yiqixuan.com'
+    http:'https://develop.yiqixuan.com'
   }
 })

@@ -14,7 +14,7 @@
 	</view>
 
 	<!-- search products  -->
-	<view class='search_products'>
+	<!-- <view class='search_products'> -->
 		<view class='search_item'>
 			<view class='item_box' wx:for="{{produList}}" wx:key='{{index}}' data-id='{{item.id}}' data-name='{{item.name}}' bindtap='goDetail'>
 				<image src='{{image}}{{item.cover_url}}'></image>
@@ -24,7 +24,7 @@
 				</view>
 			</view>
 		</view>
-	</view>
+	<!-- </view> -->
 
 	<!--up button  -->
 	<view class='search_up'>

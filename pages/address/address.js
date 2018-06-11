@@ -50,7 +50,6 @@ Page({
       })
   },
   address:function(){
-    console.log(666)
     var that=this
     wx.getSetting({
       success(res) {
@@ -118,32 +117,41 @@ Page({
 
   deleteAddr:function(event){
     var that=this;
-    var index= event.target.dataset.index;
-    wx.request({
-      url: app.globalData.http +'/mpa/address/' + that.data.address[index].id,
-      method: 'delete',
-      dataType: 'json',
-      header: {
-        "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret,
-        'Api-Ext': app.globalData.apiExt
-      },
-      success: function (data) {
-        console.log(data)
-        if (data.statusCode==200){
-          that.data.address.splice(index,1)
-          that.setData({
-            address: that.data.address
+    wx.showModal({
+      title: '提示',
+      content: '确定删除地址?',
+      success: function (res) {
+        if (res.confirm) {
+          var index = event.target.dataset.index;
+          wx.request({
+            url: app.globalData.http + '/mpa/address/' + that.data.address[index].id,
+            method: 'delete',
+            dataType: 'json',
+            header: {
+              "Api-Key": that.data.apiKey,
+              "Api-Secret": that.data.apiSecret,
+              'Api-Ext': app.globalData.apiExt
+            },
+            success: function (data) {
+              console.log(data)
+              if (data.statusCode == 200) {
+                that.data.address.splice(index, 1)
+                that.setData({
+                  address: that.data.address
+                })
+                wx.showToast({
+                  title: '删除成功',
+                  icon: 'none',
+                  duration: 1000
+                })
+              }
+            }
           })
-          wx.showToast({
-            title: '删除成功',
-            icon: 'none',
-            duration: 1000
-          })
+        } else if (res.cancel) {
+          
         }
       }
     })
-
   },
   updateAddr: function (event){
     var that = this

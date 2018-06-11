@@ -19,6 +19,7 @@ swiper{
 }
 .description{
   font-size: 15rpx;
+  padding-bottom: 100rpx;
 }
 .detail_imgs image{
 	width: 750rpx;

@@ -127,19 +127,11 @@ Page({
 			}
 		})
   },
-  onPullDownRefresh: function () {
-    var pages=that.data.page
-    pages++
-    that.setData({
-      page:pages
-    })
-    this.getList()
-  },
   onReachBottom: function () {
-    var pages = that.data.page
+    var pages=this.data.page
     pages++
-    that.setData({
-      page: pages
+    this.setData({
+      page:pages
     })
     this.getList()
   }
