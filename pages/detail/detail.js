@@ -40,11 +40,11 @@ Page({
     current:0
   },
   changeCurrent:function(){
-    var cur=this.data.current,
-    if (cur < this.data.imgs.length){
+    var cur=this.data.current
+    if (cur < this.data.imgs.length-1){
         cur++
     }else{
-        cur=1
+        cur=0
     }
     this.setData({
       current:cur

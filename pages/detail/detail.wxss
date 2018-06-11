@@ -11,7 +11,16 @@ image{
 .detail_container{
 	width: 100%;
 	height: 100%;
-	overflow: scroll;
+	overflow-x: hidden;
+  position: relative;
+}
+.showIndex{
+  position: absolute;
+  top: 620rpx;
+  right: 30rpx;
+  color:#666;
+  font-size: 26rpx;
+  z-index: 100;
 }
 swiper{
 	width:750rpx;
