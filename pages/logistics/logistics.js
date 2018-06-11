@@ -17,7 +17,7 @@ Page({
     var apiKeys = wx.getStorageSync('Api-Key');
     var apiSecrets = wx.getStorageSync('Api-Secret')
     wx.request({
-      url: app.globalData.http +'/mpa/order/1/express',
+      url: app.globalData.http +'/mpa/order/'+id+'/express',
       method:'GET',
       dataType:'json',
       header: {

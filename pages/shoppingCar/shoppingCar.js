@@ -37,56 +37,59 @@ Page({
 					seleArr.push(good[i])
 				}
 			}
+
+
+
       app.globalData.good = seleArr;
       wx.navigateTo({
         url: '/pages/surePay/surePay',
       })
-      wx.login({ 
-        success(code) {       
-        //向后台发起请求，传code
-          wx.request({
-            url: app.globalData.http +'/mpa/wechat/auth',
-            method: 'POST',
-            data: {
-              code: code.code
-            },
-            header:{
-              'Api-Ext': app.globalData.apiExt
-            },
-            success: function (res) { 
-              //保存响应头信息
-              var apiKey = res.header["Api-Key"],
-                apiSecret = res.header["Api-Secret"];
-              //设置storage
-              //获取时间戳保存storage
-              let timestamp = Date.parse(new Date());
-              wx.setStorage({
-                key: 'apiKey',
-                data: apiKey,
-              })
-              wx.setStorage({
-                key: 'timestamp',
-                data: timestamp,
-              })
+      // wx.login({ 
+      //   success(code) {       
+      //   //向后台发起请求，传code
+      //     wx.request({
+      //       url: app.globalData.http +'/mpa/wechat/auth',
+      //       method: 'POST',
+      //       data: {
+      //         code: code.code
+      //       },
+      //       header:{
+      //         'Api-Ext': app.globalData.apiExt
+      //       },
+      //       success: function (res) { 
+      //         //保存响应头信息
+      //         var apiKey = res.header["Api-Key"],
+      //           apiSecret = res.header["Api-Secret"];
+      //         //设置storage
+      //         //获取时间戳保存storage
+      //         let timestamp = Date.parse(new Date());
+      //         wx.setStorage({
+      //           key: 'apiKey',
+      //           data: apiKey,
+      //         })
+      //         wx.setStorage({
+      //           key: 'timestamp',
+      //           data: timestamp,
+      //         })
 
-              wx.setStorage({
-                key: 'apiSecret',
-                data: apiSecret,
-              })
-              if (!res.data.user_id) {
-                wx.navigateTo({
-                    url: "/pages/regMob/regMob"
-                })
-              }else{
-                app.globalData.good = seleArr;
-                wx.navigateTo({
-                  url: '/pages/surePay/surePay',
-                })
-              }
-            }
-          })
-        }
-      })
+      //         wx.setStorage({
+      //           key: 'apiSecret',
+      //           data: apiSecret,
+      //         })
+      //         if (!res.data.user_id) {
+      //           wx.navigateTo({
+      //               url: "/pages/regMob/regMob"
+      //           })
+      //         }else{
+      //           app.globalData.good = seleArr;
+      //           wx.navigateTo({
+      //             url: '/pages/surePay/surePay',
+      //           })
+      //         }
+      //       }
+      //     })
+      //   }
+      // })
     }
 	},
 	//跳转首页
@@ -499,12 +502,6 @@ Page({
             res.data[z].isTouchMove = false
             list.push(res.data[z])
           }
-
-          // res.data.forEach(function (item, index) {
-          //   item.isSelect = false;
-          //   item.isTouchMove = false 
-          //   list.push(item)
-          // })
           if (list.length == 0 && that.data.page==0) {
             isShow = 2
           } else {
@@ -539,7 +536,48 @@ Page({
       datalist:[],
       page:0
     })
-    this.getData()
+    var that = this
+    wx.showLoading({
+      title: '加载中',
+    })
+    let isShow = that.data.isShow;
+    //获取用户购物车列表
+    wx.request({
+      url: app.globalData.http + '/mpa/cart',
+      data: {
+        page: 0
+      },
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
+      success(res) {
+        if (res.data.length != 0) {
+          var list = []
+          for (var z = 0; z < res.data.length; z++) {
+            res.data[z].isSelect = false;
+            res.data[z].isTouchMove = false
+            list.push(res.data[z])
+          }
+          that.setData({
+            datalist: list,
+            isShow: 1
+          })
+        } else {
+          that.setData({
+            isShow: 2
+          })
+        }
+        wx.hideLoading();
+      },
+      fail: function () {
+        that.setData({
+          isShow: 2
+        })
+        wx.hideLoading();
+      }
+    })
   },
   /*
  * 页面上拉触底事件的处理函数

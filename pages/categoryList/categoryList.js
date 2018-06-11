@@ -38,9 +38,11 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
       success(res) {
+        var datas = that.data.produList.concat(res.data)
         that.setData({
-          produList: res.data
+          produList:datas
         })
+
       },
       complete:function(){
         wx.hideLoading();

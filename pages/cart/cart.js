@@ -11,7 +11,7 @@ Page({
     selectAll: false,
     datalist: [],
     image: 'http://image.yiqixuan.com/',
-    totalPrice: 0,
+    totalPrice: 0.00,
     page: 0,
     startX: 0, //开始坐标
     startY: 0,
@@ -22,7 +22,7 @@ Page({
   balance() {
     let that = this;
     //如果没有选择商品,总价格为0，提示
-    if (that.data.totalPrice == 0) {
+    if (that.data.totalPrice == '0.00') {
       wx.showToast({
         title: '请选择商品',
         icon: "none"
@@ -37,53 +37,59 @@ Page({
           seleArr.push(good[i])
         }
       }
+
+
+
       app.globalData.good = seleArr;
       wx.navigateTo({
         url: '/pages/surePay/surePay',
       })
-      wx.login({
-        success(code) {
-          //向后台发起请求，传code
-          wx.request({
-            url: app.globalData.http + '/mpa/wechat/auth',
-            method: 'POST',
-            data: {
-              code: code.code
-            },
-            success: function (res) {
-              //保存响应头信息
-              var apiKey = res.header["Api-Key"],
-                apiSecret = res.header["Api-Secret"];
-              //设置storage
-              //获取时间戳保存storage
-              let timestamp = Date.parse(new Date());
-              wx.setStorage({
-                key: 'apiKey',
-                data: apiKey,
-              })
-              wx.setStorage({
-                key: 'timestamp',
-                data: timestamp,
-              })
+      // wx.login({ 
+      //   success(code) {       
+      //   //向后台发起请求，传code
+      //     wx.request({
+      //       url: app.globalData.http +'/mpa/wechat/auth',
+      //       method: 'POST',
+      //       data: {
+      //         code: code.code
+      //       },
+      //       header:{
+      //         'Api-Ext': app.globalData.apiExt
+      //       },
+      //       success: function (res) { 
+      //         //保存响应头信息
+      //         var apiKey = res.header["Api-Key"],
+      //           apiSecret = res.header["Api-Secret"];
+      //         //设置storage
+      //         //获取时间戳保存storage
+      //         let timestamp = Date.parse(new Date());
+      //         wx.setStorage({
+      //           key: 'apiKey',
+      //           data: apiKey,
+      //         })
+      //         wx.setStorage({
+      //           key: 'timestamp',
+      //           data: timestamp,
+      //         })
 
-              wx.setStorage({
-                key: 'apiSecret',
-                data: apiSecret,
-              })
-              if (!res.data.user_id) {
-                wx.navigateTo({
-                  url: "/pages/regMob/regMob"
-                })
-              } else {
-                app.globalData.good = seleArr;
-                wx.navigateTo({
-                  url: '/pages/surePay/surePay',
-                })
-              }
-            }
-          })
-        }
-      })
+      //         wx.setStorage({
+      //           key: 'apiSecret',
+      //           data: apiSecret,
+      //         })
+      //         if (!res.data.user_id) {
+      //           wx.navigateTo({
+      //               url: "/pages/regMob/regMob"
+      //           })
+      //         }else{
+      //           app.globalData.good = seleArr;
+      //           wx.navigateTo({
+      //             url: '/pages/surePay/surePay',
+      //           })
+      //         }
+      //       }
+      //     })
+      //   }
+      // })
     }
   },
   //跳转首页
@@ -111,7 +117,8 @@ Page({
         },
         header: {
           "Api-Key": _this.data.apiKey,
-          "Api-Secret": _this.data.apiSecret
+          "Api-Secret": _this.data.apiSecret,
+          'Api-Ext': app.globalData.apiExt
         },
         success(res) {
 
@@ -142,7 +149,8 @@ Page({
               method: "DELETE",
               header: {
                 "Api-Key": _this.data.apiKey,
-                "Api-Secret": _this.data.apiSecret
+                "Api-Secret": _this.data.apiSecret,
+                'Api-Ext': app.globalData.apiExt
               },
               success(res) {
                 //如果删除成功
@@ -181,9 +189,11 @@ Page({
       },
       header: {
         "Api-Key": _this.data.apiKey,
-        "Api-Secret": _this.data.apiSecret
+        "Api-Secret": _this.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       success(res) {
+        console.log(res)
         if (res.statusCode == 200) {
           var num = 'datalist[' + index + '].count';
           _this.setData({
@@ -195,6 +205,12 @@ Page({
           }
           _this.setData({
             totalPrice: total
+          })
+        } else if (res.statusCode == 400) {
+          wx.showToast({
+            title: '商品库存不足',
+            icon: 'none',
+            duration: 1000
           })
         }
       }
@@ -313,7 +329,8 @@ Page({
             method: "DELETE",
             header: {
               "Api-Key": _this.data.apiKey,
-              "Api-Secret": _this.data.apiSecret
+              "Api-Secret": _this.data.apiSecret,
+              'Api-Ext': app.globalData.apiExt
             },
             success(res) {
               console.log(res)
@@ -396,53 +413,66 @@ Page({
     } else {
       isShow = 1
     }
-    //点击删除提示信息
-    wx.showModal({
-      // title: '删除',
-      content: '确定删除？',
-      success(res) {
-        if (res.confirm) {
-          //单个商品删除请求
-          if (deleArr.length == 1) {
-            wx.request({
-              url: app.globalData.http + '/mpa/cart/' + deleArr[0],
-              method: "DELETE",
-              header: {
-                "Api-Key": that.data.apiKey,
-                "Api-Secret": that.data.apiSecret
-              },
-              success(res) {
-                console.log(res)
-                that.setData({
-                  datalist: seleArr,
-                  isShow: isShow
-                })
-              }
-            })
-          } else {
-            //批量删除请求
-            wx.request({
-              url: app.globalData.http + '/mpa/cart/batch',
-              method: "DELETE",
-              data: {
-                ids: deleArr
-              },
-              header: {
-                "Api-Key": that.data.apiKey,
-                "Api-Secret": that.data.apiSecret
-              },
-              success(res) {
-                console.log(res)
-                that.setData({
-                  datalist: seleArr,
-                  isShow: isShow
-                })
-              }
-            })
+    if (deleArr.length == 0) {
+      wx.showToast({
+        title: '请选择商品',
+        icon: 'none',
+        duration: 1000
+      })
+    } else {
+      //点击删除提示信息
+      wx.showModal({
+        // title: '删除',
+        content: '确定删除？',
+        success(res) {
+          if (res.confirm) {
+            //单个商品删除请求
+            if (deleArr.length == 1) {
+              wx.request({
+                url: app.globalData.http + '/mpa/cart/' + deleArr[0],
+                method: "DELETE",
+                header: {
+                  "Api-Key": that.data.apiKey,
+                  "Api-Secret": that.data.apiSecret,
+                  'Api-Ext': app.globalData.apiExt
+                },
+                success(res) {
+                  console.log(res)
+                  that.setData({
+                    datalist: seleArr,
+                    isShow: isShow,
+                    totalPrice: 0.00
+                  })
+                }
+              })
+            } else {
+              //批量删除请求
+              wx.request({
+                url: app.globalData.http + '/mpa/cart/batch',
+                method: "DELETE",
+                data: {
+                  ids: deleArr
+                },
+                header: {
+                  "Api-Key": that.data.apiKey,
+                  "Api-Secret": that.data.apiSecret,
+                  'Api-Ext': app.globalData.apiExt
+                },
+                success(res) {
+                  console.log(res)
+                  that.setData({
+                    datalist: seleArr,
+                    isShow: isShow,
+                    totalPrice: 0.00
+                  })
+                }
+              })
+            }
           }
         }
-      }
-    })
+      })
+    }
+
   },
   /**
    * 生命周期函数--监听页面加载
@@ -459,10 +489,11 @@ Page({
       data: {
         page: that.data.page
       },
-      // header: {
-      //   "Api-Key": that.data.apiKey,
-      //   "Api-Secret": that.data.apiSecret
-      // },
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
       success(res) {
         if (res.data != "") {
           var list = []
@@ -471,12 +502,6 @@ Page({
             res.data[z].isTouchMove = false
             list.push(res.data[z])
           }
-
-          // res.data.forEach(function (item, index) {
-          //   item.isSelect = false;
-          //   item.isTouchMove = false 
-          //   list.push(item)
-          // })
           if (list.length == 0 && that.data.page == 0) {
             isShow = 2
           } else {
@@ -507,9 +532,52 @@ Page({
     var apiSecret = wx.getStorageSync('apiSecret')
     this.setData({
       apiKey: apiKey,
-      apiSecret: apiSecret
+      apiSecret: apiSecret,
+      datalist: [],
+      page: 0
     })
-    this.getData()
+    var that = this
+    wx.showLoading({
+      title: '加载中',
+    })
+    let isShow = that.data.isShow;
+    //获取用户购物车列表
+    wx.request({
+      url: app.globalData.http + '/mpa/cart',
+      data: {
+        page: 0
+      },
+      header: {
+        "Api-Key": that.data.apiKey,
+        "Api-Secret": that.data.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
+      success(res) {
+        if (res.data.length != 0) {
+          var list = []
+          for (var z = 0; z < res.data.length; z++) {
+            res.data[z].isSelect = false;
+            res.data[z].isTouchMove = false
+            list.push(res.data[z])
+          }
+          that.setData({
+            datalist: list,
+            isShow: 1
+          })
+        } else {
+          that.setData({
+            isShow: 2
+          })
+        }
+        wx.hideLoading();
+      },
+      fail: function () {
+        that.setData({
+          isShow: 2
+        })
+        wx.hideLoading();
+      }
+    })
   },
   /*
  * 页面上拉触底事件的处理函数

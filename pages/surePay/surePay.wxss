@@ -76,6 +76,9 @@ page{
   font-size: 24rpx; 
   color: #333333;
   margin-top:16rpx;
+  padding-right:20rpx;
+  line-height:36rpx;
+
 }
 .detail{
   width: 100%;

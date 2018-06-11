@@ -23,7 +23,6 @@ Page({
    */
   onLoad: function (options) { 
     var data =app.globalData.good
-    console.log(data)
     var apiKey = wx.getStorageSync(apiKey)
     var apiSecret = wx.getStorageSync(apiSecret)
     var sku_id={}
@@ -165,7 +164,8 @@ Page({
   // 立即支付
   confirm:function(){
     var that=this
-    if (Object.prototype.toString.call(that.data.address) == '[object Array]'){
+    console.log(Object.prototype.toString.call(that.data.address))
+    if (Object.prototype.toString.call(that.data.address) =='[object Number]'){
       wx.showToast({
         title: '请添加地址',
         icon: 'none',
@@ -182,8 +182,7 @@ Page({
       dataType: 'json',
       data: {
         goods: this.data.sku_ids,
-        address_id:1,
-        remarks:""
+        address_id:that.data.address.id,
       },
       header: {
         "Api-Key": that.data.apiKey,
@@ -231,10 +230,13 @@ Page({
           })
         } else if (data.statusCode === 500){
           wx.showToast({
-            title: '商品库存不足',
+            title: '下单失败',
             icon: 'none',
             duration: 1000
           })
+           that.setData({
+                disabled: false
+              })
         }
       },
       fail:function(){

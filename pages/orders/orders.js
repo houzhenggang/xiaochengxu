@@ -193,7 +193,7 @@ Page({
 
 /*查看物流*/
   checkLogistics:function(event){
-    var id = event.target.dataset.OrderID;
+    var id = event.target.dataset.orderid;
     wx.navigateTo({
       url: '/pages/logistics/logistics?id='+id
     })
