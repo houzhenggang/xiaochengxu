@@ -228,7 +228,7 @@ Page({
       })
   },
   setDefault:function(event){
-      var that=this
+      var that=this 
       var key=event.target.dataset.key
       var keys
       if (key===1){
@@ -236,6 +236,30 @@ Page({
       }else{
         keys=1
       }
+      var data = that.data.address
+      var indexs;
+      for(var i=0;i<data.length;i++){
+        if(data[i].status==2){
+            indexs=i
+        }
+      }
+
+      wx.request({
+        url: app.globalData.http + '/mpa/address/' + that.data.address[indexs].id,
+        method: 'PUT',
+        dataType: 'json',
+        data: {
+          status: 1
+        },
+        header: {
+          "Api-Key": that.data.apiKey,
+          "Api-Secret": that.data.apiSecret,
+          'Api-Ext': app.globalData.apiExt
+        },
+        success: function (data) {
+
+        }
+      })
       var index = event.target.dataset.index
       var nums 
       var num = 'address[' + index + '].status'

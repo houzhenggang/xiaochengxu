@@ -27,7 +27,7 @@
 	<!-- </view> -->
 
 	<!--up button  -->
-	<view class='search_up'>
+	<view class='search_up' catchtap='goTop'>
 		<image src='/imgs/Stick@2x.png'></image>
 	</view>
 </view>

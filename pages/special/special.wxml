@@ -14,7 +14,7 @@
 		<view class='bottom_text'>到底啦，去别处逛逛吧</view>
 
 		<!--up button  -->
-		<view class='recommend_up'>
+		<view class='recommend_up' catchtap='goTop'>
 			<image src='/imgs/Stick@2x.png'></image>
 		</view>
 	</view>

@@ -21,7 +21,13 @@ Page({
 			url: '/pages/detail/detail?id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
 	},
-
+  //返回顶部
+  goTop:function(){
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 1000
+    })
+  },
   getList: function (order_by){
     var that=this
     wx.showLoading({
@@ -56,6 +62,9 @@ Page({
     var that=this
 		var currIndex = e.currentTarget.dataset.id;
 		var flag = this.data.flag;
+    that.setData({
+      produList:[]
+    })
 		//判断价格排序方式
 		if(currIndex == 2){
 			if(flag == 0 || flag == 2){

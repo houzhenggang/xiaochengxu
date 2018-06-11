@@ -26,7 +26,7 @@ Page({
 			data:{
 				page:0,
 				pre_page:20,
-				order_by:"created_at",
+        order_by:"created_at desc",
 			},
       header: {
         'Api-Ext': app.globalData.apiExt
@@ -43,7 +43,13 @@ Page({
 			title: '推荐',
 		})
   },
-
+  //返回顶部
+  goTop: function () {
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 1000
+    })
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

@@ -5,7 +5,7 @@
 	
 	<!-- detail images  -->
 	<swiper
-		autoplay='{{true}}' interval='{{3500}}' duration='{{700}}' circular='{{true}}'>
+		autoplay='{{true}}' interval='{{3500}}' duration='{{700}}' bindchange='changeCurrent'  current='{{current}}' circular='{{true}}'>
 		<block wx:for='{{imgs}}' wx:key="{{index}}">
 			<swiper-item>
 				<view class='detail_imgs'>
@@ -13,6 +13,7 @@
 				</view>
 			</swiper-item>
 		</block>
+    <view>{{current+1}}/{{imgs.length}} </view>
 	</swiper>
 	
 

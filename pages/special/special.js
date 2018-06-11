@@ -6,35 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-		produList: [{
-			"imgurl": "/imgs/Rectangle 10@2x(1).png",
-			"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-			"price": "123.00",
-			"saleNum": "23万",
-			"prePrice": "￥233.00",
-			"saleOut":true
-		}, {
-			"imgurl": "/imgs/Rectangle 10@2x(1).png",
-			"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-			"price": "123.00",
-			"saleNum": "23万",
-			"prePrice": "￥233.00",
-			"saleOut": false
-		}, {
-			"imgurl": "/imgs/Rectangle 10@2x(1).png",
-			"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-			"price": "123.00",
-			"saleNum": "23万",
-			"prePrice": "￥233.00",
-			"saleOut": false
-		}, {
-			"imgurl": "/imgs/Rectangle 10@2x(1).png",
-			"proName": "复古宽松甜美韩版泡泡袖卫衣潮流学院风",
-			"price": "123.00",
-			"saleNum": "23万",
-			"prePrice": "￥233.00",
-			"saleOut": false
-		}]
+		produList: []
   },
 	//跳转商品详情
 	goDetail(e){
@@ -42,6 +14,13 @@ Page({
 			url: '/pages/detail/detail?goods_id=' + e.currentTarget.dataset.id + "&name=" + e.currentTarget.dataset.name,
 		})
 	},
+  //返回顶部
+  goTop: function () {
+    wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 1000
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -52,7 +31,7 @@ Page({
 			data: {
 				page: 0,
 				pre_page: 20,
-				order_by: "created_at",
+        order_by: "created_at desc",
 			},
       header:{
         'Api-Ext': app.globalData.apiExt
@@ -70,3 +49,4 @@ Page({
 		})
   }
 })
+ 

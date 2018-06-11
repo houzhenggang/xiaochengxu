@@ -310,24 +310,19 @@ Page({
    * 点击tab切换 
    */
   swichNav: function (e) {
-    var that = this;
+    var that = this
+    console.log(e.target.dataset.current)
     that.setData({
-      index: 0
+      index: 0,
+      currentTab: e.target.dataset.current
     })
-    if (this.data.currentTab === e.target.dataset.current) {
-        return false;
-    } else {
-      that.setData({
-        currentTab: e.target.dataset.current
-      })
-    }
-    console.log(this.data.currentTab);
+    console.log(that.data.currentTab)    
     wx.request({
       url: app.globalData.http +'/mpa/order',
       data: {
-        page: this.data.index,
-        per_page: 20,
-        status: this.data.currentTab
+        page: 0,
+        per_page: 15,
+        status: e.target.dataset.current
       },
       method: 'get',
       header: {
@@ -337,15 +332,14 @@ Page({
       },
       dataType: 'json',
       success: function (data) {
-        if(data.data){
           that.setData({
             allOrder: data.data
           })
-        }else{
-          that.setData({
-            allOrder: ''
-          })
-        } 
+      },
+      fail:function(){
+        that.setData({
+          allOrder:''
+        })
       }
     })
   }

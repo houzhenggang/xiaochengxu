@@ -36,7 +36,19 @@ Page({
 		imgs: {},
     description:'',
     //是否又规格
-    isSpec:''
+    isSpec:'',
+    current:0
+  },
+  changeCurrent:function(){
+    var cur=this.data.current,
+    if (cur < this.data.imgs.length){
+        cur++
+    }else{
+        cur=1
+    }
+    this.setData({
+      current:cur
+    })
   },
 	/* 规格选择弹出事件 */
 	modalShow(e){
@@ -443,8 +455,6 @@ Page({
       },
 			success(res){
         good_id = res.data.id
-
-       
 				that.setData({
 					goods:res.data,
 					goodUrl:res.data.cover_url,
@@ -490,7 +500,14 @@ Page({
           }
         })
 				wx.hideLoading();
-			}
+			},
+      complete:function(){
+        wx.showToast({
+          title: '暂无网络',
+          icon:'none'
+        })
+        wx.hideLoading();
+      }
 		})	
   }
 })
