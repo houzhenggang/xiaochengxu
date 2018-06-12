@@ -19,7 +19,7 @@ Page({
   goTop: function () {
     wx.pageScrollTo({
       scrollTop: 0,
-      duration: 1000
+      duration: 500
     })
   },
   /**

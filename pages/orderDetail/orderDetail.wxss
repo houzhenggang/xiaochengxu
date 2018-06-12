@@ -59,6 +59,13 @@ page{
   color: #333333;
   width: 474rpx;
   display: block;
+  line-height: 36rpx;
+  height: 72rpx;
+   overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .desc label:nth-child(2){
   font-family: PingFangSC-Regular;

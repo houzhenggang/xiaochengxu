@@ -10,7 +10,7 @@
 	</view>
 
 	<!--banner  -->
-	<image class='index_banner1' src='{{description.logo_url}}'></image>
+	<image class='index_banner1' src='{{image}}{{description.logo_url}}'></image>
 
    <swiper indicator-dots="{{indicatorDots}}"
       touch="{{touch}}"  duration="{{duration}}" bindchange='changeCurrent'   current='{{current}}'>

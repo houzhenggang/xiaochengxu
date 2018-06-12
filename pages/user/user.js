@@ -17,8 +17,9 @@ Page({
     var apiKey = wx.getStorageSync('apiKey')
     var apiSecret = wx.getStorageSync('apiSecret')
     var info = wx.getStorageSync('huzan_avatarUrl')
+    var userId = wx.getStorageSync('userId')
     
-    if (timeStamp + 24 * 60 * 60 * 1000 > nowTimeStamp && apiSecret && apiKey){
+    if (timeStamp + 24 * 60 * 60 * 1000 > nowTimeStamp && apiSecret && apiKey && userId){
       that.setData({
         userInfo: info,
         hasUserInfo: true
@@ -100,7 +101,7 @@ Page({
                 if (!res.data.user_id) {
                   wx.setStorage({
                     key: 'userId',
-                    data: res.data.id,
+                    data: res.data.user_id,
                   })
 
                   wx.request({

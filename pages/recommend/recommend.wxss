@@ -5,13 +5,13 @@ page{
 	background: #F6F7F7;
 }
 .recommend_container{
-	height: 100%;
+	/* height: 100%; */
 	display: flex;
 	flex-direction: column;
 }
 .recommend_products{
 	width: 750rpx;
-	overflow: hidden;
+	overflow-x: hidden;
 	position: relative;
 }
 .recommend_item{
@@ -116,6 +116,7 @@ page{
 	position: fixed;
 	right: 20rpx;
 	bottom: 78rpx;
+  z-index: 100;
 }
 .recommend_up image{
 	width: 60rpx;

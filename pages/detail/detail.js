@@ -10,6 +10,7 @@ Page({
 		//商品详情数据
 		goods:{},
     image: 'http://image.yiqixuan.com/',
+    qiniu:'?imageMogr2/thumbnail/750x672',
 		//使用data数据控制类名
 		chooseModal:false,
 		//动态控制“-”号类名
@@ -48,134 +49,151 @@ Page({
 	/* 规格选择弹出事件 */
 	modalShow(e){
     var that = this;
-    // wx.login({
-    //   success(code) {
-    //     //向后台发起请求，传code
-    //     wx.request({
-    //       url: app.globalData.http + '/mpa/wechat/auth',
-    //       method: 'POST',
-    //       header: {
-    //         'Api-Ext': app.globalData.apiExt
-    //       },
-    //       data: {
-    //         code: code.code
-    //       },
-    //       success: function (res) {
-    //         //保存响应头信息
-    //         var apiKey = res.header["Api-Key"],
-    //           apiSecret = res.header["Api-Secret"];
-    //         //设置storage
-    //         //获取时间戳保存storage
-    //         let timestamp = Date.parse(new Date());
-    //         wx.setStorage({
-    //           key: 'Api-Key',
-    //           data: apiKey
-    //         })
-    //         wx.setStorage({
-    //           key: 'timestamp',
-    //           data: timestamp,
-    //         })
-    //         wx.setStorage({
-    //           key: 'Api-Secret',
-    //           data: apiSecret
-    //         })
-    //         if (res.data.user_id) {
-    //           wx.setStorage({
-    //             key: 'userId',
-    //             data: res.data.id,
-    //           })
-
-    //         } else {
-    //           wx.navigateTo({
-    //             url: "/pages/regMob/regMob"
-    //           })
-    //           return false
-    //         }
-    //       }
-    //     })
-    //   },
-    //   fail: function (res) {
-    //   }
-    // })
-		//修改flag标识
-		let flag = e.currentTarget.dataset.flag;
-    // 有规格
-    if(that.data.isSpec){
-      //创建一个动画实例
-      var animation = wx.createAnimation({
-        //动画持续事件
-        duration: 400,
-        //定义动画效果
-        timingFunction: 'linear'
-      })
-      //将该变量赋值给当前动画
-      that.animation = animation;
-      //现在Y轴偏移，然后用step()完成一个动画
-      animation.translateY(450).step();
+    var timeStamp = wx.getStorageSync('timeStamp')
+    var nowTimeStamp = Date.parse(new Date());
+    var apiKey = wx.getStorageSync('apiKey')
+    var apiSecret = wx.getStorageSync('apiSecret')
+    var userId = wx.getStorageSync('userId')
+    if (timeStamp + 24 * 60 * 60 * 1000 > nowTimeStamp && apiSecret && apiKey && userId) {
+      //如果没有选择商品,总价格为0，提示
       that.setData({
-        animationData: animation.export(),
-        flag: flag,
-        chooseModal: true
+        apiKey: apiKey,
+        apiSecret: apiSecret
       })
-      //设置setTimeout改变Y轴偏移量
-      setTimeout(function () {
-        animation.translateY(0).step();
-        that.setData({
-          animationData: animation.export()
+      //修改flag标识
+      let flag = e.currentTarget.dataset.flag;
+      // 有规格
+      if (that.data.isSpec) {
+        //创建一个动画实例
+        var animation = wx.createAnimation({
+          //动画持续事件
+          duration: 400,
+          //定义动画效果
+          timingFunction: 'linear'
         })
-      }, 100)
-    }
-    else{
-      wx.request({
-        url: app.globalData.http + '/mpa/goods/' + that.data.goods.id + '/skus',//////////////////////////////////////请求路径需改动
-        method: "GET",
-        header: {
-          'Api-Ext': app.globalData.apiExt
-        },
-        success(res) {
-          var good=res.data[0]
+        //将该变量赋值给当前动画
+        that.animation = animation;
+        //现在Y轴偏移，然后用step()完成一个动画
+        animation.translateY(450).step();
+        that.setData({
+          animationData: animation.export(),
+          flag: flag,
+          chooseModal: true
+        })
+        //设置setTimeout改变Y轴偏移量
+        setTimeout(function () {
+          animation.translateY(0).step();
           that.setData({
-            good: good,
-            goodUrl: good.cover_url,
-            goodPrice: good.price
-          },function(){
-            //加入购物车
-            if (flag==1){
-              wx.request({
-                url: app.globalData.http + '/mpa/cart',
-                method: "POST",
-                data: {
-                  goods_sku_id: that.data.good.id,
-                  count: 1
-                },
-                header: {
-                  'Api-Ext': app.globalData.apiExt
-                },
-                success(res) {
-                  wx.showToast({
-                    title: '加入购物车成功',
-                    icon: "success"
-                  })
+            animationData: animation.export()
+          })
+        }, 100)
+      }
+      else {
+        wx.request({
+          url: app.globalData.http + '/mpa/goods/' + that.data.goods.id + '/skus',//////////////////////////////////////请求路径需改动
+          method: "GET",
+          header: {
+            'Api-Ext': app.globalData.apiExt
+          },
+          success(res) {
+            var good = res.data[0]
+            that.setData({
+              good: good,
+              goodUrl: good.cover_url,
+              goodPrice: good.price
+            }, function () {
+              //加入购物车
+              if (flag == 1) {
+                wx.request({
+                  url: app.globalData.http + '/mpa/cart',
+                  method: "POST",
+                  data: {
+                    goods_sku_id: that.data.good.id,
+                    count: 1
+                  },
+                  header: {
+                    'Api-Ext': app.globalData.apiExt
+                  },
+                  success(res) {
+                    wx.showToast({
+                      title: '加入购物车成功',
+                      icon: "success"
+                    })
+                  }
+                })
+              } else {
+                good.count = that.data.num;
+                good.goods_sku_id = that.data.good.id;
+                good.name = that.data.name;
+                good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a
+                if (flag == false) {
+                  gloGood.push(good)
                 }
-              })
-            }else{
-              good.count = that.data.num;
-              good.goods_sku_id = that.data.good.id;
-              good.name = that.data.name;
-              good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a
-              if (flag == false) {
-                gloGood.push(good)
+                app.globalData.good = []
+                app.globalData.good.push(good)
+                wx.navigateTo({
+                  url: '/pages/surePay/surePay',
+                })
               }
-              app.globalData.good = []
-              app.globalData.good.push(good)
-              wx.navigateTo({
-                url: '/pages/surePay/surePay',
+            })
+          }
+        })
+      }
+    }else{
+      wx.login({
+        success(code) {
+          //向后台发起请求，传code
+          wx.request({
+            url: app.globalData.http + '/mpa/wechat/auth',
+            method: 'POST',
+            header: {
+              'Api-Ext': app.globalData.apiExt
+            },
+            data: {
+              code: code.code
+            },
+            success: function (res) {
+              //保存响应头信息
+              var apiKey = res.header["Api-Key"],
+                apiSecret = res.header["Api-Secret"];
+              //设置storage
+              //获取时间戳保存storage
+              let timestamp = Date.parse(new Date());
+              wx.setStorage({
+                key: 'Api-Key',
+                data: apiKey
               })
+              wx.setStorage({
+                key: 'timestamp',
+                data: timestamp,
+              })
+              wx.setStorage({
+                key: 'Api-Secret',
+                data: apiSecret
+              })
+              if (res.data.user_id) {
+                wx.setStorage({
+                  key: 'userId',
+                  data: res.data.user_id,
+                })
+
+              } else {
+                wx.navigateTo({
+                  url: "/pages/regMob/regMob"
+                })
+              }
             }
           })
+        },
+        fail:function(){
+          wx.showToast({
+            title: '网络错误',
+            icon:'none'
+          })
         }
-      })
-    }	
+     })
+    }
+  	
 	},
   closeTips:function(){
     var that=this
@@ -200,61 +218,6 @@ Page({
 	//点击确认，关闭弹出框
 	closeModal(e){
 		var that = this;
-    // wx.login({
-    //   success(code) {
-    //         //向后台发起请求，传code
-    //     console.log(333)
-    //     wx.request({
-    //       url: app.globalData.http +'/mpa/wechat/auth',
-    //       method: 'POST',
-    //       header: {
-    //         'Api-Ext': app.globalData.apiExt
-    //       },
-    //       data: {
-    //         code: code.code
-    //       },
-    //       success: function (res) {
-    //         //保存响应头信息
-    //         var apiKey = res.header["Api-Key"],
-    //           apiSecret = res.header["Api-Secret"];
-    //         //设置storage
-    //         //获取时间戳保存storage
-    //         let timestamp = Date.parse(new Date());
-    //         wx.setStorage({
-    //           key: 'Api-Key',
-    //           data: apiKey
-    //         })
-    //         wx.setStorage({
-    //           key: 'timestamp',
-    //           data: timestamp,
-    //         })
-    //         wx.setStorage({
-    //           key: 'Api-Secret',
-    //           data: apiSecret
-    //         })
-    //         // wx.setStorage({
-    //         //   key: 'huzan_avatarUrl',
-    //         //   data: userInfo,
-    //         // })
-    //         if (res.data.user_id) {
-    //           wx.setStorage({
-    //             key: 'userId',
-    //             data: res.data.id,
-    //           })
-    //         } else {
-    //           wx.navigateTo({
-    //             url: "/pages/regMob/regMob"
-    //           })
-    //           return false
-    //         }
-    //       }
-    //     })
-    //   },
-    //   fail:function(res){
-    //     console.log(res)
-    //     return false
-    //   }
-    // })
     var  chooseAll = that.data.chooseSpec.every(function (val) {
       return val !== -1
     })

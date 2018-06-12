@@ -116,7 +116,8 @@ Page({
 		});
 		let that = this;
     that.setData({
-      category_id: options.category_id
+      category_id: options.category_id,
+      order_by: 'created_at desc'
     })
 		wx.setNavigationBarTitle({
 			title: options.name,
@@ -125,7 +126,8 @@ Page({
       url: app.globalData.http + '/mpa/goods/search',
 			data: {///////////////////////////////////////////////////////id需改动
         category_id: options.category_id,
-        page:that.data.page
+        page:that.data.page,
+        order_by:'created_at desc'
 			},
       header: {
         'Api-Ext': app.globalData.apiExt

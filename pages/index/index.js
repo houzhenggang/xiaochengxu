@@ -80,7 +80,7 @@ Page({
     })
     //获取推荐商品列表
     wx.request({
-      url: app.globalData.http + '/mpa/goods/recommend?page=0&order_by=created_at desc&pre_page=7',
+      url: app.globalData.http + '/mpa/goods/recommend?page=0&order_by=created_at desc&per_page=7',
       method: 'GET',
       header:{
         'Api-Ext': app.globalData.apiExt
@@ -102,7 +102,7 @@ Page({
     })
     //获取特价商品列表
     wx.request({
-      url: app.globalData.http + '/mpa/goods/special?page=0&order_by=price desc&pre_page=6',
+      url: app.globalData.http + '/mpa/goods/special?page=0&order_by=price desc&per_page=6',
       method: 'GET',
       header:{
         'Api-Ext': app.globalData.apiExt

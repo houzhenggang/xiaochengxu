@@ -16,7 +16,7 @@
                 <label>去别的页面看看吧</label>
           </view>
           <view  class='content' wx:if='{{allOrder.length!=0}}' >
-              <navigator url='/pages/orderDetail/orderDetail?id={{item.id}}' hover-class='none' wx:for="{{allOrder}}" wx:for-index="index" wx:key="index">
+              <navigator url='/pages/orderDetail/orderDetail?id={{item.id}}' hover-class='none'   wx:for="{{allOrder}}" wx:for-index="index" wx:key="index">
                   <view class='top'>
                       <label>下单时间：{{item.created_at}}</label>
                       <label wx:if='{{item.status==200}}'>待付款</label>
@@ -26,7 +26,7 @@
                       <label wx:elif='{{item.status==500}}'>退货中</label>
                       <label wx:elif='{{item.status==405}}'>已收货</label>
                   </view>
-                  <view class='orderList' wx:for="{{item.items}}" wx:for-index="id" wx:for-item="items" wx:key="id">
+                  <view class='orderList' catchtap='goDetail' data-goods_id="{{items.goods_id}}"  wx:for="{{item.items}}" wx:for-index="id" wx:for-item="items" wx:key="id">
                           <image class='goodImg' src='{{image}}{{items.cover_url}}'></image>
                           <view class='goodsInfo'>     
                               <view class='title'>{{items.name}}</view>
@@ -43,19 +43,19 @@
                   <view class='bottom'>
                       <label>实付：￥{{filters.toFix(item.amount/100)}}</label>
                       <view wx:if='{{item.status==200}}'>
-                        <label class='cancel' orderid='{{item.id}}' data-sure='207'  catchtap='confirm'>取消订单</label>
-                        <label class='pay' data-no="{{item.no}}" orderid='{{item.id}}' catchtap='payMoney'>立即付款</label>
+                        <label class='cancel' data-orderid='{{item.id}}' data-sure='207'  catchtap='confirm'>取消订单</label>
+                        <label class='pay'  data-no="{{item.no}}" data-orderid='{{item.id}}' catchtap='payMoney'>立即付款</label>
                       </view>
                       <view wx:elif='{{item.status==400 || item.status==305}}'>
-                        <label class='cancel'  orderid='{{item.id}}' data-sure='405'  catchtap='confirm'>确认收货</label>
-                        <label class='pay' orderid='{{item.id}}' catchtap='checkLogistics'>查看物流</label>
+                        <label class='cancel'  data-orderid='{{item.id}}' data-sure='405'  catchtap='confirm'>确认收货</label>
+                        <label class='pay' data-orderid='{{item.id}}' catchtap='checkLogistics'>查看物流</label>
                       </view>
                       <view wx:elif='{{item.status==500}}'>
-                        <label orderid='{{item.id}}' class='pay' catchtap='checkLogistics'>查看物流</label>
+                        <label data-orderid='{{item.id}}' class='pay' catchtap='checkLogistics'>查看物流</label>
                       </view>
                       <view wx:elif='{{item.status==405}}'>
-                       <label class='cancel' orderid='{{item.id}}' catchtap='cancelOrder'>申请售后</label>
-                        <label orderid='{{item.id}}' class='pay' catchtap='checkLogistics'>查看物流</label>
+                       <label class='cancel' data-orderid='{{item.id}}' catchtap='cancelOrder'>申请售后</label>
+                        <label data-orderid='{{item.id}}' class='pay' catchtap='checkLogistics'>查看物流</label>
                       </view>
 
                   </view>

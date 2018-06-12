@@ -138,6 +138,12 @@ Page({
       }
     }, 1000)
   },
+  goDetail:function(e){
+    console.log(e)
+      wx.navigateTo({
+        url: '/pages/detail/detail?id=' + e.currentTarget.dataset.goods_id,
+      })
+  },
 /*立即付款*/
   payMoney: function (event){
     var id = event.target.dataset.orderid
@@ -236,26 +242,34 @@ Page({
               'Api-Ext': app.globalData.apiExt
             },
             success:function(data){
-              var newArr = that.data.allOrder
-              for (var i = 0; i < newArr.length;i++){
-                if (idx == 207) {
-                  /*取消订单*/
-                  if (newArr[i].id === id) {
-                    newArr.splice(i,1);
-                    that.setData({
-                      allOrder: newArr
-                    })
-                  }  
-                }else{
-                  /*确认收货*/
-                  if (newArr[i].id === id) {
-                    var num = 'allOrder[' + i + '].status'
-                    that.setData({
-                      [num]: idx
-                    })
-                  }  
+              if(data.statusCode==200){
+                var newArr = that.data.allOrder
+                for (var i = 0; i < newArr.length; i++) {
+                  if (idx == 207) {
+                    /*取消订单*/
+                    if (newArr[i].id === id) {
+                      newArr.splice(i, 1);
+                      that.setData({
+                        allOrder: newArr
+                      })
+                    }
+                  } else {
+                    /*确认收货*/
+                    if (newArr[i].id === id) {
+                      var num = 'allOrder[' + i + '].status'
+                      that.setData({
+                        [num]: idx
+                      })
+                    }
+                  }
                 }
+              }else{
+                  wx.showToast({
+                    title: '网络错误',
+                    icon:'icon'
+                  })
               }
+             
             }
           })
         } else if (res.cancel) {

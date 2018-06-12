@@ -19,76 +19,91 @@ Page({
   },
 	//点击结算
 	balance(){
-		let that = this;
-		//如果没有选择商品,总价格为0，提示
-		if(that.data.totalPrice == '0.00'){
-			wx.showToast({
-				title: '请选择商品',
-				icon:"none"
-			})
-		}else{
-			//购物车商品信息
-			let good = that.data.datalist;
-			//已选择商品数组
-			let seleArr = [];
-			for(let i=0; i<good.length; i++){
-				if(good[i].isSelect){
-					seleArr.push(good[i])
-				}
-			}
-
-
-
-      app.globalData.good = seleArr;
-      wx.navigateTo({
-        url: '/pages/surePay/surePay',
+    var timeStamp = wx.getStorageSync('timeStamp')
+    var nowTimeStamp = Date.parse(new Date());
+    var apiKey = wx.getStorageSync('apiKey')
+    var apiSecret = wx.getStorageSync('apiSecret')
+    var userId = wx.getStorageSync('userId')
+    let that = this;
+    if (timeStamp + 24 * 60 * 60 * 1000 > nowTimeStamp && apiSecret && apiKey && userId) {
+      //如果没有选择商品,总价格为0，提示
+      that.setData({
+        apiKey: apiKey,
+        apiSecret: apiSecret
       })
-      // wx.login({ 
-      //   success(code) {       
-      //   //向后台发起请求，传code
-      //     wx.request({
-      //       url: app.globalData.http +'/mpa/wechat/auth',
-      //       method: 'POST',
-      //       data: {
-      //         code: code.code
-      //       },
-      //       header:{
-      //         'Api-Ext': app.globalData.apiExt
-      //       },
-      //       success: function (res) { 
-      //         //保存响应头信息
-      //         var apiKey = res.header["Api-Key"],
-      //           apiSecret = res.header["Api-Secret"];
-      //         //设置storage
-      //         //获取时间戳保存storage
-      //         let timestamp = Date.parse(new Date());
-      //         wx.setStorage({
-      //           key: 'apiKey',
-      //           data: apiKey,
-      //         })
-      //         wx.setStorage({
-      //           key: 'timestamp',
-      //           data: timestamp,
-      //         })
 
-      //         wx.setStorage({
-      //           key: 'apiSecret',
-      //           data: apiSecret,
-      //         })
-      //         if (!res.data.user_id) {
-      //           wx.navigateTo({
-      //               url: "/pages/regMob/regMob"
-      //           })
-      //         }else{
-      //           app.globalData.good = seleArr;
-      //           wx.navigateTo({
-      //             url: '/pages/surePay/surePay',
-      //           })
-      //         }
-      //       }
-      //     })
-      //   }
-      // })
+      if (that.data.totalPrice == '0.00') {
+        wx.showToast({
+          title: '请选择商品',
+          icon: "none"
+        })
+      } else {
+        //购物车商品信息
+        let good = that.data.datalist;
+        //已选择商品数组
+        let seleArr = [];
+        for (let i = 0; i < good.length; i++) {
+          if (good[i].isSelect) {
+            seleArr.push(good[i])
+          }
+        }
+        app.globalData.good = seleArr;
+        wx.navigateTo({
+          url: '/pages/surePay/surePay',
+        })
+      }
+    }
+    else{
+      wx.login({ 
+        success(code) {       
+        //向后台发起请求，传code
+          wx.request({
+            url: app.globalData.http +'/mpa/wechat/auth',
+            method: 'POST',
+            data: {
+              code: code.code
+            },
+            header:{
+              'Api-Ext': app.globalData.apiExt
+            },
+            success: function (res) { 
+              //保存响应头信息
+              var apiKey = res.header["Api-Key"],
+                apiSecret = res.header["Api-Secret"];
+              //设置storage
+              //获取时间戳保存storage
+              let timestamp = Date.parse(new Date());
+              wx.setStorage({
+                key: 'apiKey',
+                data: apiKey,
+              })
+              wx.setStorage({
+                key: 'timestamp',
+                data: timestamp,
+              })
+
+              wx.setStorage({
+                key: 'apiSecret',
+                data: apiSecret,
+              })
+              if (!res.data.user_id) {
+                wx.navigateTo({
+                    url: "/pages/regMob/regMob"
+                })
+              }else{
+                wx.setStorage({
+                  key: 'userId',
+                  data: res.data_id,
+                })
+                app.globalData.good = seleArr;
+                wx.navigateTo({
+                  url: '/pages/surePay/surePay',
+                })
+              }
+            }
+          })
+        }
+      })
     }
 	},
 	//跳转首页

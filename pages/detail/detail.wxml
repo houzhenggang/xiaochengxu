@@ -5,11 +5,11 @@
 	
 	<!-- detail images  -->
 	<swiper
-		autoplay='{{true}}'  interval='{{3500}}' duration='{{500}}' bindanimationfinish='changeCurrent'  current='{{current}}' circular='{{true}}'>
+		autoplay='{{true}}'  interval='{{3500}}' duration='{{500}}' bindchange='changeCurrent'  current='{{current}}' circular='{{true}}'>
 		<block wx:for='{{imgs}}' wx:key="{{index}}">
 			<swiper-item>
 				<view class='detail_imgs'>
-					<image src='{{image}}{{item.icon_url}}'></image>
+					<image src='{{image}}{{item.icon_url}}{{qiniu}}'></image>
 				</view>
 			</swiper-item>
 		</block>
