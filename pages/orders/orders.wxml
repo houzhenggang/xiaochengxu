@@ -26,7 +26,7 @@
                       <label wx:elif='{{item.status==500}}'>退货中</label>
                       <label wx:elif='{{item.status==405}}'>已收货</label>
                   </view>
-                  <view class='orderList' catchtap='goDetail' data-goods_id="{{items.goods_id}}"  wx:for="{{item.items}}" wx:for-index="id" wx:for-item="items" wx:key="id">
+                  <view class='orderList'  wx:for="{{item.items}}" wx:for-index="id" wx:for-item="items" wx:key="id">
                           <image class='goodImg' src='{{image}}{{items.cover_url}}'></image>
                           <view class='goodsInfo'>     
                               <view class='title'>{{items.name}}</view>

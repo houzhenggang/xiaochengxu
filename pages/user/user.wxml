@@ -15,38 +15,38 @@
   </view>
 </view>
 <view class='orderinfo'> 
-    <navigator url='/pages/orders/orders?curTab=1' class='myorder' hover-class="none">
+    <view data-curTab='1' class='myorder'  bindtap='toOrder'   hover-class="none">
         <view>我的订单</view>
         <view><label>所有订单</label><image class='icon' src='/imgs/right.png'></image></view>
-    </navigator>
+    </view>
     <view class='orderList'>
-        <navigator url='/pages/orders/orders?curTab=200' hover-class="none">
+        <view data-curTab='200'  bindtap='toOrder' hover-class="none">
           <image src='/imgs/daifukuan.png'></image>
           <label>待付款</label>
           <text wx:if='{{count1}}'>{{count1}}</text>
-        </navigator>
+        </view>
 
-        <navigator url='/pages/orders/orders?curTab=205' hover-class="none">
+        <view data-curTab='205'  bindtap='toOrder' hover-class="none">
           <image src='/imgs/daifahuo.png'></image>
           <label>待发货</label>
           <text wx:if='{{count2}}'>{{count2}}</text>
-        </navigator>
+        </view>
 
-        <navigator url='/pages/orders/orders?curTab=400' hover-class="none">
+        <view data-curTab='400'  bindtap='toOrder'  hover-class="none">
           <image src='/imgs/daifahuo.png'></image>
           <label>待收货</label>
           <text wx:if='{{count3}}'>{{count3}}</text>
-        </navigator>
+        </view>
 
-        <navigator url='/pages/orders/orders?curTab=500' hover-class="none">
+        <view data-curTab='500' bindtap='toOrder' hover-class="none">
           <image src='/imgs/shouhou.png'></image>
           <label>售后</label>
           <text wx:if='{{count4}}'>{{count4}}</text>
-        </navigator>
+        </view>
     </view>
 </view>
 <view class='otherInfo'>
-    <navigator url='/pages/address/address' hover-class="none">
+    <navigator url='/pages/address/address' class='nav' hover-class="none">
           <view>我的地址</view>
           <image class='icon' src='/imgs/right.png'></image>
     </navigator>  

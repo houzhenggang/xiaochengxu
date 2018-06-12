@@ -138,12 +138,6 @@ Page({
       }
     }, 1000)
   },
-  goDetail:function(e){
-    console.log(e)
-      wx.navigateTo({
-        url: '/pages/detail/detail?id=' + e.currentTarget.dataset.goods_id,
-      })
-  },
 /*立即付款*/
   payMoney: function (event){
     var id = event.target.dataset.orderid

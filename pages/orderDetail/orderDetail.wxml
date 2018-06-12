@@ -10,7 +10,7 @@
     </view>
 </view>
 <view class='detail'>
-    <view  class='menus' wx:for='{{info.items}}' wx:for-item='items' wx:key='index'>
+    <view  class='menus' wx:for='{{info.items}}' bindtap='goDetail' data-goods_id="{{items.goods_id}}" wx:for-item='items' wx:key='index'>
         <image src='{{image}}{{items.cover_url}}'></image>
         <view class='desc'>
             <label>{{items.name}}</label>

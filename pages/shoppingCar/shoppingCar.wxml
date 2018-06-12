@@ -1,5 +1,5 @@
 <wxs module="filters" src="../../utils/method.wxs"></wxs>
-<view class='container' wx:if="{{datalist.length==0}}">
+<view class='container' wx:if="{{isshow==2}}">
       <image src='/imgs/emptyCar.png'></image>
       <view>购物车竟然是空的</view>
       <text>"快买点东西犒劳自己吧"</text>
@@ -7,7 +7,7 @@
       去看看
       </view>
 </view>
-<view class='content' wx:if="{{datalist.length!=0}}">
+<view class='content' wx:if="{{isshow==3}}">
     <view wx:for="{{datalist}}" bindtouchstart='touchStart' bindtouchmove='touchMove'   data-index="{{index}}"   wx:key="index" class="carInfo {{item.isTouchMove ? 'touch-move-active' : ''}}">
       <navigator class='contents'  url='/pages/detail/detail?id={{item.goods_id}}&&name={{item.name}}' hover-class='none'>
         <view  catchtap='select' class='sel' data-index="{{index}}" data-id="{{item.id}}">

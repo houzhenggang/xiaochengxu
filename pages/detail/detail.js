@@ -1,6 +1,7 @@
 // pages/detail/detail.js
 const app = getApp();
 var WxParse = require('../../wxParse/wxParse.js');
+var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -10,7 +11,7 @@ Page({
 		//商品详情数据
 		goods:{},
     image: 'http://image.yiqixuan.com/',
-    qiniu:'?imageMogr2/thumbnail/750x672',
+    qiniu:'?imageView2/1/w/750/h/672',
 		//使用data数据控制类名
 		chooseModal:false,
 		//动态控制“-”号类名
@@ -38,7 +39,8 @@ Page({
     description:'',
     //是否又规格
     isSpec:'',
-    current:0
+    current:0,
+    apiExt: ''
   },
   changeCurrent:function(e){
     var cur=e.detail.current
@@ -49,17 +51,8 @@ Page({
 	/* 规格选择弹出事件 */
 	modalShow(e){
     var that = this;
-    var timeStamp = wx.getStorageSync('timeStamp')
-    var nowTimeStamp = Date.parse(new Date());
-    var apiKey = wx.getStorageSync('apiKey')
-    var apiSecret = wx.getStorageSync('apiSecret')
-    var userId = wx.getStorageSync('userId')
-    if (timeStamp + 24 * 60 * 60 * 1000 > nowTimeStamp && apiSecret && apiKey && userId) {
-      //如果没有选择商品,总价格为0，提示
-      that.setData({
-        apiKey: apiKey,
-        apiSecret: apiSecret
-      })
+    var login = util.checkLogin()
+    if(login){
       //修改flag标识
       let flag = e.currentTarget.dataset.flag;
       // 有规格
@@ -139,61 +132,7 @@ Page({
           }
         })
       }
-    }else{
-      wx.login({
-        success(code) {
-          //向后台发起请求，传code
-          wx.request({
-            url: app.globalData.http + '/mpa/wechat/auth',
-            method: 'POST',
-            header: {
-              'Api-Ext': app.globalData.apiExt
-            },
-            data: {
-              code: code.code
-            },
-            success: function (res) {
-              //保存响应头信息
-              var apiKey = res.header["Api-Key"],
-                apiSecret = res.header["Api-Secret"];
-              //设置storage
-              //获取时间戳保存storage
-              let timestamp = Date.parse(new Date());
-              wx.setStorage({
-                key: 'Api-Key',
-                data: apiKey
-              })
-              wx.setStorage({
-                key: 'timestamp',
-                data: timestamp,
-              })
-              wx.setStorage({
-                key: 'Api-Secret',
-                data: apiSecret
-              })
-              if (res.data.user_id) {
-                wx.setStorage({
-                  key: 'userId',
-                  data: res.data.user_id,
-                })
-
-              } else {
-                wx.navigateTo({
-                  url: "/pages/regMob/regMob"
-                })
-              }
-            }
-          })
-        },
-        fail:function(){
-          wx.showToast({
-            title: '网络错误',
-            icon:'none'
-          })
-        }
-     })
     }
-  	
 	},
   closeTips:function(){
     var that=this
@@ -392,9 +331,12 @@ Page({
 	},
 	//点击购物车
 	goCart(){
-		wx.navigateTo({
-			url: '/pages/cart/cart',
-		})
+    var login = util.checkLogin()
+    if (login){
+      wx.navigateTo({
+        url: '/pages/cart/cart',
+      })
+    }	
 	},
   /**
    * 生命周期函数--监听页面加载

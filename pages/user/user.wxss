@@ -101,7 +101,7 @@ align-items: center;
   background:#fff;
 
 }
-.orderList navigator{
+.orderList view{
   position: relative;
 }
 .orderList image{
@@ -139,7 +139,7 @@ align-items: center;
   width: 750rpx;
   background: #fff;
 }
-.otherInfo navigator{
+.otherInfo .nav{
   box-sizing: border-box;
   padding-right:20rpx;
   height: 82rpx;

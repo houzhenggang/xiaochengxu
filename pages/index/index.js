@@ -24,9 +24,15 @@ Page({
   },
   onLoad: function () {
     let that = this;
+    var apiExt
     wx.getExtConfig({
       success:function(res){
-        app.globalData.apiExt = JSON.stringify(res.extConfig)
+
+       apiExt = JSON.stringify(res.extConfig)
+       wx.setStorage({
+         key: 'apiExt',
+         data: apiExt,
+       })
       }
     })    
     //获取店家描述数据
@@ -34,7 +40,7 @@ Page({
       url: app.globalData.http + '/mpa/index',
       method: 'GET',
       header:{
-        'Api-Ext': app.globalData.apiExt
+        'Api-Ext':apiExt
       },
       success(res) {
         app.globalData.mobile = res.data.customer_service_mobile
@@ -55,7 +61,7 @@ Page({
     wx.request({
       url: app.globalData.http + '/mpa/category',
       header:{
-        'Api-Ext': app.globalData.apiExt
+        'Api-Ext':apiExt
       },
       success(res) {
         var newCate = res.data
@@ -83,7 +89,7 @@ Page({
       url: app.globalData.http + '/mpa/goods/recommend?page=0&order_by=created_at desc&per_page=7',
       method: 'GET',
       header:{
-        'Api-Ext': app.globalData.apiExt
+        'Api-Ext': apiExt
       },
       success(res) {
         if (res.data) {
@@ -105,7 +111,7 @@ Page({
       url: app.globalData.http + '/mpa/goods/special?page=0&order_by=price desc&per_page=6',
       method: 'GET',
       header:{
-        'Api-Ext': app.globalData.apiExt
+        'Api-Ext':apiExt
       },
       success(res) {
         if (res.data) {

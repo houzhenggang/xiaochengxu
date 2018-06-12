@@ -48,6 +48,11 @@ Page({
       show: true
     })
   },
+  goDetail: function (e) {
+    wx.navigateTo({
+      url: '/pages/detail/detail?id=' + e.currentTarget.dataset.goods_id,
+    })
+  },
 /*联系商家*/
   contacts:function(){
 

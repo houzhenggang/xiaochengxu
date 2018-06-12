@@ -1,6 +1,7 @@
 var app=getApp()
 //获取应用实例
-// var utils = require("../../utils/util");
+var util = require('../../utils/util.js')
+
 Page({
   data: {
     userInfo: {},
@@ -8,7 +9,10 @@ Page({
     count1:'',
     count2: '',
     count3:'',
-    count4:''
+    count4:'',
+    apiExt: '',
+    apiKey: "",
+    apiSecret: ""
   },
   onLoad: function () {
     var that=this;
@@ -31,7 +35,7 @@ Page({
         header: {
           "Api-Key": apiKey,
           "Api-Secret": apiSecret,
-          'Api-Ext': app.globalData.apiExt
+          'Api-Ext': apiExt
         },
         success: function (data) {
           var datas = data.data
@@ -46,98 +50,98 @@ Page({
       })
     }
   },
-  getInfo:function(){
+  toOrder:function(e){
+    var login = util.checkLogin()
+    if(login){
+      wx.navigateTo({
+        url: '/pages/orders/orders?curTab=' + e.currentTarget.dataset.curTab
+      })
+    }
+  },
+  getInfo:function(e){
     var that=this;
     wx.login({
       success(code) {
         //获取用户信息，拿到userInfo
-        // console.log(code)
-        // return false
-        wx.getUserInfo({
-          withCredentials: true,
+        var userInfo = e.detail.userInfo;
+        that.setData({
+          userInfo: userInfo,
+          hasUserInfo:true
+        })
+        wx.setStorage({
+          key: 'huzan_avatarUrl',
+          data: userInfo,
+        })          
+        //向后台发起请求，传code
+        wx.request({
+          url: app.globalData.http +'/mpa/wechat/auth',
+          method: 'POST',
+          header:{
+            'Api-Ext': app.globalData.apiExt
+          },
+          data: {
+            code: code.code
+          },
           success: function (res) {
-            var userInfo = res.userInfo;
-            that.setData({
-              userInfo: res.userInfo,
-              hasUserInfo:true
+            //保存响应头信息
+            var apiKey = res.header["Api-Key"],
+              apiSecret = res.header["Api-Secret"];
+            //设置storage
+            //获取时间戳保存storage
+            let timestamp = Date.parse(new Date());
+            
+            wx.setStorage({
+              key: 'apiKey',
+              data: apiKey,
             })
             wx.setStorage({
-              key: 'huzan_avatarUrl',
-              data: userInfo,
-            })          
-            //向后台发起请求，传code
-            wx.request({
-              url: app.globalData.http +'/mpa/wechat/auth',
-              method: 'POST',
-              header:{
-                'Api-Ext': app.globalData.apiExt
-              },
-              data: {
-                code: code.code
-              },
-              success: function (res) {
-                //保存响应头信息
-                var apiKey = res.header["Api-Key"],
-                  apiSecret = res.header["Api-Secret"];
-                //设置storage
-                //获取时间戳保存storage
-                let timestamp = Date.parse(new Date());
-                
-                wx.setStorage({
-                  key: 'apiKey',
-                  data: apiKey,
-                })
-                wx.setStorage({
-                  key: 'timeStamp',
-                  data: timestamp,
-                })
-                
-                wx.setStorage({
-                  key: 'apiSecret',
-                  data: apiSecret,
-                })
-              
-
-                if (!res.data.user_id) {
-                  wx.setStorage({
-                    key: 'userId',
-                    data: res.data.user_id,
-                  })
-
-                  wx.request({
-                    url: app.globalData.http +'/mpa/wechat/' + res.data.id,
-                    method: "PUT",
-                    header:{
-                      'Api-Ext': app.globalData.apiExt
-                    },
-                    data: {
-                      "nick_name": userInfo.nickName,
-                      "avatar_url": userInfo.avatarUrl,
-                      "gender": userInfo.gender,
-                      "city": userInfo.city,
-                      "province": userInfo.province,
-                      "country": userInfo.country,
-                      "language": userInfo.language
-                    },
-                    header: {
-                      "Api-Key": apiKey,
-                      "Api-Secret": apiSecret
-                    },
-                    success(res) {
-                      wx.navigateTo({
-                        url: "/pages/regMob/regMob"
-                      })
-                    },
-                    fail(res) {
-                    }
-                  })
-                }
-              }
+              key: 'timeStamp',
+              data: timestamp,
             })
+            
+            wx.setStorage({
+              key: 'apiSecret',
+              data: apiSecret,
+            })
+          
+
+            if (!res.data.user_id) {
+              wx.setStorage({
+                key: 'userId',
+                data: res.data.user_id,
+              })
+
+              wx.request({
+                url: app.globalData.http +'/mpa/wechat/' + res.data.id,
+                method: "PUT",
+                header:{
+                  'Api-Ext': app.globalData.apiExt
+                },
+                data: {
+                  "nick_name": userInfo.nickName,
+                  "avatar_url": userInfo.avatarUrl,
+                  "gender": userInfo.gender,
+                  "city": userInfo.city,
+                  "province": userInfo.province,
+                  "country": userInfo.country,
+                  "language": userInfo.language
+                },
+                header: {
+                  "Api-Key": apiKey,
+                  "Api-Secret": apiSecret
+                },
+                success(res) {
+                  wx.navigateTo({
+                    url: "/pages/regMob/regMob"
+                  })
+                },
+                fail(res) {
+                }
+              })
+            }
           }
         })
-
       }
-    });
+    })
   }
 })
