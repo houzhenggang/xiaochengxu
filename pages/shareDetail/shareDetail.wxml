@@ -1,0 +1,106 @@
+<!--pages/detail/detail.wxml-->
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
+<import src="../../wxParse/wxParse.wxml"/> 
+<view class='detail_container'>
+	
+	<!-- detail images  -->
+	<swiper
+		autoplay='{{true}}'  interval='{{3500}}' duration='{{500}}' bindchange='changeCurrent'  current='{{current}}' circular='{{true}}'>
+		<block wx:for='{{imgs}}' wx:key="{{index}}">
+			<swiper-item>
+				<view class='detail_imgs'>
+					<image src='{{image}}{{item.icon_url}}{{qiniu}}'></image>
+				</view>
+			</swiper-item>
+		</block>
+	</swiper>
+  <view class='showIndex'>{{current+1}}/{{imgs.length}} </view>
+
+	<!-- description  -->
+	<view class='detail_description'>
+		<view class='name_share padding'>
+			<text class='des_name'>{{goods.name}}</text>
+			<view>
+				<button open-type='share'>
+					<image src='/imgs/detail/product_btn_share@2x.png'></image>
+					<text>分享</text>
+				</button>
+			</view>	
+		</view>
+		<view class='detail_price padding'>
+			<text>￥{{filters.toFix(goods.price/100)}}</text><text>￥{{filters.toFix(goods.display_price/100)}}</text>
+		</view>
+		<view class='detail_info'>
+			<text>月销{{goods.sales_count}}笔</text>
+      <text wx:if="{{goods.is_free_express==1}}">快递:包邮</text>
+      <text wx:else="{{goods.is_free_express==2}}">快递:{{filters.toFix(goods.free_express_price/100)}}</text>
+       <text></text> 
+		</view>
+		<view class='detail_promise padding'>
+			<view><image src='/imgs/detail/product_icon_sign@2x.png'></image><text>全场包邮</text></view>
+			<view><image src='/imgs/detail/product_icon_sign@2x.png'></image><text>7天退还</text></view>
+			<view><image src='/imgs/detail/product_icon_sign@2x.png'></image><text>24小时发货</text></view>
+			<view><image src='/imgs/detail/product_icon_sign@2x.png'></image><text>假一赔十</text></view>		
+		</view>
+    <view class='store'>
+        <view>
+            <image src="{{image}}{{description.logo_url}}"></image>
+            <view>{{description.name}}</view>
+        </view>      
+        <navigator open-type='switchTab' hover-class='none'  url="/pages/index/index">
+        进去首页
+        </navigator>
+    </view>
+	</view>
+
+	<!-- bottom button  -->
+	<view class='detail_bottom'>
+		<view class='detail_cart' bindtap='goCart'>
+			<image src='/imgs/detail/product_btn_shop cart@2x.png'></image>
+			<text>购物车</text>
+		</view>
+		<view class='addCart' bindtap='modalShow' data-flag='1'>加入购物车</view>
+		<view class='buy' bindtap='modalShow' data-flag='2'>立即购买</view>
+	</view>
+
+	<!-- 规格选择  -->
+	<view class='mask' wx:if='{{chooseModal}}' bindtap='closeModal'></view>s
+	<view class='choose' wx:if='{{chooseModal}}' animation="{{animationData}}">
+		
+		<view class='choose_price'>
+			<image src='{{image}}{{goodUrl}}'></image>
+			<view class='desc'>
+				<text>￥{{filters.toFix(goodPrice/100)}}</text>
+        <text>库存：{{good.stock_count}}</text>
+				<view>请选择 <text  wx:for='{{spec}}' wx:key='{{index}}'>{{item.name}}</text></view>
+			</view>
+			<image src='/imgs/detail/classification_btn_close@2x.png' data-id='0' bindtap='closeTips'></image>
+		</view>
+
+		<view class='color_size'>
+			<view class='choose_color' wx:for='{{spec}}' wx:for-index="id" wx:key='{{id}}'> 
+				<text class='title'>{{item.name}}</text>
+				<view class='color'>
+					<label wx:for='{{item.propertis}}' class='select {{index == chooseSpec[id]? "active" : ""}}' wx:key='{{index}}' data-index="{{index}}" data-id="{{id}}"  wx:for-item='items' bindtap='chooseSpecs'>
+						{{items}}
+					</label>
+				</view>
+			</view>
+		</view>
+		
+		<view class='count'>
+				<text class='number'>数量</text>
+				<view>
+					<text class='{{minusStatus}}' bindtap='bindMinus'>-</text>
+					<text class='num'>{{num}}</text>
+					<text class='add' class='{{minusStatuss}}' bindtap='bindPlus'>+</text>
+				</view>
+		</view>
+		<view class='confirm' data-id='1' bindtap='closeModal'>确认</view> 
+	</view>
+  <!-- <view class='description'>{{description}}</view> -->
+   <view class='description'>
+        <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+   </view>  
+</view>
+

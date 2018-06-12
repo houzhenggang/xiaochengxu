@@ -7,20 +7,20 @@ Page({
    */
   data: {
       address:[],
-      apiKey:'',
-      apiSecret:''
+      // apiKey:'',
+      // apiSecret:''
   },
   /*
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var apiKey = wx.getStorageSync(apiKey)
-    var apiSecret = wx.getStorageSync(apiSecret)
+    // var apiKey = wx.getStorageSync(apiKey)
+    // var apiSecret = wx.getStorageSync(apiSecret)
       var that = this;
-      that.setData({
-        apiKey: apiKey,
-        apiSecret: apiSecret
-      })
+      // that.setData({
+      //   apiKey: apiKey,
+      //   apiSecret: apiSecret
+      // })
       wx.showLoading({
         title: '加载中',
       })
@@ -29,8 +29,8 @@ Page({
         method:'get',
         dataType:'json',
         header: {
-          "Api-Key":apiKey,
-          "Api-Secret":apiSecret,
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
           'Api-Ext': app.globalData.apiExt
         },
         success:function(data){
@@ -73,8 +73,8 @@ Page({
                         detail: res.detailInfo
                       },
                       header: {
-                        "Api-Key": that.data.apiKey,
-                        "Api-Secret": that.data.apiSecret,
+                        "Api-Key": app.globalData.apiKey,
+                        "Api-Secret": app.globalData.apiSecret,
                         'Api-Ext': app.globalData.apiExt
                       },
                       success: function (data) {
@@ -101,8 +101,8 @@ Page({
                   detail: res.detailInfo
                 },
                 header: {
-                  "Api-Key": that.data.apiKey,
-                  "Api-Secret": that.data.apiSecret,
+                  "Api-Key": app.globalData.apiKey,
+                  "Api-Secret": app.globalData.apiSecret,
                   'Api-Ext': app.globalData.apiExt
                 },
                 success: function (data) {
@@ -128,8 +128,8 @@ Page({
             method: 'delete',
             dataType: 'json',
             header: {
-              "Api-Key": that.data.apiKey,
-              "Api-Secret": that.data.apiSecret,
+              "Api-Key": app.globalData.apiKey,
+              "Api-Secret": app.globalData.apiSecret,
               'Api-Ext': app.globalData.apiExt
             },
             success: function (data) {
@@ -178,8 +178,8 @@ Page({
                       detail: res.detailInfo
                     },
                     header: {
-                      "Api-Key": that.data.apiKey,
-                      "Api-Secret": that.data.apiSecret,
+                      "Api-Key": app.globalData.apiKey,
+                      "Api-Secret": app.globalData.apiSecret,
                       'Api-Ext': app.globalData.apiExt
                     },
                     success: function (data) {
@@ -207,8 +207,8 @@ Page({
                   detail: res.detailInfo
                 },
                 header: {
-                  "Api-Key": that.data.apiKey,
-                  "Api-Secret": that.data.apiSecret,
+                  "Api-Key": app.globalData.apiKey,
+                  "Api-Secret": app.globalData.apiSecret,
                   'Api-Ext': app.globalData.apiExt
                 },
                 success: function (data) {
@@ -247,8 +247,8 @@ Page({
           status:keys
         },
         header: {
-          "Api-Key": that.data.apiKey,
-          "Api-Secret": that.data.apiSecret,
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
           'Api-Ext': app.globalData.apiExt
         },
         success: function (data) {

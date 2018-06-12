@@ -23,24 +23,13 @@ Page({
     special:''
   },
   onLoad: function () {
-    let that = this;
-    var apiExt
-    wx.getExtConfig({
-      success:function(res){
-
-       apiExt = JSON.stringify(res.extConfig)
-       wx.setStorage({
-         key: 'apiExt',
-         data: apiExt,
-       })
-      }
-    })    
+    let that = this;   
     //获取店家描述数据
     wx.request({
       url: app.globalData.http + '/mpa/index',
       method: 'GET',
       header:{
-        'Api-Ext':apiExt
+        'Api-Ext': app.globalData.apiExt
       },
       success(res) {
         app.globalData.mobile = res.data.customer_service_mobile
@@ -61,19 +50,19 @@ Page({
     wx.request({
       url: app.globalData.http + '/mpa/category',
       header:{
-        'Api-Ext':apiExt
+        'Api-Ext':app.globalData.apiExt
       },
       success(res) {
         var newCate = res.data
         var newCates=[]
-        var n = parseInt(newCate.length / 6)
-        var m = newCate.length%6
+        var n = parseInt(newCate.length / 5)
+        var m = newCate.length%5
         var newArr=[]
-        for (var i = 0; i <6*n;i=i+6){
-          newArr= newCate.slice(i,i+6)
+        for (var i = 0; i <5*n;i=i+5){
+          newArr= newCate.slice(i,i+5)
           newCates.push(newArr)
         }
-        newArr= newCate.slice(6 * n, newCate.length )
+        newArr= newCate.slice(5 * n, newCate.length )
         newCates.push(newArr)
         that.setData({
           categoryList: res.data,
@@ -89,7 +78,7 @@ Page({
       url: app.globalData.http + '/mpa/goods/recommend?page=0&order_by=created_at desc&per_page=7',
       method: 'GET',
       header:{
-        'Api-Ext': apiExt
+        'Api-Ext': app.globalData.apiExt
       },
       success(res) {
         if (res.data) {
@@ -111,7 +100,7 @@ Page({
       url: app.globalData.http + '/mpa/goods/special?page=0&order_by=price desc&per_page=6',
       method: 'GET',
       header:{
-        'Api-Ext':apiExt
+        'Api-Ext':app.globalData.apiExt
       },
       success(res) {
         if (res.data) {

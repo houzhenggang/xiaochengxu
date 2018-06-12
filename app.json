@@ -1,26 +1,26 @@
 {
+  "enablePullDownRefresh": true,
   "pages": [
-      "pages/index/index",
+    "pages/index/index",
     "pages/regMob/regMob",
-  
-    "pages/category/category",     
+    "pages/category/category",
     "pages/shoppingCar/shoppingCar",
     "pages/user/user",
-    "pages/search/search",    
-    "pages/address/address",    
-    "pages/surePay/surePay",						
-		"pages/detail/detail",							
-				
-    "pages/result/result", 
+    "pages/search/search",
+    "pages/address/address",
+    "pages/surePay/surePay",
+    "pages/detail/detail",
+    "pages/result/result",
     "pages/afterSale/afterSale",
     "pages/refundDetail/refundDetail",
     "pages/logistics/logistics",
     "pages/orderDetail/orderDetail",
     "pages/special/special",
-		"pages/recommend/recommend",
+    "pages/recommend/recommend",
     "pages/orders/orders",
     "pages/cart/cart",
-		"pages/categoryList/categoryList"
+    "pages/categoryList/categoryList",
+    "pages/shareDetail/shareDetail"
   ],
   "window": {
     "backgroundTextStyle": "light",

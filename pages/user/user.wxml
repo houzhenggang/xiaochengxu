@@ -33,7 +33,7 @@
         </view>
 
         <view data-curTab='400'  bindtap='toOrder'  hover-class="none">
-          <image src='/imgs/daifahuo.png'></image>
+          <image src='/imgs/daishouhuo.png'></image>
           <label>待收货</label>
           <text wx:if='{{count3}}'>{{count3}}</text>
         </view>

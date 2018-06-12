@@ -9,17 +9,17 @@ Page({
       text:'获取验证码',
       sms:'',
       disabled:false,
-      apiKey:'',
-      apiSecret:''
+      // apiKey:'',
+      // apiSecret:''
   },
-  onLoad: function () {
-    var apiKeys = wx.getStorageSync('Api-Key');
-    var apiSecrets = wx.getStorageSync('Api-Secret')
-    this.setData({
-      apiKey: apiKeys,
-      apiSecret: apiSecrets
-    })
-  },
+  // onLoad: function () {
+  //   var apiKeys = wx.getStorageSync('Api-Key');
+  //   var apiSecrets = wx.getStorageSync('Api-Secret')
+  //   this.setData({
+  //     apiKey: apiKeys,
+  //     apiSecret: apiSecrets
+  //   })
+  // },
   getSms:function(){
     var that=this;
     if (/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(this.data.mobile)){
@@ -30,8 +30,8 @@ Page({
             mobile: this.data.mobile
           },
           header: {
-            "Api-Key": that.data.apiKey,
-            "Api-Secret": that.data.apiSecret,
+            "Api-Key": app.globalData.apiKey,
+            "Api-Secret": app.globalData.apiSecret,
             'Api-Ext': app.globalData.apiExt
           },
           dataType:'json',
@@ -111,8 +111,8 @@ Page({
             },
             dataType:'json',
             header: {
-              "Api-Key": that.data.apiKey,
-              "Api-Secret": that.data.apiSecret,
+              "Api-Key": app.globalData.apiKey,
+              "Api-Secret": app.globalData.apiSecret,
               'Api-Ext': app.globalData.apiExt
             },
             success:function(data){

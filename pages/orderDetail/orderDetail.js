@@ -8,9 +8,9 @@ Page({
       info:'',
       id:'',
       show:true,
-      apiKey:'',
-      image: 'http://image.yiqixuan.com/',
-      apiSecret:''
+      // apiKey:'',
+      image: 'http://image.yiqixuan.com/'
+      // apiSecret:''
   },
 
   /**
@@ -19,20 +19,20 @@ Page({
   onLoad: function (options) {
     var that=this;
       var id=options.id;
-      var apiKey = wx.getStorageSync(apiKey)
-      var apiSecret = wx.getStorageSync(apiSecret)
+      // var apiKey = wx.getStorageSync(apiKey)
+      // var apiSecret = wx.getStorageSync(apiSecret)
       that.setData({
         id:id,
-        apiKey: apiKey,
-        apiSecret: apiSecret
+        // apiKey: apiKey,
+        // apiSecret: apiSecret
       })
       wx.request({
         url: app.globalData.http +'/mpa/order/' + id,
         method:'GET',
         dataType:'json',
         header: {
-          "Api-Key": that.data.apiKey,
-          "Api-Secret": that.data.apiSecret,
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
           'Api-Ext': app.globalData.apiExt
         },
         success:function(data){
@@ -82,8 +82,8 @@ Page({
           method: "get",
           dataType: 'json',
           header: {
-            "Api-Key": that.data.apiKey,
-            "Api-Secret": that.data.apiSecret,
+            "Api-Key": app.globalData.apiKey,
+            "Api-Secret": app.globalData.apiSecret,
             'Api-Ext': app.globalData.apiExt
           },
           success: function (data) {
@@ -154,8 +154,8 @@ Page({
         'order_id': id
       },
       header: {
-        "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret,
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
         'Api-Ext': app.globalData.apiExt
       },
       success: function (res) {
@@ -213,8 +213,8 @@ Page({
               status: idx
             },
             header: {
-              "Api-Key": that.data.apiKey,
-              "Api-Secret": that.data.apiSecret,
+              "Api-Key": app.globalData.apiKey,
+              "Api-Secret": app.globalData.apiSecret,
               'Api-Ext': app.globalData.apiExt
             },
             method: 'PUT',

@@ -11,18 +11,18 @@ Page({
     index:0,
     allOrder:1,
     image: 'http://image.yiqixuan.com/',
-    apiSecret:'',
-    apiKey:'',
+    // apiSecret:'',
+    // apiKey:'',
     disabled:false
   },
   onLoad: function (options) {
     var that = this;
-    var apiKey = wx.getStorageSync('apiKey')
-    var apiSecret = wx.getStorageSync('apiSecret')
+    // var apiKey = wx.getStorageSync('apiKey')
+    // var apiSecret = wx.getStorageSync('apiSecret')
       that.setData({
-        currentTab: options.curTab,
-        apiKey:apiKey,
-        apiSecret: apiSecret
+        currentTab: options.curTab
+        // apiKey:apiKey,
+        // apiSecret: apiSecret
       })
       wx.showLoading({
         title: '加载中',
@@ -38,8 +38,8 @@ Page({
         method:'get',
         dataType:'json',
         header: {
-          "Api-Key": that.data.apiKey,
-          "Api-Secret": that.data.apiSecret,
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
           'Api-Ext': app.globalData.apiExt
         },
         success:function(data){
@@ -79,8 +79,8 @@ Page({
           method: "get",
           dataType: 'json',
           header: {
-            "Api-Key": that.data.apiKey,
-            "Api-Secret": that.data.apiSecret,
+            "Api-Key": app.globalData.apiKey,
+            "Api-Secret": app.globalData.apiSecret,
             'Api-Ext': app.globalData.apiExt
           },
           success: function (data) {
@@ -151,8 +151,8 @@ Page({
         'order_id': id
       },
       header: {
-        "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret,
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
         'Api-Ext': app.globalData.apiExt
       },
       success: function (res) {
@@ -231,8 +231,8 @@ Page({
             method:'PUT',
             dataType:'json',
             header: {
-              "Api-Key": that.data.apiKey,
-              "Api-Secret": that.data.apiSecret,
+              "Api-Key": app.globalData.apiKey,
+              "Api-Secret": app.globalData.apiSecret,
               'Api-Ext': app.globalData.apiExt
             },
             success:function(data){
@@ -292,8 +292,8 @@ Page({
       },
       method: 'get',
       header: {
-        "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret,
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
         'Api-Ext': app.globalData.apiExt
       },
       dataType: 'json',
@@ -327,8 +327,8 @@ Page({
       },
       method: 'get',
       header: {
-        "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret,
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
         'Api-Ext': app.globalData.apiExt
       },
       dataType: 'json',

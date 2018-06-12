@@ -3,17 +3,17 @@
 	padding-left: 58rpx;
 	position: relative;
 	background: #EDEDED;
-	font-size: 22rpx;
-	line-height: 56rpx;
+	font-size: 28rpx;
+	line-height: 68rpx;
 	width: 652rpx;
-	height: 56rpx;
+	height: 68rpx;
 	margin: 0 auto;
-	border-radius: 56rpx;
+	border-radius: 68rpx;
 	color: #999999;
 	letter-spacing: 1rpx;
 }
 swiper{
-  height: 180rpx;
+  height: 200rpx;
 }
 .index_container{
   min-height: 100%;
@@ -50,16 +50,17 @@ swiper{
 }
 .index_classify view{
 	display: flex;
-	height: 128rpx;
-	width: 16.66%;
+	height: 156rpx;
+	width: 20%;
 	flex-direction: column;
 	align-items: center;
+  font-size: 26rpx;
 	justify-content: space-between
 }
 .index_classify image{
 	display: block;
-	width: 80rpx;
-	height: 80rpx;
+	width: 104rpx;
+	height: 104rpx;
 	border-radius:50%;
 }
 
@@ -85,8 +86,8 @@ swiper{
 }
 
 .index_contact{
-	min-height: 240rpx;
-	width: 668rpx;
+min-height:200rpx;
+width:710rpx;
 	margin: 0 auto;
 	margin-top: 62rpx;
 	position: relative;
@@ -114,7 +115,7 @@ swiper{
 	display: block;
 	font-size: 26rpx;
 	margin-top: 10rpx;
-	width: 330rpx;
+	width:370rpx;
 	font-family: PingFangSC-Regular;
 	color: #333333;
 	line-height: 44rpx;
@@ -154,7 +155,7 @@ swiper{
 }
 .index_recommend text{
 	display: inline-block;
-	font-size: 32rpx;
+	font-size: 36rpx;
 	line-height: 44rpx;
 	font-weight: 600;
 	font-family: PingFangSC-Semibold;
@@ -167,11 +168,12 @@ swiper{
 	margin-left: 42rpx;
 }
 .index_recommend text:nth-child(3){
-	font-size: 22rpx;
-	font-family: PingFangSC-Regular;
-	margin-left: 162rpx;
-	color: #999999;
-	line-height: 44rpx;
+  font-size:24rpx;
+  font-family:PingFangSC-Light;
+  margin-left:140rpx;
+  color:#999999;
+  font-weight:normal;
+  line-height:44rpx;
 }
 .index_recommend image:nth-child(4){
 	position: absolute;

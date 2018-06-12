@@ -11,21 +11,26 @@ Page({
     count3:'',
     count4:'',
     apiExt: '',
-    apiKey: "",
-    apiSecret: ""
+    // apiKey: "",
+    // apiSecret: "",
+    // apiExt:''
   },
   onLoad: function () {
     var that=this;
-    var timeStamp = wx.getStorageSync('timeStamp')
-    var nowTimeStamp = Date.parse(new Date());
-    var apiKey = wx.getStorageSync('apiKey')
-    var apiSecret = wx.getStorageSync('apiSecret')
-    var info = wx.getStorageSync('huzan_avatarUrl')
-    var userId = wx.getStorageSync('userId')
-    
-    if (timeStamp + 24 * 60 * 60 * 1000 > nowTimeStamp && apiSecret && apiKey && userId){
+    // var timeStamp = wx.getStorageSync('timeStamp')
+    // var nowTimeStamp = Date.parse(new Date());
+    // var apiKey = wx.getStorageSync('apiKey')
+    // var apiSecret = wx.getStorageSync('apiSecret')
+    // var apiExt = wx.getStorageSync('apiExt')
+    // var info = wx.getStorageSync('huzan_avatarUrl')
+    // var userId = wx.getStorageSync('userId')
+    // that.setData({
+    //   apiExt: apiExt
+    // })
+
+    if (app.globalData.timeStamp + 24 * 60 * 60 * 1000 > nowTimeStamp && app.globalData.apiSecret && app.globalData.apiKey){
       that.setData({
-        userInfo: info,
+        userInfo: app.globalData.info,
         hasUserInfo: true
       })
       wx.request({
@@ -33,9 +38,9 @@ Page({
         method: 'GET',
         dataType: 'json',
         header: {
-          "Api-Key": apiKey,
-          "Api-Secret": apiSecret,
-          'Api-Ext': apiExt
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
+          'Api-Ext': app.globalData.apiExt
         },
         success: function (data) {
           var datas = data.data
@@ -51,6 +56,9 @@ Page({
     }
   },
   toOrder:function(e){
+    // wx.navigateTo({
+    //   url: '/pages/orders/orders?curTab=' + e.currentTarget.dataset.curTab
+    // })
     var login = util.checkLogin()
     if(login){
       wx.navigateTo({
@@ -71,7 +79,7 @@ Page({
         wx.setStorage({
           key: 'huzan_avatarUrl',
           data: userInfo,
-        })          
+        })     
         //向后台发起请求，传code
         wx.request({
           url: app.globalData.http +'/mpa/wechat/auth',
@@ -114,9 +122,6 @@ Page({
               wx.request({
                 url: app.globalData.http +'/mpa/wechat/' + res.data.id,
                 method: "PUT",
-                header:{
-                  'Api-Ext': app.globalData.apiExt
-                },
                 data: {
                   "nick_name": userInfo.nickName,
                   "avatar_url": userInfo.avatarUrl,
@@ -127,8 +132,9 @@ Page({
                   "language": userInfo.language
                 },
                 header: {
-                  "Api-Key": apiKey,
-                  "Api-Secret": apiSecret
+                  "Api-Key": app.globalData.apiKey,
+                  "Api-Secret": app.globalData.apiSecret,
+                  'Api-Ext': app.globalData.apiExt
                 },
                 success(res) {
                   wx.navigateTo({
@@ -141,6 +147,9 @@ Page({
             }
           }
         })
+      },
+      fail:function(res){
+          console.log(res)
       }
     })
   }

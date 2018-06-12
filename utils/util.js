@@ -9,21 +9,12 @@ const formatTime = date => {
 
   return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
+// const checkKey=
 
 const checkLogin= () =>{
-  var timeStamp = wx.getStorageSync('timeStamp')
   var nowTimeStamp = Date.parse(new Date());
-  var apiKey = wx.getStorageSync('apiKey')
-  var apiSecret = wx.getStorageSync('apiSecret')
-  var apiExt = wx.getStorageSync('apiExt')
-  var userId = wx.getStorageSync('userId')
   let that = this;
-  if (timeStamp + 24 * 60 * 60 * 1000 > nowTimeStamp && apiExt && apiSecret && apiKey && userId) {
-    this.setData({
-      apiKey: apiKey,
-      apiSecret: apiSecret,
-      apiExt: apiExt
-    })
+  if (app.globalData.timeStamp + 24 * 60 * 60 * 1000 > app.globalData.nowTimeStamp && app.globalData.apiExt && app.globalData.apiSecret && app.globalData.apiKey && app.globalData.userId) {
     return true
     }
     else{
@@ -63,10 +54,7 @@ const checkLogin= () =>{
                   url: "/pages/regMob/regMob"
                 })
               } else {
-                wx.setStorage({
-                  key: 'userId',
-                  data: res.data_id,
-                })
+                app.globalData.userId = res.data_id
               }
             }
           })

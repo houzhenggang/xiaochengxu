@@ -87,7 +87,7 @@
           <image src='{{image}}{{item.cover_url}}'></image>
           <text class='item_text'>{{item.name}}</text>
           <view class='item_text_view special_item'>
-            <text>￥</text><text>{{filters.toFix(item.price/100)}}</text><text>{{filters.toFix(item.display_price/100)}}</text>
+            <text>￥</text><text>{{filters.toFix(item.price/100)}}</text><text>￥{{filters.toFix(item.display_price/100)}}</text>
           </view>
         </view>
       </view>

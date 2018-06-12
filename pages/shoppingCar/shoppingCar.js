@@ -16,10 +16,10 @@ Page({
     startX: 0, //开始坐标
     startY: 0,
     apiKey:'',
-    apiSecret:'',
-    apiExt:'',
-    apiKey:"",
-    apiSecret:""
+    // apiSecret:'',
+    // apiExt:'',
+    // apiKey:"",
+    // apiSecret:""
   },
 	//点击结算
 	balance(){
@@ -102,9 +102,9 @@ Page({
               url: app.globalData.http + '/mpa/cart/' + _this.data.datalist[index].id,
 							method:"DELETE",
               header: {
-                "Api-Key": _this.data.apiKey,
-                "Api-Secret": _this.data.apiSecret,
-                'Api-Ext': _this.data.apiExt
+                "Api-Key": app.globalData.apiKey,
+                "Api-Secret": app.globalData.apiSecret,
+                'Api-Ext': app.globalData.apiExt
               },
 							success(res){
 								//如果删除成功
@@ -142,9 +142,9 @@ Page({
 				count:newNum
 			},
       header: {
-        "Api-Key": _this.data.apiKey,
-        "Api-Secret": _this.data.apiSecret,
-        'Api-Ext': _this.data.apiExt
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
 			success(res){
         console.log(res)
@@ -282,9 +282,9 @@ Page({
             url: app.globalData.http + '/mpa/cart/' + _this.data.datalist[index].id,
             method: "DELETE",
             header: {
-              "Api-Key": _this.data.apiKey,
-              "Api-Secret": _this.data.apiSecret,
-              'Api-Ext': _this.data.apiExt
+              "Api-Key": app.globalData.apiKey,
+              "Api-Secret": app.globalData.apiSecret,
+              'Api-Ext': app.globalData.apiExt
             },
             success(res) {
               console.log(res)
@@ -379,9 +379,9 @@ Page({
                 url: app.globalData.http + '/mpa/cart/' + deleArr[0],
                 method: "DELETE",
                 header: {
-                  "Api-Key": that.data.apiKey,
-                  "Api-Secret": that.data.apiSecret,
-                  'Api-Ext': that.data.apiExt
+                  "Api-Key": app.globalData.apiKey,
+                  "Api-Secret": app.globalData.apiSecret,
+                  'Api-Ext': app.globalData.apiExt
                 },
                 success(res) {
                   console.log(res)
@@ -400,9 +400,9 @@ Page({
                   ids: deleArr
                 },
                 header: {
-                  "Api-Key": that.data.apiKey,
-                  "Api-Secret": that.data.apiSecret,
-                  'Api-Ext': that.data.apiExt
+                  "Api-Key": app.globalData.apiKey,
+                  "Api-Secret": app.globalData.apiSecret,
+                  'Api-Ext': app.globalData.apiExt
                 },
                 success(res) {
                   console.log(res)
@@ -434,9 +434,9 @@ Page({
         page: that.data.page
       },
       header: {
-        "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret,
-        'Api-Ext': that.data.apiExt
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       success(res) {
         if (res.data != "") {
@@ -466,13 +466,13 @@ Page({
     let that = this;
     var login = util.checkLogin()
     if(login){
-      var apiKey = wx.getStorageSync('apiKey')
-      var apiSecret = wx.getStorageSync('apiSecret')
-      var apiExt = wx.getStorageSync('apiExt')
+      // var apiKey = wx.getStorageSync('apiKey')
+      // var apiSecret = wx.getStorageSync('apiSecret')
+      // var apiExt = wx.getStorageSync('apiExt')
       this.setData({
-        apiKey: apiKey,
-        apiSecret: apiSecret,
-        apiExt: apiExt,
+        // apiKey: apiKey,
+        // apiSecret: apiSecret,
+        // apiExt: apiExt,
         datalist: [],
         page: 0,
         selectAll: false,
@@ -488,9 +488,9 @@ Page({
           page: 0
         },
         header: {
-          "Api-Key": apiKey,
-          "Api-Secret": apiSecret,
-          'Api-Ext':apiExt
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
+          'Api-Ext': app.globalData.apiExt
         },
         success(res) {
           if (res.data.length != 0) {

@@ -14,15 +14,15 @@ Page({
   onLoad: function (options) {
     var that=this;
     var id=options.id;
-    var apiKeys = wx.getStorageSync('Api-Key');
-    var apiSecrets = wx.getStorageSync('Api-Secret')
+    // var apiKeys = wx.getStorageSync('Api-Key');
+    // var apiSecrets = wx.getStorageSync('Api-Secret')
     wx.request({
       url: app.globalData.http +'/mpa/order/'+id+'/express',
       method:'GET',
       dataType:'json',
       header: {
-        'Api-Key': apiKeys,
-        'Api-Secret': apiSecrets,
+        'Api-Key': app.globalData.apiKey,
+        'Api-Secret': app.globalData.apiSecret,
         'Api-Ext': app.globalData.apiExt
       },
       success:function(data){

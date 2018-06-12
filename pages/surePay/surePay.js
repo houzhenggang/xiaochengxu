@@ -13,8 +13,8 @@ Page({
       sku_ids: {},
       image: 'http://image.yiqixuan.com/',
       sku_idd:[],
-      apiSecret:'',
-      apiKey:'',
+      // apiSecret:'',
+      // apiKey:'',
       disabled:false
   },
 
@@ -23,8 +23,8 @@ Page({
    */
   onLoad: function (options) { 
     var data =app.globalData.good
-    var apiKey = wx.getStorageSync(apiKey)
-    var apiSecret = wx.getStorageSync(apiSecret)
+    // var apiKey = wx.getStorageSync(apiKey)
+    // var apiSecret = wx.getStorageSync(apiSecret)
     var sku_id={}
     var sku_idss=[]
     var that=this
@@ -64,8 +64,8 @@ Page({
       dataList: app.globalData.good,
       totalMoney: sum,
       totalOrder:sum,
-      apiKey:apiKey,
-      apiSecret:apiSecret
+      // apiKey:apiKey,
+      // apiSecret:apiSecret
     })
   },
   /**
@@ -102,8 +102,8 @@ Page({
           method: "get",
           dataType: 'json',
           header: {
-            "Api-Key": that.data.apiKey,
-            "Api-Secret": that.data.apiSecret,
+            "Api-Key": app.globalData.apiKey,
+            "Api-Secret": app.globalData.apiSecret,
             'Api-Ext': app.globalData.apiExt
           },
           success: function (data) {
@@ -185,8 +185,8 @@ Page({
         address_id:that.data.address.id,
       },
       header: {
-        "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret,
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
         'Api-Ext': app.globalData.apiExt
       },
       success: function (data) {
@@ -199,8 +199,8 @@ Page({
               order_id: data.data.id
             },
             header: {
-              "Api-Key": that.data.apiKey,
-              "Api-Secret": that.data.apiSecret,
+              "Api-Key": app.globalData.apiKey,
+              "Api-Secret": app.globalData.apiSecret,
               'Api-Ext': app.globalData.apiExt
             },
             success:function(res){
@@ -259,8 +259,8 @@ Page({
           sku_ids: this.data.sku_idd
         },
         header: {
-          "Api-Key": that.data.apiKey,
-          "Api-Secret": that.data.apiSecret,
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
           'Api-Ext': app.globalData.apiExt
         },
         success:function(data){

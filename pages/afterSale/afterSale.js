@@ -8,8 +8,8 @@ Page({
     isShow:true,
     reasonID:5,
     saleArr:[],
-    apiKey:'',
-    apiSecret:'',
+    // apiKey:'',
+    // apiSecret:'',
     orderId:'',
     image: 'http://image.yiqixuan.com/',
     info:'',
@@ -32,20 +32,20 @@ Page({
   onLoad: function (options) {
     var that=this;
     var id=options.id;
-    var apiKey = wx.getStorageSync(apiKey)
-    var apiSecret = wx.getStorageSync(apiSecret)
+    // var apiKey = wx.getStorageSync(apiKey)
+    // var apiSecret = wx.getStorageSync(apiSecret)
     this.setData({
-      orderId:id,
-      apiKey: apiKey,
-      apiSecret: apiSecret
+      orderId:id
+      // apiKey: apiKey,
+      // apiSecret: apiSecret
     })
     wx.request({
       url: app.globalData.http +'/mpa/order/' + id,
       method: 'GET',
       dataType: 'json',
       header: {
-        "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret,
+        "Api-Key":app.globalData.apiKey,
+        "Api-Secret":app.globalData.apiSecret,
         'Api-Ext': app.globalData.apiExt
       },
       success: function (data) {
@@ -128,8 +128,8 @@ Page({
         order_item_ids:that.data.saleArr
       },
       header: {
-        "Api-Key": that.data.apiKey,
-        "Api-Secret": that.data.apiSecret,
+        "Api-Key":app.globalData.apiKey,
+        "Api-Secret":app.globalData.apiSecret,
         'Api-Ext': app.globalData.apiExt
       },
       success:function(data){

@@ -119,6 +119,42 @@ swiper{
 	font-size: 24rpx;
 	line-height: 34rpx;
 }
+.store{
+    width: 100%;
+    box-sizing: border-box;
+    height: 120rpx;
+    padding:0 20rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 20rpx solid #f6f7f7;
+}
+
+.store image{
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 18rpx
+}
+.store>view{
+  display: flex;
+  font-family: PingFangSC-Medium;
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: bold;
+  align-items: center;
+}
+.store navigator{
+  width: 140rpx;
+  height: 52rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #9B9B9B;
+  border-radius: 26rpx;
+  text-align: center;
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 50rpx;
+}
 .detail_promise view{
 	display: flex;
 	align-items: center;
