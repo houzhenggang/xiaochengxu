@@ -49,6 +49,7 @@
 		<view class='detail_cart' bindtap='goCart'>
 			<image src='/imgs/detail/product_btn_shop cart@2x.png'></image>
 			<text>购物车</text>
+      <label wx:if="{{cartNum>0}}">{{cartNum}}</label>
 		</view>
 		<view class='addCart' bindtap='modalShow' data-flag='1'>加入购物车</view>
 		<view class='buy' bindtap='modalShow' data-flag='2'>立即购买</view>

@@ -12,7 +12,7 @@
 	<!--banner  -->
 	<image class='index_banner1' src='{{image}}{{description.logo_url}}'></image>
 
-   <swiper indicator-dots="{{indicatorDots}}"
+   <!-- <swiper indicator-dots="{{indicatorDots}}"
       touch="{{touch}}"  duration="{{duration}}" bindchange='changeCurrent'   current='{{current}}'>
       <block wx:for="{{newCate}}" wx:for-item='item' wx:key='index' >
         <swiper-item class='index_classify'>
@@ -22,11 +22,19 @@
           </view>
         </swiper-item>
       </block>
-  </swiper> 
-
-   <view class='index_current'>
-      <view wx:key='index' wx:for="{{newCate}}" class='{{current===index?"cur":""}}'></view>
+  </swiper>  -->
+  <view  class='index_classify'>
+      <scroll-view  scroll-x="{{true}}" class='scroll'>
+        <view  data-idx="{{index}}"    wx:for='{{categoryList}}' wx:key="{{index}}" bindtap='switchCate'>
+          <image src='{{image}}{{item.icon_url}}'></image>
+          <text>{{item.name}}</text>
+        </view>
+      </scroll-view>
   </view> 
+
+   <!-- <view class='index_current'>
+      <view wx:key='index' wx:for="{{newCate}}" class='{{current===index?"cur":""}}'></view>
+  </view>  -->
 	<!--contact  -->
 	<view class="index_contact">
     <image src='{{image}}{{description.logo_url}}'></image>

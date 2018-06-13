@@ -3,7 +3,6 @@
     "extAppid": "wx0ce3e0d4b12aadf1",
     "directCommit": false,
     "ext":{
-        "merchant_id": 1,
         "data":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJtcGFfaWQiOjEsImFwcF9pZCI6Ind4MGNhN2IyZjVlOTY3MTEzMiIsIm1lcmNoYW50X2lkIjoxfQ.yujo5j1389-Cd3V-9FqiWtrcqAiJSzm5LcxmwZOLD3RRnmABxW4eJAxClDctzcwHODtbxcvNGoomofmNLUOM3g"
     },
     "pages": [

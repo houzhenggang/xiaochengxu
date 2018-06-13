@@ -18,7 +18,7 @@ Page({
   onLoad: function () {
     var that=this;
     // var timeStamp = wx.getStorageSync('timeStamp')
-    // var nowTimeStamp = Date.parse(new Date());
+    var nowTimeStamp = Date.parse(new Date());
     // var apiKey = wx.getStorageSync('apiKey')
     // var apiSecret = wx.getStorageSync('apiSecret')
     // var apiExt = wx.getStorageSync('apiExt')
@@ -59,7 +59,7 @@ Page({
     // wx.navigateTo({
     //   url: '/pages/orders/orders?curTab=' + e.currentTarget.dataset.curTab
     // })
-    var login = util.checkLogin()
+    var login = app.checkLogin()
     if(login){
       wx.navigateTo({
         url: '/pages/orders/orders?curTab=' + e.currentTarget.dataset.curTab
@@ -70,6 +70,7 @@ Page({
     var that=this;
     wx.login({
       success(code) {
+        console.log(code)
         //获取用户信息，拿到userInfo
         var userInfo = e.detail.userInfo;
         that.setData({

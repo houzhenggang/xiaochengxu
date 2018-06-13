@@ -458,13 +458,13 @@ Page({
       }
     })
   },
-  // onLoad:function(){
-  //   var login= util.checkLogin()
-  //   console.log(login)
-  // },
+  onLoad:function(){
+    // var login = app.checkLogin()
+  },
   onShow: function (options) {  
+    // console.log(app)
     let that = this;
-    var login = util.checkLogin()
+    var login = app.checkLogin()
     if(login){
       // var apiKey = wx.getStorageSync('apiKey')
       // var apiSecret = wx.getStorageSync('apiSecret')

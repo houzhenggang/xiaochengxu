@@ -40,6 +40,7 @@ Page({
     //是否又规格
     isSpec:'',
     current:0,
+    cartNum:0,
     // apiExt: ''
   },
   changeCurrent:function(e){
@@ -51,7 +52,7 @@ Page({
 	/* 规格选择弹出事件 */
 	modalShow(e){
     var that = this;
-    var login = util.checkLogin()
+    var login = app.checkLogin()
     if(login){
       //修改flag标识
       let flag = e.currentTarget.dataset.flag;
@@ -331,7 +332,7 @@ Page({
 	},
 	//点击购物车
 	goCart(){
-    var login = util.checkLogin()
+    var login = app.checkLogin()
     if (login){
       wx.navigateTo({
         url: '/pages/cart/cart',
@@ -346,6 +347,22 @@ Page({
 		wx.showLoading({
 			title: '加载中',
 		})
+    //获取购物车数量
+    wx.request({
+      url: app.globalData.http + '/mpa/cart/count', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
+      header: {
+        'Api-Ext': app.globalData.apiExt,
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
+      },
+      method:'get',
+      success(res) {
+        that.setData({
+          cartNum:res
+        })
+
+      }
+    })
     var good_id;
 		//获取商品详情
 		wx.request({

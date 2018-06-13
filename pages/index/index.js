@@ -53,20 +53,20 @@ Page({
         'Api-Ext':app.globalData.apiExt
       },
       success(res) {
-        var newCate = res.data
-        var newCates=[]
-        var n = parseInt(newCate.length / 5)
-        var m = newCate.length%5
-        var newArr=[]
-        for (var i = 0; i <5*n;i=i+5){
-          newArr= newCate.slice(i,i+5)
-          newCates.push(newArr)
-        }
-        newArr= newCate.slice(5 * n, newCate.length )
-        newCates.push(newArr)
+        // var newCate = res.data
+        // var newCates=[]
+        // var n = parseInt(newCate.length / 5)
+        // var m = newCate.length%5
+        // var newArr=[]
+        // for (var i = 0; i <5*n;i=i+5){
+        //   newArr= newCate.slice(i,i+5)
+        //   newCates.push(newArr)
+        // }
+        // newArr= newCate.slice(5 * n, newCate.length )
+        // newCates.push(newArr)
         that.setData({
           categoryList: res.data,
-          newCate: newCates
+          // newCate: newCates
         })
       },
       fail:function(res){
@@ -135,8 +135,7 @@ Page({
 	switchCate(e){
 		//当前点击索引,保存到globalData
     var idx = e.currentTarget.dataset.idx;
-		var index = e.currentTarget.dataset.index;
-		app.globalData.classIdx = parseInt(idx)*6+parseInt(index);
+    app.globalData.classIdx = idx;
 		wx.switchTab({
       url: '/pages/category/category',
 		})
