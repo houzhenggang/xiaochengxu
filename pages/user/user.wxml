@@ -17,39 +17,39 @@
 <view class='orderinfo'> 
     <view data-curTab='1' class='myorder'  bindtap='toOrder'   hover-class="none">
         <view>我的订单</view>
-        <view><label>所有订单</label><image class='icon' src='/imgs/right.png'></image></view>
+        <view><label>所有订单</label><image class='icon' src='{{image}}right.png'></image></view>
     </view>
     <view class='orderList'>
-        <view data-curTab='200'  bindtap='toOrder' hover-class="none">
-          <image src='/imgs/daifukuan.png'></image>
+        <view  data-curTab='200'  bindtap='toOrder' hover-class="none">
+          <image src='{{image}}daifukuan.png'></image>
           <label>待付款</label>
           <text wx:if='{{count1}}'>{{count1}}</text>
         </view>
 
         <view data-curTab='205'  bindtap='toOrder' hover-class="none">
-          <image src='/imgs/daifahuo.png'></image>
+          <image src='{{image}}daifahuo.png'></image>
           <label>待发货</label>
           <text wx:if='{{count2}}'>{{count2}}</text>
         </view>
 
         <view data-curTab='400'  bindtap='toOrder'  hover-class="none">
-          <image src='/imgs/daishouhuo.png'></image>
+          <image src='{{image}}daishouhuo.png'></image>
           <label>待收货</label>
           <text wx:if='{{count3}}'>{{count3}}</text>
         </view>
 
         <view data-curTab='500' bindtap='toOrder' hover-class="none">
-          <image src='/imgs/shouhou.png'></image>
+          <image src='{{image}}shouhou.png'></image>
           <label>售后</label>
           <text wx:if='{{count4}}'>{{count4}}</text>
         </view>
     </view>
 </view>
 <view class='otherInfo'>
-    <navigator url='/pages/address/address' class='nav' hover-class="none">
+    <view url='/pages/address/address' bindtap='goAddress' class='nav' hover-class="none">
           <view>我的地址</view>
-          <image class='icon' src='/imgs/right.png'></image>
-    </navigator>  
+          <image class='icon' src='{{image}}right.png'></image>
+    </view>  
       
     <!-- <navigator>
           <view>联系商家</view>

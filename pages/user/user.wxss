@@ -9,7 +9,7 @@ page{
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #FF7C7D;
+  background: linear-gradient(0deg,#FF7D7D  4%, #FF6286 96%);
 }
 .userinfo {
   display: flex;
@@ -147,7 +147,7 @@ align-items: center;
   justify-content: space-between;
   align-items: center;
   display: flex;
-  border-bottom: 1rpx solid  #EBEBEB;
+  /* border-bottom: 1rpx solid  #EBEBEB; */
 }
 .otherInfo view{
   font-family: PingFangSC-Regular;

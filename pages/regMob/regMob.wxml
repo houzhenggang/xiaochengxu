@@ -7,16 +7,16 @@
   </view>
 </view> -->
 <view class='content'>
-  <image class='regMob' src='/imgs/regMob_icon.png'></image>
+  <image class='regMob' src='{{image}}regMob_icon.png'></image>
   <view>
-      <input placeholder='请输入手机号' placeholder-class='phcolor' bindinput="inputMob" type='tel'  ></input>
+      <input placeholder='请输入手机号' class='mobile' placeholder-class='phcolor' bindinput="inputMob" type='tel'  ></input>
   </view>
   
 </view>
 <view class='content lst'>
-  <image class='yzm_icon' src='/imgs/yzm_icon.png'></image>
-  <view>
-      <input placeholder-class='phcolor'  type='tel'   bindinput="inputSms"  placeholder='请输入验证码'></input>
+  <image class='yzm_icon' src='{{image}}yzm_icon.png'></image>
+  <view class='yanzm'>
+      <input placeholder-class='phcolor'  class='tel'  type='tel'   bindinput="inputSms"  placeholder='请输入验证码'></input>
       <button hover-class="none" bindtap='getSms' class="{{disabled?'gray':''}}" disabled='{{disabled}}' >{{text}}</button>
   </view>
 </view>

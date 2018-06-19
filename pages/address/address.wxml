@@ -7,15 +7,15 @@
   <view class='userAddr'>地址：{{item.province}}{{item.city}}{{item.county}}{{item.detail}}</view>
   <view class='contentBtm'>
     <label catchtap='setDefault' data-key='{{item.status}}'  data-index='{{index}}'  wx:if='{{item.status==1}}'>
-      <image src='/imgs/unchecked.png' data-key='{{item.status}}' catchtap='setDefault'   data-index='{{index}}'></image>
+      <image src='{{image}}unchecked.png' data-key='{{item.status}}' catchtap='setDefault'   data-index='{{index}}'></image>
       设为默认
     </label>
     <label catchtap='setDefault'  data-key='{{item.status}}'  data-index='{{index}}'   wx:if='{{item.status==2}}'>
-      <image src='/imgs/checked.png'  data-key='{{item.status}}' catchtap='setDefault'   data-index='{{index}}' ></image>
+      <image src='{{image}}checked.png'  data-key='{{item.status}}' catchtap='setDefault'   data-index='{{index}}' ></image>
       已设为默认
     </label>
-    <!-- <label catchtap='updateAddr' data-index='{{index}}'><image src='/imgs/updataAddr.png' ></image>编辑</label> -->
-    <label  catchtap='deleteAddr' data-index='{{index}}'><image src='/imgs/del.png'></image>删除</label>
+    <!-- <label catchtap='updateAddr' data-index='{{index}}'><image src='{{image}}updataAddr.png' ></image>编辑</label> -->
+    <label  catchtap='deleteAddr' data-index='{{index}}'><image src='{{image}}del.png'></image>删除</label>
   </view>
 </view>
 <view class='address' catchtap='address'>新增收货地址</view>

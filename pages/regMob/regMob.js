@@ -9,20 +9,18 @@ Page({
       text:'获取验证码',
       sms:'',
       disabled:false,
+      image: 'http://image.yiqixuan.com/'
       // apiKey:'',
       // apiSecret:''
   },
-  // onLoad: function () {
-  //   var apiKeys = wx.getStorageSync('Api-Key');
-  //   var apiSecrets = wx.getStorageSync('Api-Secret')
-  //   this.setData({
-  //     apiKey: apiKeys,
-  //     apiSecret: apiSecrets
-  //   })
-  // },
   getSms:function(){
     var that=this;
-    if (/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(this.data.mobile)){
+    console.log('-------')
+    console.log(app.globalData.apiKey)
+    console.log(app.globalData.apiSecret)
+    console.log(app.globalData.apiExt)
+    if (/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.data.mobile)){
+        console.log("send mobile to: " + this.data.mobile)
         wx.request({
           url: app.globalData.http +'/mpa/common/send_sms',
           method:'post',
@@ -36,26 +34,53 @@ Page({
           },
           dataType:'json',
           success:function(data){
-             var t=60;
-             that.setData({
-               disabled:true
-             })
-               
-             var time=setInterval(function(){
-               if(t>1){
-                 t--;
-                 that.setData({
-                   text: '已发送(' + t + 's)'
-                 })
-               }else{
-                 clearInterval(time)
-                 that.setData({
-                   disabled: false,
-                   text:'获取验证码'
-                 })  
-               }
-                
-             },1000)
+            console.log('*****')            
+            console.log(app.globalData.apiKey)
+            console.log(app.globalData.apiSecret)
+            console.log(app.globalData.apiExt)
+            console.log('%%%%%')                       
+            console.log(data)
+            var code=parseInt(data.statusCode.toString());
+            console.log(code)   
+            if(code >= 200 && code < 300){
+                var t=60;
+                that.setData({
+                  disabled:true
+                })               
+                var time=setInterval(function(){
+                  if(t>1){
+                    t--;
+                    that.setData({
+                      text: '已发送(' + t + 's)'
+                    })
+                  }else{
+                     clearInterval(time)
+                     that.setData({
+                       disabled: false,
+                       text:'获取验证码'
+                    })  
+                 }    
+               },1000)
+            }
+            else{
+              var tip=data.data.message.toString()
+              wx.showToast({
+                title:tip,
+                icon:'none',
+                duration:1000
+              })
+            }
+          },
+          fail:function(res){
+            console.log('接口报错：'+ res)
+            console.log(app.globalData.apiKey)
+            console.log(app.globalData.apiSecret)
+            console.log(app.globalData.apiExt)
+            // wx.showToast({
+            //   title: '网络错误',
+            //   icon: 'none',
+            //   duration: 1000
+            // })
           }
         })
     }else{
@@ -89,7 +114,7 @@ Page({
   },
   bindMob:function(){
       var that=this;
-      if (!(/^1[3|4|5|7|8][0-9]\d{4,8}$/.test(this.data.mobile))){
+      if (!(/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.data.mobile))){
         wx.showToast({
           title: '请正确输入11位数字',
           icon: 'none',
@@ -116,30 +141,34 @@ Page({
               'Api-Ext': app.globalData.apiExt
             },
             success:function(data){
-              if(data.status==201){
+              console.log(data)
+              var code = data.statusCode.toString()
+              if(code==500){
                 wx.showToast({
-                  title: '绑定成功',
-                  icon: 'success',
+                  title: '网络错误',
+                  icon: 'none',
                   duration: 1000,
-                  success:function(){
-                    wx.navigateBack({
-                      delta: 1
-                    })
-                  }
+                })
+              }
+              else if (code.indexOf('40')>-1){
+                var tip=data.data.message
+                wx.showToast({
+                  title: tip,
+                  icon: 'none',
+                  duration: 1000,
                 })
               }else{
                 wx.showToast({
-                  title: '绑定失败',
-                  icon: 'none',
-                  duration: 1000,
-                  success: function () {
-                    wx.navigateBack({
-                      delta: 1
-                    })
-                  }
+                  title: '绑定成功',
+                  icon: 'success',
+                  duration: 1000, 
                 })
+                setTimeout(function () {
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                }, 1000)
               }
-              
             }
           })
       }

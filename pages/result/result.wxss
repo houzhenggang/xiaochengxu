@@ -9,16 +9,19 @@ page{
 	display: flex;
 	flex-direction: column;
 }
+.container_search{
+    padding-bottom: 20rpx;
+}
 .container_search_navi{
 	padding-left: 58rpx;
 	position: relative;
 	background: #EDEDED;
-	font-size: 22rpx;
-	line-height: 56rpx;
+	font-size: 28rpx;
+	line-height: 68rpx;
 	width: 652rpx;
-	height: 56rpx;
+	height: 68rpx;
 	margin: 0 auto;
-	border-radius: 56rpx;
+	border-radius: 68rpx;
 	font-family: PingFangSC-Regular;
 	color: #333333;
 	letter-spacing: 1rpx;

@@ -10,23 +10,12 @@
 	</view>
 
 	<!--banner  -->
-	<image class='index_banner1' src='{{image}}{{description.logo_url}}'></image>
-
-   <!-- <swiper indicator-dots="{{indicatorDots}}"
-      touch="{{touch}}"  duration="{{duration}}" bindchange='changeCurrent'   current='{{current}}'>
-      <block wx:for="{{newCate}}" wx:for-item='item' wx:key='index' >
-        <swiper-item class='index_classify'>
-          <view wx:for="{{item}}"  wx:for-item='items' wx:for-index='id' wx:key='id'  data-idx="{{index}}" data-index="{{id}}"  bindtap='switchCate'>
-            <image src='{{image}}{{items.icon_url}}'></image>
-            <text>{{items.name}}</text>
-          </view>
-        </swiper-item>
-      </block>
-  </swiper>  -->
-  <view  class='index_classify'>
+	 <image class='index_banner1'   mode='widthFix' src='{{image}}{{description.banner}}'></image> 
+  <!-- <view  class='index_classify' wx:if="{{categoryList.length>4}}"> -->
+  <view  class='index_classify' wx:if="{{categoryList.length>3}}">
       <scroll-view  scroll-x="{{true}}" class='scroll'>
-        <view  data-idx="{{index}}"    wx:for='{{categoryList}}' wx:key="{{index}}" bindtap='switchCate'>
-          <image src='{{image}}{{item.icon_url}}'></image>
+        <view  data-idx="{{item.id}}"  data-name="{{item.name}}"   wx:for='{{categoryList}}' wx:key="{{index}}" bindtap='switchCate'>
+          <image src='{{image}}{{item.icon_url}}?imageView2/1/w/104/h/104'></image>
           <text>{{item.name}}</text>
         </view>
       </scroll-view>
@@ -37,30 +26,30 @@
   </view>  -->
 	<!--contact  -->
 	<view class="index_contact">
-    <image src='{{image}}{{description.logo_url}}'></image>
+    <image src='{{image}}{{description.logo_url}}?imageView2/1/w/160/h/160'></image>
     <view class='desc'>
       	<text class='contact_h4'>Hi 亲爱的小主</text>
 		    <text class='contact_p'>{{description.description}}</text>
     </view>
     <view class='contacts'>
-        <button open-type='contact'><image src='/imgs/Content_icon_WeChat@2x.png'></image></button>
+        <button open-type='contact'><image    src='/imgs/Content_icon_WeChat@2x.png'></image></button>
         <image bindtap='contactPhone' src='/imgs/Content_icon_phone@2x.png'></image>
     </view>
 		
 	</view>
 
 	<!--recommend products  -->
-  <view wx:if="{{recommend_first}}">
+  <view wx:if="{{recommend==2}}">
       	<view class='index_recommend'>
           <text>精品</text>
           <text>推荐</text>
           <text data-type='recommend'  bindtap='showMore'>查看更多 ></text>
-          <image src='/imgs/Group 3@2x.png'></image>
+          <image src='{{image}}Group 3@2x.png'></image>
           <!-- <image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image> -->
         </view>
 
         <view class='index_re_produ'>
-          <image class='re_produ_img' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" src='{{image}}{{recommend_first[0].cover_url}}'  bindtap='bindDetail'></image>
+          <image class='re_produ_img' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" src='{{image}}{{recommend_first[0].cover_url}}?imageView2/1/w/710/h/340'  bindtap='bindDetail'></image>
           <text class='re_produ_text' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindDetail'>{{recommend_first[0].name}}</text>
           <view class='re_text_view' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindDetail'>
             <text>￥</text><text>{{filters.toFix(recommend_first[0].price/100)}}</text><text>销量{{recommend_first[0].sales_count}}件</text>
@@ -70,7 +59,7 @@
 
         <view class='index_item'>
           <view class='item_box' wx:for="{{recommend_goods}}" data-id='{{item.id}}' data-name="{{item.name}}"  wx:key="index" bindtap='bindDetail'>
-            <image src='{{image}}{{item.cover_url}}'></image>
+            <image src='{{image}}{{item.cover_url}}?imageView2/1/w/344/h/344'></image>
             <text class='item_text'>{{item.name}}</text>
             <view class='item_text_view'>
               <text>￥</text><text>{{filters.toFix(item.price/100)}}</text><text>销量{{item.sales_count}}件</text>
@@ -86,13 +75,13 @@
         <text>特价</text>
         <text>促销</text>
         <text data-type='special' bindtap='showMore'>查看更多 ></text>
-        <image src='/imgs/Group 3@2x.png'></image>
+        <image src='{{image}}Group 3@2x.png'></image>
         <!-- <image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image> -->
       </view>
 
       <view class='index_item'>
         <view class='item_box' wx:key="index" wx:for="{{special_goods}}" data-id='{{item.id}}' data-name="{{item.name}}" bindtap='bindDetail'>
-          <image src='{{image}}{{item.cover_url}}'></image>
+          <image src='{{image}}{{item.cover_url}}?imageView2/1/w/344/h/344'></image>
           <text class='item_text'>{{item.name}}</text>
           <view class='item_text_view special_item'>
             <text>￥</text><text>{{filters.toFix(item.price/100)}}</text><text>￥{{filters.toFix(item.display_price/100)}}</text>
@@ -100,7 +89,7 @@
         </view>
       </view>
   </view>
-
+  
 	<!--bottom  -->
 	<view class='bottom'>到底啦，去别处逛逛吧</view>
 </view>

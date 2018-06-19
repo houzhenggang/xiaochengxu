@@ -13,7 +13,8 @@ Page({
 		//不存在二级分类的商品详情
 		goods:[],
 		//存在二级分类
-		category: []
+		category: [],
+    winHeight:''
   },
 	//处理左侧楼层点击事件
 	leftCellTap(e){
@@ -64,14 +65,32 @@ Page({
       url: '/pages/detail/detail?id='+e.currentTarget.dataset.id,
 		})
 	},
+
+  // onLoad:function(){
+  //   var that=this
+  //   wx.getSystemInfo({
+  //     success: function (res) {
+  //       that.setData({
+  //         winHeight: res.windowHeight
+  //       });
+  //     }
+  //   });
+  // },
   /**
    * 生命周期函数--监听页面加载
    */
-  onShow: function (options) {
+  onLoad: function (options) {
+    let that = this;
 		wx.showLoading({
 			title: '加载中',
 		})
-		let that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          winHeight: res.windowHeight
+        });
+      }
+    });
     that.setData({
       select: app.globalData.classIdx 
     })

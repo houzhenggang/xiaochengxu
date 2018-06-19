@@ -31,7 +31,8 @@ Page({
     wx.request({
       url: app.globalData.http + '/mpa/goods/search',
       data: {
-        keywords: that.data.value
+        keywords: that.data.value,
+        page:that.data.page
       },
       header: {
         'Api-Ext': app.globalData.apiExt
@@ -39,61 +40,65 @@ Page({
       dataType: 'json',
       method: 'GET',
       success: function (data) {
-        that.setData({
-          produList: data.data
-        })
+        var list = that.data.produList.concat(data.data)
+          that.setData({
+            produList: list
+          })
+      },
+      complete:function(){
+        wx.hideLoading()
       }
     })
 
   },
-  //排序方式点击
-  bindRank(e) {
-    //当前所点击排序方式
-    var that = this
-    var currIndex = e.currentTarget.dataset.id;
-    var flag = this.data.flag;
-    //判断价格排序方式
-    if (currIndex == 2) {
-      if (flag == 0 || flag == 2) {
-        flag = 1
-        //按价格降序
-        that.setData({
-          order_by: 'price desc',
-          page: 0
-        })
-        this.getList()
+  // //排序方式点击
+  // bindRank(e) {
+  //   //当前所点击排序方式
+  //   var that = this
+  //   var currIndex = e.currentTarget.dataset.id;
+  //   var flag = this.data.flag;
+  //   //判断价格排序方式
+  //   if (currIndex == 2) {
+  //     if (flag == 0 || flag == 2) {
+  //       flag = 1
+  //       //按价格降序
+  //       that.setData({
+  //         order_by: 'price desc',
+  //         page: 0
+  //       })
+  //       this.getList()
 
-      } else if (flag == 1) {
-        flag = 2
-        //按价格升序
-        that.setData({
-          order_by: 'price asc',
-          page: 0
-        })
-        this.getList()
-      }
-    } else if (currIndex == 1) {
-      //按销量排序
-      that.setData({
-        order_by: 'sales_count desc',
-        page: 0
-      })
-      this.getList()
-      flag = 0
-    } else {
-      that.setData({
-        order_by: 'created_at desc',
-        page: 0
-      })
-      this.getList()
-      flag = 0
-    }
-    //存入data
-    this.setData({
-      rank: currIndex,
-      flag: flag
-    })
-  },
+  //     } else if (flag == 1) {
+  //       flag = 2
+  //       //按价格升序
+  //       that.setData({
+  //         order_by: 'price asc',
+  //         page: 0
+  //       })
+  //       this.getList()
+  //     }
+  //   } else if (currIndex == 1) {
+  //     //按销量排序
+  //     that.setData({
+  //       order_by: 'sales_count desc',
+  //       page: 0
+  //     })
+  //     this.getList()
+  //     flag = 0
+  //   } else {
+  //     that.setData({
+  //       order_by: 'created_at desc',
+  //       page: 0
+  //     })
+  //     this.getList()
+  //     flag = 0
+  //   }
+  //   //存入data
+  //   this.setData({
+  //     rank: currIndex,
+  //     flag: flag
+  //   })
+  // },
   goTop: function () {
     wx.pageScrollTo({
       scrollTop: 0,
@@ -126,9 +131,18 @@ Page({
       dataType: 'json',
       method: 'GET',
       success: function (data) {
-        that.setData({
-          produList: data.data
-        })
+        console.log(data)
+        if (data.data.length > 0) {
+          that.setData({
+            produList: data.data
+          })
+        } else {
+          wx.showToast({
+            title: '暂无商品',
+            icon: 'none',
+            duration: 2000
+          })
+        }
       },
       complete:function(){
         wx.hideLoading()

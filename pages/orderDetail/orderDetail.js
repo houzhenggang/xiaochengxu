@@ -192,38 +192,103 @@ Page({
       url: '/pages/afterSale/afterSale?id=' + that.data.id
     })
   },
-  /*取消订单 确认收货 */
-  confirm: function (event) {
-    var that = this;
-    var idx = event.target.dataset.sure;
-    var tips;
-    if (idx == 207) {
-      tips = '确认要取消订单吗？'
-    } else {
-      tips = '确认已经收到货了吗'
-    }
+
+
+  /*取消订单*/
+  cancel: function (event) {
+    var that = this
+    var id = event.target.dataset.orderid;
     wx.showModal({
       title: '温馨提示',
-      content: tips,
+      content: '确认要取消订单吗？',
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: app.globalData.http +'/mpa/order/' + id,
+            url: app.globalData.http + '/mpa/order/' + that.data.id + '/canceled',
+            method: 'PUT',
+            dataType: 'json',
             data: {
-              status: idx
+              status: 207
             },
             header: {
               "Api-Key": app.globalData.apiKey,
               "Api-Secret": app.globalData.apiSecret,
               'Api-Ext': app.globalData.apiExt
             },
-            method: 'PUT',
-            dataType: 'json',
             success: function (data) {
+              var code = data.statusCode.toString()
+              if (code.indexOf('20') > -1) {
+                wx.showToast({
+                  title: '取消成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+              } else {
+                var tip = data.data.message.toString()
+                wx.showToast({
+                  title: tip,
+                  icon: 'none',
+                  duration: 1000
+                })
+              }
+            },
+            fail: function () {
+              wx.showToast({
+                title: '网络错误',
+                icon: 'none',
+                duration: 1000
+              })
             }
           })
-        } else if (res.cancel) {
-
+        }
+      }
+    })
+  },
+  /*确认收货 */
+  confirm: function (event) {
+    var that = this;
+    wx.showModal({
+      title: '温馨提示',
+      content: '确认已经收到货了吗',
+      success: function (res) {
+        if (res.confirm) {
+          wx.request({
+            url: app.globalData.http + '/mpa/order/' + that.data.id + '/received',
+            method: 'PUT',
+            dataType: 'json',
+            data: {
+              status: 405
+            },
+            header: {
+              "Api-Key": app.globalData.apiKey,
+              "Api-Secret": app.globalData.apiSecret,
+              'Api-Ext': app.globalData.apiExt
+            },
+            success: function (data) {
+              var code = data.statusCode.toString()
+              if (code.indexOf('20') > -1) {
+                wx.showToast({
+                  title: '收货成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+              } else {
+                var tip = data.data.message.toString()
+                wx.showToast({
+                  title: tip,
+                  icon: 'none',
+                  duration: 1000
+                })
+              }
+            },
+            fail: function () {
+              wx.showToast({
+                title: '网络错误',
+                icon: 'none',
+                duration: 1000
+              })
+            }
+          })
         }
       }
     })

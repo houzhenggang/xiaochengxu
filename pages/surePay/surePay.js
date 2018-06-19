@@ -13,6 +13,7 @@ Page({
       sku_ids: {},
       image: 'http://image.yiqixuan.com/',
       sku_idd:[],
+      cart_item_ids:[],
       // apiSecret:'',
       // apiKey:'',
       disabled:false
@@ -23,40 +24,54 @@ Page({
    */
   onLoad: function (options) { 
     var data =app.globalData.good
+    console.log(data)
     // var apiKey = wx.getStorageSync(apiKey)
     // var apiSecret = wx.getStorageSync(apiSecret)
     var sku_id={}
-    var sku_idss=[]
+    var sku_idss = [], cart_item_ids=[]
     var that=this
     var sum=0
-    console.log(data)
     for(var i=0;i<data.length;i++){
       sum += parseFloat(data[i].price) * parseFloat(data[i].count)
       sku_id[[data[i].goods_sku_id]]=data[i].count
       sku_idss.push(data[i].goods_sku_id)
+     cart_item_ids.push(data[i].id)
     }
     that.setData({
       sku_ids: sku_id,
-      sku_idd: sku_idss
+      sku_idd: sku_idss,
+      cart_item_ids: cart_item_ids
     })
-
     wx.request({
       url: app.globalData.http +'/mpa/address',
       method: 'get',
       dataType: 'json',
       header: {
         "Api-Key": app.globalData.apiKey,
-        "Api-Secret": app.globalData.apiSecret
+        "Api-Secret": app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       success: function (data) {
-        if (data.data[0].status===2){
-          that.setData({
-            address: data.data[0]
-          },function(){
-            that.getCarriage()
-          })
+        var code=data.statusCode.toString()
+        if (code.indexOf('20') > -1){
+          if (data.data.length > 0){
+            if (data.data[0].status === 2 && data.data.length > 0) {
+              that.setData({
+                address: data.data[0]
+              }, function () {
+                that.getCarriage()
+              })
 
-        } 
+            } 
+          }
+        } else{
+            var tip=data.data.message.toString();
+            wx.showToast({
+              title: tip,
+              icon:'none',
+              duration:2000
+            })
+        }
       }
     })
 
@@ -107,40 +122,52 @@ Page({
             'Api-Ext': app.globalData.apiExt
           },
           success: function (data) {
-            if(data.data.status==205){
-              // console.log(666)             
+            var code=data.statusCode.toString()
+            if(code.indexOf('20')>-1){          
               clearInterval(time)
               wx.hideLoading()
               wx.showToast({
                 title: '支付成功',
                 icon: 'success',
-                duration: 1000,
-                complete:function(){
+                duration: 1000
+              })
+              setTimeout(function(){
                   wx.navigateTo({
                     url: '/pages/orderDetail/orderDetail?id=' + id,
                   })
-                }
+              },1000)
+            }else{
+              clearInterval(time)
+              wx.hideLoading()
+              var tip = data.data.message.toString()
+              wx.showToast({
+                title:tip,
+                icon: 'success',
+                duration: 2000
               })
-             
+              setTimeout(function () {
+                wx.navigateTo({
+                  url: '/pages/orderDetail/orderDetail?id=' + id,
+                })
+              }, 1000)
             }
            
           },
-          fail:function(){
+          fail:function(res){
+            console.log(res)
             wx.hideLoading()
             wx.showToast({
               title: '支付失败',
               icon: 'none',
               duration: 500
-            },function(){
-              clearInterval(time)
-              that.setData({
-                disabled: false
-              })
-              wx.navigateTo({
-                url: '/pages/orderDetail/orderDetail?id=' + id,
-              })
             })
-            
+            clearInterval(time)
+            that.setData({
+              disabled: false
+            })
+            wx.navigateTo({
+              url: '/pages/orderDetail/orderDetail?id=' + id,
+            })           
           }
         })
       } else {
@@ -148,15 +175,11 @@ Page({
         wx.showToast({
           title: '网络错误',
           icon: 'none',
-          duration: 500
-        }, function () {
-          clearInterval(time)
-          that.setData({
-            disabled: false
-          })
-          wx.navigateTo({
-            url: '/pages/orderDetail/orderDetail?id=' + id,
-          })
+          duration: 1000
+        })
+        clearInterval(time)
+        that.setData({
+          disabled: false
         })
       }
     }, 1000)
@@ -164,7 +187,7 @@ Page({
   // 立即支付
   confirm:function(){
     var that=this
-    console.log(Object.prototype.toString.call(that.data.address))
+    // console.log(Object.prototype.toString.call(that.data.address))
     if (Object.prototype.toString.call(that.data.address) =='[object Number]'){
       wx.showToast({
         title: '请添加地址',
@@ -181,8 +204,10 @@ Page({
       method: "post",
       dataType: 'json',
       data: {
-        goods: this.data.sku_ids,
+        goods: that.data.sku_ids,
         address_id:that.data.address.id,
+        remarks:'',
+        cart_item_ids: that.data.cart_item_ids
       },
       header: {
         "Api-Key": app.globalData.apiKey,
@@ -190,7 +215,8 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
       success: function (data) {
-        if (data.statusCode===200){
+        var code = data.statusCode.toString()
+        if (code.indexOf('20')>-1){
           wx.request({
             url: app.globalData.http +'/mpa/payment/payment',
             method: "post",
@@ -204,44 +230,81 @@ Page({
               'Api-Ext': app.globalData.apiExt
             },
             success:function(res){
-              var time = res.data.timeStamp
-              time=time.toString()
-              wx.requestPayment({
-                'timeStamp': time,
-                'nonceStr': data.data.no,
-                'package': 'prepay_id=' + res.data.result.prepay_id,
-                'signType': 'MD5',
-                'paySign': res.data.paySign,
-                'success':function(res){
-                  that.checkPay(data.data.id)
-                },
-                'fail':function(){
+              var codes=res.statusCode.toString()
+              if(codes.indexOf('20')>-1){
+                var time = res.data.timeStamp.toString()
+                wx.requestPayment({
+                  'timeStamp': time,
+                  'nonceStr': data.data.no,
+                  'package': 'prepay_id=' + res.data.result.prepay_id,
+                  'signType': 'MD5',
+                  'paySign': res.data.paySign,
+                  'success': function (datas) {
+                    that.checkPay(data.data.id)
+                  },
+                  'fail': function (datas) {
+                    console.log(datas)
+                    that.setData({
+                      disabled: false
+                    })
+                  }
+                })
+              } 
+              else{
+                console.log('0000')
+                var tip = res.data.message.toString()
+                wx.showToast({
+                  title: tip,
+                  icon: 'none',
+                  duration: 2000
+                })
+                setTimeout(function () {
                   that.setData({
                     disabled: false
                   })
-                }
-              })
+                }, 500)
+              }             
             },
-            fail: function () {
-              that.setData({
-                disabled: false
+            fail: function (res) {
+              console.log(res)
+              wx.showToast({
+                title: '下单失败',
+                icon: 'none',
+                duration: 2000
               })
+              setTimeout(function () {
+                that.setData({
+                  disabled: false
+                })
+              },500)
             }
           })
-        } else if (data.statusCode === 500){
+        }else{
+          console.log('333')
+          var tip = data.data.message.toString()
           wx.showToast({
-            title: '下单失败',
+            title: tip,
             icon: 'none',
-            duration: 1000
+            duration: 2000
           })
-           that.setData({
-                disabled: false
-              })
+          setTimeout(function () {
+            that.setData({
+              disabled: false
+            })
+          }, 500)
         }
       },
-      fail:function(){
-        that.setData({
-          disabled: false
+      fail:function(res){
+        console.log(res)
+        wx.showToast({
+          title: '下单失败',
+          icon: 'none',
+          duration: 1000
+        })
+        setTimeout(function () {
+          that.setData({
+            disabled: false
+          })
         })
       }
     })

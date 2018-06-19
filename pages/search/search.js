@@ -6,7 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    dataList:[]
+    dataList:[],
+    image: 'http://image.yiqixuan.com/'
   },
 	//input事件
 	searchKey:function(e){
@@ -22,9 +23,24 @@ Page({
       dataType:'json',
       method:'GET',
       success:function(data){
-        that.setData({
-          dataList:data.data
-        })
+        var code = data.statusCode.toString()
+        if(code==500){
+          that.setData({
+            dataList:[]
+          })
+        } else if (code.indexOf('40')>-1){
+          var tip=data.data.message.toString()
+          wx.showToast({
+            title: tip,
+            icon:'none',
+            duration:1000
+          })
+        }
+        else{
+          that.setData({
+            dataList: data.data
+          })
+        }     
       } 
     })
 

@@ -1,8 +1,8 @@
 <wxs module="filters" src="../../utils/method.wxs"></wxs>
 <navigator url='/pages/address/address' hover-class='none'>
      <view class='address' wx:if='{{address!==1}}'>
-        <image src='/imgs/position.png'></image>
-        <view  class='name'>
+        <image src='{{image}}position.png'></image>
+        <view  class='name clearfix'>
           <label>收货人：{{address.name}}</label>
           <label>{{address.mobile}}</label>
         </view>
@@ -23,7 +23,7 @@
         <image src='{{image}}{{item.cover_url}}'></image>
         <view class='desc'>
             <label>{{item.name}}</label>
-            <label>{{item.sku_description}}</label>
+            <label wx:if="{{item.sku_description!=0}}">{{item.sku_description}}</label>
             <view>
                 <label>￥{{filters.toFix(item.price/100)}}</label>
                 <label>x{{item.count}}</label>

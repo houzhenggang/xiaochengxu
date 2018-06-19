@@ -13,26 +13,38 @@ Page({
     image: 'http://image.yiqixuan.com/',
     // apiSecret:'',
     // apiKey:'',
-    disabled:false
+    disabled:false,
+    url:''
   },
-  onLoad: function (options) {
+  
+  onLoad: function (options){
     var that = this;
-    // var apiKey = wx.getStorageSync('apiKey')
-    // var apiSecret = wx.getStorageSync('apiSecret')
+    if (options.curTab==500){
       that.setData({
-        currentTab: options.curTab
-        // apiKey:apiKey,
-        // apiSecret: apiSecret
+        currentTab: options.curTab,
+        url: app.globalData.http + '/mpa/after_sale'
       })
+    }else{
+      that.setData({
+        currentTab: options.curTab,
+        url: app.globalData.http + '/mpa/order'
+      })
+    }
+    
+  },
+
+
+  onShow: function () {
+      var that = this;
       wx.showLoading({
         title: '加载中',
       })
       wx.request({
-        url: app.globalData.http +'/mpa/order',
+        url:that.data.url,
         data:{
           page:this.data.index,
           per_page:15,
-          status: this.data.currentTab
+          status: that.data.currentTab
         },
 
         method:'get',
@@ -43,9 +55,21 @@ Page({
           'Api-Ext': app.globalData.apiExt
         },
         success:function(data){
+          var code = data.statusCode.toString()
+          if (code.indexOf('20') > -1 && data.data.length > 0) {
             that.setData({
               allOrder: data.data
-            })        
+            })
+          } else {
+            that.setData({
+              allOrder: ''
+            })
+          }         
+        },
+        fail:function(){
+          that.setData({
+            allOrder: ''
+          })
         },
         complete:function(){
           wx.hideLoading()
@@ -84,40 +108,52 @@ Page({
             'Api-Ext': app.globalData.apiExt
           },
           success: function (data) {
-            if (data.data.status == 205) {
-              // console.log(666)             
+            var code = data.statusCode.toString()
+            if (code.indexOf('20') > -1) {
               clearInterval(time)
               wx.hideLoading()
               wx.showToast({
                 title: '支付成功',
                 icon: 'success',
-                duration: 1000,
-                complete: function () {
-                  wx.navigateTo({
-                    url: '/pages/orderDetail/orderDetail?id=' + id,
-                  })
-                }
+                duration: 1000
               })
-
+              setTimeout(function () {
+                wx.navigateTo({
+                  url: '/pages/orderDetail/orderDetail?id=' + id,
+                })
+              }, 1000)
+            } else {
+              clearInterval(time)
+              wx.hideLoading()
+              var tip = data.data.message.toString()
+              wx.showToast({
+                title: tip,
+                icon: 'success',
+                duration: 1000
+              })
+              setTimeout(function () {
+                wx.navigateTo({
+                  url: '/pages/orderDetail/orderDetail?id=' + id,
+                })
+              }, 1000)
             }
 
           },
-          fail: function () {
+          fail: function (res) {
+            console.log(res)
             wx.hideLoading()
             wx.showToast({
               title: '支付失败',
               icon: 'none',
               duration: 500
-            }, function () {
-              clearInterval(time)
-              that.setData({
-                disabled: false
-              })
-              wx.navigateTo({
-                url: '/pages/orderDetail/orderDetail?id=' + id,
-              })
             })
-
+            clearInterval(time)
+            that.setData({
+              disabled: false
+            })
+            wx.navigateTo({
+              url: '/pages/orderDetail/orderDetail?id=' + id,
+            })
           }
         })
       } else {
@@ -126,14 +162,10 @@ Page({
           title: '网络错误',
           icon: 'none',
           duration: 500
-        }, function () {
-          clearInterval(time)
-          that.setData({
-            disabled: false
-          })
-          wx.navigateTo({
-            url: '/pages/orderDetail/orderDetail?id=' + id,
-          })
+        })
+        clearInterval(time)
+        that.setData({
+          disabled: false
         })
       }
     }, 1000)
@@ -207,67 +239,118 @@ Page({
       url: '/pages/afterSale/afterSale?id='+id,
     })
   },
-  /*取消订单 确认收货 */
-  confirm: function(event){
-    var that=this;
+  /*取消订单*/
+  cancel:function(event){
+    var that=this
     var id = event.target.dataset.orderid;
-    var idx = event.target.dataset.sure;
-    var tips;
-    if(idx==207){
-        tips='确认要取消订单吗？'
-    }else{
-        tips='确认已经收到货了吗'
-    }
     wx.showModal({
       title: '温馨提示',
-      content: tips,
+      content: '确认要取消订单吗？',
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: app.globalData.http +'/mpa/order/' + id,
-            data:{
-              status:idx
+            url: app.globalData.http + '/mpa/order/' + id +'/canceled',
+            method: 'PUT',
+            dataType: 'json',
+            data: {
+              status: 207
             },
+            header: {
+              "Api-Key": app.globalData.apiKey,
+              "Api-Secret": app.globalData.apiSecret,
+              'Api-Ext': app.globalData.apiExt
+            },
+            success: function (data) {
+              var code=data.statusCode.toString()
+              if (code.indexOf('20')>-1) {
+                var newArr = that.data.allOrder
+                for (var i = 0; i < newArr.length; i++) {
+                  /*取消订单*/
+                  if (newArr[i].id === id) {
+                    newArr.splice(i, 1);
+                    that.setData({
+                      allOrder: newArr
+                    })
+                  }
+                }
+                wx.showToast({
+                  title: '取消成功',
+                  icon:'success',
+                  duration:1000
+                })
+              } else {
+                var tip = data.data.message.toString()
+                wx.showToast({
+                  title: tip,
+                  icon: 'none',
+                  duration: 1000
+                })
+              }
+            },
+            fail: function () {
+              wx.showToast({
+                title: '网络错误',
+                icon: 'none',
+                duration: 1000
+              })
+            }
+          })
+        }
+      }
+    })
+  },
+  /*确认收货 */
+  confirm: function(event){
+    var that=this;
+    var id = event.target.dataset.orderid;
+    wx.showModal({
+      title: '温馨提示',
+      content: '确认已经收到货了吗',
+      success: function (res) {
+        if (res.confirm) {
+          wx.request({
+            url: app.globalData.http + '/mpa/order/' + id +'/received',
             method:'PUT',
             dataType:'json',
+            data:{
+              status:405
+            },
             header: {
               "Api-Key": app.globalData.apiKey,
               "Api-Secret": app.globalData.apiSecret,
               'Api-Ext': app.globalData.apiExt
             },
             success:function(data){
-              if(data.statusCode==200){
+              var code = data.statusCode.toString()
+              
+              if(code.indexOf('20')>-1){
                 var newArr = that.data.allOrder
                 for (var i = 0; i < newArr.length; i++) {
-                  if (idx == 207) {
-                    /*取消订单*/
-                    if (newArr[i].id === id) {
-                      newArr.splice(i, 1);
-                      that.setData({
-                        allOrder: newArr
-                      })
-                    }
-                  } else {
-                    /*确认收货*/
-                    if (newArr[i].id === id) {
-                      var num = 'allOrder[' + i + '].status'
-                      that.setData({
-                        [num]: idx
-                      })
-                    }
+                  /*确认收货*/
+                  if (newArr[i].id === id) {
+                    var num = 'allOrder[' + i + '].status'
+                    that.setData({
+                      [num]: idx
+                    })
                   }
                 }
               }else{
+                var tip=data.data.message.toString()
                   wx.showToast({
-                    title: '网络错误',
-                    icon:'icon'
+                    title:tip,
+                    icon:'none',
+                    duration:1000
                   })
               }
-             
+            },
+            fail:function(){
+              wx.showToast({
+                title: '网络错误',
+                icon: 'none',
+                duration: 1000
+              })
             }
           })
-        } else if (res.cancel) {
-          
         }
       }
     })
@@ -284,7 +367,7 @@ Page({
     })
     that.setData({ index: indexs});
     wx.request({
-      url: app.globalData.http +'/mpa/order',
+      url: that.data.url,
       data: {
         page: this.data.index,
         per_page: 15,
@@ -312,14 +395,23 @@ Page({
    */
   swichNav: function (e) {
     var that = this
-    console.log(e.target.dataset.current)
-    that.setData({
-      index: 0,
-      currentTab: e.target.dataset.current
-    })
-    console.log(that.data.currentTab)    
+    if (e.target.dataset.current == 500) {
+      var url = app.globalData.http + '/mpa/after_sale'
+      that.setData({
+        index: 0,
+        currentTab: e.target.dataset.current,
+        url: app.globalData.http + '/mpa/after_sale'
+      })
+    } else {
+      var url = app.globalData.http + '/mpa/order'
+      that.setData({
+        index: 0,
+        currentTab: e.target.dataset.current,
+        url: app.globalData.http + '/mpa/order'
+      })
+    }
     wx.request({
-      url: app.globalData.http +'/mpa/order',
+      url:url,
       data: {
         page: 0,
         per_page: 15,
@@ -333,9 +425,16 @@ Page({
       },
       dataType: 'json',
       success: function (data) {
-          that.setData({
-            allOrder: data.data
-          })
+          var code=data.statusCode.toString()
+          if (code.indexOf('20') > -1 && data.data.length>0 ){
+            that.setData({
+              allOrder: data.data
+            })
+          }else{
+            that.setData({
+              allOrder: ''
+            })
+          }   
       },
       fail:function(){
         that.setData({

@@ -10,7 +10,7 @@
 	</view>
 
 	<!--family  -->
-	<view class='search_family'>
+	<!-- <view class='search_family'>
 		<view class='new {{rank == 0 ? "selected" : "normal"}}' data-id='0' bindtap='bindRank'>新品</view>
 		<view class='sale_num {{rank == 1 ? "selected" : "normal"}}' data-id='1' bindtap='bindRank'>销量</view>
 		<view class='family_arrow {{rank == 2 ? "selected" : "normal"}}' data-id='2' bindtap='bindRank'>
@@ -19,11 +19,11 @@
 				<text class='arrow_up {{flag==1?"up":""}}'></text><text class='arrow_down {{flag==2?"down":""}}'></text>
 			</view>
 		</view>
-	</view>
+	</view> -->
 
 	<!-- search products  -->
 	<view class='search_products'>
-		<view class='search_item' wx:for="{{produList.length!=0}}">
+		<view class='search_item' wx:if="{{produList.length!=0}}">
 			<view class='item_box' wx:for="{{produList}}" wx:key='{{index}}'  data-id='{{item.id}}' bindtap='goDetail'>
 				<image src='{{image}}{{item.cover_url}}'></image>
 				<text class='item_text'>{{item.name}}</text>
@@ -36,6 +36,6 @@
 
 	<!--up button  -->
 	<view class='search_up' catchtap='goTop'>
-		<image src='/imgs/Stick@2x.png'></image>
+		<image src='{{image}}Stick@2x.png'></image>
 	</view>
 </view>

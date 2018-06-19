@@ -1,6 +1,6 @@
 <wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class='address'>
-    <image src='/imgs/position.png'></image>
+    <image src='{{image}}position.png'></image>
     <view  class='name'>
       <label>收货人：{{info.consignee}}</label>
       <label>{{info.mobile}}</label>
@@ -11,7 +11,7 @@
 </view>
 <view class='detail'>
     <view  class='menus' wx:for='{{info.items}}' bindtap='goDetail' data-goods_id="{{items.goods_id}}" wx:for-item='items' wx:key='index'>
-        <image src='{{image}}{{items.cover_url}}'></image>
+        <image src='{{image}}{{items.cover_url}}?imageView2/1/w/200/h/200'></image>
         <view class='desc'>
             <label>{{items.name}}</label>
             <label>{{items.sku_description}}</label>
@@ -57,9 +57,9 @@
 <view class='btnBottom'>
     <view  wx:if='{{info.status==405}}' bindtap='cancelOrder' class='cancel'>申请售后</view>
     <view  wx:if='{{info.status==400 || info.status==305}}' bindtap='confirm'  data-sure='405' class='cancel'>确认收货</view>
-    <view  wx:if='{{info.status==205 || info.status==300 || info.status==405 || info.status==400 || info.status==305}}' class='cancel' bindtap='contacts' >联系商家</view>
+    <view class='cancel' bindtap='contacts' >联系商家</view>
     <view  wx:if='{{info.status==405 || info.status==400 || info.status==305}}'  class='pay' bindtap='checkLogistics'>查看物流</view>
-    <view  wx:if='{{info.status==200}}' data-sure='207' bindtap='confirm' class='cancel'>取消订单</view>
+    <view  wx:if='{{info.status==200}}' data-sure='207' bindtap='cancal'   class='cancel'>取消订单</view>
     <view  wx:if='{{info.status==200}}' bindtap='payMoney' data-no="{{info.no}}" data-orderid='{{info.id}}' class='pay'>立即支付</view>
 </view>
 
@@ -68,11 +68,11 @@
         <view class='clear' bindtap='close'></view>
         <view class='title'>请选择联系方式</view>
         <button open-type='contact' session-from="weapp">
-              <image src='/imgs/Wechat_icon.png'></image>
+              <image src='{{image}}Wechat_icon.png'></image>
               <label>微信联系</label>
         </button>
         <view class='iphone' bindtap='callPhone'>
-            <image src='/imgs/phone_icon.png'></image>
+            <image src='{{image}}phone_icon.png'></image>
             <label>电话联系</label>
         </view> 
     </view>

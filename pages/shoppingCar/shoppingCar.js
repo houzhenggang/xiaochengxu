@@ -13,9 +13,11 @@ Page({
     image: 'http://image.yiqixuan.com/',
    	totalPrice:0.00,
     page:0,
+    ishow:3,
     startX: 0, //开始坐标
     startY: 0,
     apiKey:'',
+    login:''
     // apiSecret:'',
     // apiExt:'',
     // apiKey:"",
@@ -70,9 +72,9 @@ Page({
 					count: newNum
 				},
         header: {
-          "Api-Key": _this.data.apiKey,
-          "Api-Secret": _this.data.apiSecret,
-          'Api-Ext': _this.data.apiExt
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
+          'Api-Ext': app.globalData.apiExt
         },
 				success(res) {
 
@@ -209,11 +211,6 @@ Page({
       if (dataList[i].isTouchMove)//只操作为true的
         dataList[i].isTouchMove = false;
     }
-
-    // dataList.forEach(function (v, i) {
-    //   if (v.isTouchMove)//只操作为true的
-    //     v.isTouchMove = false;
-    // })
     this.setData({
       startX: e.changedTouches[0].clientX,
       startY: e.changedTouches[0].clientY,
@@ -222,7 +219,7 @@ Page({
   },
   //滑动事件处理
   touchmove: function (e) {
-    var that = this,
+      var that = this,
       index = e.currentTarget.dataset.index,//当前索引
       startX = that.data.startX,//开始X坐标
       startY = that.data.startY,//开始Y坐标
@@ -405,7 +402,6 @@ Page({
                   'Api-Ext': app.globalData.apiExt
                 },
                 success(res) {
-                  console.log(res)
                   that.setData({
                     datalist: seleArr,
                     totalPrice: 0.00
@@ -424,6 +420,11 @@ Page({
    */
   getData:function(){
     var that=this
+    var pages = this.data.page;
+    pages = pages + 1
+    this.setData({
+      page: pages
+    })
     wx.showLoading({
       title: '加载中',
     })
@@ -431,7 +432,7 @@ Page({
     wx.request({
       url: app.globalData.http + '/mpa/cart',
       data: {
-        page: that.data.page
+        page: pages
       },
       header: {
         "Api-Key": app.globalData.apiKey,
@@ -458,41 +459,28 @@ Page({
       }
     })
   },
-  onLoad:function(){
-    // var login = app.checkLogin()
-  },
-  onShow: function (options) {  
-    // console.log(app)
-    let that = this;
-    var login = app.checkLogin()
-    if(login){
-      // var apiKey = wx.getStorageSync('apiKey')
-      // var apiSecret = wx.getStorageSync('apiSecret')
-      // var apiExt = wx.getStorageSync('apiExt')
-      this.setData({
-        // apiKey: apiKey,
-        // apiSecret: apiSecret,
-        // apiExt: apiExt,
-        datalist: [],
-        page: 0,
-        selectAll: false,
-        totalPrice: 0.00
-      })
-      wx.showLoading({
-        title: '加载中',
-      })
-      //获取用户购物车列表
-      wx.request({
-        url: app.globalData.http + '/mpa/cart',
-        data: {
-          page: 0
-        },
-        header: {
-          "Api-Key": app.globalData.apiKey,
-          "Api-Secret": app.globalData.apiSecret,
-          'Api-Ext': app.globalData.apiExt
-        },
-        success(res) {
+
+  getCart:function(){
+    var that=this;
+    this.setData({
+      page: 0,
+      selectAll: false,
+      totalPrice: 0.00
+    })
+    //获取用户购物车列表
+    wx.request({
+      url: app.globalData.http + '/mpa/cart',
+      data: {
+        page: 0
+      },
+      header: {
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
+      success(res) {
+        var code=res.statusCode.toString()
+        if(code.indexOf('20')>-1){
           if (res.data.length != 0) {
             var list = []
             for (var z = 0; z < res.data.length; z++) {
@@ -502,25 +490,42 @@ Page({
             }
             that.setData({
               datalist: list,
+              ishow:2
+            })
+          } else {
+            that.setData({
+              ishow: 1,
             })
           }
-          wx.hideLoading();
-        },
-        fail: function () {
-          wx.hideLoading();
-        }
-      })
+        }else{
+          var tip=res.data.message.toString()
+          wx.showToast({
+            title: tip,
+            icon:'none',
+            duration:100
+          })
+        } 
+        wx.hideLoading();
+      },
+      fail: function () {
+        wx.hideLoading();
+      }
+    })
+  },
+
+  onShow: function (options) {  
+    let that = this;
+    // app.checkLogin()
+    if (app.globalData.login){
+      that.getCart()
+    }else{
+      app.checkLogin(that.getCart())
     }
   },
   /*
  * 页面上拉触底事件的处理函数
  */
   onReachBottom: function () {
-      var pages=this.data.page;
-      pages=pages+1
-      this.setData({
-        page:pages
-      })
       this.getData()
   }
 })

@@ -97,7 +97,7 @@ navigator{
 }
 .goodsInfo label{
   font-family: PingFangSC-Regular;
-  font-size: 24rpx;
+  font-size: 26rpx;
   color: #151515;
 }
 .orderList{
@@ -136,7 +136,7 @@ line-height: 40rpx;
   color: #333333;
 }
 .bottom .pay{
-  width: 120rpx;
+  width: 140rpx;
   height: 50rpx;
   line-height:50rpx;
   text-align: center;
@@ -146,14 +146,14 @@ line-height: 40rpx;
   color: #fff;
   font-family: PingFangSC-Regular;
   border-radius: 3px;
-  margin-left: 46rpx;
+  margin-left: 30rpx;
 }
 .bottom view{
   display: flex;
   justify-content: flex-start
 }
 .bottom .cancel{
-  width: 120rpx;
+  width: 140rpx;
   height: 50rpx;
   z-index: 99;
   border-radius: 3px;
@@ -164,5 +164,4 @@ line-height: 40rpx;
   display: block;
   color: #EA2534;
   font-family: PingFangSC-Regular;
-  font-size: 11px;
 }

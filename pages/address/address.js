@@ -7,6 +7,7 @@ Page({
    */
   data: {
       address:[],
+      image: 'http://image.yiqixuan.com/'
       // apiKey:'',
       // apiSecret:''
   },
@@ -14,13 +15,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    // var apiKey = wx.getStorageSync(apiKey)
-    // var apiSecret = wx.getStorageSync(apiSecret)
       var that = this;
-      // that.setData({
-      //   apiKey: apiKey,
-      //   apiSecret: apiSecret
-      // })
       wx.showLoading({
         title: '加载中',
       })
@@ -34,8 +29,8 @@ Page({
           'Api-Ext': app.globalData.apiExt
         },
         success:function(data){
-         
-          if(data.data.code==0){
+          var code = data.statusCode.toString()
+          if(code==500|| code.indexOf('40')>-1){
 
           }else{
             that.setData({
@@ -78,9 +73,30 @@ Page({
                         'Api-Ext': app.globalData.apiExt
                       },
                       success: function (data) {
+                        console.log(data)
+                        var code = data.statusCode.toString()
+                        if (code.indexOf('20') > -1) {
+                          var adds = that.data.address
+                          adds.unshift(data.data)
+                          that.setData({
+                            address:adds
+                          })
+                        }else{
+                          var tip =data.data.message.toString()
+                          wx.showToast({
+                            title: tip,
+                            icon: 'none',
+                            duration: 1000
+                          })
+                        }
                       } 
                     })
                 }
+              })
+            },
+            fail:function(res){
+              wx.openSetting({
+                success: (res) => {}
               })
             }
           })
@@ -106,11 +122,36 @@ Page({
                   'Api-Ext': app.globalData.apiExt
                 },
                 success: function (data) {
+                  console.log(data)                  
+                  var code = data.statusCode.toString()
+                  if (code.indexOf('20') > -1) {
+
+                    var adds = that.data.address
+                    adds.unshift(data.data)
+                    that.setData({
+                      address: adds
+                    })
+                  } else {
+                    var tip = data.data.message.toString()
+                    wx.showToast({
+                      title: tip,
+                      icon: 'none',
+                      duration: 1000
+                    })
+                  }
                 }
               })
+            },
+            fail:function(res){
+              console.log(res)
             }
           })
         }
+      },
+      fail:function(res){
+        wx.openSetting({
+          success: (res) => {}
+        })
       }
     })
   },
@@ -133,14 +174,25 @@ Page({
               'Api-Ext': app.globalData.apiExt
             },
             success: function (data) {
-              console.log(data)
-              if (data.statusCode == 200) {
+              var code=data.statusCode.toString()
+              if (code.indexOf('20')>-1) {
+                
+                if (that.data.address[index].id == app.globalData.address.id){
+                  app.globalData.address=1
+                }
                 that.data.address.splice(index, 1)
                 that.setData({
                   address: that.data.address
                 })
                 wx.showToast({
                   title: '删除成功',
+                  icon: 'none',
+                  duration: 1000
+                })
+              }else{
+                var tip = data.data.message.toString();
+                wx.showToast({
+                  title: tip,
                   icon: 'none',
                   duration: 1000
                 })
@@ -252,22 +304,32 @@ Page({
           'Api-Ext': app.globalData.apiExt
         },
         success: function (data) {
-            if(key===1){
-              for (var i = 0; i < that.data.address.length;i++){
+          var code=data.statusCode.toString()
+          if(code.indexOf('20')>-1){
+            if (key === 1) {
+              for (var i = 0; i < that.data.address.length; i++) {
                 if (that.data.address[i].status === 2) {
-                      nums = 'address[' + i + '].status'
+                  nums = 'address[' + i + '].status'
                 }
               }
-                that.setData({
-                    [num]:2,
-                    [nums]:1
-                })
+              that.setData({
+                [num]: 2,
+                [nums]: 1
+              })
 
-            }else{
+            } else {
               that.setData({
                 [num]: 1
               })
             }
+          }else{
+            wx.showToast({
+              title: '设置失败',
+              icon: 'none',
+              duration: 1000,
+            })
+          }
+           
         }
       })
   }

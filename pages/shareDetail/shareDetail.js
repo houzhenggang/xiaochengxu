@@ -1,7 +1,6 @@
 // pages/detail/detail.js
 const app = getApp();
 var WxParse = require('../../wxParse/wxParse.js');
-var util = require('../../utils/util.js');
 Page({
 
   /**
@@ -39,7 +38,8 @@ Page({
     description: '',
     //是否又规格
     isSpec: '',
-    current: 0
+    current: 0,
+    cartNum: 0,
     // apiExt: ''
   },
   changeCurrent: function (e) {
@@ -51,8 +51,8 @@ Page({
   /* 规格选择弹出事件 */
   modalShow(e) {
     var that = this;
-    var login = util.checkLogin()
-    if (login) {
+    // app.checkLogin()
+    if (app.globalData.login) {
       //修改flag标识
       let flag = e.currentTarget.dataset.flag;
       // 有规格
@@ -105,13 +105,37 @@ Page({
                     count: 1
                   },
                   header: {
-                    'Api-Ext': app.globalData.apiExt
+                    'Api-Ext': app.globalData.apiExt,
+                    "Api-Key": app.globalData.apiKey,
+                    "Api-Secret": app.globalData.apiSecret
                   },
                   success(res) {
-                    wx.showToast({
-                      title: '加入购物车成功',
-                      icon: "success"
-                    })
+                    var code = res.statusCode.toString()
+                    if (code == 500) {
+                      wx.showToast({
+                        title: '网络错误',
+                        icon: 'none',
+                        duration: 1000
+                      })
+                    } else if (code.indexOf('40') > -1) {
+                      var tip = res.data.message.toString()
+                      wx.showToast({
+                        title: tip,
+                        icon: 'none',
+                        duration: 1000
+                      })
+                    }
+                    else {
+                      wx.showToast({
+                        title: '加入购物车成功',
+                        icon: "success"
+                      })
+                      var cartNum = parseInt(that.data.cartNum)
+                      cartNum++
+                      that.setData({
+                        cartNum: cartNum
+                      })
+                    }
                   }
                 })
               } else {
@@ -132,6 +156,8 @@ Page({
           }
         })
       }
+    } else {
+      app.checkLogin()
     }
   },
   closeTips: function () {
@@ -194,17 +220,42 @@ Page({
         url: app.globalData.http + '/mpa/cart',
         method: "POST",
         header: {
-          'Api-Ext': app.globalData.apiExt
+          'Api-Ext': app.globalData.apiExt,
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
         },
         data: {
           goods_sku_id: that.data.good.id,
           count: that.data.num
         },
         success(res) {
-          wx.showToast({
-            title: '加入购物车成功',
-            icon: "success"
-          })
+          var code = res.statusCode.toString()
+          if (code == 500) {
+            wx.showToast({
+              title: '网络错误',
+              icon: 'none',
+              duration: 1000
+            })
+          } else if (code.indexOf('40') > -1) {
+            var tip = res.data.message.toString()
+            wx.showToast({
+              title: tip,
+              icon: 'none',
+              duration: 1000
+            })
+          }
+          else {
+            wx.showToast({
+              title: '加入购物车成功',
+              icon: "success"
+            })
+            console.log(that.data.cartNum)
+            var cartNum = parseInt(that.data.cartNum)
+            cartNum++
+            that.setData({
+              cartNum: cartNum
+            })
+          }
         }
       })
     } else if (clickId == 1 && flag == 2) {//来源为立即购买，即flag为2
@@ -319,7 +370,6 @@ Page({
   //定义分享转发
   onShareAppMessage: function (res) {
     if (res.from === "button") {
-      console.log(res.target)
     }
     return {
       title: this.data.goods.name,
@@ -331,11 +381,12 @@ Page({
   },
   //点击购物车
   goCart() {
-    var login = util.checkLogin()
-    if (login) {
+    if (app.globalData.login) {
       wx.navigateTo({
         url: '/pages/cart/cart',
       })
+    } else {
+      app.checkLogin()
     }
   },
   /**
@@ -343,38 +394,25 @@ Page({
    */
   onLoad: function (options) {
     let that = this;
+    app.globalData.apiExt = wx.getExtConfigSync().data
     wx.showLoading({
       title: '加载中',
     })
-    //是否为分享页面
-      var apiExt
-      wx.getExtConfig({
-        success: function (res) {
-          apiExt = JSON.stringify(res.extConfig.data)
-          wx.setStorage({
-            key: 'apiExt',
-            data: apiExt,
-          })
-        }
-      })
-      //获取店家描述数据
-      wx.request({
-        url: app.globalData.http + '/mpa/index',
-        method: 'GET',
-        header: {
-          'Api-Ext': apiExt
-        },
-        success(res) {
-          app.globalData.mobile = res.data.customer_service_mobile
-          that.setData({
-            description: res.data,
-            showStore: 2
-          })
-        },
-        fail: function (res) {
-          console.log(res)
-        }
-      })
+    //获取购物车数量
+    wx.request({
+      url: app.globalData.http + '/mpa/cart/count', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
+      header: {
+        'Api-Ext': app.globalData.apiExt,
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
+      },
+      method: 'get',
+      success(res) {
+        that.setData({
+          cartNum: res.data
+        })
+      }
+    })
     var good_id;
     //获取商品详情
     wx.request({

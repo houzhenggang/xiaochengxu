@@ -115,15 +115,15 @@ width:710rpx;
 	line-height: 40rpx;
 }
 .index_contact>image{
-  width: 193rpx;
-  height: 156rpx;
+  width: 160rpx;
+  height: 160rpx;
   margin: 0 20rpx;
   }
 .index_contact .contact_p{
 	display: block;
 	font-size: 26rpx;
 	margin-top: 10rpx;
-	width:370rpx;
+	width:404rpx;
 	font-family: PingFangSC-Regular;
 	color: #333333;
 	line-height: 44rpx;
@@ -187,7 +187,8 @@ width:710rpx;
 	position: absolute;
 	width: 338rpx;
 	height: 36rpx;
-	left: 192rpx;
+	left:50%;
+  transform:translateX(-50%);
 }
 .index_recommend image:nth-child(5){
 	width: 12rpx;

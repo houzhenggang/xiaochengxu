@@ -33,6 +33,14 @@
   font-size: 26rpx;
   line-height: 36rpx;
   color: #333333;
+  height: 72rpx;
+  overflow:hidden;
+text-overflow:ellipsis;
+display:-webkit-box;
+-webkit-line-clamp:2;
+-webkit-box-orient:vertical;
+
+
 }
 .size{
   font-family: PingFangSC-Regular;

@@ -10,7 +10,12 @@
   flex-direction: column;
   align-items: center;
 }
-
+.mobile{
+  width: 100%;
+}
+.tel{
+  width: 500rpx;
+}
 .userinfo-avatar {
   width: 156rpx;
   height: 156rpx;
@@ -38,6 +43,7 @@
   align-items: center; 
   border-bottom: 1rpx solid #e5e5e5;
   padding-bottom:8rpx;
+  width: 100%;
 }
 .content .regMob{
   width: 24rpx;
@@ -45,6 +51,9 @@
   position: absolute;
   top:9rpx;
   left:42rpx;
+}
+.yanzm input{
+  width: 60%;
 }
 .yzm_icon{
   width:32rpx;
@@ -64,23 +73,26 @@ input{
 }
 .phcolor{
   font-family: PingFangSC-Regular;
-  font-size: 36rpx;
+  font-size: 28rpx;
   color: #999999;
 }
 button{
-    background: #fff !important;
-    display: flex;
-    align-items: center;
-    width: 50%; 
-    justify-content: flex-end;
-    padding:0;
-    padding-right: 20rpx;
-    margin:0;
-    text-align: right;
-    line-height: 40rpx;
-    font-family:PingFangSC-Regular;
-    font-size: 28rpx;
-    color: #3A3A3A;
+  background:#fff !important;
+  display:flex;
+  height:50rpx;
+  align-items:center;
+  width:40%;
+  justify-content:flex-end;
+  padding:0;
+  padding-right:20rpx;
+  margin:0;
+  text-align:right;
+  line-height:50rpx;
+  z-index: 100;
+  font-family:PingFangSC-Regular;
+  font-size:28rpx;
+  color:#3A3A3A;
+
 }
 button::after{  
   border:none; 
@@ -96,10 +108,9 @@ button::after{
   height: 88rpx;
   line-height: 88rpx;
   text-align: center;
-
   border-radius:6rpx;
   font-family: PingFangSC-Semibold;
-  font-size: 28rpx;
+  font-size: 30rpx;
   color: #FFFFFF;
   margin:0 auto;
   margin-top:82rpx;

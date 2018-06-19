@@ -1,31 +1,15 @@
 //app.js
 App({
   onLaunch: function () {
-    var that=this
-    wx.getExtConfig({
-      success: function (res) {
-        that.globalData.apiExt = res.extConfig.data
-      }
-    })
-    that.globalData.apiKey = wx.getStorage('apiKey')
-    that.globalData.apiSecret = wx.getStorage('apiSecret')
-    that.globalData.timeStamp = wx.getStorage('timeStamp')
-    that.globalData.info = wx.getStorage('huzan_avatarUrl')
-    that.globalData.userId = wx.getStorage('userId')
+    this.globalData.apiExt= wx.getExtConfigSync().data
   },
-
-  checkLogin:function(){
-    var nowTimeStamp = Date.parse(new Date());
+  checkLogin:function(callback){
     let that = this;
-    if (that.globalData.timeStamp + 24 * 60 * 60 * 1000 > that.globalData.nowTimeStamp && that.globalData.apiExt && that.globalData.apiSecret && that.globalData.apiKey && that.globalData.userId) {
-      return true
-    }
-    else {
       wx.login({
         success(code) {
           //向后台发起请求，传code
           wx.request({
-            url: 'https://develop.yiqixuan.com/mpa/wechat/auth',
+            url: 'https://api.yiqixuan.com/mpa/wechat/auth',
             method: 'POST',
             data: {
               code: code.code
@@ -35,35 +19,55 @@ App({
             },
             success: function (res) {
               //保存响应头信息
-              var apiKey = res.header["Api-Key"],
-                apiSecret = res.header["Api-Secret"];
-              //设置storage
-              //获取时间戳保存storage
-              let timestamp = Date.parse(new Date());
-              wx.setStorage({
-                key: 'apiKey',
-                data: apiKey,
-              })
-              wx.setStorage({
-                key: 'timestamp',
-                data: timestamp,
-              })
-              wx.setStorage({
-                key: 'apiSecret',
-                data: apiSecret,
-              })
-              if (!res.data.user_id) {
-                wx.navigateTo({
-                  url: "/pages/regMob/regMob"
+              console.log(res.header)
+              var code = res.statusCode.toString()
+              if (code.indexOf('40') > -1 || code == 500){
+                var tip=res.data.message.toString()
+                wx.showToast({
+                  title: tip,
+                  icon: 'none',
+                  duration: 1000
                 })
-              } else {
-                that.globalData.userId = res.data_id
               }
+              else{
+                if (res.header["api-key"] && res.header["api-secret"] ){
+                  var apiKey = res.header["api-key"],
+                    apiSecret = res.header["api-secret"];
+                } else if (res.header["Api-Key"] && res.header["Api-Secret"]){
+                  var apiKey = res.header["Api-Key"],
+                    apiSecret = res.header["Api-Secret"];
+                }
+                //设置storage
+                //获取时间戳保存storage
+                // let timestamp = Date.parse(new Date());
+                that.globalData.apiKey = apiKey
+                that.globalData.apiSecret = apiSecret
+                // that.globalData.timeStamp = timestamp
+                that.globalData.info = wx.getStorageSync('huzan_avatarUrl')
+                if (!res.data.user_id) {
+                  wx.navigateTo({
+                    url: "/pages/regMob/regMob"
+                  })
+                } else {
+                  that.globalData.login = true
+                  callback
+                }
+              }
+            },
+            fail:function(res){
+              console.log('接口报错')
+              console.log(res)
+              console.log(that.globalData.apiKey)
+              console.log(that.globalData.apiSecret)
+              console.log(that.globalData.apiExt)
             }
           })
+        },
+        fail:function(res){
+          console.log(res)
         }
       })
-    }
+    // }
   },
 
   globalData: {
@@ -77,7 +81,8 @@ App({
     apiExt:'',
     apiKey:'',
     apiSecret:'',
+    login:false,
     timeStamp:'',
-    http:'https://develop.yiqixuan.com'
+    http:'https://api.yiqixuan.com/'
   }
 })

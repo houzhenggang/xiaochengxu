@@ -1,6 +1,6 @@
 {
-  "enablePullDownRefresh": true,
   "pages": [
+   
     "pages/index/index",
     "pages/regMob/regMob",
     "pages/category/category",

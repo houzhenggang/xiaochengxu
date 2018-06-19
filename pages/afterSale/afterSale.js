@@ -23,7 +23,8 @@ Page({
       '脏污/色差',
       '其他'
     ],
-    value:''
+    value:'',
+    items:''
   },
 
   /**
@@ -32,12 +33,8 @@ Page({
   onLoad: function (options) {
     var that=this;
     var id=options.id;
-    // var apiKey = wx.getStorageSync(apiKey)
-    // var apiSecret = wx.getStorageSync(apiSecret)
     this.setData({
       orderId:id
-      // apiKey: apiKey,
-      // apiSecret: apiSecret
     })
     wx.request({
       url: app.globalData.http +'/mpa/order/' + id,
@@ -57,13 +54,8 @@ Page({
           newArr.push(item[i])
           sale.push(item[i].id)
         }
-
-        // item.forEach(function(v,i){ 
-        //   Object.assign(v,{isSelect:true})
-        //   newArr.push(v)
-        //   sale.push(v.id)
-        // })
         that.setData({
+          items: data.data,
           info:newArr,
           num: newArr.length,
           saleArr:sale
@@ -90,20 +82,12 @@ Page({
     }else{
       n++
     }
-
-
     if (sale.indexOf(that.data.info[index].id)>-1){
         for(var i=0;i<sale.length;i++){
           if (sale[i] !== that.data.info[index].id) {
             newSale.push(sale[i])
           }
         }
-
-        // sale.forEach(function(v,i){
-        //   if (v !== that.data.info[index].id){
-        //       newSale.push(v)
-        //   }
-        // })
         sale=newSale
     }else{
         sale.push(that.data.info[index].id)
@@ -117,28 +101,52 @@ Page({
   /*提交申请*/
   submit:function(){
     var that=this;
-    wx.request({
-      url: app.globalData.http +'/mpa/after_sale',
-      method:"POST",
-      dataType:'json',
-      data:{
-        order_id: that.data.orderId,
-        reason: that.data.reasonID,
-        remark: that.data.value,
-        order_item_ids:that.data.saleArr
-      },
-      header: {
-        "Api-Key":app.globalData.apiKey,
-        "Api-Secret":app.globalData.apiSecret,
-        'Api-Ext': app.globalData.apiExt
-      },
-      success:function(data){
-        console.log(data)
-        wx.navigateTo({
-          url: '/pages/refundDetail/refundDetail?id=' + that.data.orderId
-        })
-      }
-    })
+    if (that.data.saleArr.length==0){
+      wx.showToast({
+        title: '请选择退换货商品',
+        icon:'none',
+        duration:2000
+      })
+    }else{
+      wx.request({
+        url: app.globalData.http + '/mpa/after_sale',
+        method: "POST",
+        dataType: 'json',
+        data: {
+          order_id: that.data.orderId,
+          reason: that.data.reasonID,
+          remark: that.data.value,
+          order_item_ids: that.data.saleArr
+        },
+        header: {
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
+          'Api-Ext': app.globalData.apiExt
+        },
+        success: function (data) {
+          var code = data.statusCode.toString()
+          if (code.indexOf('20') > -1) {
+            wx.showToast({
+              title: '退款申请成功',
+              icon: 'success',
+              duration: 1000
+            })
+            setTimeout(function () {
+              wx.navigateTo({
+                url: '/pages/refundDetail/refundDetail?id=' + data.data.id
+              })
+            }, 1000)
+          } else {
+            var tip = JSON.parse(data.data)
+            wx.showToast({
+              title: tip.message,
+              icon: 'none',
+              duration: 1000
+            })
+          }
+        }
+      })
+    }
   },
   /*选择原因*/
   selectReason:function(){
