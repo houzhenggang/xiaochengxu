@@ -31,8 +31,7 @@ Page({
       url: app.globalData.http + '/mpa/goods/special',
 			data: {
 				page: 0,
-				pre_page: 20,
-        order_by: "created_at desc",
+				pre_page: 20
 			},
       header:{
         'Api-Ext': app.globalData.apiExt
@@ -48,6 +47,26 @@ Page({
 		wx.setNavigationBarTitle({
 			title: '特价',
 		})
+  },
+  onPullDownRefresh: function () {
+    let that = this;
+    wx.request({
+      url: app.globalData.http + '/mpa/goods/special',
+      data: {
+        page: 0,
+        pre_page: 20
+      },
+      header: {
+        'Api-Ext': app.globalData.apiExt
+      },
+      method: "GET",
+      success(res) {
+        wx.stopPullDownRefresh()
+        that.setData({
+          produList: res.data
+        })
+      }
+    })
   }
 })
  

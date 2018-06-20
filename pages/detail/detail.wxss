@@ -108,7 +108,7 @@ swiper{
 	color: #F02417;
 	line-height: 66rpx;
 }
-.detail_price text:last-child{
+.detail_price text:nth-child(2){
 	margin-left: 22rpx;
 	color: #999;
 	text-decoration: line-through;
@@ -132,7 +132,7 @@ swiper{
 	padding: 24rpx 20rpx 20rpx 20rpx;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
+	justify-content: flex-start;
 	font-size: 26rpx;
 	line-height: 34rpx;
 }
@@ -140,6 +140,9 @@ swiper{
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+.detail_promise view:nth-child(n+2){
+  margin-left: 56rpx;
 }
 .detail_promise image{
 	width: 20rpx;

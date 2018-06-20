@@ -104,9 +104,9 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
 			success(res){
+        console.log(res)
 				let leftSelectedIdx = app.globalData.classIdx;
         res.data[leftSelectedIdx].selected = true
-        // Object.assign(res.data[leftSelectedIdx], { selected :true})
 				that.setData({
 					category:res.data[leftSelectedIdx].children,
 					leftTapArray:res.data

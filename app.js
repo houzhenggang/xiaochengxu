@@ -9,7 +9,7 @@ App({
         success(code) {
           //向后台发起请求，传code
           wx.request({
-            url: 'https://api.yiqixuan.com/mpa/wechat/auth',
+            url: 'https://develop.yiqixuan.com/mpa/wechat/auth',
             method: 'POST',
             data: {
               code: code.code
@@ -42,7 +42,6 @@ App({
                 // let timestamp = Date.parse(new Date());
                 that.globalData.apiKey = apiKey
                 that.globalData.apiSecret = apiSecret
-                // that.globalData.timeStamp = timestamp
                 that.globalData.info = wx.getStorageSync('huzan_avatarUrl')
                 if (!res.data.user_id) {
                   wx.navigateTo({
@@ -83,6 +82,6 @@ App({
     apiSecret:'',
     login:false,
     timeStamp:'',
-    http:'https://api.yiqixuan.com/'
+    http:'https://develop.yiqixuan.com'
   }
 })

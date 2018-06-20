@@ -1,4 +1,10 @@
 /**index.wxss**/
+page{
+  background: #fff;
+}
+.index_container{
+  background: #fff
+}
 .container_search_navi{
 	padding-left: 58rpx;
 	position: relative;

@@ -127,10 +127,19 @@ Page({
                       title: '加入购物车成功',
                       icon: "success"
                     })
-                    var cartNum = parseInt(that.data.cartNum)
-                    cartNum++
-                    that.setData({
-                      cartNum: cartNum
+                    wx.request({
+                      url: app.globalData.http + '/mpa/cart/count', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
+                      header: {
+                        'Api-Ext': app.globalData.apiExt,
+                        "Api-Key": app.globalData.apiKey,
+                        "Api-Secret": app.globalData.apiSecret,
+                      },
+                      method: 'get',
+                      success(res) {
+                        that.setData({
+                          cartNum: res.data
+                        })
+                      }
                     })
                   }
                 }
@@ -254,11 +263,19 @@ Page({
               title: '加入购物车成功',
               icon: "success"
             })
-            console.log(that.data.cartNum)
-            var cartNum = parseInt(that.data.cartNum)
-            cartNum++
-            that.setData({
-              cartNum: cartNum
+            wx.request({
+              url: app.globalData.http + '/mpa/cart/count', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
+              header: {
+                'Api-Ext': app.globalData.apiExt,
+                "Api-Key": app.globalData.apiKey,
+                "Api-Secret": app.globalData.apiSecret,
+              },
+              method: 'get',
+              success(res) {
+                that.setData({
+                  cartNum: res.data
+                })
+              }
             })
           }
         }

@@ -137,7 +137,7 @@ Page({
               })
             }, 1000)
           } else {
-            var tip = JSON.parse(data.data)
+            var tip = data.data
             wx.showToast({
               title: tip.message,
               icon: 'none',
@@ -163,6 +163,7 @@ Page({
   },
 
   remark:function(event){
+    console.log('222' + event.detail.value)
     var value = event.detail.value
     this.setData({
         value:value

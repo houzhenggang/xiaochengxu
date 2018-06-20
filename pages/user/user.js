@@ -20,10 +20,15 @@ Page({
     var that=this;
     // var nowTimeStamp = Date.parse(new Date());
     // console.log(app.globalData.info)
-    if (app.globalData.info){
+    var uerinfo = wx.getStorageSync("huzan_avatarUrl")
+    if (uerinfo){
       that.setData({
-        userInfo: app.globalData.info,
+        userInfo: uerinfo,
         hasUserInfo: true
+      })
+    }else{
+      that.setData({
+        hasUserInfo: false
       })
     }
       wx.request({

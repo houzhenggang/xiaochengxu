@@ -165,9 +165,11 @@ Page({
             that.setData({
               disabled: false
             })
-            wx.navigateTo({
-              url: '/pages/orderDetail/orderDetail?id=' + id,
-            })           
+            setTimeout(function () {
+              wx.navigateTo({
+                url: '/pages/orderDetail/orderDetail?id=' + id,
+              })
+            }, 1000)        
           }
         })
       } else {
@@ -258,11 +260,9 @@ Page({
                   icon: 'none',
                   duration: 2000
                 })
-                setTimeout(function () {
-                  that.setData({
-                    disabled: false
-                  })
-                }, 500)
+                that.setData({
+                  disabled: false
+                })
               }             
             },
             fail: function (res) {
@@ -272,11 +272,9 @@ Page({
                 icon: 'none',
                 duration: 2000
               })
-              setTimeout(function () {
-                that.setData({
-                  disabled: false
-                })
-              },500)
+              that.setData({
+                disabled: false
+              })
             }
           })
         }else{
@@ -287,11 +285,9 @@ Page({
             icon: 'none',
             duration: 2000
           })
-          setTimeout(function () {
-            that.setData({
-              disabled: false
-            })
-          }, 500)
+          that.setData({
+            disabled: false
+          })
         }
       },
       fail:function(res){
@@ -301,10 +297,8 @@ Page({
           icon: 'none',
           duration: 1000
         })
-        setTimeout(function () {
-          that.setData({
-            disabled: false
-          })
+        that.setData({
+          disabled: false
         })
       }
     })
