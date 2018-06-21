@@ -1,80 +1,108 @@
+<!--pages/detail/detail.wxml-->
 <wxs module="filters" src="../../utils/method.wxs"></wxs>
-<view class='address'>
-    <image src='{{image}}position.png'></image>
-    <view  class='name'>
-      <label>收货人：{{info.consignee}}</label>
-      <label>{{info.mobile}}</label>
-    </view>
-    <view class='addr'>
-        收货地址：{{info.province}}{{info.city}}{{info.county}}{{info.address_detail}}
-    </view>
-</view>
-<view class='detail'>
-    <view  class='menus' wx:for='{{info.items}}' bindtap='goDetail' data-goods_id="{{items.goods_id}}" wx:for-item='items' wx:key='index'>
-        <image src='{{image}}{{items.cover_url}}?imageView2/1/w/200/h/200'></image>
-        <view class='desc'>
-            <label>{{items.name}}</label>
-            <label>{{items.sku_description}}</label>
-            <label>x{{items.count}}</label>
-            <label>￥{{filters.toFix(items.price/100)}}</label>
-        </view>
-    </view>
-    <view class='info'>
-      <view>
-        <label>商品总价</label> 
-        <label>￥{{filters.toFix(info.goods_amount/100)}}</label>
-      </view>
-      <view>
-        <label>运费（快递）</label> 
-        <label>￥{{filters.toFix(info.express_amount/100)}}</label>
-      </view>
-      <view>
-        <label>订单总价</label> 
-        <label>￥{{filters.toFix(info.amount/100)}}</label>
-      </view>
-    </view>
-    <view class='info'>
-         <view>
-            <label>订单编号</label> 
-            <label>{{info.no}}</label>
-          </view>
-          <view>
-            <label>创建时间</label> 
-            <label>{{info.created_at}}</label>
-          </view>
-          <view>
-            <label>状态</label> 
-             <label wx:if='{{info.status==200}}'>待付款</label>
-            <label wx:elif='{{info.status==205}}'>待发货</label>
-            <label wx:elif='{{info.status==305}}'>已发货</label>
-            <label wx:elif='{{info.status==400}}'>待收货</label>
-            <label wx:elif='{{info.status==500}}'>退货中</label>
-            <label wx:elif='{{info.status==405}}'>已收货</label>
-          </view> 
-    </view>
-</view>
+<import src="../../wxParse/wxParse.wxml"/> 
+ <view class='detail_container'   wx:if='{{show==1}}'  > 
+	
+	<!-- detail images  -->
+	<swiper
+		autoplay='{{true}}'  interval='{{3500}}' duration='{{500}}' bindchange='changeCurrent'  current='{{current}}' circular='{{true}}'>
+		<block wx:for='{{imgs}}' wx:key="{{index}}">
+			<swiper-item>
+				<view class='detail_imgs'>
+					<image src='{{image}}{{item.icon_url}}?imageslim'></image>
+				</view>
+			</swiper-item>
+		</block>
+	</swiper>
+  <view class='showIndex'>{{current+1}}/{{imgs.length}} </view>
 
-<view class='btnBottom'>
-    <view  wx:if='{{info.status==405}}' bindtap='cancelOrder' class='cancel'>申请售后</view>
-    <view  wx:if='{{info.status==400 || info.status==305}}' bindtap='confirm'  data-sure='405' class='cancel'>确认收货</view>
-    <view class='cancel' bindtap='contacts' >联系商家</view>
-    <view  wx:if='{{info.status==405 || info.status==400 || info.status==305}}'  class='pay' bindtap='checkLogistics'>查看物流</view>
-    <view  wx:if='{{info.status==200}}' data-sure='207' bindtap='cancal'   class='cancel'>取消订单</view>
-    <view  wx:if='{{info.status==200}}' bindtap='payMoney' data-no="{{info.no}}" data-orderid='{{info.id}}' class='pay'>立即支付</view>
-</view>
-
-<view class='shade' hidden='{{show}}'>
-     <view class='contact'>
-        <view class='clear' bindtap='close'></view>
-        <view class='title'>请选择联系方式</view>
-        <button open-type='contact' session-from="weapp">
-              <image src='{{image}}Wechat_icon.png'></image>
-              <label>微信联系</label>
-        </button>
-        <view class='iphone' bindtap='callPhone'>
-            <image src='{{image}}phone_icon.png'></image>
-            <label>电话联系</label>
-        </view> 
+	<!-- description  -->
+	<view class='detail_description'>
+		<view class='name_share padding'>
+			<text class='des_name'>{{goods.name}}</text>
+			 <view>
+				<button open-type='share'>
+					<image src='{{image}}product_btn_share@2x.png?imageslim'></image>
+					<text>分享</text>
+				</button>
+			</view>	 
+		</view>
+		<view class='detail_price padding'>
+			<text>￥{{filters.toFix(goods.price/100)}}</text>
+      <text wx:if="{{goods.display_price!=0}}">￥{{filters.toFix(goods.display_price/100)}}</text>
+		</view>
+		<view class='detail_info'>
+			<text>月销{{goods.sales_count}}笔</text>
+      <!-- <text wx:if="{{goods.is_free_express==1}}">快递:包邮</text>
+      <text wx:else="{{goods.is_free_express==2}}">快递:{{filters.toFix(goods.free_express_price/100)}}</text> -->
+       <!-- <text></text>  -->
+		</view>
+    <!-- <view class='detail_promise padding' > -->
+		 <view class='detail_promise padding'  wx:if="{{goods.free_return==1||goods.quick_delivery==1||goods.genuine_article==1}}" > 
+			<view wx:if="{{goods.free_return==1}}"><image src='{{image}}product_icon_sign@2x.png'></image><text>7天包退换</text></view>
+			<view wx:if="{{goods.quick_delivery==1}}"><image src='{{image}}product_icon_sign@2x.png'></image><text>24小时发货</text></view>
+			<view wx:if="{{goods.genuine_article==1}}"><image src='{{image}}product_icon_sign@2x.png'></image><text>100%正品</text></view>		
+		</view>
+    <view class='store'>
+        <view>
+            <image src="{{image}}{{description.logo_url}}?imageslim"></image>
+            <view>{{description.name}}</view>
+        </view>      
+        <navigator open-type='switchTab' hover-class='none'  url="/pages/index/index">
+        进去首页
+        </navigator>
     </view>
-</view>
+	</view>
 
+	<!-- bottom button  -->
+	<view class='detail_bottom'>
+		<view class='detail_cart' bindtap='goCart'>
+			<image src='{{image}}product_btn_shop cart@2x.png?imageslim'></image>
+			<text>购物车</text>
+      <label wx:if="{{cartNum>0}}">{{cartNum}}</label>
+		</view>
+		<view class='addCart' bindtap='modalShow' data-flag='1'>加入购物车</view>
+		<view class='buy' bindtap='modalShow' data-flag='2'>立即购买</view>
+	</view>
+
+	<!-- 规格选择  -->
+	<view class='mask' wx:if='{{chooseModal}}' bindtap='closeModal'></view>
+	<view class='choose' wx:if='{{chooseModal}}' animation="{{animationData}}">
+		
+		<view class='choose_price'>
+			<image src='{{image}}{{goodUrl}}?imageslim'></image>
+			<view class='desc'>
+				<text>￥{{filters.toFix(goodPrice/100)}}</text>
+        <text>库存：{{good.stock_count}}</text>
+				<view>请选择 <text  wx:for='{{spec}}' wx:key='{{index}}'>{{item.name}}</text></view>
+			</view>
+			<image src='{{image}}classification_btn_close@2x.png' data-id='0' bindtap='closeTips'></image>
+		</view>
+
+		<view class='color_size'>
+			<view class='choose_color' wx:for='{{spec}}' wx:for-index="id" wx:key='{{id}}'> 
+				<text class='title'>{{item.name}}</text>
+				<view class='color'>
+					<label wx:for='{{item.propertis}}' class='select {{index == chooseSpec[id]? "active" : ""}}' wx:key='{{index}}' data-index="{{index}}" data-id="{{id}}"  wx:for-item='items' bindtap='chooseSpecs'>
+						{{items}}
+					</label>
+				</view>
+			</view>
+		</view>
+		
+		<view class='count'>
+				<text class='number'>数量</text>
+				<view>
+					<text class='{{minusStatus}}' bindtap='bindMinus'>-</text>
+					<text class='num'>{{num}}</text>
+					<text class='add' class='{{minusStatuss}}' bindtap='bindPlus'>+</text>
+				</view>
+		</view>
+		<view class='confirm' data-id='1' bindtap='closeModal'>确认</view> 
+	</view>
+  <!-- <view class='description'>{{description}}</view> -->
+   <view class='description'>
+        <view style='font-size:28rpx'>商品详情</view>
+        <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
+   </view>  
+</view>

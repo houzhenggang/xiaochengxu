@@ -11,7 +11,7 @@
 <scroll-view  current="{{currentTab}}" scroll-y bindscrolltolower="getMore" class="swiper-box"  style="height:{{2*winHeight - 102}}rpx">  
       <view>
           <view class='container' wx:if='{{allOrder.length==0}}'>
-                <image src='{{image}}empty_order.png'></image>
+                <image src='{{image}}empty_order.png?imageslim'></image>
                 <view>您的订单空空如也呢</view>
                 <label>去别的页面看看吧</label>
           </view>
@@ -27,7 +27,7 @@
                       <label wx:elif='{{item.status==405}}'>已收货</label>
                   </view>
                   <view class='orderList'  wx:for="{{item.items}}" wx:for-index="id" wx:for-item="items" wx:key="id">
-                          <image class='goodImg' src='{{image}}{{items.cover_url}}?imageView2/1/w/164/h/160'></image>
+                          <image class='goodImg' src='{{image}}{{items.cover_url}}?imageView2/1/w/164/h/160/imageslim'></image>
                           <view class='goodsInfo'>     
                               <view class='title'>{{items.name}}</view>
                               
@@ -63,16 +63,15 @@
               
               <navigator  wx:if="{{currentTab==500}}"  url='/pages/refundDetail/refundDetail?id={{item.id}}' hover-class='none'   wx:for="{{allOrder}}" wx:for-index="index" wx:key="index">
                   <view class='top'>
-                      <label>下单时间：{{item.created_at}}</label>
-                      <!-- <label wx:if='{{item.status==200}}'>待付款</label>
-                      <label wx:elif='{{item.status==205}}'>待发货</label>
-                      <label wx:elif='{{item.status==305}}'>已发货</label>
-                      <label wx:elif='{{item.status==400}}'>待收货</label>
-                      <label wx:elif='{{item.status==500}}'>退货中</label>
-                      <label wx:elif='{{item.status==405}}'>已收货</label> -->
+                      <label>申请时间：{{item.created_at}}</label>
+                       <label wx:if='{{item.status==1}}'>待处理</label>
+                      <label wx:elif='{{item.status==2}}'>处理中</label>
+                      <label wx:elif='{{item.status==3}}'>已完成</label>
+                      <label wx:elif='{{item.status==4}}'>取消退货</label>
+                      <label wx:elif='{{item.status==5}}'>拒绝</label>
                   </view>
                   <view class='orderList'  wx:for="{{item.items}}" wx:for-index="id" wx:for-item="items" wx:key="id">
-                          <image class='goodImg' src='{{image}}{{items.order_items.cover_url}}?imageView2/1/w/164/h/160'></image>
+                          <image class='goodImg' src='{{image}}{{items.order_items.cover_url}}?imageView2/1/w/164/h/160/imageslim'></image>
                           <view class='goodsInfo'>     
                               <view class='title'>{{items.name}}</view>
                               

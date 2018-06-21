@@ -16,6 +16,5 @@ const formatNumber = n => {
 }
 
 module.exports = {
-  formatTime: formatTime,
-  checkLogin: checkLogin
+  formatTime: formatTime
 }

@@ -1,8 +1,13 @@
 var filters = {
   toFix: function (value) {
     return parseFloat(value).toFixed(2)//此处2为保留两位小数
-  }
+  },
+  trim:function(value){
+    var reg = getRegExp('^\s*|\s*$/g')
+    return value.replace(reg,'') //去除2端的空格
+  } 
 }
 module.exports = {
-  toFix: filters.toFix
+  toFix: filters.toFix,
+  trim: filters.trim
 }
