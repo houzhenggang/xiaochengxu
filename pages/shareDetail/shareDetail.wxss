@@ -1,10 +1,16 @@
 /* pages/detail/detail.wxss */
 @import "/wxParse/wxParse.wxss";
-page{
+/* page{
 	height: 100%;
 	font-family: PingFangSC-Regular;
   width: 100%;
-}
+   max-height:100%; 
+  display:flex;
+  justify-content:flex-start;
+  margin-top:86rpx;
+  border-top:1rpx solid #E3E3E3;
+
+} */
 image{
 	display: block;
 }
@@ -13,19 +19,6 @@ image{
 	height: 100%;
 	overflow-x: hidden;
   position: relative;
-}
-.detail_cart label{
-  position: absolute;
-  background: #EA2534;
-  color: #fff;
-  line-height: 30rpx;
-  text-align: center;
-  top:10rpx;
-  right: 20rpx;
-  font-size: 20rpx;
-  min-width:30rpx;
-  height: 30rpx;
-  border-radius: 15rpx; 
 }
 .showIndex{
   position: absolute;
@@ -40,8 +33,19 @@ swiper{
 	height:672rpx;
 }
 .description{
-  font-size: 15rpx;
+  font-size: 26rpx;
   padding-bottom: 100rpx;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 30rpx 20rpx 100rpx;
+  border-top: 20rpx solid #f6f7f7;
+}
+
+.description image{
+  width: 100% !important;
+  padding: 0;
+  margin: 0 auto;
+  margin-top: 20rpx;
 }
 .detail_imgs image{
 	width: 750rpx;
@@ -104,10 +108,11 @@ swiper{
 	color: #F02417;
 	line-height: 66rpx;
 }
-.detail_price text:last-child{
+.detail_price text:nth-child(2){
 	margin-left: 22rpx;
-	color: #C9C9C9;
+	color: #999;
 	text-decoration: line-through;
+  font-weight:normal;
 }
 .detail_info{
 	height: 34rpx;
@@ -115,7 +120,7 @@ swiper{
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	font-size: 24rpx;
+	font-size: 26rpx;
 	color: #999999;
 	line-height: 34rpx;
 	padding: 14rpx 20rpx 12rpx 20rpx;
@@ -127,51 +132,17 @@ swiper{
 	padding: 24rpx 20rpx 20rpx 20rpx;
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
-	border-bottom: 20rpx solid #f6f7f7;
-	font-size: 24rpx;
+	justify-content: flex-start;
+	font-size: 26rpx;
 	line-height: 34rpx;
-}
-.store{
-    width: 100%;
-    box-sizing: border-box;
-    height: 120rpx;
-    padding:0 20rpx;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 20rpx solid #f6f7f7;
-}
-
-.store image{
-  width: 80rpx;
-  height: 80rpx;
-  margin-right: 18rpx
-}
-.store>view{
-  display: flex;
-  font-family: PingFangSC-Medium;
-  font-size: 28rpx;
-  color: #333333;
-  font-weight: bold;
-  align-items: center;
-}
-.store navigator{
-  width: 140rpx;
-  height: 52rpx;
-  box-sizing: border-box;
-  border: 1rpx solid #9B9B9B;
-  border-radius: 26rpx;
-  text-align: center;
-  font-family: PingFangSC-Regular;
-  font-size: 24rpx;
-  color: #999999;
-  line-height: 50rpx;
 }
 .detail_promise view{
 	display: flex;
 	align-items: center;
 	justify-content: center;
+}
+.detail_promise view:nth-child(n+2){
+  margin-left: 56rpx;
 }
 .detail_promise image{
 	width: 20rpx;
@@ -185,8 +156,9 @@ swiper{
 	height: 100rpx;
 	position: fixed;
 	bottom: 0;
+  z-index: 100;
   background: #fff;
-	border-top: 1rpx #D7D7D7 solid;
+	/* border-top: 1rpx #D7D7D7 solid; */
 	box-sizing: border-box;
 	display: flex;
 	align-items: center;
@@ -197,18 +169,36 @@ swiper{
 	margin-bottom: 4rpx;
 }
 .detail_bottom .detail_cart{
-	width: 118rpx;
+	width: 16%;
 	height: 100rpx;
+  border-top:1rpx #D7D7D7 solid;
 	font-size: 16rpx;
+  position: relative;
+  box-sizing: border-box;
 	color: #414141;
 	display: flex;
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
 }
+.detail_cart label{
+  position: absolute;
+  background: #EA2534;
+  color: #fff;
+  line-height: 30rpx;
+  text-align: center;
+  top:10rpx;
+  right: 20rpx;
+  font-size: 20rpx;
+  min-width:30rpx;
+  height: 30rpx;
+  border-radius: 15rpx; 
+}
 .detail_bottom .addCart{
-	width: 316rpx;
+	width: 42%;
 	height: 100rpx;
+  border-top:1rpx #D7D7D7 solid;
+box-sizing: border-box;
 	background: #FFEEEE;
 	font-size: 28rpx;
 	color: #FB4F4F;
@@ -216,7 +206,7 @@ swiper{
 	line-height: 100rpx;
 }
 .detail_bottom .buy{
-	width: 316rpx;
+	width: 42%;
 	height: 100rpx;
 	background: #EA2534;
 	font-size: 28rpx;
@@ -316,7 +306,7 @@ swiper{
 	padding-left:18rpx;
 	overflow: hidden;
   flex-wrap: wrap;
-  padding-bottom: 16rpx;
+  /* padding-bottom: 16rpx; */
 }
 .choose_color view label{
   display: block;
@@ -326,6 +316,7 @@ swiper{
 	background: #F1F1F1;
   border-radius: 4rpx;
 	margin-right: 26rpx;
+	margin-bottom: 20rpx;
   font-family: PingFangSC-Regular;
   font-size: 24rpx;
 }
@@ -422,4 +413,41 @@ swiper{
 	color: #FFFFFF;
 	font-size: 32rpx;
 	letter-spacing: 2.4rpx;
+}
+
+.store{
+    width: 100%;
+    box-sizing: border-box;
+    height: 120rpx;
+    padding:0 20rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 20rpx solid #f6f7f7;
+}
+
+.store image{
+  width: 80rpx;
+  height: 80rpx;
+  margin-right: 18rpx
+}
+.store>view{
+  display: flex;
+  font-family: PingFangSC-Medium;
+  font-size: 28rpx;
+  color: #333333;
+  font-weight: bold;
+  align-items: center;
+}
+.store navigator{
+  width: 140rpx;
+  height: 52rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #9B9B9B;
+  border-radius: 26rpx;
+  text-align: center;
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #999999;
+  line-height: 50rpx;
 }

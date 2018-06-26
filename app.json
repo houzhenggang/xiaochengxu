@@ -1,6 +1,5 @@
 {
   "pages": [
-   
     "pages/index/index",
     "pages/regMob/regMob",
     "pages/category/category",
@@ -19,8 +18,8 @@
     "pages/recommend/recommend",
     "pages/orders/orders",
     "pages/cart/cart",
-    "pages/categoryList/categoryList",
-    "pages/shareDetail/shareDetail"
+    "pages/shareDetail/shareDetail",
+    "pages/categoryList/categoryList"
   ],
   "window": {
     "backgroundTextStyle": "light",

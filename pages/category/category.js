@@ -29,7 +29,8 @@ Page({
     })
     if (category.length){      
 			that.setData({
-				category:category
+				category:category,
+        second: 1
 			});
 		}else{
       wx.showLoading({
@@ -41,12 +42,15 @@ Page({
           'Api-Ext': app.globalData.apiExt
         },
         data: {
-          category_id: tempArr[select].id
+          category_id: tempArr[select].id,
+          page:0,
+          order_by:"created_at desc"
         },
         success(res) {
           that.setData({
             goods: res.data,
-            category: category
+            category: category,
+            second:2
           })
           wx.hideLoading();
         }

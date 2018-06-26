@@ -58,7 +58,7 @@ Page({
         url: '/pages/address/address'
       })
     }else{
-      app.checkLogin(
+      app.wechat(
         wx.navigateTo({
           url: '/pages/address/address'
         })
@@ -77,13 +77,16 @@ Page({
         url: '/pages/orders/orders?curTab=' + e.currentTarget.dataset.curtab
       })
     }else{
-      app.checkLogin(
+      app.wechat(
         wx.navigateTo({
           url: '/pages/orders/orders?curTab=' + e.currentTarget.dataset.curtab
         })
       )
     }
   },
+  // getPhoneNumber:function(e){
+  //     console.log(e)
+  // },
   getInfo:function(e){
     console.log(e)
     var that=this;
@@ -161,37 +164,28 @@ Page({
                   }
 
                 })
-
-                if (!res.data.user_id) {
-                  wx.setStorage({
-                    key: 'userId',
-                    data: res.data.user_id,
-                  })
-                  wx.request({
-                    url: app.globalData.http + '/mpa/wechat/' + res.data.id,
-                    method: "PUT",
-                    data: {
-                      "nick_name": userInfo.nickName,
-                      "avatar_url": userInfo.avatarUrl,
-                      "gender": userInfo.gender,
-                      "city": userInfo.city,
-                      "province": userInfo.province,
-                      "country": userInfo.country,
-                      "language": userInfo.language
-                    },
-                    header: {
-                      "Api-Key": app.globalData.apiKey,
-                      "Api-Secret": app.globalData.apiSecret,
-                      'Api-Ext': app.globalData.apiExt
-                    },
-                    complete(res) {
-                      wx.navigateTo({
-                        url: "/pages/regMob/regMob"
-                      })
-                    }
-                  })
-                } else {
-                  app.globalData.userId = res.data.user_id
+                wx.request({
+                  url: app.globalData.http + '/mpa/wechat/' + res.data.id,
+                  method: "PUT",
+                  data: {
+                    "nick_name": userInfo.nickName,
+                    "avatar_url": userInfo.avatarUrl,
+                    "gender": userInfo.gender,
+                    "city": userInfo.city,
+                    "province": userInfo.province,
+                    "country": userInfo.country,
+                    "language": userInfo.language
+                  },
+                  header: {
+                    "Api-Key": app.globalData.apiKey,
+                    "Api-Secret": app.globalData.apiSecret,
+                    'Api-Ext': app.globalData.apiExt
+                  },
+                  complete(res) {
+                  }
+                })
+                if (res.data.user_id) {
+                  app.globalData.userId = true
                   app.globalData.login = true
                 }
               }

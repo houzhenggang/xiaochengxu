@@ -17,13 +17,13 @@ page{
   
 }
 .clearfix{  
-        zoom:1;  
-    }  
+    zoom:1;  
+}  
 .clearfix:after{  
-        content: "";  
-        display: block;  
-        clear: both;  
-    }  
+    content: "";  
+    display: block;  
+    clear: both;  
+}  
 .container_search_navi{
 	padding-left: 58rpx;
 	position: fix;

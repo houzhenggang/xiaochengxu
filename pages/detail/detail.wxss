@@ -37,15 +37,18 @@ swiper{
   padding-bottom: 100rpx;
   width: 100%;
   box-sizing: border-box;
-  padding: 30rpx 20rpx 0;
+  padding: 30rpx 20rpx 100rpx;
   border-top: 20rpx solid #f6f7f7;
 }
 
-.description image{
+.description img{
   width: 100% !important;
   padding: 0;
   margin: 0 auto;
   margin-top: 20rpx;
+}
+.description p{
+  font-size: 26rpx;
 }
 .detail_imgs image{
 	width: 750rpx;

@@ -3,26 +3,5 @@
     "extAppid": "wx0ce3e0d4b12aadf1",
     "directCommit": false,
     "ext":{   "data":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJtcGFfaWQiOjEsImFwcF9pZCI6Ind4MGNhN2IyZjVlOTY3MTEzMiIsIm1lcmNoYW50X2lkIjoxfQ.yujo5j1389-Cd3V-9FqiWtrcqAiJSzm5LcxmwZOLD3RRnmABxW4eJAxClDctzcwHODtbxcvNGoomofmNLUOM3g"
-    },
-    "pages": [
-      "pages/index/index",
-      "pages/category/category",
-      "pages/shoppingCar/shoppingCar",
-      "pages/user/user",
-      "pages/search/search",
-      "pages/address/address",
-      "pages/surePay/surePay",
-      "pages/detail/detail",
-      "pages/regMob/regMob",
-      "pages/result/result",
-      "pages/afterSale/afterSale",
-      "pages/refundDetail/refundDetail",
-      "pages/logistics/logistics",
-      "pages/orderDetail/orderDetail",
-      "pages/special/special",
-      "pages/recommend/recommend",
-      "pages/orders/orders",
-      "pages/cart/cart",
-      "pages/categoryList/categoryList"
-  ]
+    }
 }

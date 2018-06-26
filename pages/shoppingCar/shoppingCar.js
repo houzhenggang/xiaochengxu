@@ -115,6 +115,11 @@ Page({
 									_this.setData({
 										datalist:_this.data.datalist
 									})
+                  if (_this.data.datalist.length==0){
+                    _this.setData({
+                      ishow:1
+                    })
+                  }
 								}else{
 									wx.showToast({
 										title: '请重新尝试',
@@ -296,7 +301,11 @@ Page({
                   datalist: _this.data.datalist,
                   totalPrice: total
                 })
-
+                if (_this.data.datalist.length == 0) {
+                  _this.setData({
+                    ishow: 1
+                  })
+                }
               } else {
                 wx.showToast({
                   title: '请重新尝试',
@@ -384,8 +393,13 @@ Page({
                   console.log(res)
                   that.setData({
                     datalist: seleArr,
-                    totalPrice: 0.00
+                    totalPrice: 0.00,
                   })
+                  if (seleArr.length==0){
+                    that.setData({
+                        ishow:1
+                    })
+                  }
                 }
               })
             } else {
@@ -406,6 +420,11 @@ Page({
                     datalist: seleArr,
                     totalPrice: 0.00
                   })
+                  if (seleArr.length == 0) {
+                    that.setData({
+                      ishow: 1
+                    })
+                  }
                 }
               })
             }
@@ -460,8 +479,12 @@ Page({
     })
   },
 
+
   getCart:function(){
     var that=this;
+    wx.showLoading({
+      title: '加载中',
+    })
     this.setData({
       page: 0,
       selectAll: false,
@@ -498,11 +521,14 @@ Page({
             })
           }
         }else{
+          console.log('购物车：' + res)
+          console.log('购物车：' + res.data)
+          console.log('购物车：'+res.data.message)
           var tip=res.data.message.toString()
           wx.showToast({
             title: tip,
             icon:'none',
-            duration:100
+            duration:2000
           })
         } 
         wx.hideLoading();
@@ -519,7 +545,109 @@ Page({
     if (app.globalData.login){
       that.getCart()
     }else{
-      app.checkLogin(that.getCart())
+      wx.login({
+        success(code) {
+          //向后台发起请求，传code
+          wx.request({
+            url: app.globalData.http + '/mpa/wechat/auth',
+            method: 'POST',
+            data: {
+              code: code.code
+            },
+            header: {
+              'Api-Ext': app.globalData.apiExt
+            },
+            success: function (res) {
+              //保存响应头信息
+              console.log(res.header)
+              var code = res.statusCode.toString()
+              if (code.indexOf('40') > -1 || code == 500) {
+                var tip = res.data.message.toString()
+                wx.showToast({
+                  title: tip,
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+              else {
+                if (res.header["api-key"] && res.header["api-secret"]) {
+                  var apiKey = res.header["api-key"],
+                    apiSecret = res.header["api-secret"];
+                } else if (res.header["Api-Key"] && res.header["Api-Secret"]) {
+                  var apiKey = res.header["Api-Key"],
+                    apiSecret = res.header["Api-Secret"];
+                }
+                //设置storage
+                //获取时间戳保存storage
+                // let timestamp = Date.parse(new Date());
+                app.globalData.apiKey = apiKey
+                app.globalData.apiSecret = apiSecret
+                app.globalData.login = true
+                wx.showLoading({
+                  title: '加载中',
+                })
+                that.setData({
+                  page: 0,
+                  selectAll: false,
+                  totalPrice: 0.00
+                })
+                //获取用户购物车列表
+                wx.request({
+                  url: app.globalData.http + '/mpa/cart',
+                  data: {
+                    page: 0
+                  },
+                  header: {
+                    "Api-Key":apiKey,
+                    "Api-Secret":apiSecret,
+                    'Api-Ext': app.globalData.apiExt
+                  },
+                  success(res) {
+                    var code = res.statusCode.toString()
+                    if (code.indexOf('20') > -1) {
+                      if (res.data.length != 0) {
+                        var list = []
+                        for (var z = 0; z < res.data.length; z++) {
+                          res.data[z].isSelect = false;
+                          res.data[z].isTouchMove = false
+                          list.push(res.data[z])
+                        }
+                        that.setData({
+                          datalist: list,
+                          ishow: 2
+                        })
+                      } else {
+                        that.setData({
+                          ishow: 1,
+                        })
+                      }
+                    } else {
+                      console.log('购物车：' + res)
+                      console.log('购物车：' + res.data)
+                      console.log('购物车：' + res.data.message)
+                      var tip = res.data.message.toString()
+                      wx.showToast({
+                        title: tip,
+                        icon: 'none',
+                        duration: 2000
+                      })
+                    }
+                  },
+                  complete: function () {
+                    wx.hideLoading();
+                  }
+                })
+
+              }
+            },
+            fail: function (res) {
+            }
+          })
+        },
+        fail: function (res) {
+          console.log(res)
+        }
+      })
     }
   },
   /*

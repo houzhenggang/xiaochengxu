@@ -19,12 +19,8 @@ Page({
   onLoad: function (options) {
     var that=this;
       var id=options.id;
-      // var apiKey = wx.getStorageSync(apiKey)
-      // var apiSecret = wx.getStorageSync(apiSecret)
       that.setData({
-        id:id,
-        // apiKey: apiKey,
-        // apiSecret: apiSecret
+        id:id
       })
       wx.request({
         url: app.globalData.http +'/mpa/order/' + id,
@@ -55,7 +51,6 @@ Page({
   },
 /*联系商家*/
   contacts:function(){
-
     this.setData({
       show:false
     })
