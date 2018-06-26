@@ -89,7 +89,7 @@ Page({
     });
   },
   /* 查询支付状态*/
-  checkPay: function (id) {
+  checkPay: function (id,index) {
     var that = this
     var t = 90;
     wx.showLoading({
@@ -116,6 +116,10 @@ Page({
                 title: '支付成功',
                 icon: 'success',
                 duration: 1000
+              })
+              var num = 'allOrder[' + index + '].status'
+              that.setData({
+                [num]: 205
               })
               setTimeout(function () {
                 wx.navigateTo({
@@ -174,6 +178,7 @@ Page({
   payMoney: function (event){
     var id = event.target.dataset.orderid
     var no = event.target.dataset.no
+    var index = event.target.dataset.index
     var that=this
     wx.request({
       url: app.globalData.http + '/mpa/payment/payment',
@@ -197,7 +202,7 @@ Page({
           'signType': 'MD5',
           'paySign': res.data.paySign,
           'success': function (res) {
-            that.checkPay(id)
+            that.checkPay(id,index)
           },
           'fail': function () {
             that.setData({
@@ -330,7 +335,7 @@ Page({
                   if (newArr[i].id === id) {
                     var num = 'allOrder[' + i + '].status'
                     that.setData({
-                      [num]: idx
+                      [num]: 405
                     })
                   }
                 }
@@ -365,7 +370,6 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    that.setData({ index: indexs});
     wx.request({
       url: that.data.url,
       data: {
@@ -381,12 +385,18 @@ Page({
       },
       dataType: 'json',
       success: function (data) {
+        var code=data.statusCode.toString()
+        if(code>=200 && code<=300){
+          var order = that.data.allOrder
+          order = order.concat(data.data)
+          that.setData({
+            allOrder: order,
+            index: indexs
+          })
+        }
+      },
+      complete:function(){
         wx.hideLoading()
-        var order = that.data.allOrder
-        order=order.concat(data.data)
-        that.setData({
-          allOrder: order
-        })
       }
     })
   },

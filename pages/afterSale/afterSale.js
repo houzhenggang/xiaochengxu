@@ -50,9 +50,11 @@ Page({
         var item = data.data.items
         var sale=[]
         for(var i=0;i<item.length;i++){
-          item[i].isSelect=true
-          newArr.push(item[i])
-          sale.push(item[i].id)
+          if(item[i].is_select){
+            item[i].isSelect = true
+            newArr.push(item[i])
+            sale.push(item[i].id)
+          }
         }
         that.setData({
           items: data.data,

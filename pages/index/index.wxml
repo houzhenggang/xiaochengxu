@@ -34,7 +34,6 @@
     </view>
     <view class='contacts'>
         <button open-type='contact'><image    src='/imgs/Content_icon_WeChat@2x.png'></image></button>
-        <image bindtap='contactPhone' src='/imgs/Content_icon_phone@2x.png'></image>
     </view>
 		
 	</view>
@@ -44,13 +43,13 @@
       	<view class='index_recommend'>
           <text>精品</text>
           <text>推荐</text>
-          <view data-type='recommend'  bindtap='showMore'><text>查看更多</text> <image class='icon' src='{{image}}right.png?imageslim'></image> </view>
-          <image src='{{image}}Group 3@2x.png'></image>
+          <view data-type='recommend'  catchtap='showMore'><text>查看更多</text> <image class='icon' src='{{image}}right.png?imageslim'></image> </view>
+          <image src='{{image}}Group 3@2x.png?imageslim'></image>
           <!-- <image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image> -->
         </view>
 
         <view class='index_re_produ'>
-          <image class='re_produ_img' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" src='{{image}}{{recommend_first[0].cover_url}}?imageView2/1/w/710/h/340/imageslim'  bindtap='bindDetail'></image>
+          <image class='re_produ_img' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" mode='widthFix'  src='{{image}}{{recommend_first[0].cover_url}}?imageslim'  bindtap='bindDetail'></image>
           <text class='re_produ_text' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindDetail'>{{recommend_first[0].name}}</text>
           <view class='buy_view'>
             <view class='re_text_view' data-id='{{recommend_first[0].id}}' data-name="{{recommend_first[0].name}}" bindtap='bindDetail'>
@@ -77,7 +76,7 @@
       <view class='index_recommend index_special' >
         <text>特价</text>
         <text>促销</text>
-        <view data-type='special' bindtap='showMore'><text>查看更多</text><image class='icon' src='{{image}}right.png?imageslim'></image></view>
+        <view data-type='special' catchtap='showMore'><text>查看更多</text><image class='icon' src='{{image}}right.png?imageslim'></image></view>
         <image src='{{image}}Group 3@2x.png'></image>
         <!-- <image data-type='special' bindtap='showMore' src='/imgs/button_right@2x.png'></image> -->
       </view>

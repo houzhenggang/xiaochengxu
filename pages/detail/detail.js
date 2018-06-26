@@ -36,12 +36,12 @@ Page({
     goodUrl: "",
     imgs: {},
     description: '',
+    content:'',
     //是否又规格
     isSpec: '',
     current: 0,
     cartNum: 0,
     show: 2
-    // apiExt: ''
   },
   changeCurrent: function (e) {
     var cur = e.detail.current
@@ -168,10 +168,10 @@ Page({
   modalShow(e) {
     var that = this;
     let flag = e.currentTarget.dataset.flag;
-    if (app.globalData.login) {
+    if (app.globalData.login && app.globalData.userId ) {
       that.showSize(flag)
     } else {
-      app.checkLogin(that.showSize(flag))
+      app.checkUser(that.showSize(flag))
     }
   },
   closeTips: function () {
@@ -333,6 +333,62 @@ Page({
       minusStatuss: minusStatus
     })
   },
+  // //选择规格事件
+  // chooseSpecs(e) {
+  //   let that = this;
+  //   var chooseAll;
+  //   //已选择规格索引
+  //   var aIndex = e.target.dataset.id,
+  //     bIndex = e.target.dataset.index;
+  //   var aArr = that.data.specType,
+  //     bArr = that.data.spec;
+  //   //已选择规格种类
+  //   var textSpec = 'chooseSpec[' + aIndex + ']'
+  //   that.setData({
+  //     [textSpec]: bIndex,
+  //     num: 1
+  //   }, function () {
+  //     chooseAll = that.data.chooseSpec.every(function (val) {
+  //       return val !== -1
+  //     })
+  //     //所有规格都选了
+  //     if (chooseAll) {
+  //       wx.request({
+  //         url: app.globalData.http + '/mpa/goods/' + that.data.goods.id + '/skus',//////////////////////////////////////请求路径需改动
+  //         method: "GET",
+  //         header: {
+  //           'Api-Ext': app.globalData.apiExt
+  //         },
+  //         success(res) {
+  //           let good;
+  //           var ress = res.data
+  //           for (var i = 0; i < that.data.chooseSpec.length; i++) {
+  //             for (var j = 0; j < ress.length; j++) {
+  //               if (that.data.chooseSpec.length == 1) {
+  //                 if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]]) {
+  //                   good = ress[j];
+  //                 }
+  //               } else if (that.data.chooseSpec.length == 2) {
+  //                 if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]] && ress[j].property_b == bArr[1]['propertis'][that.data.chooseSpec[1]]) {
+  //                   good = ress[j];
+  //                 }
+  //               } else {
+  //                 if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]] && ress[j].property_b == bArr[1]['propertis'][that.data.chooseSpec[1]] && ress[j].property_c == bArr[2]['propertis'][that.data.chooseSpec[2]]) {
+  //                   good = ress[j];
+  //                 }
+  //               }
+  //             }
+  //           }
+  //           that.setData({
+  //             good: good,
+  //             goodUrl: good.cover_url,
+  //             goodPrice: good.price
+  //           })
+  //         }
+  //       })
+  //     }
+  //   })
+  // },
   //选择规格事件
   chooseSpecs(e) {
     let that = this;
@@ -348,11 +404,7 @@ Page({
       [textSpec]: bIndex,
       num: 1
     }, function () {
-      chooseAll = that.data.chooseSpec.every(function (val) {
-        return val !== -1
-      })
       //所有规格都选了
-      if (chooseAll) {
         wx.request({
           url: app.globalData.http + '/mpa/goods/' + that.data.goods.id + '/skus',//////////////////////////////////////请求路径需改动
           method: "GET",
@@ -386,9 +438,9 @@ Page({
             })
           }
         })
-      }
     })
   },
+
   //定义分享转发
   onShareAppMessage: function (res) {
     if (res.from === "button") {
@@ -408,7 +460,11 @@ Page({
         url: '/pages/cart/cart',
       })
     } else {
-      app.checkLogin()
+      app.wechat(
+        wx.navigateTo({
+          url: '/pages/cart/cart',
+        })
+      )
     }
   },
   /**
@@ -434,13 +490,9 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
-
-
     wx.showLoading({
       title: '加载中',
     })
-
-
     //获取商品规格详情
     wx.request({
       url: app.globalData.http + '/mpa/goods/' + options.id + '/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
@@ -491,7 +543,9 @@ Page({
             show: 1
           })
           if (res.data.detail.content) {
-            WxParse.wxParse('article', 'html', res.data.detail.content, that, 5);
+            that.setData({
+              content: res.data.detail.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto" ').replace(/id/gi,'class'),
+            })
           }
         } else {
           wx.showToast({

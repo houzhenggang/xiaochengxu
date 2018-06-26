@@ -48,10 +48,13 @@ Page({
       }
     })
 
-
+    //商品分类
     wx.request({
       url: app.globalData.http + '/mpa/index/category?per_page=10',
       method:'get',
+      header: {
+        'Api-Ext': app.globalData.apiExt
+      },
       success:function(res){
         that.setData({
           categoryList: res.data,
@@ -212,13 +215,13 @@ Page({
       }
     }
   },
-	contactPhone(){
-		var phoneNumber = this.data.description.customer_service_mobile;
-    app.globalData.mobile = phoneNumber
-		wx.makePhoneCall({
-			phoneNumber: phoneNumber,
-		})
-	},
+	// contactPhone(){
+	// 	var phoneNumber = this.data.description.customer_service_mobile;
+  //   app.globalData.mobile = phoneNumber
+	// 	wx.makePhoneCall({
+	// 		phoneNumber: phoneNumber,
+	// 	})
+	// },
 	switchCate(e){
 		//当前点击索引,保存到globalData
     var idx = e.currentTarget.dataset.idx;
@@ -230,7 +233,7 @@ Page({
 	},
 	//查看更多点击事件
 	showMore(e){
-		var path = e.target.dataset.type;
+		var path = e.currentTarget.dataset.type;
     console.log(path)
 		wx.navigateTo({
 			url: '/pages/'+path+"/"+path,

@@ -16,7 +16,7 @@
     <view class='right'>
         <scroll-view class='tab' scroll-y="{{true}}"  style="height:{{2*winHeight -120 }}rpx"  >
         <view>
-              <block wx:if="{{second==1}}">
+        <block wx:if="{{second==1}}">
           <view class='right_flex'>
             <view wx:for="{{category}}" wx:key="{{index}}" data-idx='{{index}}' data-id='{{item.id}}' data-name='{{item.name}}' class='right_cell' bindtap='goList'>
               <image src='{{image}}{{item.icon_url}}?imageView2/1/w/104/h/114/imageslim'></image>

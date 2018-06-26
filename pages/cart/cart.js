@@ -541,7 +541,7 @@ Page({
     if (app.globalData.login) {
       that.getCart()
     } else {
-      app.checkLogin(that.getCart())
+      app.wechat(that.getCart())
     }
   },
   /*

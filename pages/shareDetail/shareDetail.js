@@ -40,6 +40,7 @@ Page({
     isSpec: '',
     current: 0,
     cartNum: 0,
+    content:'',
     show: 2
     // apiExt: ''
   },
@@ -168,10 +169,10 @@ Page({
   modalShow(e) {
     var that = this;
     let flag = e.currentTarget.dataset.flag;
-    if (app.globalData.login) {
+    if (app.globalData.login && app.globalData.userId) {
       that.showSize(flag)
     } else {
-      app.checkLogin(that.showSize(flag))
+      app.checkUser(that.showSize(flag))
     }
   },
   closeTips: function () {
@@ -408,7 +409,11 @@ Page({
         url: '/pages/cart/cart',
       })
     } else {
-      app.checkLogin()
+      app.wechat(
+        wx.navigateTo({
+          url: '/pages/cart/cart',
+        })
+      )
     }
   },
   /**
@@ -439,7 +444,6 @@ Page({
       title: '加载中',
     })
 
-    
     //获取商铺信息
     wx.request({
       url: app.globalData.http+"/mpa/index",
@@ -506,7 +510,9 @@ Page({
             show: 1
           })
           if (res.data.detail.content) {
-            WxParse.wxParse('article', 'html', res.data.detail.content, that, 5);
+            that.setData({
+              content: res.data.detail.content.replace(/\<img/gi, '<img style="max-width:100%;height:auto" '),
+            })
           }
         } else {
           wx.showToast({

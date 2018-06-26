@@ -21,7 +21,7 @@
     </view>
     <view class='reason'>
       <label>退货备注</label> 
-      <textarea maxlength='500'  bindconfirm='remark' value='{{value}}'></textarea>  
+      <textarea maxlength='500'  catchconfirm='remark' value='{{value}}'></textarea>  
     </view>
     <view class='tip'>
       注：目前只支持自寄退货

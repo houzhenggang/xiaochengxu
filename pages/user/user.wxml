@@ -3,10 +3,10 @@
   <open-data type="userNickName" lang="zh_CN"></open-data>  -->
   <view class="userinfo">
     <block wx:if='{{!hasUserInfo}}'>
-         <button  open-type="getUserInfo" bindgetuserinfo="getInfo" hover-class='none'>
+          <button  open-type="getUserInfo" bindgetuserinfo="getInfo"   hover-class='none'>
               <image src='{{image}}userHead.png?imageslim'></image>
                <label>点击头像获取信息</label> 
-        </button>
+        </button> 
     </block>
      <block wx:else='{{hasUserInfo}}'>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>

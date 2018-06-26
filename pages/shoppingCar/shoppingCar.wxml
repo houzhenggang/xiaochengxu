@@ -11,11 +11,7 @@
     <view wx:for="{{datalist}}" bindtouchstart='touchStart' bindtouchmove='touchMove'   data-index="{{index}}"   wx:key="index" class="carInfo {{item.isTouchMove ? 'touch-move-active' : ''}}">
       <navigator class='contents'  url='/pages/detail/detail?id={{item.goods_id}}&&name={{item.name}}' hover-class='none'>
         <view  catchtap='select' class='sel' data-index="{{index}}" data-id="{{item.id}}">
-
                <view class='select {{item.isSelect?"cur":""}}'></view> 
-              <!-- <view class='select cur}}'></view> -->
-              <!-- <image class='select'  wx:if='{{item.isSelect}}' src='{{image}}checked.png?imageslim'></image>
-              <image class='select'   wx:else='{{item.isSelect}}' src='{{image}}unchecked.png?imageslim'></image> -->
         </view>
       <image class='goodImg' src='{{image}}{{item.cover_url}}?imageslim'></image>
       <view class='goodsInfo'>    
@@ -39,8 +35,6 @@
 		<!-- 删除/全选  -->
 		<view class='bottom'>
        <view class='select {{selectAll?"cur":""}}' bindtap='selectAll'></view>  
-			 <!-- <image class='select' bindtap='selectAll' wx:if='{{!selectAll}}' src='{{image}}unchecked.png'></image>
-      <image class='selected'  bindtap='selectAll' wx:else='{{selectAll}}' src='{{image}}checked.png'></image>  -->
 			<view class='total_text'>
 				<view><text>全选</text><text bindtap='bottomDelete'>删除</text></view><text>合计：￥{{filters.toFix(totalPrice/100)}}</text>
 			</view>

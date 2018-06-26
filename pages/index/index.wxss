@@ -140,7 +140,7 @@ width:710rpx;
 	padding: 0;
 	border-radius: 64rpx 66rpx;
 	background: #EDEDED;
-  margin-bottom: 20rpx;
+  /* margin-bottom: 20rpx; */
 }
 .index_contact button image{
 	width: 66rpx;
@@ -187,7 +187,7 @@ width:710rpx;
 .index_recommend>text:nth-child(2){
 	margin-left: 42rpx;
 }
-.index_recommend view{
+/* .index_recommend view{
   font-size:24rpx;
 	display: inline-block;  
   font-family:PingFangSC-Light;
@@ -195,7 +195,21 @@ width:710rpx;
   color:#999999;
   font-weight:normal;
   line-height:44rpx;
+} */
+
+.index_recommend view {
+font-size:24rpx;
+display:inline-block;
+font-family:PingFangSC-Light;
+/* margin-left:140rpx; */
+color:#999999;
+font-weight:normal;
+line-height:44rpx;
+width:260rpx;
+text-align:right;
+
 }
+
 .index_recommend image:nth-child(4){
 	position: absolute;
 	width: 338rpx;

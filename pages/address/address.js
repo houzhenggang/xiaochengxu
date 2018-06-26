@@ -14,7 +14,7 @@ Page({
   /*
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onShow: function (options) {
       var that = this;
       wx.showLoading({
         title: '加载中',
@@ -76,11 +76,6 @@ Page({
                         console.log(data)
                         var code = data.statusCode.toString()
                         if (code.indexOf('20') > -1) {
-                          var adds = that.data.address
-                          adds.unshift(data.data)
-                          that.setData({
-                            address:adds
-                          })
                         }else{
                           var tip =data.data.message.toString()
                           wx.showToast({
@@ -125,12 +120,6 @@ Page({
                   console.log(data)                  
                   var code = data.statusCode.toString()
                   if (code.indexOf('20') > -1) {
-
-                    var adds = that.data.address
-                    adds.unshift(data.data)
-                    that.setData({
-                      address: adds
-                    })
                   } else {
                     var tip = data.data.message.toString()
                     wx.showToast({
@@ -175,10 +164,12 @@ Page({
             },
             success: function (data) {
               var code=data.statusCode.toString()
-              if (code.indexOf('20')>-1) {
-                
-                if (that.data.address[index].id == app.globalData.address.id){
-                  app.globalData.address=1
+              if (code.indexOf('20')>-1) { 
+                if (app.globalData.address!=1){
+                  //判断删除的地址是否是app.globalData.address的地址
+                  if (that.data.address[index].id == app.globalData.address.id) {
+                    app.globalData.address = 1
+                  }
                 }
                 that.data.address.splice(index, 1)
                 that.setData({

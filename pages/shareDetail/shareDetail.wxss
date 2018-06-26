@@ -37,7 +37,7 @@ swiper{
   padding-bottom: 100rpx;
   width: 100%;
   box-sizing: border-box;
-  padding: 30rpx 20rpx 0;
+  padding: 30rpx 20rpx 100rpx;
   border-top: 20rpx solid #f6f7f7;
 }
 

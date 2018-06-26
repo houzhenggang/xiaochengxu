@@ -43,8 +43,8 @@
                   <view class='bottom'>
                       <label>实付：￥{{filters.toFix(item.amount/100)}}</label>
                       <view wx:if='{{item.status==200}}'>
-                        <label class='cancel' data-orderid='{{item.id}}' data-sure='207'  catchtap='cancel'>取消订单</label>
-                        <label class='pay'  data-no="{{item.no}}" data-orderid='{{item.id}}' catchtap='payMoney'>立即付款</label>
+                        <label class='cancel' data-orderid='{{item.id}}'   catchtap='cancel'>取消订单</label>
+                        <label class='pay'  data-index="{{index}}" data-no="{{item.no}}" data-orderid='{{item.id}}' catchtap='payMoney'>立即付款</label>
                       </view>
                       <view wx:elif='{{item.status==400 || item.status==305}}'>
                         <label class='cancel'  data-orderid='{{item.id}}' data-sure='405'  catchtap='confirm'>确认收货</label>
@@ -68,7 +68,7 @@
                       <label wx:elif='{{item.status==2}}'>处理中</label>
                       <label wx:elif='{{item.status==3}}'>已完成</label>
                       <label wx:elif='{{item.status==4}}'>取消退货</label>
-                      <label wx:elif='{{item.status==5}}'>拒绝</label>
+                      <label wx:elif='{{item.status==5}}'>已拒绝</label>
                   </view>
                   <view class='orderList'  wx:for="{{item.items}}" wx:for-index="id" wx:for-item="items" wx:key="id">
                           <image class='goodImg' src='{{image}}{{items.order_items.cover_url}}?imageView2/1/w/164/h/160/imageslim'></image>
