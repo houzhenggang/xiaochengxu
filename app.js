@@ -9,7 +9,7 @@ App({
         success(code) {
           //向后台发起请求，传code
           wx.request({
-            url: 'https://api.yiqixuan.com/mpa/wechat/auth',
+            url: 'https://develop.yiqixuan.com/mpa/wechat/auth',
             method: 'POST',
             data: {
               code: code.code
@@ -82,6 +82,6 @@ App({
     apiSecret:'',
     login:false,
     timeStamp:'',
-    http:'https://api.yiqixuan.com'
+    http:'https://develop.yiqixuan.com'
   }
 })
