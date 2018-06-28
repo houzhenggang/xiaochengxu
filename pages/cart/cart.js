@@ -115,6 +115,11 @@ Page({
                   _this.setData({
                     datalist: _this.data.datalist
                   })
+                  if (_this.data.datalist.length == 0) {
+                    _this.setData({
+                      ishow: 1
+                    })
+                  }
                 } else {
                   wx.showToast({
                     title: '请重新尝试',
@@ -296,7 +301,11 @@ Page({
                   datalist: _this.data.datalist,
                   totalPrice: total
                 })
-
+                if (_this.data.datalist.length == 0) {
+                  _this.setData({
+                    ishow: 1
+                  })
+                }
               } else {
                 wx.showToast({
                   title: '请重新尝试',
@@ -384,8 +393,13 @@ Page({
                   console.log(res)
                   that.setData({
                     datalist: seleArr,
-                    totalPrice: 0.00
+                    totalPrice: 0.00,
                   })
+                  if (seleArr.length == 0) {
+                    that.setData({
+                      ishow: 1
+                    })
+                  }
                 }
               })
             } else {
@@ -406,6 +420,11 @@ Page({
                     datalist: seleArr,
                     totalPrice: 0.00
                   })
+                  if (seleArr.length == 0) {
+                    that.setData({
+                      ishow: 1
+                    })
+                  }
                 }
               })
             }
@@ -462,6 +481,9 @@ Page({
 
   getCart: function () {
     var that = this;
+    wx.showLoading({
+      title: '加载中',
+    })
     this.setData({
       page: 0,
       selectAll: false,

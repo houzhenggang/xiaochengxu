@@ -31,6 +31,7 @@ page{
     color: #999999;
     display: flex;
     align-items: center;
+    height:100%;
 }
 .contentBtm label:nth-child(2){
   margin-left:215rpx;

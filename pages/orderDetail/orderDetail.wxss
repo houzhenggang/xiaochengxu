@@ -10,6 +10,17 @@ page{
   min-height:100%;
   position: relative;
 }
+.clearfix{  
+        zoom:1;  
+    }  
+.clearfix:after{  
+        content: "";  
+        display: block;  
+        clear: both;  
+    } 
+ .name{
+   margin-top:10rpx; 
+ }
 .address image{
   width: 24rpx;
   height: 30rpx;
@@ -22,18 +33,24 @@ page{
   font-size: 24rpx;
   color: #333333;
   font-weight: bold;
+  line-height: 36rpx;
+  float: left;
 }
 .name label:nth-child(2){
   font-family: PingFangSC-Regular;
   font-size: 24rpx;
+  line-height: 36rpx;  
   color: #333333;
   margin-left:40rpx;
+   float: left;
 }
 .addr{
-  font-family: PingFangSC-Regular;
-  font-size: 24rpx; 
-  color: #333333;
-  margin-top:16rpx;
+  font-family:PingFangSC-Regular;
+  font-size:24rpx;
+  color:#333333;
+  margin-top:4rpx;
+  padding-right:20rpx;
+  line-height:36rpx;
 }
 .detail{
   width: 100%;

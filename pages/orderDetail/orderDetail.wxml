@@ -1,7 +1,7 @@
 <wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class='address'>
     <image src='{{image}}position.png'></image>
-    <view  class='name'>
+    <view  class='name clearfix'>
       <label>收货人：{{info.consignee}}</label>
       <label>{{info.mobile}}</label>
     </view>

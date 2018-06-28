@@ -1,7 +1,7 @@
 <wxs module="filters" src="../../utils/method.wxs"></wxs>
 <navigator url='/pages/address/address' hover-class='none'>
      <view class='address' wx:if='{{address!==1}}'>
-        <image src='{{image}}position.png'></image>
+        <image src='{{image}}position.png?imageslim'></image>
         <view  class='name clearfix'>
           <label>收货人：{{address.name}}</label>
           <label>{{address.mobile}}</label>
@@ -20,7 +20,7 @@
 
 <view class='detail'>
     <view  class='menus' wx:for='{{dataList}}' wx:key='index'>
-        <image src='{{image}}{{item.cover_url}}'></image>
+        <image src='{{image}}{{item.cover_url}}?imageslim'></image>
         <view class='desc'>
             <label>{{item.name}}</label>
             <label wx:if="{{item.sku_description!=0}}">{{item.sku_description}}</label>
