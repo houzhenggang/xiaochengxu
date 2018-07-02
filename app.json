@@ -1,8 +1,9 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/trendsDetail/trendsDetail",
     "pages/messageList/messageList",
+    "pages/trendsDetail/trendsDetail",
+    "pages/index/index",
+    
     "pages/regMob/regMob",
     "pages/category/category",
     "pages/shoppingCar/shoppingCar",
