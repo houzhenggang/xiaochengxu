@@ -123,6 +123,7 @@ box-sizing:border-box;
 	font-size: 28rpx;
 	color: #333333;
 	line-height: 40rpx;
+  width:422rpx;
 }
 .index_contact>image{
   width: 160rpx;

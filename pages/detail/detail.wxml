@@ -32,7 +32,7 @@
 		</view>
 		<view class='detail_price padding'>
 			<text>￥{{filters.toFix(goods.price/100)}}</text>
-      <text wx:if="{{goods.display_price!=0||goods.display_price}}">￥{{filters.toFix(goods.display_price/100)}}</text>
+      <text wx:if="{{goods.display_price!=0 && goods.display_price}}">￥{{filters.toFix(goods.display_price/100)}}</text>
 		</view>
 		<view class='detail_info'>
 			<text>月销{{goods.sales_count}}笔</text>

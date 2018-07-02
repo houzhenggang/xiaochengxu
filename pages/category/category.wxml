@@ -32,7 +32,7 @@
                 <text>{{item.name}}</text>
                 <text>销量{{item.sales_count}}件</text>
                 <text>￥{{filters.toFix(item.price/100)}}</text>
-                <text>￥{{filters.toFix(item.display_price/100)}}</text>
+                <text  wx:if="{{item.display_price!=0 && item.display_price}}">￥{{filters.toFix(item.display_price/100)}}</text>
               </view>
             </view>					
           </view>

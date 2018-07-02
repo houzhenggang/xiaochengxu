@@ -21,7 +21,7 @@
       </scroll-view>
   </view> 
 
-    <view class='index_current'>
+    <view class='index_current' wx:if="{{newCate.length>1}}">
       <view wx:key='index' wx:for="{{newCate}}" class='{{current===index?"cur":""}}'></view>
   </view>   
 	<!--contact  -->

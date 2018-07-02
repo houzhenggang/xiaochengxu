@@ -252,7 +252,7 @@ Page({
     var newNum = parseInt(_this.data.locallist[index].count) + 1;
     //PUT，用户修改购物车数量
     wx.request({
-      url: app.globalData.http + '/mpa/goods_sku/sku_stock/' + id,
+      url: app.globalData.http + '/mpa/goods_sku/stock_count/' + id,
       method: "GET",
       header: {
         "Api-Key": app.globalData.apiKey,
