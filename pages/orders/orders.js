@@ -373,7 +373,7 @@ Page({
     wx.request({
       url: that.data.url,
       data: {
-        page: this.data.index,
+        page: indexs,
         per_page: 15,
         status: this.data.currentTab
       },
@@ -387,12 +387,14 @@ Page({
       success: function (data) {
         var code=data.statusCode.toString()
         if(code>=200 && code<=300){
-          var order = that.data.allOrder
-          order = order.concat(data.data)
-          that.setData({
-            allOrder: order,
-            index: indexs
-          })
+          if(data.data.length>0){
+            var order = that.data.allOrder
+            order = order.concat(data.data)
+            that.setData({
+              allOrder: order,
+              index: indexs
+            })
+          }
         }
       },
       complete:function(){

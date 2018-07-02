@@ -12,14 +12,9 @@ Page({
     count4:'',
     apiExt: '',
     image: 'http://image.yiqixuan.com/'
-    // apiKey: "",
-    // apiSecret: "",
-    // apiExt:''
   },
   onShow: function () {
     var that=this;
-    // var nowTimeStamp = Date.parse(new Date());
-    // console.log(app.globalData.info)
     var uerinfo = wx.getStorageSync("huzan_avatarUrl")
     if (uerinfo){
       that.setData({
@@ -31,8 +26,9 @@ Page({
         hasUserInfo: false
       })
     }
+    if (app.globalData.userId){
       wx.request({
-        url: app.globalData.http+'/mpa/order/status/count',
+        url: app.globalData.http + '/mpa/order/status/count',
         method: 'GET',
         dataType: 'json',
         header: {
@@ -49,21 +45,13 @@ Page({
             count4: datas[3].count,
           })
         }
-
       })
+    }
   },
   goAddress:function(){
-    if (app.globalData.login) {
-      wx.navigateTo({
-        url: '/pages/address/address'
-      })
-    }else{
-      app.wechat(
-        wx.navigateTo({
-          url: '/pages/address/address'
-        })
-      )
-    }
+    wx.navigateTo({
+      url: '/pages/address/address'
+    })
   },
   // order: function (curTab){
   //   wx.navigateTo({
@@ -71,18 +59,9 @@ Page({
   //   })
   // },
   toOrder:function(e){
-    var curTab = e.currentTarget.dataset.curtab
-    if (app.globalData.login){
-      wx.navigateTo({
-        url: '/pages/orders/orders?curTab=' + e.currentTarget.dataset.curtab
-      })
-    }else{
-      app.wechat(
-        wx.navigateTo({
-          url: '/pages/orders/orders?curTab=' + e.currentTarget.dataset.curtab
-        })
-      )
-    }
+    wx.navigateTo({
+      url: '/pages/orders/orders?curTab=' + e.currentTarget.dataset.curtab
+    })
   },
   // getPhoneNumber:function(e){
   //     console.log(e)
@@ -135,7 +114,6 @@ Page({
                 // let timestamp = Date.parse(new Date());
                 app.globalData.apiKey = apiKey
                 app.globalData.apiSecret = apiSecret
-                app.globalData.info = userInfo
                 that.setData({
                   userInfo: userInfo,
                   hasUserInfo: true
@@ -143,26 +121,6 @@ Page({
                 wx.setStorage({
                   key: 'huzan_avatarUrl',
                   data: userInfo,
-                })
-                wx.request({
-                  url: app.globalData.http + '/mpa/order/status/count',
-                  method: 'GET',
-                  dataType: 'json',
-                  header: {
-                    "Api-Key": app.globalData.apiKey,
-                    "Api-Secret": app.globalData.apiSecret,
-                    'Api-Ext': app.globalData.apiExt
-                  },
-                  success: function (data) {
-                    var datas = data.data
-                    that.setData({
-                      count1: datas[0].count,
-                      count2: datas[1].count,
-                      count3: datas[2].count,
-                      count4: datas[3].count,
-                    })
-                  }
-
                 })
                 wx.request({
                   url: app.globalData.http + '/mpa/wechat/' + res.data.id,
@@ -186,7 +144,10 @@ Page({
                 })
                 if (res.data.user_id) {
                   app.globalData.userId = true
-                  app.globalData.login = true
+                  // wx.setStorage({
+                  //   key: 'userId',
+                  //   data: true,
+                  // })
                 }
               }
             }

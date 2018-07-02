@@ -32,6 +32,19 @@ swiper{
 	width:750rpx;
 	height:672rpx;
 }
+.banner{
+  width:750rpx;
+  height:672rpx;
+  position: relative;
+}
+.banner>image{
+  width: 190rpx;
+  height: 190rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
 .description{
   font-size: 26rpx;
   padding-bottom: 100rpx;
@@ -41,11 +54,14 @@ swiper{
   border-top: 20rpx solid #f6f7f7;
 }
 
-.description image{
+.description img{
   width: 100% !important;
   padding: 0;
   margin: 0 auto;
   margin-top: 20rpx;
+}
+.description p{
+  font-size: 26rpx;
 }
 .detail_imgs image{
 	width: 750rpx;
@@ -198,12 +214,22 @@ swiper{
 	width: 42%;
 	height: 100rpx;
   border-top:1rpx #D7D7D7 solid;
-box-sizing: border-box;
+  box-sizing: border-box;
 	background: #FFEEEE;
 	font-size: 28rpx;
 	color: #FB4F4F;
 	text-align: center;
 	line-height: 100rpx;
+  border-radius:0;
+  padding:0;
+}
+.detail_bottom .disAddcart{
+  background: #CACACA;
+  color: #fff;
+}
+.detail_bottom button:after{
+  border-radius: 0;
+  border: 0;
 }
 .detail_bottom .buy{
 	width: 42%;
@@ -213,24 +239,41 @@ box-sizing: border-box;
 	text-align: center;
 	line-height: 100rpx;
 	color: #FFFFFF;
+  border-radius:0;
+  padding:0;
 }
-
+.detail_bottom .disBuy{
+  background: #B4B0B1
+}
+.soldTips{
+  position: fixed;
+  bottom: 100rpx;
+  left: 0;
+  width: 100%;
+  height: 106rpx;
+  font-size: 36rpx;
+  z-index: 100;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  line-height:106rpx;
+}
 /* mask  */
 .mask{
 	width: 750rpx;
 	height: 100%;
-	background: #C0C0C0;
+	background: #000;
 	z-index: 10;
 	position: fixed;
 	top: 0;
-	opacity: 0.8;
+	opacity: 0.4;
 }
 
 /* choose  */
 .choose{
 	position: fixed;
 	z-index: 100;
-	height: 900rpx;
+	/* height: 900rpx; */
 	width: 750rpx;
 	box-sizing: border-box;
 	bottom: 0;
@@ -282,7 +325,7 @@ box-sizing: border-box;
 }
 
 .color_size{
-	height: 528rpx;
+	/* height: 528rpx; */
 	padding: 0 20rpx;
 	overflow: scroll;
 }
@@ -290,13 +333,13 @@ box-sizing: border-box;
 /* choose color  */
 .choose_color{
 	width: 710rpx;
-	border-bottom: 1rpx solid #EDEDED;
+	/* border-bottom: 1rpx solid #EDEDED; */
 }
 .title{
-	color: #3A3A3A;
+	color: #666;
 	letter-spacing: 2.1rpx;
 	display: block;
-	padding: 10rpx 0;
+	padding: 14rpx 0;
 	line-height: 40rpx;
 	font-size: 28rpx;
 }
@@ -361,11 +404,12 @@ box-sizing: border-box;
 	border-top: 1rpx solid #EDEDED;
 	display: flex;
 	align-items: center;
+  margin-bottom: 100rpx;
 	justify-content: space-between;
 }
 .count .number{
 	font-size: 28rpx;
-	color: #3A3A3A;
+	color: #666;
 	letter-spacing: 2.1rpx;
 }
 .count view{
@@ -413,8 +457,8 @@ box-sizing: border-box;
 	color: #FFFFFF;
 	font-size: 32rpx;
 	letter-spacing: 2.4rpx;
+  padding: 0;
 }
-
 .store{
     width: 100%;
     box-sizing: border-box;

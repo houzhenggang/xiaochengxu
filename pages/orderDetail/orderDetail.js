@@ -8,6 +8,7 @@ Page({
       info:'',
       id:'',
       show:true,
+      expire_at:'00 时 00 分 00 秒',
       // apiKey:'',
       image: 'http://image.yiqixuan.com/'
       // apiSecret:''
@@ -16,6 +17,29 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
+  setInterval:function(time){
+      var that=this
+      var t = parseInt(time)
+      var ts=setInterval(function(){
+        if(t<=1){
+          clearInterval(ts)
+          wx.switchTab({
+            url:'/pages/index/index'
+          })
+        }
+        t = t-1;
+        var hour = parseInt(t / ( 60 * 60));
+        var minute = Math.floor((t / 60) % 60)
+        var second = t % 60
+
+        hour = hour < 10 ? '0' + hour : hour
+        minute = minute < 10 ? '0' + minute : minute
+        second = second < 10 ? '0' + second : second
+        that.setData({
+          expire_at: hour + " 时 " + minute + " 分 " + second +" 秒"
+        })
+      }, 1000)
+  },
   onLoad: function (options) {
     var that=this;
       var id=options.id;
@@ -35,6 +59,10 @@ Page({
           that.setData({
             info:data.data
           })
+          if (data.data.status==200){
+            var time = data.data.expire_at
+            that.setInterval(time)
+          }
         }
       })
   },
@@ -60,6 +88,56 @@ Page({
     var that=this;
     wx.navigateTo({
       url: '/pages/logistics/logistics?id=' + that.data.info.id
+    })
+  },
+  /*取消订单*/
+  cancel: function (event) {
+    var that = this
+    var id = event.target.dataset.orderid;
+    wx.showModal({
+      title: '温馨提示',
+      content: '确认要取消订单吗？',
+      success: function (res) {
+        if (res.confirm) {
+          wx.request({
+            url: app.globalData.http + '/mpa/order/' + id + '/canceled',
+            method: 'PUT',
+            dataType: 'json',
+            data: {
+              status: 207
+            },
+            header: {
+              "Api-Key": app.globalData.apiKey,
+              "Api-Secret": app.globalData.apiSecret,
+              'Api-Ext': app.globalData.apiExt
+            },
+            success: function (data) {
+              var code = data.statusCode.toString()
+              if (code.indexOf('20') > -1) {
+                wx.showToast({
+                  title: '取消成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+              } else {
+                var tip = data.data.message.toString()
+                wx.showToast({
+                  title: tip,
+                  icon: 'none',
+                  duration: 1000
+                })
+              }
+            },
+            fail: function () {
+              wx.showToast({
+                title: '网络错误',
+                icon: 'none',
+                duration: 1000
+              })
+            }
+          })
+        }
+      }
     })
   },
   /* 查询支付状态*/
@@ -239,6 +317,7 @@ Page({
       }
     })
   },
+
   /*确认收货 */
   confirm: function (event) {
     var that = this;

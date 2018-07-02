@@ -7,42 +7,51 @@ Page({
    */
   data: {
       address:[],
+      userId:true,
       image: 'http://image.yiqixuan.com/'
-      // apiKey:'',
-      // apiSecret:''
   },
   /*
    * 生命周期函数--监听页面加载
    */
+  onLoad:function(){
+    this.setData({
+      userId: app.globalData.userId
+    })
+  },
   onShow: function (options) {
-      var that = this;
+    var that = this;
+    if (app.globalData.userId){
       wx.showLoading({
         title: '加载中',
       })
       wx.request({
-        url: app.globalData.http +'/mpa/address',
-        method:'get',
-        dataType:'json',
+        url: app.globalData.http + '/mpa/address',
+        method: 'get',
+        dataType: 'json',
         header: {
           "Api-Key": app.globalData.apiKey,
           "Api-Secret": app.globalData.apiSecret,
           'Api-Ext': app.globalData.apiExt
         },
-        success:function(data){
+        success: function (data) {
           var code = data.statusCode.toString()
-          if(code==500|| code.indexOf('40')>-1){
+          if (code == 500 || code.indexOf('40') > -1) {
 
-          }else{
+          } else {
             that.setData({
               address: data.data
             })
           }
-            
+
         },
-        complete:function(){
+        complete: function () {
+          that.setData({
+            userId: app.globalData.userId
+          })
           wx.hideLoading()
         }
       })
+    }
   },
   address:function(){
     var that=this
@@ -319,9 +328,79 @@ Page({
               icon: 'none',
               duration: 1000,
             })
-          }
-           
+          } 
         }
       })
-  }
+  },
+  getPhoneNumber: function (e) {
+    console.log(e)
+    if (e.detail.encryptedData && e.detail.iv) {
+      wx.login({
+        success(code) {
+          wx.request({
+            url: app.globalData.http + '/mpa/wechat/auth',
+            method: 'POST',
+            header: {
+              'Api-Ext': app.globalData.apiExt
+            },
+            data: {
+              code: code.code
+            },
+            success: function (res) {
+              var codes = res.statusCode.toString()
+              if (codes >= 200 && codes < 300) {
+                //保存响应头信息
+                // if (res.header["api-key"] && res.header["api-secret"]) {
+                //   var apiKey = res.header["api-key"],
+                //     apiSecret = res.header["api-secret"];
+                // } else if (res.header["Api-Key"] && res.header["Api-Secret"]) {
+                //   var apiKey = res.header["Api-Key"],
+                //     apiSecret = res.header["Api-Secret"];
+                // }
+                // app.globalData.apiKey = apiKey
+                // app.globalData.apiSecret = apiSecret
+                wx.request({
+                  url: app.globalData.http + '/mpa/user/login',
+                  method: 'post',
+                  data: {
+                    encrypted: e.detail.encryptedData,
+                    iv: e.detail.iv
+                  },
+                  dataType: 'json',
+                  header: {
+                    "Api-Key": app.globalData.apiKey,
+                    "Api-Secret": app.globalData.apiSecret,
+                    'Api-Ext': app.globalData.apiExt
+                  },
+                  success: function (data) {
+                    var datas = data.statusCode.toString()
+                    if (datas >= 200 && datas < 300) {
+                      app.globalData.userId = true
+                      that.setData({
+                        userId:true
+                      })
+                    } else {
+                      var tip = data.data.message.toString()
+                      wx.showToast({
+                        title: tip,
+                        icon: 'none',
+                        duration: 2000
+                      })
+                    }
+                  }
+                })
+              } else {
+                var tip = res.data.message.toString()
+                wx.showToast({
+                  title: tip,
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+            }
+          })
+        }
+      })
+    }
+  },
 })

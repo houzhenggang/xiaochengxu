@@ -1,7 +1,7 @@
 {  
-    "extEnable": false,
-    "extAppid": "wx0ce3e0d4b12aadf1",
+    "extEnable": true,
+    "extAppid": "wx3d23ecd4dcb83ff7",
     "directCommit": false,
-    "ext":{   "data":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJtcGFfaWQiOjEsImFwcF9pZCI6Ind4MGNhN2IyZjVlOTY3MTEzMiIsIm1lcmNoYW50X2lkIjoxfQ.yujo5j1389-Cd3V-9FqiWtrcqAiJSzm5LcxmwZOLD3RRnmABxW4eJAxClDctzcwHODtbxcvNGoomofmNLUOM3g"
+    "ext":{   "data":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJtcGFfaWQiOjMsImFwcF9pZCI6Ind4M2QyM2VjZDRkY2I4M2ZmNyIsIm1lcmNoYW50X2lkIjoxfQ.9wq_5QEf61t-Ye1IYeCBV_vDrWzbDe9wdDacv_GNX0nug0iDfk1QSYq_TNdGC8Obus61KTYLreNhdd8JNsC_Lw"
     }
 }

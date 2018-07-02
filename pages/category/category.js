@@ -69,21 +69,10 @@ Page({
       url: '/pages/detail/detail?id='+e.currentTarget.dataset.id,
 		})
 	},
-
-  // onLoad:function(){
-  //   var that=this
-  //   wx.getSystemInfo({
-  //     success: function (res) {
-  //       that.setData({
-  //         winHeight: res.windowHeight
-  //       });
-  //     }
-  //   });
-  // },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onShow: function () {
     let that = this;
 		wx.showLoading({
 			title: '加载中',
@@ -96,7 +85,8 @@ Page({
       }
     });
     that.setData({
-      select: app.globalData.classIdx 
+      select: app.globalData.classIdx,
+      keyword: app.globalData.keyword
     })
 		wx.setNavigationBarTitle({
 			title: '搜索',
@@ -108,7 +98,6 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
 			success(res){
-        console.log(res)
 				let leftSelectedIdx = app.globalData.classIdx;
         res.data[leftSelectedIdx].selected = true
 				that.setData({

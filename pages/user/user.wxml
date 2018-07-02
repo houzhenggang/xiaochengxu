@@ -17,7 +17,7 @@
 <view class='orderinfo'> 
     <view data-curTab='1' class='myorder'  bindtap='toOrder'   hover-class="none">
         <view>我的订单</view>
-        <view><label>所有订单</label><image class='icon' src='{{image}}right.png?imageslim'></image></view>
+        <view><label>全部订单</label><image class='icon' src='{{image}}right.png?imageslim'></image></view>
     </view>
     <view class='orderList'>
         <view  data-curTab='200'  bindtap='toOrder' hover-class="none">

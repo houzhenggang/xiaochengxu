@@ -13,6 +13,7 @@ Page({
       sku_ids: {},
       image: 'http://image.yiqixuan.com/',
       sku_idd:[],
+      local:[],
       cart_item_ids:[],
       // apiSecret:'',
       // apiKey:'',
@@ -24,9 +25,10 @@ Page({
    */
   onLoad: function (options) { 
     var data =app.globalData.good
-    console.log(data)
-    // var apiKey = wx.getStorageSync(apiKey)
-    // var apiSecret = wx.getStorageSync(apiSecret)
+    // var local = app.globalData.localArr
+    // app.globalData.localArr=[]
+    // var total = data.concat(local)
+
     var sku_id={}
     var sku_idss = [], cart_item_ids=[]
     var that=this
@@ -35,12 +37,20 @@ Page({
       sum += parseFloat(data[i].price) * parseFloat(data[i].count)
       sku_id[[data[i].goods_sku_id]]=data[i].count
       sku_idss.push(data[i].goods_sku_id)
-     cart_item_ids.push(data[i].id)
+      cart_item_ids.push(data[i].id)
     }
+
+    // for(var j=0;j<local.length;j++){
+    //   sum += parseFloat(local[j].price) * parseFloat(local[j].count)
+    //   sku_id[[local[j].goods_sku_id]] = local[j].count
+    //   sku_idss.push(local[j].goods_sku_id)
+    // }
+
     that.setData({
       sku_ids: sku_id,
       sku_idd: sku_idss,
       cart_item_ids: cart_item_ids
+      // local: local
     })
     wx.request({
       url: app.globalData.http +'/mpa/address',
@@ -76,11 +86,9 @@ Page({
     })
 
     that.setData({
-      dataList: app.globalData.good,
+      dataList: data,
       totalMoney: sum,
       totalOrder:sum,
-      // apiKey:apiKey,
-      // apiSecret:apiSecret
     })
   },
   /**
@@ -218,7 +226,24 @@ Page({
       },
       success: function (data) {
         var code = data.statusCode.toString()
-        if (code.indexOf('20')>-1){
+        if (code >= 200 && code<300 ){
+          // var localgood=wx.getStorageSync('good')
+          // var local = that.data.local
+          // if (localgood){
+          //     for(var j=localgood.length-1;j>=0;j--){
+          //         for( var i=0;i<local.length;i++){
+          //           if (localgood[j].id == local[i].id){
+          //             localgood.splice(j,1)
+          //           }
+          //         }
+          //     }
+          //     wx.setStorage({
+          //       key: 'good',
+          //       data: localgood,
+          //     })
+          // }
+
+
           wx.request({
             url: app.globalData.http +'/mpa/payment/payment',
             method: "post",
@@ -233,7 +258,7 @@ Page({
             },
             success:function(res){
               var codes=res.statusCode.toString()
-              if(codes.indexOf('20')>-1){
+              if (codes >= 200 && codes <300 ){
                 var time = res.data.timeStamp.toString()
                 wx.requestPayment({
                   'timeStamp': time,

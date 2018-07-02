@@ -1,12 +1,12 @@
 <wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class='container_search'>
-		<navigator class='container_search_navi' url="/pages/search/search">输入关键字进行搜索
+		<navigator class='container_search_navi' url="/pages/search/search">{{keyword}}
 			<icon type='search' size='12' color='#999999'></icon>
 		</navigator>
 	</view>
 	<!-- category search   -->
 
-	 <view class='clearfix'> 
+	 <view class='clearfix' style="height:{{2*winHeight}}rpx"> 
     <view class='left'>
         <scroll-view class='tab'  style="height:{{2*winHeight -86 }}rpx"   scroll-y="{{true}}">
                <view wx:for="{{leftTapArray}}" wx:key="{{index}}" data-idx='{{index}}' data-id='{{item.id}}' bindtap='leftCellTap' class="left_cell {{ index == select ? 'selected' : ''}}">{{item.name}}</view>      
