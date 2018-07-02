@@ -1,0 +1,34 @@
+<view class='container'>
+    <view class='message clearfix'>
+        <image src='/imgs/Group@2x.png'></image>
+        <view class='info'> 
+            <view>以前的快乐</view>
+            <view>
+            这身搭配听不错哦fashion！点赞点赞
+            </view>
+            <view>
+                今天12:23
+            </view>
+        </view>
+        <view class='title'>
+            新品上新啦,小仙女们快来围观吧
+            有优惠哦……
+        </view>
+    </view>
+     <view class='message clearfix'>
+        <image src='/imgs/Group@2x.png'></image>
+        <view class='info'> 
+            <view>以前的快乐</view>
+            <view>
+            这身搭配听不错哦fashion！点赞点赞
+            </view>
+            <view>
+                今天12:23
+            </view>
+        </view>
+        <view class='title'>
+            新品上新啦,小仙女们快来围观吧
+            有优惠哦……
+        </view>
+    </view>
+</view>
