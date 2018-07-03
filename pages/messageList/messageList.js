@@ -1,18 +1,35 @@
-// pages/messageList/messageList.js
+var app=getApp()
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    data:[]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    var that=this
+    wx.request({
+      url: app.globalData.http + '/mpa/comment/unread',
+      method: 'GET',
+      dataType: 'json',
+      header: {
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
+      success: function (data) {
+        console.log(data)
+        that.setData({
+          info: data.data
+        })
+      }
+    })
   },
 
   /**
