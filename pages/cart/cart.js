@@ -32,23 +32,28 @@ Page({
     } else {
       //购物车商品信息
       let good = that.data.datalist;
-      // var local = that.data.locallist
+      var local = that.data.locallist
       //已选择商品数组
       var seleArr = [];
       //本地购物车已选中的商品
-      // var localArr=[];
+      var localArr=[];
       for (var i = 0; i < good.length; i++) {
         if (good[i].isSelect) {
           seleArr.push(good[i])
         }
       }
-      // for (var i = 0; i < local.length; i++) {
-      //   if (local[i].isSelect) {
-      //     localArr.push(local[i])
-      //   }
-      // }
+      for (var i = 0; i < local.length; i++) {
+        if (local[i].isSelect) {
+          localArr.push(local[i])
+        }
+      }
 
-      app.globalData.good = seleArr;
+      if (seleArr.length > 0) {
+        app.globalData.good = seleArr;
+      } else if (localArr.length > 0) {
+        app.globalData.good = localArr;
+      }
+      // app.globalData.good = seleArr;
       // app.globalData.localArr = localArr;
       wx.navigateTo({
         url: '/pages/surePay/surePay',
@@ -570,7 +575,7 @@ Page({
     })
   },
   getPhoneNumber: function (e) {
-    console.log(e)
+    var that = this
     if (e.detail.encryptedData && e.detail.iv) {
       wx.login({
         success(code) {
@@ -633,6 +638,9 @@ Page({
                         duration: 2000
                       })
                     }
+                  },
+                  fail: function () {
+
                   }
                 })
               } else {
@@ -658,6 +666,8 @@ Page({
       })
       this.setData({
         page: 0,
+        userId: true,
+        locallist: [],
         selectAll: false,
         totalPrice: 0.00
       })
@@ -745,6 +755,7 @@ Page({
         })
       } else {
         that.setData({
+          locallist:[],
           local: false,
           userId: app.globalData.userId
         })

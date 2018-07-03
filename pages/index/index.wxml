@@ -10,7 +10,7 @@
 	</view>
 
 	<!--banner  -->
-	 <image class='index_banner1'   mode='widthFix' src='{{image}}{{description.banner}}?imageslim'></image> 
+	 <image class='index_banner1' wx:if="{{description.banner}}"  mode='widthFix' src='{{image}}{{description.banner}}?imageslim'></image> 
   <!-- <view  class='index_classify' wx:if="{{categoryList.length>4}}"> -->
    <view  class='index_classify'>
       <scroll-view  scroll-x="{{true}}" class='scroll'  bindscroll="scrollCategory">

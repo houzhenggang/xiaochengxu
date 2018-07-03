@@ -35,7 +35,6 @@ Page({
       },
       success(res) {
         app.globalData.mobile = res.data.customer_service_mobile
-
         that.setData({
           description: res.data
         })
@@ -206,8 +205,16 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
       success: function (res) {
+        var cateNum = Math.ceil(res.data.length / 5)
+        var remain = res.data.length % 5
+        var cateArr = []
+        for (var i = 0; i < cateNum; i++) {
+          cateArr.push(1)
+        }
         that.setData({
           categoryList: res.data,
+          newCate: cateArr,
+          remain: remain
         })
       }
     })

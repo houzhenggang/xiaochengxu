@@ -117,8 +117,14 @@ Page({
                 wx.showToast({
                   title: '取消成功',
                   icon: 'success',
-                  duration: 1000
+                  duration: 2000
                 })
+                setTimeout(function(){
+                  wx.navigateBack({
+                    delta: 1
+                  })
+                },2000)
+               
               } else {
                 var tip = data.data.message.toString()
                 wx.showToast({

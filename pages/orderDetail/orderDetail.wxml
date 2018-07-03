@@ -63,7 +63,7 @@
     </view>
 </view>
 <view class='btnBottom'>
-    <view  wx:if='{{info.status==405}}' bindtap='cancelOrder' class='cancel'>申请售后</view>
+    <view  wx:if='{{info.status==405&&info.after_sale_status==1}}' bindtap='cancelOrder' class='cancel'>申请售后</view>
     <view  wx:if='{{info.status==400 || info.status==305}}' bindtap='confirm'  data-sure='405' class='cancel'>确认收货</view>
     <view class='cancel' bindtap='contacts' >联系商家</view>
     <view  wx:if='{{info.status==405 || info.status==400 || info.status==305}}'  class='pay' bindtap='checkLogistics'>查看物流</view>

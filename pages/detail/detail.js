@@ -601,6 +601,9 @@ Page({
     var that=this
     //获取购物车数量
     var goodlist = wx.getStorageSync('good')
+    that.setData({
+      userId: app.globalData.userId
+    })
     if (app.globalData.userId){
       wx.request({
         url: app.globalData.http + '/mpa/cart/count', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
@@ -626,9 +629,6 @@ Page({
     let that = this;
     wx.showLoading({
       title: '加载中',
-    })
-    that.setData({
-      userId: app.globalData.userId
     })
     //获取商品规格详情
     wx.request({

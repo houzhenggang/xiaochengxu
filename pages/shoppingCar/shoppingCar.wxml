@@ -59,7 +59,7 @@
 				<view><text>全选</text><text bindtap='bottomDelete'>删除</text></view><text>合计：￥{{filters.toFix(totalPrice/100)}}</text>
 			</view>
       <button wx:if="{{!userId}}" class='balance'  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">结算</button>
-      <view  wx:else class='balance' bindtap='balance'>结算</view>
+      <view  wx:if="{{userId}}" class='balance' bindtap='balance'>结算</view>
 		</view>
 </view>
 <view class='container' wx:if="{{ !session && !local}}">
