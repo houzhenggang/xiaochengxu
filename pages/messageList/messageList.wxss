@@ -22,7 +22,7 @@ view{
   box-sizing: border-box;
   width: 100%;
 }
-.message image{
+.message .head{
   width: 68rpx;
   height: 68rpx;
   border-radius: 50%;
@@ -68,5 +68,13 @@ view{
   position: absolute;
   top: 50%;
   right:20rpx;
+  transform: translateY(-50%);
+}
+.banner{
+  position: absolute;
+  top: 50%;
+  right:20rpx;
+  height: 140rpx;
+  width: 220rpx;
   transform: translateY(-50%);
 }
