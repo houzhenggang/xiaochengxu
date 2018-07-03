@@ -1,25 +1,18 @@
 var app=getApp()
 //获取应用实例
-var util = require('../../utils/util.js')
-
 Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
     count1:'',
-    count2: '',
+    count2:'',
     count3:'',
     count4:'',
-    apiExt: '',
+    apiExt:'',
     image: 'http://image.yiqixuan.com/'
-    // apiKey: "",
-    // apiSecret: "",
-    // apiExt:''
   },
   onShow: function () {
     var that=this;
-    // var nowTimeStamp = Date.parse(new Date());
-    // console.log(app.globalData.info)
     var uerinfo = wx.getStorageSync("huzan_avatarUrl")
     if (uerinfo){
       that.setData({
