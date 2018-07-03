@@ -16,9 +16,9 @@ Page({
     session: false,
     datalist: [],
     //本地购物车
-    local: true,
+    local: false,
     locallist: [],
-    userId: true
+    userId: false
   },
   //点击结算
   balance() {
@@ -587,15 +587,15 @@ Page({
               var codes = res.statusCode.toString()
               if (codes >= 200 && codes < 300) {
                 //保存响应头信息
-                // if (res.header["api-key"] && res.header["api-secret"]) {
-                //   var apiKey = res.header["api-key"],
-                //     apiSecret = res.header["api-secret"];
-                // } else if (res.header["Api-Key"] && res.header["Api-Secret"]) {
-                //   var apiKey = res.header["Api-Key"],
-                //     apiSecret = res.header["Api-Secret"];
-                // }
-                // app.globalData.apiKey = apiKey
-                // app.globalData.apiSecret = apiSecret
+                if (res.header["api-key"] && res.header["api-secret"]) {
+                  var apiKey = res.header["api-key"],
+                    apiSecret = res.header["api-secret"];
+                } else if (res.header["Api-Key"] && res.header["Api-Secret"]) {
+                  var apiKey = res.header["Api-Key"],
+                    apiSecret = res.header["Api-Secret"];
+                }
+                app.globalData.apiKey = apiKey
+                app.globalData.apiSecret = apiSecret
                 wx.request({
                   url: app.globalData.http + '/mpa/user/login',
                   method: 'post',
@@ -612,6 +612,15 @@ Page({
                   success: function (data) {
                     var datas = data.statusCode.toString()
                     if (datas >= 200 && datas < 300) {
+                      if (data.header["api-key"] && data.header["api-secret"]) {
+                        var apiKey = data.header["api-key"],
+                          apiSecret = data.header["api-secret"];
+                      } else if (data.header["Api-Key"] && data.header["Api-Secret"]) {
+                        var apiKey = data.header["Api-Key"],
+                          apiSecret = data.header["Api-Secret"];
+                      }
+                      app.globalData.apiKey = apiKey
+                      app.globalData.apiSecret = apiSecret
                       app.globalData.userId = true
                       that.setData({
                         userId: true
@@ -678,7 +687,7 @@ Page({
               })
             } else {
               that.setData({
-                session: false,
+                session: false
               })
             }
           } else {

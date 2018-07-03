@@ -272,10 +272,15 @@ Page({
   onShareAppMessage: function (res) {
     if (res.from === "button") {
     }
+    if (this.data.description.share_logo_url){
+      var url = this.data.image + this.data.description.share_logo_url
+    }else{
+      var url = this.data.image + this.data.description.logo_url
+    }
     return {
       title: this.data.description.share_text,
       path: "/pages/index/index",
-      imageUrl: this.data.image + this.data.description.share_logo_url,
+      imageUrl: url,
       success(res) {
       }
     }

@@ -53,6 +53,7 @@ Page({
   },
   getPhoneNumber:function(e){
     console.log(e)
+    var that=this
     if (e.detail.encryptedData && e.detail.iv){
       wx.login({
         success(code) {
@@ -94,6 +95,15 @@ Page({
                   success: function (data) {
                      var datas = data.statusCode.toString()
                      if (datas >= 200 && datas < 300) {  
+                       if (data.header["api-key"] && data.header["api-secret"]) {
+                         var apiKey = data.header["api-key"],
+                           apiSecret = data.header["api-secret"];
+                       } else if (data.header["Api-Key"] && data.header["Api-Secret"]) {
+                         var apiKey = data.header["Api-Key"],
+                           apiSecret = data.header["Api-Secret"];
+                       }
+                       app.globalData.apiKey = apiKey
+                       app.globalData.apiSecret = apiSecret
                        app.globalData.userId=true
                        that.setData({
                          userId:true

@@ -62,7 +62,7 @@
       <view  wx:else class='balance' bindtap='balance'>结算</view>
 		</view>
 </view>
-<view class='container' wx:if="{{!session && !local}}">
+<view class='container' wx:if="{{ !session && !local}}">
       <image src='{{image}}emptyCar.png'></image>
       <view>购物车竟然是空的</view>
       <text>"快买点东西犒劳自己吧"</text>
