@@ -17,7 +17,9 @@ Page({
     voted: false,
     autoFocus: false,
     value: '',
-    commentId: 0
+    commentId: 0,
+    comments:[],
+    content: ''
   },
   // 动态点赞
   vote(e) {
@@ -96,16 +98,30 @@ Page({
     let that = this;
     // 动态列表数据
     wx.request({
-      url: app.globalData.http + '/mpa/feed/95',
+      url: app.globalData.http + '/mpa/feed/97',
       method: 'GET',
       success(res) {
-        console.log(res)
+        var nodes = res.data.content.replace(/<img/gi, '<img style="width:100%;"')
+          .replace(/<p/gi, '<p style="font-size:24rpx;"')
         that.setData({
           trendsData: res.data,
-          name: app.globalData.name
+          name: app.globalData.name,
+          content:nodes
         })
       }
     })
+    // // 评论列表数据
+    // wx.request({
+    //   url: app.globalData.http + '/mpa/comment?feed_id='+97,
+    //   method: 'GET',
+    //   success(res) {
+    //     that.setData({
+    //       comments:res.data
+    //     })
+    //   }
+    // })
+
+
   },
 
   /**

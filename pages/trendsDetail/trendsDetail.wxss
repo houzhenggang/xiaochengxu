@@ -22,6 +22,12 @@ page {
 .input_outer text.active {
   color: #EA2534;
 }
+.content{
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 20rpx;
+  background: #fff;
+}
 input {
   border: 1px solid #E3E3E3;
   width: 624rpx;
@@ -32,11 +38,10 @@ input {
   font-size: 24rpx;
   border-radius: 4rpx;
 }
-.item_box {
+/* .item_box {
   background: white;
-  padding:32rpx 30rpx 40rpx 30rpx;
   margin-bottom: 20rpx;
-}
+} */
 .item_box:nth-last-child(2) {
   margin-bottom: 0;
   padding-bottom: 0;
@@ -50,7 +55,8 @@ input {
   width: 68rpx;
   height: 68rpx;
   display: block;
-  border-radius: 68rpx;
+  border-radius: 50%;
+  overflow: hidden;
   margin-right: 20rpx;
 }
 .item_box .box_header .user_info {
@@ -65,9 +71,13 @@ input {
 }
 
 .box_content {
-  color: #999999;
+  color: #999;
+  width: 100%;
+  /* box-sizing: border-box;
+  padding: 0 20rpx; */
   font-size: 24rpx;
   margin-top: 18rpx;
+  background: #fff;
 }
 .box_content .content_text {
   color: #333333;
