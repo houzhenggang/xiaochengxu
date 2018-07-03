@@ -18,6 +18,12 @@
   float: left;
   width: 422rpx;
 }
+.tip{
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #333333;
+  margin-top: 24rpx;
+}
 .select{
   width: 44rpx;
   height: 44rpx;
@@ -123,6 +129,7 @@ page{
 .afterReason>view{
   position: absolute;
   bottom:0;
+  z-index: 101;
   width: 100%;
   left: 0;
   background: #fff;

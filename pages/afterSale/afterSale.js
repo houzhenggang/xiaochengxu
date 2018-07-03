@@ -176,7 +176,7 @@ Page({
       console.log(id);
       this.setData({
         reasonID:id,
-        reasonText: that.data.reason[id]+' >',
+        reasonText: that.data.reason[id-1]+' >',
         isShow: true
       })
   }

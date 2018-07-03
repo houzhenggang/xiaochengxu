@@ -6,12 +6,12 @@
   </view>
   <view class='userAddr'>地址：{{item.province}}{{item.city}}{{item.county}}{{item.detail}}</view>
   <view class='contentBtm'>
-    <label catchtap='setDefault' data-key='{{item.status}}'  data-index='{{index}}'  wx:if='{{item.status==1}}'>
-      <image src='{{image}}unchecked.png' data-key='{{item.status}}' catchtap='setDefault'   data-index='{{index}}'></image>
+    <label catchtap='setDefault' style='width:50%' data-key='{{item.status}}'  data-index='{{index}}'  wx:if='{{item.status==1}}'>
+      <image src='{{image}}unchecked.png?imageslim' data-key='{{item.status}}' catchtap='setDefault'   data-index='{{index}}'></image>
       设为默认
     </label>
-    <label catchtap='setDefault'  data-key='{{item.status}}'  data-index='{{index}}'   wx:if='{{item.status==2}}'>
-      <image src='{{image}}checked.png'  data-key='{{item.status}}' catchtap='setDefault'   data-index='{{index}}' ></image>
+    <label catchtap='setDefault' style='width:50%'  data-key='{{item.status}}'  data-index='{{index}}'   wx:if='{{item.status==2}}'>
+      <image src='{{image}}checked.png?imageslim'  data-key='{{item.status}}' catchtap='setDefault'   data-index='{{index}}' ></image>
       已设为默认
     </label>
     <!-- <label catchtap='updateAddr' data-index='{{index}}'><image src='{{image}}updataAddr.png' ></image>编辑</label> -->

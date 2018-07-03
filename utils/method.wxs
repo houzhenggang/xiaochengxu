@@ -20,9 +20,14 @@ var filters = {
       var time = str
     }
     return time
+  },
+  trim: function (value) {
+    var reg = getRegExp('^\s*|\s*$/g')
+    return value.replace(reg, '') //去除2端的空格
   }
 }
 module.exports = {
   toFix: filters.toFix,
-  getTime: filters.getTime
+  getTime: filters.getTime,
+  trim:filters.trim
 }

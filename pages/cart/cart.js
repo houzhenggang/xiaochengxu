@@ -569,6 +569,7 @@ Page({
       }
     })
   },
+
   getPhoneNumber: function (e) {
     console.log(e)
     if (e.detail.encryptedData && e.detail.iv) {

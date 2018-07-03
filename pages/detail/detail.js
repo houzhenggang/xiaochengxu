@@ -1,4 +1,4 @@
-// pages/detail/detail.js
+  // pages/detail/detail.js
 const app = getApp();
 var WxParse = require('../../wxParse/wxParse.js');
 Page({
@@ -434,9 +434,13 @@ Page({
   },
   onLoad: function (options) {
     let that = this;
+
+
     wx.showLoading({
       title: '加载中',
     })
+
+
     //获取商品规格详情
     wx.request({
       url: app.globalData.http + '/mpa/goods/' + options.id + '/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id

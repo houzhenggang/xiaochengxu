@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/messageList/messageList",
+    "pages/trends/trends",    
     "pages/index/index",
     "pages/regMob/regMob",
     "pages/category/category",
@@ -38,6 +39,12 @@
         "iconPath": "imgs/index.png",
         "selectedIconPath": "imgs/index_active.png",
         "text": "首页"
+      },
+      {
+        "pagePath": "pages/trends/trends",
+        "iconPath": "imgs/trends.png",
+        "selectedIconPath": "imgs/trends_active.png",
+        "text": "动态"
       },
       {
         "pagePath": "pages/category/category",
