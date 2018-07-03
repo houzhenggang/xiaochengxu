@@ -100,10 +100,11 @@ Page({
       method: 'GET',
       success (res) {
         // 对评论进行截取，只保留前十条评论
-        let temp = [];
         for (let i = 0; i < res.data.length; i++ ) {
+          // 当数组长度大于10时截取
           if (res.data[i].comments.length > 10) {
-            res.data[i].comments.splice(10, res.data[i].comments.length - 10)
+            res.data[i].comments.splice(10, res.data[i].comments.length - 10);
+
           }
         }
         that.setData({
@@ -113,7 +114,12 @@ Page({
       }
     })
   },
-
+  // 下拉刷新
+  onPullDownRefresh: function () {
+    console.log(111)
+    wx.startPullDownRefresh()
+    this.onLoad()
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

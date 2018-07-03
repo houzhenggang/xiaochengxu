@@ -3,7 +3,6 @@
   <view class='item_box' wx:for='{{trendsData}}' wx:key='{{index}}'>
 
     <view class='box_header'>
-      <image src='{{image}}emptyCar.png'></image>
       <view class='user_info'>
         <text>{{name}}</text>
         <text>{{item.created_at}}</text>
@@ -11,12 +10,12 @@
     </view>
 
     <view class='box_content'>
-      <view class='content_text'>{{item.type == 1 ? item.content : item.title}}</view>
-      <view class='image' wx:if='{{item.type == 2}}'>
-        <image src='{{image + item.cover_url}}' mode='aspectFit'></image>
+      <view class='{{item.type == 1 ? "content_text" : "content_text title"}}'>{{item.type == 1 ? item.content : item.title}}</view>
+      <view class='image' wx:if='{{item.type == 2 && item.cover_url}}'>
+        <image src='{{image + item.cover_url}}' mode='aspectFill'></image>
       </view>
-      <view class='images' wx:else>
-        <image wx:for='{{item.images}}' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}' wx:key='{{ind}}'></image>
+      <view class='images' wx:if='{{item.type == 1}}'>
+        <image wx:for='{{item.images}}' class='{{item.images.length == 1 ? "one" : (item.images.length == 2 ? "two" : "")}}' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}' wx:key='{{ind}}' mode='widthFix'></image>
       </view>
       <view class='stati_data'>
         <view class='stati_left'>

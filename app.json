@@ -1,7 +1,7 @@
 {
   "pages": [
     "pages/trends/trends",    
-    "pages/index/index",
+    "pages/index/index",    
     "pages/regMob/regMob",
     "pages/category/category",
     "pages/shoppingCar/shoppingCar",

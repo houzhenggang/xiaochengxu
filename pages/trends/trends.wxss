@@ -1,7 +1,7 @@
 /* pages/trends/trends.wxss */
 page {
   background: #F9F9F9;
-  height: 100%;
+  min-height: 100%;
   position: relative;
 }
 
@@ -72,30 +72,49 @@ input {
 .box_content .content_text {
   color: #333333;
   font-size: 28rpx;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical; 
+  overflow: hidden;
+  line-height: 40rpx;
+}
+.box_content .content_text.title {
+  font-size: 32rpx;
+  -webkit-line-clamp: 1;
 }
 .box_content .image {
   margin-top: 20rpx;
   width: 690rpx;
   height: 386rpx;
+  overflow: hidden;
 }
 .box_content .images {
   margin-top: 20rpx;
   width: 690rpx;
-  overflow: hidden;
+  /* overflow: hidden; */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 .box_content .images image {
-  float: left;
   width: 222rpx;
-  margin-left: 12rpx;
+  margin-bottom: 10rpx;
   height: 222rpx;
 }
-.box_content .images image:nth-child(3n+1) {
-  margin-left: 0;
+.box_content .images .one {
+  width: 690rpx;
+  height: 386rpx;
+}
+.box_content .images .two {
+  width: 338rpx;
+  height: 338rpx;
 }
 .box_content .image image{
-  display: block;
-  margin: 0 auto;
+  float: left;
   height: 386rpx;
+  margin: 0 auto;
+  width: 690rpx;
 }
 .box_content .stati_data {
   margin-top: 34rpx;
