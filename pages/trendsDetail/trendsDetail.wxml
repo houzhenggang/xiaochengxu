@@ -1,7 +1,7 @@
 
 <!--pages/trends/trends.wxml-->
 <view>
-  <view class='item_box' wx:for='{{trendsData}}' wx:key='{{index}}'>
+  <view class='item_box'>
 
     <view class='box_header'>
       <image src='{{image}}emptyCar.png'></image>
@@ -11,7 +11,7 @@
       </view>
     </view>
 
-    <view class='box_content'>
+    <view class='box_content' wx:if="{{trendsData.type==1}}">
       <view class='content_text'>{{item.type == 1 ? item.content : item.title}}</view>
       <view class='image' wx:if='{{item.type == 2}}'>
         <image src='{{image + item.cover_url}}' mode='aspectFit'></image>

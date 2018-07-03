@@ -96,9 +96,10 @@ Page({
     let that = this;
     // 动态列表数据
     wx.request({
-      url: app.globalData.http + '/mpa/feed/'+options.id,
+      url: app.globalData.http + '/mpa/feed/95',
       method: 'GET',
       success(res) {
+        console.log(res)
         that.setData({
           trendsData: res.data,
           name: app.globalData.name
