@@ -112,6 +112,12 @@ Page({
               recommend_goods: res.data,
               recommend: 1
             })
+          }else{
+            that.setData({
+              recommend_first: [],
+              recommend_goods:[],
+              recommend: 2
+            })
           }        
         }
       },
@@ -131,6 +137,11 @@ Page({
           that.setData({
             special_goods: res.data,
             special:1
+          })
+        }else{
+          that.setData({
+            special_goods:[],
+            special: 2
           })
         }
       },
@@ -175,9 +186,16 @@ Page({
       dataType: 'json',
       method: 'GET',
       success: function (data) {
-        that.setData({
-          good: data.data
-        })
+        if (data.data.length>0){
+          that.setData({
+            good: data.data
+          })
+        }else{
+          that.setData({
+            good:[]
+          })
+        }
+       
       }
     })
     //商品分类
@@ -206,11 +224,17 @@ Page({
         if (code.indexOf('20') > -1) {
           //截取第一件商品
           let firstGood = res.data.splice(0, 1);
-          if (firstGood.length) {
+          if (firstGood.length>0) {
             that.setData({
               recommend_first: firstGood,
               recommend_goods: res.data,
               recommend: 1
+            })
+          }else{
+            that.setData({
+              recommend_first: [],
+              recommend_goods: [],
+              recommend: 2
             })
           }
         }
@@ -232,6 +256,11 @@ Page({
             special_goods: res.data,
             special: 1
           })
+        }else{
+          that.setData({
+            special_goods:[],
+            special: 2
+          })
         }
       },
       fail: function (res) {
@@ -251,7 +280,7 @@ Page({
     var remain = parseInt(this.data.remain)
     var cur = Math.floor(scrollLeft / width)
     var cateNum = Math.floor(scrollWidth / width)
-    if (remain != 0 && scrollLeft >= (scrollWidth -width-(remain-1) * width/5)) {
+    if (remain != 0 && scrollLeft >= (scrollWidth -width-(remain-1) * width/5)-20) {
       cur++
       this.setData({
         current: cur
