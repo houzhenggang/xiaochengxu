@@ -86,7 +86,8 @@ Page({
     });
     that.setData({
       select: app.globalData.classIdx,
-      keyword: app.globalData.keyword
+      keyword: app.globalData.keyword,
+      leftTapArray:[]
     })
 		wx.setNavigationBarTitle({
 			title: '搜索',
