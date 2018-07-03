@@ -1,5 +1,5 @@
 <view class='container'>
-    <view class='message clearfix'>
+    <view wx:if class='message clearfix'>
         <image src='/imgs/Group@2x.png'></image>
         <view class='info'> 
             <view>以前的快乐</view>
@@ -26,9 +26,14 @@
                 今天12:23
             </view>
         </view>
-        <view class='title'>
+        <!-- <view class='title'>
             新品上新啦,小仙女们快来围观吧
             有优惠哦……
-        </view>
+        </view> -->
+        <image src='/imgs/userHead.png'></image>
+        <!-- <view class='title'>
+            新品上新啦,小仙女们快来围观吧
+            有优惠哦……
+        </view> -->
     </view>
 </view>
