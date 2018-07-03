@@ -34,6 +34,8 @@ Page({
       },
       success(res) {
         app.globalData.mobile = res.data.customer_service_mobile
+        app.globalData.logo_url = res.data.logo_url
+        app.globalData.name = res.data.name   
         that.setData({
           description: res.data
         }, function () {
@@ -123,6 +125,8 @@ Page({
       },
       success(res) {
         app.globalData.mobile = res.data.customer_service_mobile
+        app.globalData.logo_url = res.data.logo_url
+        app.globalData.name = res.data.name   
         that.setData({
           description: res.data
         }, function () {

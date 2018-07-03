@@ -73,15 +73,17 @@ App({
     userInfo: null,
 		classIdx:0,
     mobile:'',
+    name:'',
+    logo_url:'',
 		good:[],
     address:1,
     info:'',
     userId:'',
     apiExt:'',
-    apiKey:'',
-    apiSecret:'',
+    apiKey:'132',
+    apiSecret:'123',
     login:false,
     timeStamp:'',
-    http:'https://develop.yiqixuan.com'
+    http:'https://wu-v11-develop.yiqixuan.com'
   }
 })
