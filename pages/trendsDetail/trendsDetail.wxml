@@ -1,1 +1,45 @@
 
+<!--pages/trends/trends.wxml-->
+<view>
+  <view class='item_box' wx:for='{{trendsData}}' wx:key='{{index}}'>
+
+    <view class='box_header'>
+      <image src='{{image}}emptyCar.png'></image>
+      <view class='user_info'>
+        <text>{{name}}</text>
+        <text>{{item.created_at}}</text>
+      </view>
+    </view>
+
+    <view class='box_content'>
+      <view class='content_text'>{{item.type == 1 ? item.content : item.title}}</view>
+      <view class='image' wx:if='{{item.type == 2}}'>
+        <image src='{{image + item.cover_url}}' mode='aspectFit'></image>
+      </view>
+      <view class='images' wx:else>
+        <image wx:for='{{item.images}}' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}' wx:key='{{ind}}'></image>
+      </view>
+      <view class='stati_data'>
+        <view class='stati_left'>
+          <view><image src='../../imgs/Browse_icon@2x.png'></image><text>{{item.pv_browse}}</text></view>
+          <view bindtap='commentVisi' data-id='{{item.id}}'><image src='../../imgs/Comment_icon@2x.png'></image><text>{{item.pv_share}}</text></view>
+        </view>
+        <view  wx:if='{{voted}}' data-id='{{item.id}}' bindtap='cancledVote'><image src='../../imgs/Zan_gary_red@2x.png'></image><text>{{item.pv_vote}}</text></view> 
+        <view bindtap='vote' data-id='{{item.id}}' wx:else><image src='../../imgs/Zan_gary_icon@2x.png'></image><text>{{item.pv_vote}}</text></view>
+      </view>
+
+      <view wx:if='{{item.comments.length}}' class='comments'>
+        <view wx:for='{{item.comments}}' wx:for-item='ite' wx:for-index='ind' wx:key='{{ind}}'>
+          <view wx:if='{{ite.type == 1}}'><text>{{ite.nick_name}} : </text>{{ite.content}}</view>
+          <view wx:else><text>{{name}}</text> 回复 <text>{{ite.nick_name}} : </text>{{ite.content}}</view>          
+        </view>
+        <view class='comments_count' wx:if='{{item.comment_success_count > 10}}'>共{{item.comment_success_count}}条回复></view>
+      </view>
+    </view>
+  </view>
+  <view class='bottom'>到底啦，去别处逛逛吧</view>
+  <view class='input_outer' wx:if='{{inputVisi}}'>
+      <input bindinput='userInput' bindblur='userBlur' placeholder='回复巴拉巴拉' auto-focus='{{autoFocus}}' bindconfirm='comment'></input>
+      <text class='{{value ? "active" : ""}}' bindtap='comment'>发送</text>  
+    </view>
+</view>
