@@ -661,6 +661,12 @@ Page({
               content: res.data.detail.content.replace(/\<img style="max-width:750.0px;"/gi, '<img style="width:100%;height:auto" ').replace(/750.0px/gi, '100%').replace(/width="\d+"/gi, '').replace(/height="\d+"/gi, '').replace(/\s+id/gi, ' class'),
             })
           }
+        }else{
+          wx.showToast({
+            title: '该商品已找不到',
+            icon:'none',
+            duration:2000
+          })
         }
       },
       fail: function () {
