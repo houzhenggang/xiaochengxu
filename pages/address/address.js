@@ -125,8 +125,7 @@ Page({
                   "Api-Secret": app.globalData.apiSecret,
                   'Api-Ext': app.globalData.apiExt
                 },
-                success: function (data) {
-                  console.log(data)                  
+                success: function (data) {       
                   var code = data.statusCode.toString()
                   if (code.indexOf('20') > -1) {
                   } else {

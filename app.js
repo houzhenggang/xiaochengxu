@@ -56,6 +56,8 @@ App({
     info:'',
     keyword:'',
     userId:false,
+    name:'',
+    logo_url:'',
     apiExt:'',
     apiKey:'',
     apiSecret:'',

@@ -58,9 +58,39 @@ button label{
 .usermotto {
   margin-top: 200px;
 }
+.bind_mobile {
+  display: flex;
+  height: 100rpx;
+  padding: 0 20rpx;
+  font-size: 24rpx;
+  color: #999999;
+  align-items: center;
+  justify-content: space-between;
+}
+.bind_mobile view {
+  display: flex;
+  font-size: 24rpx;
+  color: #999999;
+  align-items: center;
+}
+.bind_mobile button {
+  width: 124rpx;
+  height: 50rpx;
+  color: #EA2534;
+  padding: 0;
+  margin: 0;
+  border: 1px solid #EA2534;
+  text-align: center;
+  line-height: 50rpx;
+  font-size: 22rpx;
+}
+.bind_mobile image {
+  width: 46rpx;
+  height: 46rpx;
+  margin-right: 10rpx;
+}
 .orderinfo {
   width: 750rpx;
-  border-top:20rpx solid #f7f7f7;
   overflow: hidden;
   
 }

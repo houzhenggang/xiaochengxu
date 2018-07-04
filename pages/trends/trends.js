@@ -12,6 +12,7 @@ Page({
     comments: [1],
     trendsData:[],
     name: '',
+    logo_url:'',
     inputVisi: false,
     inputValue: '',
     voted: false,
@@ -22,29 +23,83 @@ Page({
   },
   // 动态点赞
   vote (e) {
-    console.log(e)
-    wx.request({
-      url: app.globalData.http + '/mpa/feed/' + e.currentTarget.dataset.id + '/vote',
-      method: 'POST',
-      header: {
-        'Api-Key':app.globalData.apiKey,
-        'Api-Secret': app.globalData.apiSecret
-      },
-      success (res) {
-        console.log(res)
-      }
-    })
+    let that = this;
+    // 判断是否已进行微信授权和绑定手机号
+    let userInfo = wx.getStorageSync('huzan_avatarUrl');
+    if (userInfo && app.globalData.userId) {
+      wx.request({
+        url: app.globalData.http + '/mpa/feed/' + e.currentTarget.dataset.id + '/vote',
+        method: 'POST',
+        header: {
+          'Api-Key': app.globalData.apiKey,
+          'Api-Secret': app.globalData.apiSecret,
+          'Api-Ext': app.globalData.apiExt
+        },
+        success(res) {
+          // 修改本地数据
+          let tempArr = that.data.trendsData,
+              i = e.currentTarget.dataset.index;
+          tempArr[i].vote = true;
+          tempArr[i].pv_vote += 1;
+          that.setData({
+            trendsData:tempArr
+          })
+          wx.showToast({
+            title: '点赞成功',
+          })
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '请完成微信和手机号授权',
+        icon: 'none',
+        complete() {
+          wx.switchTab({
+            url: '/pages/user/user',
+          })
+        }
+      })
+    }
   },
   // 动态取消点赞
   cancledVote (e) {
-    console.log(e)
-    // wx.request({
-    //   url: app.globalData.http + '/feed/' + id + '/canceled',
-    //   method: 'POST',
-    //   success(res) {
-    //     console.log(res)
-    //   }
-    // })
+    let that = this;
+    // 判断是否已进行微信授权和绑定手机号
+    let userInfo = wx.getStorageSync('huzan_avatarUrl');
+    if (userInfo && app.globalData.userId) {
+      wx.request({
+        url: app.globalData.http + '/mpa/feed/' + e.currentTarget.dataset.id + '/unvote',
+        method: 'POST',
+        header: {
+          'Api-Key': app.globalData.apiKey,
+          'Api-Secret': app.globalData.apiSecret,
+          'Api-Ext': app.globalData.apiExt
+        },
+        success(res) {
+          // 修改本地数据
+          let tempArr = that.data.trendsData,
+            i = e.currentTarget.dataset.index;
+          tempArr[i].vote = false;
+          tempArr[i].pv_vote -= 1;
+          that.setData({
+            trendsData: tempArr
+          })
+          wx.showToast({
+            title: '取消点赞成功',
+          })
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '请完成微信和手机号授权',
+        icon: 'none',
+        complete() {
+          wx.switchTab({
+            url: '/pages/user/user',
+          })
+        }
+      })
+    }
   },
   // input输入值改变
   userInput (e) {
@@ -73,6 +128,7 @@ Page({
       wx.showToast({
         title: '请完成微信和手机号授权',
         icon: 'none',
+        duration:2000,
         complete () {
           wx.switchTab({
             url: '/pages/user/user',
@@ -110,6 +166,26 @@ Page({
       url: '/pages/trendsDetail/trendsDetail?id=' + e.currentTarget.dataset.id,
     })
   },
+  // 时间格式化
+  getTime: function (value) {
+    // var reg = getRegExp('/-/')
+    var timestamp = value.replace(/-/gi, '/')
+    timestamp = new Date(timestamp).getTime()
+    var nowTime = new Date().getTime()
+    var disTime = nowTime - timestamp;
+    if (disTime < 60 * 60 * 1000) {
+      var time = Math.floor(disTime / 60 / 1000)
+      time = time + '分钟前'
+    } else if (disTime < 24 * 60 * 60 * 1000) {
+      var time = Math.floor(disTime / 60 / 1000 / 60)
+      time = time + '小时前'
+    } else if (disTime < 2 * 24 * 60 * 60 * 1000) {
+      var time = '昨天' + value.substring(11, 16)
+    } else {
+      var time = value
+    }
+    return time
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -129,7 +205,8 @@ Page({
         }
         that.setData({
           trendsData: res.data,
-          name: app.globalData.name
+          name: app.globalData.name,
+          logo_url: app.globalData.logo_url
         })
       }
     })

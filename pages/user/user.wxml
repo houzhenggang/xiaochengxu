@@ -14,8 +14,12 @@
     </block> 
   </view>
 </view>
+<view class='bind_mobile'>
+  <view><image src='{{image}}icon-phone @2x.png'></image><text>找不到订单或优惠券，绑定手机试试</text></view>
+  <button open-type='getPhoneNumber' bindgetphonenumber='getPhoneNumber'>立即绑定</button>
+</view>
 <view class='orderinfo'> 
-    <view data-curTab='1' class='myorder'  bindtap='toOrder'   hover-class="none">
+    <view data-curTab='1' class='myorder'  bindtap='toOrder' hover-class="none">
         <view>我的订单</view>
         <view><label>全部订单</label><image class='icon' src='{{image}}right.png?imageslim'></image></view>
     </view>

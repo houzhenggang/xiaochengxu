@@ -3,6 +3,7 @@
   <view class='item_box' wx:for='{{trendsData}}' wx:key='{{index}}'>
 
     <view class='box_header'>
+      <image src='{{image + logo_url}}'></image>
       <view class='user_info'>
         <text>{{name}}</text>
         <text>{{item.created_at}}</text>
@@ -26,8 +27,8 @@
             <image src='../../imgs/Comment_icon@2x.png'></image><text>{{item.pv_share}}</text>
           </view>
         </view>
-        <view  wx:if='{{voted}}' data-id='{{item.id}}' bindtap='cancledVote'><image src='../../imgs/Zan_gary_red@2x.png'></image><text>{{item.pv_vote}}</text></view> 
-        <view bindtap='vote' data-id='{{item.id}}' wx:else><image src='../../imgs/Zan_gary_icon@2x.png'></image><text>{{item.pv_vote}}</text></view>
+        <view  wx:if='{{item.vote}}' data-id='{{item.id}}' data-index="{{index}}" bindtap='cancledVote'><image src='../../imgs/Zan_gary_red@2x.png'></image><text>{{item.pv_vote}}</text></view> 
+        <view bindtap='vote' data-id='{{item.id}}' data-index="{{index}}" wx:else><image src='../../imgs/Zan_gary_icon@2x.png'></image><text>{{item.pv_vote}}</text></view>
       </view>
 
       <view wx:if='{{item.comments.length}}' class='comments'>

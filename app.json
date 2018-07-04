@@ -1,13 +1,13 @@
 {
   "pages": [
     "pages/trends/trends",    
+    "pages/user/user",    
     "pages/trendsDetail/trendsDetail",
     "pages/messageList/messageList",
     "pages/index/index",    
     "pages/regMob/regMob",
     "pages/category/category",
     "pages/shoppingCar/shoppingCar",
-    "pages/user/user",
     "pages/search/search",
     "pages/address/address",
     "pages/surePay/surePay",
