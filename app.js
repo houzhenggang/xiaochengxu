@@ -51,8 +51,6 @@ App({
     userInfo: null,
 		classIdx:0,
     mobile:'',
-    name:'',
-    logo_url:'',
 		good:[],
     address:1,
     info:'',
@@ -63,6 +61,6 @@ App({
     apiSecret:'',
     login:false,
     timeStamp:'',
-    http:'https://wu-v11-develop.yiqixuan.com'
+    http:'https://develop.yiqixuan.com'
   }
 })
