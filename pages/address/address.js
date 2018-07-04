@@ -7,42 +7,51 @@ Page({
    */
   data: {
       address:[],
+      userId:true,
       image: 'http://image.yiqixuan.com/'
-      // apiKey:'',
-      // apiSecret:''
   },
   /*
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-      var that = this;
+  onLoad:function(){
+    this.setData({
+      userId: app.globalData.userId
+    })
+  },
+  onShow: function (options) {
+    var that = this;
+    if (app.globalData.userId){
       wx.showLoading({
         title: '加载中',
       })
       wx.request({
-        url: app.globalData.http +'/mpa/address',
-        method:'get',
-        dataType:'json',
+        url: app.globalData.http + '/mpa/address',
+        method: 'get',
+        dataType: 'json',
         header: {
           "Api-Key": app.globalData.apiKey,
           "Api-Secret": app.globalData.apiSecret,
           'Api-Ext': app.globalData.apiExt
         },
-        success:function(data){
+        success: function (data) {
           var code = data.statusCode.toString()
-          if(code==500|| code.indexOf('40')>-1){
+          if (code == 500 || code.indexOf('40') > -1) {
 
-          }else{
+          } else {
             that.setData({
               address: data.data
             })
           }
-            
+
         },
-        complete:function(){
+        complete: function () {
+          that.setData({
+            userId: app.globalData.userId
+          })
           wx.hideLoading()
         }
       })
+    }
   },
   address:function(){
     var that=this
@@ -76,11 +85,6 @@ Page({
                         console.log(data)
                         var code = data.statusCode.toString()
                         if (code.indexOf('20') > -1) {
-                          var adds = that.data.address
-                          adds.unshift(data.data)
-                          that.setData({
-                            address:adds
-                          })
                         }else{
                           var tip =data.data.message.toString()
                           wx.showToast({
@@ -125,12 +129,6 @@ Page({
                   console.log(data)                  
                   var code = data.statusCode.toString()
                   if (code.indexOf('20') > -1) {
-
-                    var adds = that.data.address
-                    adds.unshift(data.data)
-                    that.setData({
-                      address: adds
-                    })
                   } else {
                     var tip = data.data.message.toString()
                     wx.showToast({
@@ -175,10 +173,12 @@ Page({
             },
             success: function (data) {
               var code=data.statusCode.toString()
-              if (code.indexOf('20')>-1) {
-                
-                if (that.data.address[index].id == app.globalData.address.id){
-                  app.globalData.address=1
+              if (code.indexOf('20')>-1) { 
+                if (app.globalData.address!=1){
+                  //判断删除的地址是否是app.globalData.address的地址
+                  if (that.data.address[index].id == app.globalData.address.id) {
+                    app.globalData.address = 1
+                  }
                 }
                 that.data.address.splice(index, 1)
                 that.setData({
@@ -328,9 +328,88 @@ Page({
               icon: 'none',
               duration: 1000,
             })
-          }
-           
+          } 
         }
       })
-  }
+  },
+  getPhoneNumber: function (e) {
+    var that=this
+    if (e.detail.encryptedData && e.detail.iv) {
+      wx.login({
+        success(code) {
+          wx.request({
+            url: app.globalData.http + '/mpa/wechat/auth',
+            method: 'POST',
+            header: {
+              'Api-Ext': app.globalData.apiExt
+            },
+            data: {
+              code: code.code
+            },
+            success: function (res) {
+              var codes = res.statusCode.toString()
+              if (codes >= 200 && codes < 300) {
+                //保存响应头信息
+                if (res.header["api-key"] && res.header["api-secret"]) {
+                  var apiKey = res.header["api-key"],
+                    apiSecret = res.header["api-secret"];
+                } else if (res.header["Api-Key"] && res.header["Api-Secret"]) {
+                  var apiKey = res.header["Api-Key"],
+                    apiSecret = res.header["Api-Secret"];
+                }
+                app.globalData.apiKey = apiKey
+                app.globalData.apiSecret = apiSecret
+                wx.request({
+                  url: app.globalData.http + '/mpa/user/login',
+                  method: 'post',
+                  data: {
+                    encrypted: e.detail.encryptedData,
+                    iv: e.detail.iv
+                  },
+                  dataType: 'json',
+                  header: {
+                    "Api-Key": apiKey,
+                    "Api-Secret":apiSecret,
+                    'Api-Ext': app.globalData.apiExt
+                  },
+                  success: function (data) {
+                    var datas = data.statusCode.toString()
+                    if (datas >= 200 && datas < 300) {
+                      if (data.header["api-key"] && data.header["api-secret"]) {
+                        var apiKey = data.header["api-key"],
+                          apiSecret = data.header["api-secret"];
+                      } else if (data.header["Api-Key"] && data.header["Api-Secret"]) {
+                        var apiKey = data.header["Api-Key"],
+                          apiSecret = data.header["Api-Secret"];
+                      }
+                      app.globalData.apiKey = apiKey
+                      app.globalData.apiSecret = apiSecret
+                      app.globalData.userId = true
+                      that.setData({
+                        userId:true
+                      })
+                    } else {
+                      var tip = data.data.message.toString()
+                      wx.showToast({
+                        title: tip,
+                        icon: 'none',
+                        duration: 2000
+                      })
+                    }
+                  }
+                })
+              } else {
+                var tip = res.data.message.toString()
+                wx.showToast({
+                  title: tip,
+                  icon: 'none',
+                  duration: 2000
+                })
+              }
+            }
+          })
+        }
+      })
+    }
+  },
 })

@@ -1,7 +1,7 @@
 .address{
   border-top:20rpx solid  #F6F7F7;
   border-bottom:20rpx solid  #F6F7F7;
-  height: 132rpx;
+  /* height: 132rpx; */
   position: relative;
   padding-left:60rpx;
 
@@ -26,7 +26,7 @@ page{
         clear: both;  
     } 
  .name{
-   margin-top:10rpx; 
+   margin-top:14rpx; 
  }
 .name label:nth-child(1){
   font-family: PingFangSC-Medium;
@@ -90,10 +90,10 @@ page{
   font-family: PingFangSC-Regular;
   font-size: 24rpx; 
   color: #333333;
-  margin-top:4rpx;
+  margin-top:14rpx;
   padding-right:20rpx;
   line-height:36rpx;
-
+  margin-bottom:14rpx;
 }
 .detail{
   width: 100%;

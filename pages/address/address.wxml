@@ -18,4 +18,5 @@
     <label  catchtap='deleteAddr' data-index='{{index}}'><image src='{{image}}del.png'></image>删除</label>
   </view>
 </view>
-<view class='address' catchtap='address'>新增收货地址</view>
+<button wx:if="{{!userId}}" class='address'  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">新增收货地址</button>
+<view  wx:else class='address' catchtap='address'>新增收货地址</view>

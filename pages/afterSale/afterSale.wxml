@@ -19,10 +19,10 @@
       <label>退货理由</label> 
       <label>{{reasonText}}</label>
     </view>
-    <view class='reason'>
+     <view class='reason'>
       <label>退货备注</label> 
-      <textarea maxlength='500'  bindconfirm='remark' value='{{value}}'></textarea>  
-    </view>
+      <textarea maxlength='500' adjust-position  class="{{disabled?'disabel':''}}" bindconfirm='remark' value='{{value}}'></textarea>  
+    </view> 
     <view class='tip'>
       注：目前只支持自寄退货
     </view>
@@ -31,7 +31,7 @@
     <view class='selectReason'>
         <view class='clear' bindtap='closeReason'></view>
         <view class='name'>请选择退货理由</view>
-        <view wx:for='{{reason}}' data-reasonID='{{index+1}}' wx:key='index'  catchtap='chooseReason' wx:for-index='index'>{{item}}</view>
+        <view class='rea' wx:for='{{reason}}' data-reasonID='{{index+1}}' wx:key='index'  bindtap='chooseReason' wx:for-index='index'>{{item}}</view>
     </view>
 </view>
 <view class='submit' bindtap='submit'>下一步</view>

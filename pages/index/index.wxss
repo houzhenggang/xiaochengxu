@@ -38,7 +38,7 @@ swiper{
 .index_banner1{
 	display: block;
 	width: 710rpx;
-	height: 288rpx;
+	height: auto;
 	margin: 0 auto;
 	margin-top: 22rpx;
 	border-radius: 8rpx;
@@ -66,8 +66,8 @@ swiper{
 }
 .index_classify image{
 	display: block;
-	width: 104rpx;
-	height: 104rpx;
+	width: 90rpx;
+	height: 90rpx;
 	border-radius:50%;
   margin: 0 auto;
 }
@@ -76,6 +76,7 @@ swiper{
   text-align: center;
   font-size: 26rpx;
   margin-top: 20rpx;
+  color:#666;
 }
 
 .index_current{
@@ -100,8 +101,8 @@ swiper{
 }
 
 .index_contact{
-min-height:200rpx;
-width:710rpx;
+  min-height:200rpx;
+  width:710rpx;
 	margin: 0 auto;
 	margin-top: 62rpx;
 	position: relative;
@@ -111,6 +112,9 @@ width:710rpx;
   justify-content: flex-start;
   align-items: center;
 	letter-spacing: 1rpx;
+  padding:20rpx;
+box-sizing:border-box;
+
 	border-radius: 10rpx;
 }
 .index_contact .contact_h4{
@@ -119,20 +123,25 @@ width:710rpx;
 	font-size: 28rpx;
 	color: #333333;
 	line-height: 40rpx;
+  width:422rpx;
 }
 .index_contact>image{
   width: 160rpx;
   height: 160rpx;
-  margin: 0 20rpx;
+  margin-right:20rpx;
   }
 .index_contact .contact_p{
 	display: block;
 	font-size: 26rpx;
-	margin-top: 10rpx;
-	width:404rpx;
+	margin: 10rpx 0;
+	width:422rpx;
 	font-family: PingFangSC-Regular;
 	color: #333333;
+  word-break:break-all;
 	line-height: 44rpx;
+}
+.index_contact .desc{
+  height: 100%;
 }
 .index_contact button{
 	width: 66rpx;
@@ -140,7 +149,7 @@ width:710rpx;
 	padding: 0;
 	border-radius: 64rpx 66rpx;
 	background: #EDEDED;
-  margin-bottom: 20rpx;
+  /* margin-bottom: 20rpx; */
 }
 .index_contact button image{
 	width: 66rpx;
@@ -149,6 +158,7 @@ width:710rpx;
 }
 .index_contact button::after{
 	border: none;
+  padding: 0;
 }
 .contacts{
   padding:0 20rpx;
@@ -187,7 +197,7 @@ width:710rpx;
 .index_recommend>text:nth-child(2){
 	margin-left: 42rpx;
 }
-.index_recommend view{
+/* .index_recommend view{
   font-size:24rpx;
 	display: inline-block;  
   font-family:PingFangSC-Light;
@@ -195,7 +205,21 @@ width:710rpx;
   color:#999999;
   font-weight:normal;
   line-height:44rpx;
+} */
+
+.index_recommend view {
+font-size:24rpx;
+display:inline-block;
+font-family:PingFangSC-Light;
+/* margin-left:140rpx; */
+color:#999999;
+font-weight:normal;
+line-height:44rpx;
+width:260rpx;
+text-align:right;
+
 }
+
 .index_recommend image:nth-child(4){
 	position: absolute;
 	width: 338rpx;

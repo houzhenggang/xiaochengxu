@@ -10,8 +10,6 @@ Page({
       sms:'',
       disabled:false,
       image: 'http://image.yiqixuan.com/'
-      // apiKey:'',
-      // apiSecret:''
   },
   getSms:function(){
     var that=this;
