@@ -24,33 +24,47 @@ Page({
   },
   // 动态点赞
   vote(e) {
-    var that=this
-    wx.request({
-      url: app.globalData.http + '/mpa/feed/' + that.data.commentId+ '/vote',
-      method: 'POST',
-      header: {
-        'Api-Key': app.globalData.apiKey,
-        'Api-Secret': app.globalData.apiSecret,
-        'Api-Ext': app.globalData.apiExt
-      },
-      success(res) {
-        if (res.statusCode >= 200 && res.statusCode<300){
-          var voteCount = that.data.trendsData.pv_vote;
-          console.log(voteCount)
-          voteCount++
-          var vote = 'trendsData.pv_vote'
-          that.setData({
-            voted:true,
-            [vote]: voteCount
-          })
-          wx.showToast({
-            title: '点赞成功',
-            icon:'success',
-            duration:1000
-          })
+    if (app.globalData.userId && app.globalData.userInfo){
+      var that = this
+      wx.request({
+        url: app.globalData.http + '/mpa/feed/' + that.data.commentId + '/vote',
+        method: 'POST',
+        header: {
+          'Api-Key': app.globalData.apiKey,
+          'Api-Secret': app.globalData.apiSecret,
+          'Api-Ext': app.globalData.apiExt
+        },
+        success(res) {
+          if (res.statusCode >= 200 && res.statusCode < 300) {
+            var voteCount = that.data.trendsData.pv_vote;
+            console.log(voteCount)
+            voteCount++
+            var vote = 'trendsData.pv_vote'
+            that.setData({
+              voted: true,
+              [vote]: voteCount
+            })
+            wx.showToast({
+              title: '点赞成功',
+              icon: 'success',
+              duration: 1000
+            })
+          }
         }
-      }
-    })
+      })
+    }else{
+      wx.showToast({
+        title: '请完成微信和手机号授权',
+        icon:'none',
+        duration:2000
+      })
+      setTimeout(function(){
+        wx.switchTab({
+          url: '/pages/user/user'
+        })
+      },2000)
+    }
+    
   },
   // 动态取消点赞
   cancledVote(e) {
@@ -97,10 +111,24 @@ Page({
   },
   // 点击评论
   commentVisi(e) {
-    this.setData({
-      inputVisi: true,
-      autoFocus: true
-    })
+    if (app.globalData.userId && app.globalData.userInfo){
+      this.setData({
+        inputVisi: true,
+        autoFocus: true
+      })
+    }else{
+      wx.showToast({
+        title: '请完成微信和手机号授权',
+        icon: 'none',
+        duration: 2000
+      })
+      setTimeout(function () {
+        wx.switchTab({
+          url: '/pages/user/user'
+        })
+      }, 2000)
+    } 
+    
   },
   // 动态评论
   comment(e) {
