@@ -227,23 +227,6 @@ Page({
       success: function (data) {
         var code = data.statusCode.toString()
         if (code >= 200 && code<300 ){
-          // var localgood=wx.getStorageSync('good')
-          // var local = that.data.local
-          // if (localgood){
-          //     for(var j=localgood.length-1;j>=0;j--){
-          //         for( var i=0;i<local.length;i++){
-          //           if (localgood[j].id == local[i].id){
-          //             localgood.splice(j,1)
-          //           }
-          //         }
-          //     }
-          //     wx.setStorage({
-          //       key: 'good',
-          //       data: localgood,
-          //     })
-          // }
-
-
           wx.request({
             url: app.globalData.http +'/mpa/payment/payment',
             method: "post",

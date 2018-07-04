@@ -640,7 +640,6 @@ Page({
                     }
                   },
                   fail: function () {
-
                   }
                 })
               } else {

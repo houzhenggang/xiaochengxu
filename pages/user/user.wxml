@@ -50,11 +50,9 @@
           <view>我的地址</view>
           <image class='icon' src='{{image}}right.png?imageslim'></image>
     </view>  
-      
-    <!-- <navigator>
-          <view>联系商家</view>
-          <image class='icon' src='/imgs/right.png'></image>
-    </navigator> -->
-    <!-- <button open-type="getUserInfo" bindtap='getInfo' >获取授权</button> -->
+     <view url='/pages/address/address' bindtap='goAddress' class='nav' hover-class="none">
+          <view>我的消息</view>
+          <image class='icon' src='{{image}}right.png'></image>
+    </view>    
 </view>
 

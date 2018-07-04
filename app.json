@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/trendsDetail/trendsDetail",
+    "pages/messageList/messageList",
     "pages/trends/trends",    
     "pages/index/index",    
     "pages/regMob/regMob",

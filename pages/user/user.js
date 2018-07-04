@@ -1,16 +1,14 @@
 var app=getApp()
 //获取应用实例
-var util = require('../../utils/util.js')
-
 Page({
   data: {
     userInfo: {},
     hasUserInfo: false,
     count1:'',
-    count2: '',
+    count2:'',
     count3:'',
     count4:'',
-    apiExt: '',
+    apiExt:'',
     image: 'http://image.yiqixuan.com/'
   },
   onShow: function () {

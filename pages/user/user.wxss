@@ -147,7 +147,10 @@ align-items: center;
   justify-content: space-between;
   align-items: center;
   display: flex;
-  /* border-bottom: 1rpx solid  #EBEBEB; */
+  border-bottom: 1rpx solid  #EBEBEB; 
+}
+.otherInfo .nav:last-child{
+  border-bottom:0;
 }
 .otherInfo view{
   font-family: PingFangSC-Regular;

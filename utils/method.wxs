@@ -2,12 +2,32 @@ var filters = {
   toFix: function (value) {
     return parseFloat(value).toFixed(2)//此处2为保留两位小数
   },
-  trim:function(value){
+  getTime: function (value, nowTime){
+    var reg= '2018-07-02 12:25';
+    var reg = getRegExp('/-/')
+    var timestamp = value.replace(reg, '/')
+    timestamp = new Date(timestamp).getTime()
+    var disTime = nowTime - timestamp;
+    if (disTime < 60 * 60 * 1000) {
+      var time = Math.floor(disTime / 60 / 1000)
+      time = time + '分钟前'
+    } else if (disTime < 24 * 60 * 60 * 1000) {
+      var time = Math.floor(disTime / 60 / 1000 / 60)
+      time = time + '小时前'
+    } else if (disTime < 2 * 24 * 60 * 60 * 1000) {
+      var time = '昨天' + str.substring(11)
+    } else {
+      var time = str
+    }
+    return time
+  },
+  trim: function (value) {
     var reg = getRegExp('^\s*|\s*$/g')
-    return value.replace(reg,'') //去除2端的空格
-  } 
+    return value.replace(reg, '') //去除2端的空格
+  }
 }
 module.exports = {
   toFix: filters.toFix,
-  trim: filters.trim
+  getTime: filters.getTime,
+  trim:filters.trim
 }
