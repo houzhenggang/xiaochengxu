@@ -610,8 +610,8 @@ Page({
                   },
                   dataType: 'json',
                   header: {
-                    "Api-Key": app.globalData.apiKey,
-                    "Api-Secret": app.globalData.apiSecret,
+                    "Api-Key":apiKey,
+                    "Api-Secret": apiSecret,
                     'Api-Ext': app.globalData.apiExt
                   },
                   success: function (data) {

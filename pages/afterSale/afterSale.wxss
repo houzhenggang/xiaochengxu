@@ -144,6 +144,9 @@ page{
   padding-left: 20rpx;
   border-bottom:1rpx solid #E3E3E3;
 }
+.disable{
+  pointer-events:none;
+}
 .selectReason view:nth-child(2){
     padding-left: 0;
     text-align: center;
@@ -169,6 +172,13 @@ page{
   top:50%;
   left: 35%;
   transform: rotate(45deg);
+}
+.selectReason .rea{
+  position: relative;
+  z-index: 8999;
+}
+.selectReason .disabel{
+  pointer-events:none;
 }
 .selectReason .clear::after{
   content:'';

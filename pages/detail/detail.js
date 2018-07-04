@@ -680,9 +680,9 @@ Page({
             show: 1,
             status: res.data.status
           })
-          if (res.data.detail) {
+          if (res.data.detail) {          
             that.setData({
-              content: res.data.detail.content.replace(/\<img style="max-width:750.0px;"/gi, '<img style="width:100%;height:auto" ').replace(/750.0px/gi, '100%').replace(/width="\d+"/gi, '').replace(/height="\d+"/gi, '').replace(/\s+id/gi,' class'),
+              content: res.data.detail.content.replace(/\<img style="max-width:750.0px;"/gi, '<img style="width:100%;height:auto" ').replace(/750.0px/gi, '100%').replace(/width="\d+"/gi, '').replace(/height="\d+"/gi, '').replace(/\s+id/gi, ' class').replace(/\<img/gi, '<img style="width:100%;height:auto" ').replace(/<p/gi, '<p style="font-size:12px;line-height:16px;"'),
             })
           }
         }else{

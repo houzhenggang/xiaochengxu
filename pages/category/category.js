@@ -89,9 +89,6 @@ Page({
       keyword: app.globalData.keyword,
       leftTapArray:[]
     })
-		wx.setNavigationBarTitle({
-			title: '搜索',
-		})
 		//请求一级分类，设置data数据
 		wx.request({
       url: app.globalData.http + '/mpa/category',
@@ -100,12 +97,23 @@ Page({
       },
 			success(res){
 				let leftSelectedIdx = app.globalData.classIdx;
-        res.data[leftSelectedIdx].selected = true
+        
+        if (leftSelectedIdx > res.data.length-1){
+          res.data[0].selected = true
+          leftSelectedIdx = 0,
+          app.globalData.classIdx=0
+          that.setData({
+            select:0,
+          })
+        }else{
+          res.data[leftSelectedIdx].selected = true
+        }
 				that.setData({
 					category:res.data[leftSelectedIdx].children,
-					leftTapArray:res.data
+					leftTapArray:res.data,
+          second:1
 				})
-        if (!res.data[leftSelectedIdx].children.length){
+        if (res.data[leftSelectedIdx].children.length==0){
           wx.request({
             url: app.globalData.http + '/mpa/goods/search',
             data: {
@@ -116,7 +124,8 @@ Page({
             },
             success(data) {
               that.setData({
-                goods: data.data
+                goods: data.data,
+                second:2
               })
             }
           })

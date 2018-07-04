@@ -24,7 +24,8 @@ Page({
       '其他'
     ],
     value:'',
-    items:''
+    items:'',
+    disabled:false
   },
 
   /**
@@ -154,18 +155,19 @@ Page({
   selectReason:function(){
       var that=this;
       that.setData({
-        isShow:false
+        isShow:false,
+        disabled:true
       })
   },
   /*关闭选择原因*/
   closeReason:function(){
       this.setData({
-        isShow:true
+        isShow:true,
+        disabled: false
       })
   },
 
   remark:function(event){
-    console.log('222' + event.detail.value)
     var value = event.detail.value
     this.setData({
         value:value
@@ -175,11 +177,11 @@ Page({
   chooseReason:function(event){
       var that=this;
       var id=event.target.dataset.reasonid;
-      console.log(id);
       this.setData({
         reasonID:id,
         reasonText: that.data.reason[id-1]+' >',
-        isShow: true
+        isShow: true,
+        disabled: false
       })
   }
 })
