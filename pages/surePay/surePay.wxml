@@ -46,6 +46,6 @@
     </view>
 </view>
 <view class='confirmPay'>
-    <view>合计：<label>{{filters.toFix(totalOrder/100)}}</label></view>
+    <view>合计：<label>￥{{filters.toFix(totalOrder/100)}}</label></view>
     <button disabled='{{disabled}}' bindtap='confirm'>立即支付</button>
 </view>
