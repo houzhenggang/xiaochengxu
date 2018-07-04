@@ -2,7 +2,7 @@
 <view class='container'>
     <view class='search'>
       	<icon type='search' size='12' color='#999999'></icon>
-      <input bindinput='searchKey' placeholder='搜索品牌或商品' focus='true' value='{{value}}' confirm-type="搜索" bindconfirm='confirmEvent'></input>
+      <input bindinput='searchKey' placeholder='{{keyword}}' focus='true' value='{{value}}' confirm-type="搜索" bindconfirm='confirmEvent'></input>
       <image class='clearKey' src='{{image}}clear.png' bindtap='clearKey'></image>
     </view>
     <view class='searchList'>

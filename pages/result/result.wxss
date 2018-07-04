@@ -144,6 +144,11 @@ page{
 	color: #333333;
   height: 72rpx;
 	line-height: 36rpx;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
 }
 .item_box .item_text_view{
 	display: flex;

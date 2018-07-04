@@ -3,10 +3,10 @@
   <open-data type="userNickName" lang="zh_CN"></open-data>  -->
   <view class="userinfo">
     <block wx:if='{{!hasUserInfo}}'>
-         <button  open-type="getUserInfo" bindgetuserinfo="getInfo" hover-class='none'>
+          <button  open-type="getUserInfo" bindgetuserinfo="getInfo"   hover-class='none'>
               <image src='{{image}}userHead.png?imageslim'></image>
                <label>点击头像获取信息</label> 
-        </button>
+        </button> 
     </block>
      <block wx:else='{{hasUserInfo}}'>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
@@ -17,7 +17,7 @@
 <view class='orderinfo'> 
     <view data-curTab='1' class='myorder'  bindtap='toOrder'   hover-class="none">
         <view>我的订单</view>
-        <view><label>所有订单</label><image class='icon' src='{{image}}right.png?imageslim'></image></view>
+        <view><label>全部订单</label><image class='icon' src='{{image}}right.png?imageslim'></image></view>
     </view>
     <view class='orderList'>
         <view  data-curTab='200'  bindtap='toOrder' hover-class="none">
@@ -54,10 +54,5 @@
           <view>我的消息</view>
           <image class='icon' src='{{image}}right.png'></image>
     </view>    
-    <!-- <navigator>
-          <view>联系商家</view>
-          <image class='icon' src='/imgs/right.png'></image>
-    </navigator> -->
-    <!-- <button open-type="getUserInfo" bindtap='getInfo' >获取授权</button> -->
 </view>
 

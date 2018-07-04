@@ -16,9 +16,9 @@ Page({
     session: false,
     datalist: [],
     //本地购物车
-    local: true,
+    local: false,
     locallist: [],
-    userId: true
+    userId: false
   },
   //点击结算
   balance() {
@@ -32,23 +32,28 @@ Page({
     } else {
       //购物车商品信息
       let good = that.data.datalist;
-      // var local = that.data.locallist
+      var local = that.data.locallist
       //已选择商品数组
       var seleArr = [];
       //本地购物车已选中的商品
-      // var localArr=[];
+      var localArr=[];
       for (var i = 0; i < good.length; i++) {
         if (good[i].isSelect) {
           seleArr.push(good[i])
         }
       }
-      // for (var i = 0; i < local.length; i++) {
-      //   if (local[i].isSelect) {
-      //     localArr.push(local[i])
-      //   }
-      // }
+      for (var i = 0; i < local.length; i++) {
+        if (local[i].isSelect) {
+          localArr.push(local[i])
+        }
+      }
 
-      app.globalData.good = seleArr;
+      if (seleArr.length > 0) {
+        app.globalData.good = seleArr;
+      } else if (localArr.length > 0) {
+        app.globalData.good = localArr;
+      }
+      // app.globalData.good = seleArr;
       // app.globalData.localArr = localArr;
       wx.navigateTo({
         url: '/pages/surePay/surePay',
@@ -252,7 +257,7 @@ Page({
     var newNum = parseInt(_this.data.locallist[index].count) + 1;
     //PUT，用户修改购物车数量
     wx.request({
-      url: app.globalData.http + '/mpa/goods_sku/sku_stock/' + id,
+      url: app.globalData.http + '/mpa/goods_sku/stock_count/' + id,
       method: "GET",
       header: {
         "Api-Key": app.globalData.apiKey,
@@ -569,9 +574,8 @@ Page({
       }
     })
   },
-
   getPhoneNumber: function (e) {
-    console.log(e)
+    var that = this
     if (e.detail.encryptedData && e.detail.iv) {
       wx.login({
         success(code) {
@@ -588,15 +592,15 @@ Page({
               var codes = res.statusCode.toString()
               if (codes >= 200 && codes < 300) {
                 //保存响应头信息
-                // if (res.header["api-key"] && res.header["api-secret"]) {
-                //   var apiKey = res.header["api-key"],
-                //     apiSecret = res.header["api-secret"];
-                // } else if (res.header["Api-Key"] && res.header["Api-Secret"]) {
-                //   var apiKey = res.header["Api-Key"],
-                //     apiSecret = res.header["Api-Secret"];
-                // }
-                // app.globalData.apiKey = apiKey
-                // app.globalData.apiSecret = apiSecret
+                if (res.header["api-key"] && res.header["api-secret"]) {
+                  var apiKey = res.header["api-key"],
+                    apiSecret = res.header["api-secret"];
+                } else if (res.header["Api-Key"] && res.header["Api-Secret"]) {
+                  var apiKey = res.header["Api-Key"],
+                    apiSecret = res.header["Api-Secret"];
+                }
+                app.globalData.apiKey = apiKey
+                app.globalData.apiSecret = apiSecret
                 wx.request({
                   url: app.globalData.http + '/mpa/user/login',
                   method: 'post',
@@ -606,13 +610,22 @@ Page({
                   },
                   dataType: 'json',
                   header: {
-                    "Api-Key": app.globalData.apiKey,
-                    "Api-Secret": app.globalData.apiSecret,
+                    "Api-Key":apiKey,
+                    "Api-Secret": apiSecret,
                     'Api-Ext': app.globalData.apiExt
                   },
                   success: function (data) {
                     var datas = data.statusCode.toString()
                     if (datas >= 200 && datas < 300) {
+                      if (data.header["api-key"] && data.header["api-secret"]) {
+                        var apiKey = data.header["api-key"],
+                          apiSecret = data.header["api-secret"];
+                      } else if (data.header["Api-Key"] && data.header["Api-Secret"]) {
+                        var apiKey = data.header["Api-Key"],
+                          apiSecret = data.header["Api-Secret"];
+                      }
+                      app.globalData.apiKey = apiKey
+                      app.globalData.apiSecret = apiSecret
                       app.globalData.userId = true
                       that.setData({
                         userId: true
@@ -625,6 +638,8 @@ Page({
                         duration: 2000
                       })
                     }
+                  },
+                  fail: function () {
                   }
                 })
               } else {
@@ -650,6 +665,8 @@ Page({
       })
       this.setData({
         page: 0,
+        userId: true,
+        locallist: [],
         selectAll: false,
         totalPrice: 0.00
       })
@@ -679,7 +696,7 @@ Page({
               })
             } else {
               that.setData({
-                session: false,
+                session: false
               })
             }
           } else {
@@ -737,6 +754,7 @@ Page({
         })
       } else {
         that.setData({
+          locallist:[],
           local: false,
           userId: app.globalData.userId
         })
