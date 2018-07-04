@@ -18,6 +18,10 @@ App({
     apiSecret:'',
     login:false,
     timeStamp:'',
+<<<<<<< HEAD
     http:'https://wu-v11-develop.yiqixuan.com'
+=======
+    http:'https://test.yiqixuan.com'
+>>>>>>> feature1.0.1
   }
 })

@@ -25,6 +25,6 @@
     </view>
 </view>
 <view class='refundMoney'>退款金额 ¥{{filters.toFix(data.refund_amount/100)}}</view>
-<view class='bottom' wx:if="{{data.status==1||data.status==4}}" >
+<view class='bottom' wx:if="{{data.status==1}}" >
     <view class='cancel' data-id='1' bindtap='cancel'>取消申请</view>
 </view>
