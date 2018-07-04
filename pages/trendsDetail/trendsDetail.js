@@ -110,16 +110,17 @@ Page({
         })
       }
     })
-    // // 评论列表数据
-    // wx.request({
-    //   url: app.globalData.http + '/mpa/comment?feed_id='+97,
-    //   method: 'GET',
-    //   success(res) {
-    //     that.setData({
-    //       comments:res.data
-    //     })
-    //   }
-    // })
+    // 评论列表数据
+    wx.request({
+      url: app.globalData.http + '/mpa/comment?feed_id='+97,
+      method: 'GET',
+      success(res) {
+        console.log(res)
+        that.setData({
+          comments:res.data
+        })
+      }
+    })
 
 
   },
