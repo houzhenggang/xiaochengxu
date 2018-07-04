@@ -16,6 +16,7 @@ Page({
     inputValue: '',
     voted: false,
     autoFocus: false,
+    hasUserInfo:true,
     value: '',
     commentId: 0
   },
@@ -53,7 +54,6 @@ Page({
   },
   // input框失去焦点
   userBlur (e) {
-    console.log(111111)
     this.setData({
       inputVisi: false,
       autoFocus:false
@@ -61,11 +61,25 @@ Page({
   },
   // 点击评论
   commentVisi (e) {
-    this.setData({
-      inputVisi: true,
-      autoFocus:true,
-      commentId: e.currentTarget.dataset.id
-    })
+    // 判断是否已进行微信授权和绑定手机号
+    let userInfo = wx.getStorageSync('huzan_avatarUrl');
+    if (userInfo && app.globalData.userId) {
+      this.setData({
+        inputVisi: true,
+        autoFocus: true,
+        commentId: e.currentTarget.dataset.id
+      })
+    } else {
+      wx.showToast({
+        title: '请完成微信和手机号授权',
+        icon: 'none',
+        complete () {
+          wx.switchTab({
+            url: '/pages/user/user',
+          })
+        }
+      })
+    }
   },
   // 动态评论
   comment(e) {
@@ -87,6 +101,13 @@ Page({
       success(res) {
         console.log(res)
       }
+    })
+  },
+  // 跳转动态详情
+  commentDetail (e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '/pages/trendsDetail/trendsDetail?id=' + e.currentTarget.dataset.id,
     })
   },
   /**

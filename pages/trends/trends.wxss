@@ -151,8 +151,8 @@ input {
   border-style:solid;
   border-color:transparent transparent #F5F5F7 transparent;
   position:absolute;
-  left:30%;
-  top:-40rpx;
+  left:20%;
+  top:-38rpx;
 }
 .box_content .comments view {
   margin-bottom: 60rpx;
