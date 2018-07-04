@@ -46,13 +46,13 @@
     </view>
 </view>
 <view class='otherInfo'>
-    <view url='/pages/address/address' bindtap='goAddress' class='nav' hover-class="none">
+    <navigator url='/pages/address/address' class='nav' hover-class="none">
           <view>我的地址</view>
           <image class='icon' src='{{image}}right.png?imageslim'></image>
-    </view>  
-     <view url='/pages/address/address' bindtap='goAddress' class='nav' hover-class="none">
+    </navigator>  
+     <navigator url='/pages/messageList/messageList' class='nav' hover-class="none">
           <view>我的消息</view>
           <image class='icon' src='{{image}}right.png'></image>
-    </view>    
+    </navigator>  
 </view>
 

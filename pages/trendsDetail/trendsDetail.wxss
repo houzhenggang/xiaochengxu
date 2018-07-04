@@ -14,6 +14,14 @@ page {
   align-items: center;
   padding: 30rpx 20rpx; 
 }
+.box_content .images .one {
+  width: 690rpx;
+  height: 386rpx;
+}
+.box_content .images .two {
+  width: 338rpx;
+  height: 338rpx;
+}
 .input_outer text {
   font-size: 28rpx;
   margin-left: 20rpx;
@@ -63,13 +71,19 @@ input {
   flex: 1;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   color: #999999;
 }
 .item_box .box_header .user_info text:first-child {
   color: #333333;
-  font-size: 28rpx;
+  font-size: 24rpx;
+  font-family: PingFangSC-Regular;
 }
-
+.user_info  text:nth-child(2){
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #9CA2B0;
+}
 .box_content {
   color: #999;
   width: 100%;
@@ -85,12 +99,12 @@ input {
 }
 .box_content .image {
   margin-top: 20rpx;
-  width: 690rpx;
+  width: 100%;
   height: 386rpx;
 }
 .box_content .images {
   margin-top: 20rpx;
-  width: 690rpx;
+  width: 100%;
   overflow: hidden;
 }
 .box_content .images image {

@@ -91,7 +91,7 @@ input {
 }
 .box_content .images {
   margin-top: 20rpx;
-  width: 690rpx;
+  width: 100%;
   /* overflow: hidden; */
   display: flex;
   justify-content: space-between;
@@ -102,6 +102,13 @@ input {
   margin-bottom: 10rpx;
   height: 222rpx;
 }
+
+.box_content .image image{
+  float: left;
+  height: 386rpx;
+  margin: 0 auto;
+  width: 690rpx;
+}
 .box_content .images .one {
   width: 690rpx;
   height: 386rpx;
@@ -109,12 +116,6 @@ input {
 .box_content .images .two {
   width: 338rpx;
   height: 338rpx;
-}
-.box_content .image image{
-  float: left;
-  height: 386rpx;
-  margin: 0 auto;
-  width: 690rpx;
 }
 .box_content .stati_data {
   margin-top: 34rpx;

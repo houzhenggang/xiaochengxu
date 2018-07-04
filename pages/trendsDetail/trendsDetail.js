@@ -17,36 +17,70 @@ Page({
     voted: false,
     autoFocus: false,
     value: '',
-    commentId: 0,
+    commentId: '',
     comments:[],
     content: '',
     timestamp:''
   },
   // 动态点赞
   vote(e) {
-    console.log(e)
+    var that=this
     wx.request({
-      url: app.globalData.http + '/mpa/feed/' + e.currentTarget.dataset.id + '/vote',
+      url: app.globalData.http + '/mpa/feed/' + that.data.commentId+ '/vote',
       method: 'POST',
       header: {
         'Api-Key': app.globalData.apiKey,
-        'Api-Secret': app.globalData.apiSecret
+        'Api-Secret': app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       success(res) {
-        console.log(res)
+        if (res.statusCode >= 200 && res.statusCode<300){
+          var voteCount = that.data.trendsData.pv_vote;
+          console.log(voteCount)
+          voteCount++
+          var vote = 'trendsData.pv_vote'
+          that.setData({
+            voted:true,
+            [vote]: voteCount
+          })
+          wx.showToast({
+            title: '点赞成功',
+            icon:'success',
+            duration:1000
+          })
+        }
       }
     })
   },
   // 动态取消点赞
   cancledVote(e) {
-    console.log(e)
-    // wx.request({
-    //   url: app.globalData.http + '/feed/' + id + '/canceled',
-    //   method: 'POST',
-    //   success(res) {
-    //     console.log(res)
-    //   }
-    // })
+    var that=this
+    wx.request({
+      url: app.globalData.http + '/mpa/feed/' + that.data.commentId+ '/unvote',
+      method: 'POST',
+      header: {
+        'Api-Key': app.globalData.apiKey,
+        'Api-Secret': app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
+      success(res) {
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          var voteCount = that.data.trendsData.pv_vote;
+          console.log(voteCount)
+          voteCount--
+          var vote ='trendsData.pv_vote'
+          that.setData({
+            voted: false,
+            [vote]: voteCount
+          })
+          wx.showToast({
+            title: '取消点赞',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
   },
   // input输入值改变
   userInput(e) {
@@ -65,13 +99,11 @@ Page({
   commentVisi(e) {
     this.setData({
       inputVisi: true,
-      autoFocus: true,
-      commentId: e.currentTarget.dataset.id
+      autoFocus: true
     })
   },
   // 动态评论
   comment(e) {
-    console.log(e)
     this.setData({
       autoFocus: false
     })
@@ -81,7 +113,8 @@ Page({
       method: 'POST',
       header: {
         'Api-Key': app.globalData.apiKey,
-        'Api-Secret': app.globalData.apiSecret
+        'Api-Secret': app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       data: {
         content: that.data.value
@@ -130,28 +163,32 @@ Page({
     let that = this;
     // 动态列表数据
     wx.request({
-      url: app.globalData.http + '/mpa/feed/97',
+      url: app.globalData.http + '/mpa/feed/'+options.id,
       method: 'GET',
-      header: {
-        "Api-Key": app.globalData.apiKey,
-        "Api-Secret": app.globalData.apiSecret,
-        'Api-Ext': app.globalData.apiExt
-      },
       success(res) {
         var nodes = res.data.content.replace(/<img/gi, '<img style="width:100%;"')
-          .replace(/<p/gi, '<p style="font-size:24rpx;"')
-        // that.setData({
-        //   trendsData: res.data,
-        //   name: app.globalData.name,
-        //   content:nodes
-        // })
-        var timestamp = that.getTime(res.data.created_at)
-        that.setData({
-          trendsData: res.data,
-          name: '麻婆豆腐',
-          content: nodes,
-          timestamp: timestamp
-        })
+          .replace(/<p/gi, '<p style="font-size:24rpx;"');
+        var timestamp = that.getTime(res.data.created_at);
+
+        if (!res.data.vote){
+          that.setData({
+            trendsData: res.data,
+            name: app.globalData.name,
+            content: nodes,
+            timestamp: timestamp,
+            commentId: options.id,
+            voted:false
+          })
+        }else{
+          that.setData({
+            trendsData: res.data,
+            name: app.globalData.name,
+            content: nodes,
+            timestamp: timestamp,
+            commentId: options.id,
+            voted: true
+          })
+        }
       }
     })
     // 评论列表数据
@@ -159,11 +196,9 @@ Page({
       url: app.globalData.http + '/mpa/comment',
       method: 'GET',
       data:{
-        feed_id:97
+        feed_id: options.id
       },
       header: {
-        "Api-Key": app.globalData.apiKey,
-        "Api-Secret": app.globalData.apiSecret,
         'Api-Ext': app.globalData.apiExt
       },
       success(res) {
@@ -182,51 +217,9 @@ Page({
   },
 
   /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
 
   }
 })
