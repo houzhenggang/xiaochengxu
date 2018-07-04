@@ -19,7 +19,8 @@ Page({
     value: '',
     commentId: 0,
     comments:[],
-    content: ''
+    content: '',
+    timestamp:''
   },
   // 动态点赞
   vote(e) {
@@ -55,7 +56,6 @@ Page({
   },
   // input框失去焦点
   userBlur(e) {
-    console.log(111111)
     this.setData({
       inputVisi: false,
       autoFocus: false
@@ -94,12 +94,49 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
+  getTime: function (value)  {
+    // var reg = getRegExp('/-/')
+    var timestamp = value.replace(/-/gi, '/')
+    timestamp = new Date(timestamp).getTime()
+    var nowTime = new Date().getTime()
+    var disTime = nowTime - timestamp;
+    if (disTime < 60 * 60 * 1000) {
+      var time = Math.floor(disTime / 60 / 1000)
+      time = time + '分钟前'
+    } else if (disTime < 24 * 60 * 60 * 1000) {
+      var time = Math.floor(disTime / 60 / 1000 / 60)
+      time = time + '小时前'
+    } else if (disTime < 2 * 24 * 60 * 60 * 1000) {
+      var time = '昨天' + value.substring(11,16)
+    } else {
+      var time = value
+    }
+    return time
+  },
+  time:function(value){
+    var timestamp = value.replace(/-/gi, '/')
+    timestamp = new Date(timestamp).getTime()
+    var nowTime = new Date().getTime()
+    var disTime = nowTime - timestamp;
+    if (disTime < 24 * 60 * 60 * 1000) {
+      time = value.substring(11,16)
+    }else {
+      var time = value.substring(5, 16)
+    }
+    return time
+  },
+
   onLoad: function (options) {
     let that = this;
     // 动态列表数据
     wx.request({
       url: app.globalData.http + '/mpa/feed/97',
       method: 'GET',
+      header: {
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
       success(res) {
         var nodes = res.data.content.replace(/<img/gi, '<img style="width:100%;"')
           .replace(/<p/gi, '<p style="font-size:24rpx;"')
@@ -108,10 +145,12 @@ Page({
         //   name: app.globalData.name,
         //   content:nodes
         // })
+        var timestamp = that.getTime(res.data.created_at)
         that.setData({
           trendsData: res.data,
           name: '麻婆豆腐',
-          content: nodes
+          content: nodes,
+          timestamp: timestamp
         })
       }
     })
@@ -128,9 +167,13 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
       success(res) {
-        console.log(res)
+        var comment=res.data
+        comment.forEach(function(v){
+          var time = that.time(v.created_at)
+          v.time = time
+        })
         that.setData({
-          comments:res.data
+          comments: comment
         })
       }
     })

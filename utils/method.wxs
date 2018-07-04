@@ -2,11 +2,11 @@ var filters = {
   toFix: function (value) {
     return parseFloat(value).toFixed(2)//此处2为保留两位小数
   },
-  getTime: function (value, nowTime){
-    var reg= '2018-07-02 12:25';
+  getTime: function (value){
     var reg = getRegExp('/-/')
     var timestamp = value.replace(reg, '/')
     timestamp = new Date(timestamp).getTime()
+    // var nowTime = new Date().getTime()
     var disTime = nowTime - timestamp;
     if (disTime < 60 * 60 * 1000) {
       var time = Math.floor(disTime / 60 / 1000)

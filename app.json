@@ -19,7 +19,6 @@
     "pages/orderDetail/orderDetail",
     "pages/special/special",
     "pages/recommend/recommend",
-    "pages/orders/orders",
     "pages/cart/cart",
     "pages/shareDetail/shareDetail",
     "pages/categoryList/categoryList"

@@ -1,5 +1,5 @@
 
-<!--pages/trends/trends.wxml-->
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
 <view class='content'>
   <view class='item_box'>
 
@@ -7,7 +7,7 @@
       <image src='{{image}}emptyCar.png'></image>
       <view class='user_info'>
         <text>5555</text>
-        <text>{{trendsData.created_at}}</text>
+        <text>{{timestamp}}</text>
       </view>
     </view>
 
@@ -40,18 +40,19 @@
     <view wx:if='{{comments.length>0}}' class='comments'>
         <view wx:for='{{comments}}' wx:for-item='ite' wx:for-index='ind' wx:key='{{ind}}'>
           <view wx:if='{{ite.type == 1}}' class='comment clearfix'>
-              <view style='float:left'>
+              <view style='width:75%'>
                   <text class='user'>{{ite.nick_name}} : </text>{{ite.content}}
               </view>
-              <view style='float:right'>12:31</view>
+              <view style='text-align:right'>{{ite.time}}</view>
           </view>
-          <view wx:else class='comment clearfix'>
-                <view style='float:left'>
+          <view wx:else class='comment'>
+                <view style='width:75%'>
                 <text class='user'>{{name}}</text> 回复 <text class='store'>{{ite.nick_name}} : </text>{{ite.content}}
                 </view>
-                 <view style='float:right'>12:31</view>
+                <view style='text-align:right'>{{ite.time}}</view>
           </view>          
         </view>
+       <view class='top'></view>  
   </view>
   
   <!-- <view class='bottom'>到底啦，去别处逛逛吧</view> -->

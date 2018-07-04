@@ -1,4 +1,4 @@
-// pages/trends/trends.js
+ // pages/trends/trends.js
 const app = getApp();
 Page({
 
@@ -27,7 +27,8 @@ Page({
       method: 'POST',
       header: {
         'Api-Key':app.globalData.apiKey,
-        'Api-Secret': app.globalData.apiSecret
+        'Api-Secret': app.globalData.apiSecret,
+        
       },
       success (res) {
         console.log(res)
