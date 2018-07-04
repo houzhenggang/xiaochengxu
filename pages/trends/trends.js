@@ -104,7 +104,6 @@ Page({
           // 当数组长度大于10时截取
           if (res.data[i].comments.length > 10) {
             res.data[i].comments.splice(10, res.data[i].comments.length - 10);
-
           }
         }
         that.setData({
