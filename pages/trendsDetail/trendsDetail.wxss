@@ -128,14 +128,14 @@ input {
 .box_content .stati_data>view>image {
   height: 32rpx;
 }
-.box_content .comments {
+.item_box .comments {
   margin-top: 40rpx;
   background: #F5F5F7;
   padding: 20rpx;
   font-size: 28rpx;
   position: relative;
 }
-.box_content .comments::before {
+.item_box .comments::before {
   display:block;
   content:'';
   border-width:20rpx;
@@ -145,17 +145,56 @@ input {
   left:30%;
   top:-40rpx;
 }
-.box_content .comments view {
+.item_box .comments view {
   margin-bottom: 60rpx;
 }
-.box_content .comments text {
+.item_box .comments text {
   color: #000000;
 }
-.box_content .comments .comments_count {
+.item_box .comments .comments_count {
   color: #EA2534;
   margin-bottom: 0;
 }
+.comments{
+  background: #F6F7F7;
+  border-radius: 4px;
+  margin-top: 32rpx;
+}
+.comment{
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #3F3F3F;
+  line-height: 44rpx;
+  padding: 0 20rpx;
+  border-bottom: 1rpx solid #FDFDFD;
+}
+.comment label{
+  display: block;
+}
+.comment view{
+  line-height: 26rpx;
+}
+.user{
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #000000;
+  /* line-height: 44rpx; */
+}
+.clearfix:after{content:"";display:block;clear:both;}
+.clearfix{
+    zoom:1;
+}
 
+
+.store{
+  font-family: PingFangSC-Regular;
+  font-size: 28rpx;
+  color: #002222;
+  line-height: 44px;
+}
+.bottom{
+  	width: 750rpx;
+}
 .bottom{
 	width: 750rpx;
 	height: 140rpx;

@@ -39,13 +39,22 @@
     </view>
     <view wx:if='{{comments.length>0}}' class='comments'>
         <view wx:for='{{comments}}' wx:for-item='ite' wx:for-index='ind' wx:key='{{ind}}'>
-          <view wx:if='{{ite.type == 1}}'><text>{{ite.nick_name}} : </text>{{ite.content}}</view>
-          <view wx:else><text>{{name}}</text> 回复 <text>{{ite.nick_name}} : </text>{{ite.content}}</view>          
+          <view wx:if='{{ite.type == 1}}' class='comment clearfix'>
+              <view style='float:left'>
+                  <text class='user'>{{ite.nick_name}} : </text>{{ite.content}}
+              </view>
+              <view style='float:right'>12:31</view>
+          </view>
+          <view wx:else class='comment clearfix'>
+                <view style='float:left'>
+                <text class='user'>{{name}}</text> 回复 <text class='store'>{{ite.nick_name}} : </text>{{ite.content}}
+                </view>
+                 <view style='float:right'>12:31</view>
+          </view>          
         </view>
-        <view class='comments_count' wx:if='{{item.comment_success_count > 10}}'>共{{item.comment_success_count}}条回复></view>
   </view>
   
-  <view class='bottom'>到底啦，去别处逛逛吧</view>
+  <!-- <view class='bottom'>到底啦，去别处逛逛吧</view> -->
 </view>
  <view class='input_outer' wx:if='{{inputVisi}}'>
       <input bindinput='userInput' bindblur='userBlur' placeholder='回复巴拉巴拉' auto-focus='{{autoFocus}}' bindconfirm='comment'></input>

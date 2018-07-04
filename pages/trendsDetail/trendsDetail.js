@@ -103,17 +103,30 @@ Page({
       success(res) {
         var nodes = res.data.content.replace(/<img/gi, '<img style="width:100%;"')
           .replace(/<p/gi, '<p style="font-size:24rpx;"')
+        // that.setData({
+        //   trendsData: res.data,
+        //   name: app.globalData.name,
+        //   content:nodes
+        // })
         that.setData({
           trendsData: res.data,
-          name: app.globalData.name,
-          content:nodes
+          name: '麻婆豆腐',
+          content: nodes
         })
       }
     })
     // 评论列表数据
     wx.request({
-      url: app.globalData.http + '/mpa/comment?feed_id='+97,
+      url: app.globalData.http + '/mpa/comment',
       method: 'GET',
+      data:{
+        feed_id:97
+      },
+      header: {
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
       success(res) {
         console.log(res)
         that.setData({
