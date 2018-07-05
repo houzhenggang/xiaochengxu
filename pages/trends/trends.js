@@ -23,21 +23,6 @@ Page({
   },
   // 动态点赞
   vote (e) {
-<<<<<<< HEAD
-    console.log(e)
-    wx.request({
-      url: app.globalData.http + '/mpa/feed/' + e.currentTarget.dataset.id + '/vote',
-      method: 'POST',
-      header: {
-        'Api-Key':app.globalData.apiKey,
-        'Api-Secret': app.globalData.apiSecret,
-        
-      },
-      success (res) {
-        console.log(res)
-      }
-    })
-=======
     let that = this;
     // 判断是否已进行微信授权和绑定手机号
     let userInfo = wx.getStorageSync('huzan_avatarUrl');
@@ -75,7 +60,6 @@ Page({
         }
       })
     }
->>>>>>> 066e0f0bf399a0d62ff487147a6d38b695cd63cb
   },
   // 动态取消点赞
   cancledVote (e) {

@@ -89,7 +89,7 @@ Page({
           })
           wx.showToast({
             title: '取消点赞',
-            icon: 'none',
+            icon: 'success',
             duration: 1000
           })
         }

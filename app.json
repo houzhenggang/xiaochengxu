@@ -1,15 +1,10 @@
 {
   "pages": [
-<<<<<<< HEAD
     "pages/trends/trends",
-    "pages/index/index",
-=======
-    "pages/trends/trends",    
+    "pages/index/index",  
     "pages/user/user",    
->>>>>>> 066e0f0bf399a0d62ff487147a6d38b695cd63cb
     "pages/trendsDetail/trendsDetail",
     "pages/messageList/messageList",
-   
     "pages/regMob/regMob",
     "pages/category/category",
     "pages/shoppingCar/shoppingCar",
