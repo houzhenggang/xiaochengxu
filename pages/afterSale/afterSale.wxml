@@ -33,12 +33,5 @@
       注：目前只支持自寄退货
     </view>
 </view>
-<view class='afterReason' hidden='{{isShow}}'>
-    <view class='selectReason'>
-        <view class='clear' bindtap='closeReason'></view>
-        <view class='name'>请选择退货理由</view>
-        <view class='rea' wx:for='{{reason}}' data-reasonID='{{index+1}}' wx:key='index'  bindtap='chooseReason' wx:for-index='index'>{{item}}</view>
-    </view>
-</view>
 <view class='submit' bindtap='submit'>下一步</view>
 
