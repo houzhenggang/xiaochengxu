@@ -17,7 +17,7 @@
           <image src='{{image + item.cover_url}}' mode='aspectFill'></image>
         </view>
         <view class='images' wx:if='{{item.type == 1}}'>
-          <image wx:for='{{item.images}}' class='{{item.images.length == 1 ? "one" : (item.images.length == 2 ? "two" : "")}}' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}' wx:key='{{ind}}' mode='widthFix'></image>
+          <image wx:for='{{item.images}}' class='{{item.images.length == 1 ? "one" : (item.images.length == 2 ? "two" : "")}}' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}' wx:key='{{ind}}' mode='{{item.images.length > 2 ? widthFix : aspectFill}}'></image>
         </view>
       </view>
       <view class='stati_data'>
@@ -34,7 +34,7 @@
       <view wx:if='{{item.comments.length}}' class='comments'>
         <block wx:for='{{item.comments}}' wx:for-item='ite' wx:for-index='ind' wx:key='{{ind}}'>
           <view wx:if='{{ite.type == 1}}'><text>{{ite.nick_name}} : </text>{{ite.content}}</view>
-          <view wx:else><text>{{name}}</text><text> 回复 </text><text>{{ite.nick_name}} : </text>{{ite.content}}</view>          
+          <view wx:else><text>{{name}}</text><text>回复</text><text>{{ite.nick_name}} : </text> {{ite.content}}</view>          
         </block>
         <view class='comments_count' wx:if='{{item.comment_success_count > 10}}'>共{{item.comment_success_count}}条回复></view>
       </view>

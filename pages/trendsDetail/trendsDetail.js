@@ -193,6 +193,11 @@ Page({
     wx.request({
       url: app.globalData.http + '/mpa/feed/'+options.id,
       method: 'GET',
+      header: {
+        'Api-Key': app.globalData.apiKey,
+        'Api-Secret': app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
       success(res) {
         var nodes = res.data.content.replace(/<img/gi, '<img style="width:100%;"')
           .replace(/<p/gi, '<p style="font-size:24rpx;"');

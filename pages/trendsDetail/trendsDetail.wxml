@@ -39,7 +39,7 @@
     </view>
     <view wx:if='{{comments.length>0}}' class='comments'>
         <view wx:for='{{comments}}' wx:for-item='ite' wx:for-index='ind' wx:key='{{ind}}'>
-          <view wx:if='{{ite.type == 1}}' class='comment clearfix'>
+          <view wx:if='{{ite.type == 1}}' class='comment'>
               <view style='width:75%'>
                   <text class='user'>{{ite.nick_name}} : </text>{{ite.content}}
               </view>

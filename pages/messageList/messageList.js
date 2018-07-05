@@ -6,13 +6,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    data:[]
+    data:[],
+    name:'',
+    image:'http://image.yiqixuan.com/',
+    logo_url:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+    })
     var that=this
     wx.request({
       url: app.globalData.http + '/mpa/comment/unread',
@@ -24,14 +30,59 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
       success: function (data) {
-        console.log(data)
+        if (data.data.length) {
+          wx.hideLoading();
+        } else {
+          wx.hideLoading();
+          wx.showToast({
+            title: '暂无未查看消息',
+            icon: 'none'
+          })
+          setTimeout(function () {
+            wx.hideToast()
+          }, 2000)
+        }
+        for (let i = 0; i < data.data.length; i++) {
+          data.data[i].time_stamp = that.getTime(data.data[i].updated_at)
+        }
         that.setData({
-          info: data.data
+          data: data.data,
+          name: app.globalData.name,
+          logo_url: app.globalData.logo_url
         })
+      },
+      fail() {
+        wx.hideLoading();
+        wx.showToast({
+          title: '获取动态数据失败，请重试',
+          icon: 'none'
+        })
+        setTimeout(function () {
+          wx.hideToast()
+        }, 2000)
       }
     })
   },
-
+  // 时间格式化
+  getTime: function (value) {
+    // var reg = getRegExp('/-/')
+    var timestamp = value.replace(/-/gi, '/')
+    timestamp = new Date(timestamp).getTime()
+    var nowTime = new Date().getTime()
+    var disTime = nowTime - timestamp;
+    if (disTime < 60 * 60 * 1000) {
+      var time = Math.floor(disTime / 60 / 1000)
+      time = time + '分钟前'
+    } else if (disTime < 24 * 60 * 60 * 1000) {
+      var time = Math.floor(disTime / 60 / 1000 / 60)
+      time = time + '小时前'
+    } else if (disTime < 2 * 24 * 60 * 60 * 1000) {
+      var time = '昨天' + value.substring(11, 16)
+    } else {
+      var time = value
+    }
+    return time
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

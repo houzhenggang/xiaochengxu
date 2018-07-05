@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/afterSale/afterSale",
     "pages/index/index",    
+    "pages/afterSale/afterSale",
     "pages/trends/trends",    
     "pages/user/user",    
     "pages/trendsDetail/trendsDetail",

@@ -7,6 +7,7 @@ Page({
     count1:'',
     count2:'',
     count3:'',
+    userId:'',
     count4:'',
     apiExt:'',
     messageNum:'',

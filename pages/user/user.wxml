@@ -14,7 +14,7 @@
     </block> 
   </view>
 </view>
-<view class='bind_mobile' wx:if="{{}}">
+<view class='bind_mobile' wx:if="{{!userId}}">
   <view><image src='{{image}}icon-phone @2x.png'></image><text>找不到订单或优惠券，绑定手机试试</text></view>
   <button open-type='getPhoneNumber' bindgetphonenumber='getPhoneNumber'>立即绑定</button>
 </view>

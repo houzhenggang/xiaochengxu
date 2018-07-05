@@ -125,6 +125,9 @@ input {
 .box_content .stati_data .stati_left view:first-child {
   margin-right: 54rpx;
 }
+.box_content .stati_data .stati_left view:first-child image {
+  height: 22rpx;
+}
 .box_content .stati_data view {
   display: flex;
   align-items: center;
@@ -132,7 +135,7 @@ input {
 .box_content .stati_data view image {
   display: block;
   width: 30rpx;
-  height: 22rpx;
+  height: 30rpx;
   margin-right: 20rpx;
 }
 .box_content .stati_data>view>image {
@@ -156,10 +159,21 @@ input {
   top:-38rpx;
 }
 .box_content .comments view {
-  margin-bottom: 60rpx;
+  margin-top: 60rpx;
+  overflow: hidden;
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+.box_content .comments view:first-child {
+  margin-top: 0;
 }
 .box_content .comments text {
+  float: left;
   color: #000000;
+}
+.box_content .comments text:nth-child(2) {
+  color: #999999;
 }
 .box_content .comments .comments_count {
   color: #EA2534;

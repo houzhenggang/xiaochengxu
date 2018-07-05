@@ -1,39 +1,13 @@
 <view class='container'>
-    <view class='message clearfix'>
-        <image class='head' src='/imgs/Group@2x.png'></image>
+    <view class='message clearfix' wx:for='{{data}}' wx:key='index'>
+        <image class='head' src='{{image + logo_url}}'></image>
         <view class='info'> 
-            <view>以前的快乐</view>
-            <view>
-            这身搭配听不错哦fashion！点赞点赞
-            </view>
-            <view>
-                今天12:23
-            </view>
+            <view>{{name}}</view>
+            <view>{{item.content}}</view>
+            <view>{{item.time_stamp}}</view>
         </view>
-        <view class='title'>
-            新品上新啦,小仙女们快来围观吧
-            有优惠哦……
-        </view>
-    </view>
-     <view class='message clearfix'>
-        <image class='head' src='/imgs/Group@2x.png'></image>
-        <view class='info'> 
-            <view>以前的快乐</view>
-            <view>
-            这身搭配听不错哦fashion！点赞点赞
-            </view>
-            <view>
-                今天12:23
-            </view>
-        </view>
-        <!-- <view class='title'>
-            新品上新啦,小仙女们快来围观吧
-            有优惠哦……
-        </view> -->
-        <image class='banner' src='/imgs/Rectangle 10@2x(1).png'></image>
-        <!-- <view class='title'>
-            新品上新啦,小仙女们快来围观吧
-            有优惠哦……
-        </view> -->
+        <view class='title' wx:if='{{item.feed.type == 2}}'>{{item.feed.title}}</view>
+        <view class='title' wx:elif='{{item.feed.type == 1 && !item.images.length}}'>{{item.feed.content}}</view>
+        <image class='banner' wx:else src='{{image + item.images[0]}}'></image>
     </view>
 </view>
