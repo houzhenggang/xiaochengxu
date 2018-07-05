@@ -9,6 +9,7 @@ Page({
     count3:'',
     count4:'',
     apiExt:'',
+    messageNum:'',
     image: 'http://image.yiqixuan.com/'
   },
   onShow: function () {
@@ -17,11 +18,13 @@ Page({
     if (uerinfo){
       that.setData({
         userInfo: uerinfo,
-        hasUserInfo: true
+        hasUserInfo: true,
+        userId: app.globalData.userId
       })
     }else{
       that.setData({
-        hasUserInfo: false
+        hasUserInfo: false,
+        userId: app.globalData.userId
       })
     }
     if (app.globalData.userId){
@@ -41,6 +44,22 @@ Page({
             count2: datas[1].count,
             count3: datas[2].count,
             count4: datas[3].count,
+          })
+        }
+      })
+      wx.request({
+        url: app.globalData.http + '/mpa/comment/unread/count',
+        method: 'GET',
+        dataType: 'json',
+        header: {
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
+          'Api-Ext': app.globalData.apiExt
+        },
+        success: function (data) {
+          var datas = data.data
+          that.setData({
+            messageNum: datas
           })
         }
       })
