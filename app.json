@@ -6,6 +6,7 @@
     "pages/trendsDetail/trendsDetail",
     "pages/messageList/messageList",
     "pages/regMob/regMob",
+    "pages/orders/orders",
     "pages/category/category",
     "pages/shoppingCar/shoppingCar",
     "pages/search/search",
