@@ -170,7 +170,13 @@ Page({
       _this.setData({
         [num]: newNum,
         totalPrice: total
+      },function(){
+          wx.setStorage({
+            key: 'good',
+            data: _this.data.locallist,
+          })
       })
+
     } else if (parseInt(_this.data.locallist[index].count) == 1) {//当删除数量等于1时，调用DELETE接口删除所选
       wx.showModal({
         // title: '删除',
@@ -270,6 +276,11 @@ Page({
           var num = 'locallist[' + index + '].count';
           _this.setData({
             [num]: newNum
+          }, function () {
+            wx.setStorage({
+              key: 'good',
+              data: _this.data.locallist,
+            })
           })
           //计算合计金额
           if (_this.data.locallist[index].isSelect) {
