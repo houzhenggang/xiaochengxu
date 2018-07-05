@@ -109,10 +109,13 @@ Page({
   },
   // input框失去焦点
   userBlur (e) {
-    this.setData({
-      inputVisi: false,
-      autoFocus:false
-    })
+    let that = this;
+    setTimeout(function(){
+      that.setData({
+        inputVisi: false,
+        autoFocus: false
+      })
+    },200)
   },
   // 点击评论
   commentVisi (e) {
@@ -148,8 +151,9 @@ Page({
       url: app.globalData.http + '/mpa/feed/' + that.data.commentId + '/comment',
       method: 'POST',
       header: {
-        'Api-Key': app.globalData.apiKey,
-        'Api-Secret': app.globalData.apiSecret
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
       },
       data: {
         content: that.data.value
@@ -190,11 +194,19 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+    })
     let that = this;
     // 动态列表数据
     wx.request({
       url: app.globalData.http + '/mpa/feed',
       method: 'GET',
+      header: {
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
       success (res) {
         // 对评论进行截取，只保留前十条评论
         for (let i = 0; i < res.data.length; i++ ) {
@@ -202,12 +214,35 @@ Page({
           if (res.data[i].comments.length > 10) {
             res.data[i].comments.splice(10, res.data[i].comments.length - 10);
           }
+          res.data[i].time_stamp = that.getTime(res.data[i].created_at)
+        }
+        if (res.data.length) {
+          wx.hideLoading();
+        } else {
+          wx.hideLoading();          
+          wx.showToast({
+            title: '暂无动态数据',
+            icon:'none'
+          })
+          setTimeout(function(){
+            wx.hideToast()
+          },2000)
         }
         that.setData({
           trendsData: res.data,
           name: app.globalData.name,
           logo_url: app.globalData.logo_url
         })
+      },
+      fail () {
+        wx.hideLoading();        
+        wx.showToast({
+          title: '获取动态数据失败，请重试',
+          icon: 'none'
+        })
+        setTimeout(function () {
+          wx.hideToast()
+        }, 2000)
       }
     })
   },

@@ -6,7 +6,7 @@
       <image src='{{image + logo_url}}'></image>
       <view class='user_info'>
         <text>{{name}}</text>
-        <text>{{item.created_at}}</text>
+        <text>{{item.time_stamp}}</text>
       </view>
     </view>
 
@@ -34,15 +34,15 @@
       <view wx:if='{{item.comments.length}}' class='comments'>
         <block wx:for='{{item.comments}}' wx:for-item='ite' wx:for-index='ind' wx:key='{{ind}}'>
           <view wx:if='{{ite.type == 1}}'><text>{{ite.nick_name}} : </text>{{ite.content}}</view>
-          <view wx:else><text>{{name}}</text> 回复 <text>{{ite.nick_name}} : </text>{{ite.content}}</view>          
+          <view wx:else><text>{{name}}</text><text> 回复 </text><text>{{ite.nick_name}} : </text>{{ite.content}}</view>          
         </block>
         <view class='comments_count' wx:if='{{item.comment_success_count > 10}}'>共{{item.comment_success_count}}条回复></view>
       </view>
     </view>
   </view>
-  <view class='bottom'>到底啦，去别处逛逛吧</view>
-  <view class='input_outer' wx:if='{{inputVisi}}'>
+  <view class='bottom' wx:if='{{trendsData.length}}'>到底啦，去别处逛逛吧</view>
+</view>
+<view class='input_outer' wx:if='{{inputVisi}}'>
       <input bindinput='userInput' bindblur='userBlur' placeholder='{{"回复" + name}}' auto-focus='{{autoFocus}}' bindconfirm='comment'></input>
       <text class='{{value ? "active" : ""}}' bindtap='comment'>发送</text>  
-    </view>
-</view>
+  </view>
