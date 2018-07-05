@@ -4,9 +4,9 @@
   <view class='item_box'>
 
     <view class='box_header'>
-      <image src='{{image}}emptyCar.png'></image>
+      <image src='{{image + logo_url}}'></image>
       <view class='user_info'>
-        <text>5555</text>
+        <text>{{name}}</text>
         <text>{{timestamp}}</text>
       </view>
     </view>
@@ -14,7 +14,7 @@
     <view class='box_content' wx:if="{{trendsData.type==1}}">
       <view class='content_text'>{{trendsData.content}}</view>
       <view class='images'>
-          <image wx:for='{{trendsData.images}}' class='{{trendsData.images.length == 1 ? "one" : (trendsData.images.length == 2 ? "two" : "")}}' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}' wx:key='{{ind}}' mode='widthFix'></image>
+          <image wx:for='{{trendsData.images}}' class='{{trendsData.images.length == 1 ? "one" : (trendsData.images.length == 2 ? "two" : "more")}}' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageView2/1/w/222/h/222' wx:key='{{ind}}' mode='{{trendsData.images.length > 2 ? aspectFit : widthFix}}'  data-ind='{{ind}}' catchtap='viewImages'></image>
         </view>
       <view class='stati_data'>
         <view class='stati_left'>

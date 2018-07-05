@@ -11,7 +11,13 @@ Page({
     image:'http://image.yiqixuan.com/',
     logo_url:''
   },
-
+  // 跳转动态详情
+  trendsDetail(e) {
+    console.log(e)
+    wx.navigateTo({
+      url: '/pages/trendsDetail/trendsDetail?id=' + e.currentTarget.dataset.id,
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

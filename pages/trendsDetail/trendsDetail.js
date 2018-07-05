@@ -17,10 +17,12 @@ Page({
     voted: false,
     autoFocus: false,
     value: '',
+    logo_url:'',
     commentId: '',
     comments:[],
     content: '',
-    timestamp:''
+    timestamp:'',
+    page:0
   },
   // 动态点赞
   vote(e) {
@@ -130,6 +132,19 @@ Page({
     } 
     
   },
+  // 图片预览
+  viewImages(e) {
+    var that = this;
+    let ind = e.currentTarget.dataset.ind,
+      tempArr = [], temp = that.data.trendsData.images;
+    for (let i = 0; i < temp.length; i++) {
+      tempArr.push(that.data.image + temp[i].img_url)
+    }
+    wx.previewImage({
+      current: that.data.image + that.data.trendsData.images[ind].img_url, // 当前显示图片的http链接
+      urls: tempArr // 需要预览的图片http链接列表
+    })
+  },
   // 动态评论
   comment(e) {
     this.setData({
@@ -207,6 +222,7 @@ Page({
           that.setData({
             trendsData: res.data,
             name: app.globalData.name,
+            logo_url: app.globalData.logo_url,
             content: nodes,
             timestamp: timestamp,
             commentId: options.id,
@@ -216,6 +232,7 @@ Page({
           that.setData({
             trendsData: res.data,
             name: app.globalData.name,
+            logo_url: app.globalData.logo_url,            
             content: nodes,
             timestamp: timestamp,
             commentId: options.id,
@@ -248,11 +265,35 @@ Page({
 
 
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
-
+    // 评论列表数据
+    var that = this
+    var pages = this.data.page
+    pages++
+    wx.request({
+      url: app.globalData.http + '/mpa/comment',
+      method: 'GET',
+      data: {
+        feed_id: that.data.commentId,
+        page: pages
+      },
+      header: {
+        'Api-Ext': app.globalData.apiExt
+      },
+      success(res) {
+        if (res.data.length > 0) {
+          var comment = res.data
+          var com = that.data.comments.concat(comment)
+          comment.forEach(function (v) {
+            var time = that.time(v.created_at)
+            v.time = time
+          })
+          that.setData({
+            comments: com,
+            page: pages
+          })
+        }
+      }
+    })
   }
 })

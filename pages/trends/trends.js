@@ -142,6 +142,30 @@ Page({
       })
     }
   },
+  // 图片预览
+  viewImage (e) {
+    var that = this;
+    let index = e.currentTarget.dataset.index;
+    var arr = []
+    arr.push(that.data.image + that.data.trendsData[index].cover_url)
+    wx.previewImage({
+      current: that.data.image + that.data.trendsData[index].cover_url, // 当前显示图片的http链接
+      urls: arr // 需要预览的图片http链接列表
+    })
+  },
+  viewImages (e) {
+    var that = this;
+    let index = e.currentTarget.dataset.index,
+      ind = e.currentTarget.dataset.ind,
+      tempArr = [], temp = that.data.trendsData[index].images;
+    for (let i = 0; i < temp.length; i++) {
+      tempArr.push(that.data.image + temp[i].img_url)
+    }
+    wx.previewImage({
+      current: that.data.image + that.data.trendsData[index].images[ind].img_url, // 当前显示图片的http链接
+      urls: tempArr // 需要预览的图片http链接列表
+    })
+  },
   // 动态评论
   comment(e) {
     console.log(e)
@@ -303,53 +327,5 @@ Page({
       }
     })
     wx.stopPullDownRefresh()    
-  },
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
   }
 })

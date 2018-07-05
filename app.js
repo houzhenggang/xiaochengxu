@@ -66,6 +66,6 @@ App({
     apiSecret:'',
     login:false,
     timeStamp:'',
-    http:'https://wu-v11-develop.yiqixuan.com'
+    http:'https://test.yiqixuan.com'
   }
 })
