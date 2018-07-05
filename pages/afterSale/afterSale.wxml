@@ -15,13 +15,19 @@
       <label>退货数量</label> 
       <label>{{num}}</label>
     </view>
-    <view  class='desc' bindtap='selectReason'>
+     <!-- <view  class='desc' bindtap='selectReason'>
       <label>退货理由</label> 
       <label>{{reasonText}}</label>
-    </view>
+    </view>  -->
+    <picker  class='picker' bindchange="bindPickerChange"  range="{{reason}}">
+      <label>退货理由</label> 
+      <label style='float:right'>
+      {{reasonText}}
+      </label>
+    </picker>
      <view class='reason'>
       <label>退货备注</label> 
-      <textarea maxlength='500' adjust-position  class="{{disabled?'disabel':''}}" bindconfirm='remark' value='{{value}}'></textarea>  
+      <textarea maxlength='500'   bindconfirm='remark' value='{{value}}'></textarea>  
     </view> 
     <view class='tip'>
       注：目前只支持自寄退货

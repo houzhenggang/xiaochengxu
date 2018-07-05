@@ -71,7 +71,6 @@ textarea{
   font-family: PingFangSC-Regular;
   font-size: 22rpx;
   color: #999999;
-  margin-top: 
 }
 .clearfix:after{content:"";display:block;clear:both;}
 .clearfix{
@@ -91,7 +90,7 @@ textarea{
   font-family: PingFangSC-Regular;
   font-size: 26rpx;
   color: #666666;
-  line-height: 36rpx;
+  /* line-height: 36rpx; */
 } 
 .desc label:nth-child(2){
   color: #333;
@@ -190,4 +189,14 @@ page{
   width: 30rpx;
   height: 2rpx;
   transform: rotate(-45deg);
+}
+picker{
+  border-bottom:1rpx solid #E3E3E3;
+  height: 76rpx;
+}
+picker label{
+  font-family:PingFangSC-Regular;
+  font-size:26rpx;
+  color:#666666;
+  line-height: 76rpx;
 }
