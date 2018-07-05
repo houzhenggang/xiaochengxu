@@ -262,6 +262,11 @@ input {
 .comment label{
   display: block;
 }
+.comment view {
+  word-break: break-all;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
 .user{
   font-family: PingFangSC-Regular;
   font-size: 28rpx;

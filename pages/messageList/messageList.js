@@ -44,7 +44,11 @@ Page({
         }
         for (let i = 0; i < data.data.length; i++) {
           data.data[i].time_stamp = that.getTime(data.data[i].updated_at)
+          if (data.data[i].feed.type == 1 && data.data[i].images.length) {
+            data.data[i].img_url = data.data[i].images[0].img_url
+          }
         }
+        console.log(data.data)
         that.setData({
           data: data.data,
           name: app.globalData.name,
