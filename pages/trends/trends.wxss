@@ -53,6 +53,7 @@ input {
   margin-right: 20rpx;
 }
 .item_box .box_header .user_info {
+  font-family: PingFangSC-Light;
   flex: 1;
   display: flex;
   justify-content: space-between;
@@ -79,6 +80,7 @@ input {
   line-height: 40rpx;
 }
 .box_content .content_text.title {
+  font-family: PingFangSC-Regular;
   font-size: 32rpx;
   -webkit-line-clamp: 1;
 }
