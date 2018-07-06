@@ -13,10 +13,19 @@ Page({
   },
   // 跳转动态详情
   trendsDetail(e) {
-    console.log(e)
-    wx.navigateTo({
-      url: '/pages/trendsDetail/trendsDetail?id=' + e.currentTarget.dataset.id,
-    })
+    let index = e.currentTarget.dataset.index;
+    let that = this;
+    if (!that.data.data[index].feed) {
+      wx.showToast({
+        title: '该动态已被删除',
+        duration: 2000,
+        icon: 'none'
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/trendsDetail/trendsDetail?id=' + e.currentTarget.dataset.id,
+      })
+    }
   },
   /**
    * 生命周期函数--监听页面加载
@@ -48,13 +57,15 @@ Page({
             wx.hideToast()
           }, 2000)
         }
+        console.log(data)
         for (let i = 0; i < data.data.length; i++) {
           data.data[i].time_stamp = that.getTime(data.data[i].updated_at)
-          if (data.data[i].feed.type == 1 && data.data[i].images.length) {
-            data.data[i].img_url = data.data[i].images[0].img_url
+          if (data.data[i].feed) {
+            if (data.data[i].feed.type == 1 && data.data[i].images.length) {
+              data.data[i].img_url = data.data[i].images[0].img_url
+            }
           }
         }
-        console.log(data.data)
         that.setData({
           data: data.data,
           name: app.globalData.name,
@@ -81,10 +92,10 @@ Page({
     var nowTime = new Date().getTime()
     var disTime = nowTime - timestamp;
     if (disTime < 60 * 60 * 1000) {
-      var time = Math.floor(disTime / 60 / 1000)
+      var time = Math.ceil(disTime / 60 / 1000)
       time = time + '分钟前'
     } else if (disTime < 24 * 60 * 60 * 1000) {
-      var time = Math.floor(disTime / 60 / 1000 / 60)
+      var time = Math.ceil(disTime / 60 / 1000 / 60)
       time = time + '小时前'
     } else if (disTime < 2 * 24 * 60 * 60 * 1000) {
       var time = '昨天' + value.substring(11, 16)

@@ -177,10 +177,10 @@ Page({
     var nowTime = new Date().getTime()
     var disTime = nowTime - timestamp;
     if (disTime < 60 * 60 * 1000) {
-      var time = Math.floor(disTime / 60 / 1000)
+      var time = Math.ceil(disTime / 60 / 1000)
       time = time + '分钟前'
     } else if (disTime < 24 * 60 * 60 * 1000) {
-      var time = Math.floor(disTime / 60 / 1000 / 60)
+      var time = Math.ceil(disTime / 60 / 1000 / 60)
       time = time + '小时前'
     } else if (disTime < 2 * 24 * 60 * 60 * 1000) {
       var time = '昨天' + value.substring(11,16)
@@ -214,56 +214,62 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
       success(res) {
-        var nodes = res.data.content.replace(/<img/gi, '<img style="width:100%;"')
-          .replace(/<p/gi, '<p style="font-size:24rpx;"');
-        var timestamp = that.getTime(res.data.created_at);
+        if (res.statusCode == 200){
+          var nodes = res.data.content.replace(/<img/gi, '<img style="width:100%;"')
+            .replace(/<p/gi, '<p style="font-size:24rpx;"');
+          var timestamp = that.getTime(res.data.created_at);
 
-        if (!res.data.vote){
-          that.setData({
-            trendsData: res.data,
-            name: app.globalData.name,
-            logo_url: app.globalData.logo_url,
-            content: nodes,
-            timestamp: timestamp,
-            commentId: options.id,
-            voted:false
+          if (!res.data.vote){
+            that.setData({
+              trendsData: res.data,
+              name: app.globalData.name,
+              logo_url: app.globalData.logo_url,
+              content: nodes,
+              timestamp: timestamp,
+              commentId: options.id,
+              voted:false
+            })
+          }else{
+            that.setData({
+              trendsData: res.data,
+              name: app.globalData.name,
+              logo_url: app.globalData.logo_url,            
+              content: nodes,
+              timestamp: timestamp,
+              commentId: options.id,
+              voted: true
+            })
+          }
+          // 评论列表数据
+          wx.request({
+            url: app.globalData.http + '/mpa/comment',
+            method: 'GET',
+            data: {
+              feed_id: options.id
+            },
+            header: {
+              'Api-Ext': app.globalData.apiExt
+            },
+            success(res) {
+              var comment = res.data
+              comment.forEach(function (v) {
+                var time = that.time(v.created_at)
+                v.time = time
+              })
+              that.setData({
+                comments: comment
+              })
+            }
           })
-        }else{
-          that.setData({
-            trendsData: res.data,
-            name: app.globalData.name,
-            logo_url: app.globalData.logo_url,            
-            content: nodes,
-            timestamp: timestamp,
-            commentId: options.id,
-            voted: true
+        } else {
+          wx.showToast({
+            title: '该动态已被删除',
+            duration: 2000,
+            icon: 'none'
           })
         }
       }
     })
-    // 评论列表数据
-    wx.request({
-      url: app.globalData.http + '/mpa/comment',
-      method: 'GET',
-      data:{
-        feed_id: options.id
-      },
-      header: {
-        'Api-Ext': app.globalData.apiExt
-      },
-      success(res) {
-        var comment=res.data
-        comment.forEach(function(v){
-          var time = that.time(v.created_at)
-          v.time = time
-        })
-        that.setData({
-          comments: comment
-        })
-      }
-    })
-
-
   },
   onReachBottom: function () {
     // 评论列表数据

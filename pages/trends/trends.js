@@ -18,6 +18,7 @@ Page({
     voted: false,
     autoFocus: false,
     hasUserInfo:true,
+    page:0,
     value: '',
     commentId: 0
   },
@@ -54,9 +55,11 @@ Page({
         title: '请完成微信和手机号授权',
         icon: 'none',
         complete() {
-          wx.switchTab({
-            url: '/pages/user/user',
-          })
+          setTimeout(function () {
+            wx.switchTab({
+              url: '/pages/user/user',
+            })
+          }, 2000)
         }
       })
     }
@@ -189,12 +192,19 @@ Page({
       }
     })
   },
-  // 跳转动态详情
+  // 跳转动态详情,若存在goods_id,跳转商品详情
   commentDetail (e) {
-    console.log(e)
-    wx.navigateTo({
-      url: '/pages/trendsDetail/trendsDetail?id=' + e.currentTarget.dataset.id,
-    })
+    let index = e.currentTarget.dataset.index;
+    let that = this;
+    if (that.data.trendsData[index].goods_id) {
+      wx.navigateTo({
+        url: '/pages/detail/detail?id=' + that.data.trendsData[index].goods_id,
+      })
+    } else {
+      wx.navigateTo({
+        url: '/pages/trendsDetail/trendsDetail?id=' + e.currentTarget.dataset.id,
+      })
+    }
   },
   // 时间格式化
   getTime: function (value) {
@@ -204,10 +214,10 @@ Page({
     var nowTime = new Date().getTime()
     var disTime = nowTime - timestamp;
     if (disTime < 60 * 60 * 1000) {
-      var time = Math.floor(disTime / 60 / 1000)
+      var time = Math.ceil(disTime / 60 / 1000)
       time = time + '分钟前'
     } else if (disTime < 24 * 60 * 60 * 1000) {
-      var time = Math.floor(disTime / 60 / 1000 / 60)
+      var time = Math.ceil(disTime / 60 / 1000 / 60)
       time = time + '小时前'
     } else if (disTime < 2 * 24 * 60 * 60 * 1000) {
       var time = '昨天' + value.substring(11, 16)
@@ -242,6 +252,7 @@ Page({
           }
           res.data[i].time_stamp = that.getTime(res.data[i].created_at)
         }
+        console.log(res.data)
         if (res.data.length) {
           wx.hideLoading();
         } else {
@@ -312,7 +323,66 @@ Page({
         that.setData({
           trendsData: res.data,
           name: app.globalData.name,
+          page:0,
           logo_url: app.globalData.logo_url
+        })
+      },
+      fail() {
+        wx.hideLoading();
+        wx.showToast({
+          title: '获取动态数据失败，请重试',
+          icon: 'none',
+          duration: 2000
+        })
+      }
+    })
+    wx.stopPullDownRefresh()    
+  },
+  // 上拉加载
+  onReachBottom: function () {
+    // 评论列表数据
+    var that = this
+    var pages = this.data.page
+    pages++
+    wx.showLoading({
+      title: '加载中',
+    })
+    // 动态列表数据
+    wx.request({
+      url: app.globalData.http + '/mpa/feed',
+      method: 'GET',
+      header: {
+        "Api-Key": app.globalData.apiKey,
+        "Api-Secret": app.globalData.apiSecret,
+        'Api-Ext': app.globalData.apiExt
+      },
+      data:{
+        page: pages
+      },
+      success(res) {
+        // 对评论进行截取，只保留前十条评论
+        for (let i = 0; i < res.data.length; i++) {
+          // 当数组长度大于10时截取
+          if (res.data[i].comments.length > 10) {
+            res.data[i].comments.splice(10, res.data[i].comments.length - 10);
+          }
+          res.data[i].time_stamp = that.getTime(res.data[i].created_at)
+        }
+        if (res.data.length) {
+          wx.hideLoading();
+        } else {
+          wx.hideLoading();
+          wx.showToast({
+            title: '无更多动态数据',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+        let newArr = that.data.trendsData.concat(res.data)
+        console.log(newArr)
+        that.setData({
+          trendsData: newArr,
+          page:pages
         })
       },
       fail() {
@@ -326,6 +396,6 @@ Page({
         }, 2000)
       }
     })
-    wx.stopPullDownRefresh()    
+    wx.stopPullDownRefresh()
   }
 })

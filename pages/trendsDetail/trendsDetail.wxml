@@ -14,14 +14,22 @@
     <view class='box_content' wx:if="{{trendsData.type==1}}">
       <view class='content_text'>{{trendsData.content}}</view>
       <view class='images'>
-          <image wx:for='{{trendsData.images}}' class='{{trendsData.images.length == 1 ? "one" : (trendsData.images.length == 2 ? "two" : "more")}}' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageView2/1/w/222/h/222' wx:key='{{ind}}' mode='{{trendsData.images.length > 2 ? aspectFit : widthFix}}'  data-ind='{{ind}}' catchtap='viewImages'></image>
+        <block wx:if='{{trendsData.images.length == 1}}'>
+          <image wx:for='{{trendsData.images}}' class='one' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='widthFix'  data-ind='{{ind}}' catchtap='viewImages'></image>
+        </block>
+        <block wx:elif='{{trendsData.images.length == 2}}'>
+          <image wx:for='{{trendsData.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='top'  data-ind='{{ind}}' catchtap='viewImages'></image>
+        </block>
+        <block wx:else>
+          <image wx:for='{{trendsData.images}}' class='more' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='aspectFill'  data-ind='{{ind}}' catchtap='viewImages'></image>
+        </block>
         </view>
       <view class='stati_data'>
         <view class='stati_left'>
           <view><image src='../../imgs/Browse_icon@2x.png'></image><text>{{trendsData.pv_browse}}</text></view>
-          <view bindtap='commentVisi'><image src='../../imgs/Comment_icon@2x.png'></image><text>{{trendsData.pv_share}}</text></view>
+          <view bindtap='commentVisi'><image src='../../imgs/Comment_icon@2x.png'></image><text>{{trendsData.comment_success_count}}</text></view>
         </view>
-        <view  wx:if='{{voted}}' bindtap='cancledVote'><image src='../../imgs/Zan_gary_red@2x.png'></image><text>{{trendsData.pv_vote}}</text></view> 
+        <view  wx:if='{{voted}}' bindtap='cancledVote'><image class='voted_img' src='../../imgs/Zan_gary_red@2x.png'></image><text>{{trendsData.pv_vote}}</text></view> 
         <view bindtap='vote' wx:else><image src='../../imgs/Zan_gary_icon@2x.png'></image><text>{{trendsData.pv_vote}}</text></view>
       </view>
       </view>
