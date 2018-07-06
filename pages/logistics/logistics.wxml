@@ -1,7 +1,7 @@
 
-<view class='container'>
+<view class='container' wx:if="{{list.State}}">
     <view class='head'>
-        <label>物流信息：<em wx:if='list.state==3'>已签收</em><em wx:elif='list.state==2'>运输中</em><em wx:else>问题件</em>
+        <label>物流信息：<em wx:if='{{list.State==3}}'>已签收</em><em wx:elif='{{list.State==2}}'>运输中</em><em wx:elif='{{list.State==1}}'>问题件</em>
         </label>
         <label>承运快递：{{list.ShipperName}}</label>
         <label>运单编号：{{list.LogisticCode}}</label>

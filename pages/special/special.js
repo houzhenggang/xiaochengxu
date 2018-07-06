@@ -38,7 +38,6 @@ Page({
       },
 			method: "GET",
 			success(res) {
-				console.log(res)
 				that.setData({
 					produList: res.data
 				})

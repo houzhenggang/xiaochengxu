@@ -1,0 +1,71 @@
+
+<wxs module="filters" src="../../utils/method.wxs"></wxs>
+<view class='content'>
+  <view class='item_box'>
+
+    <view class='box_header'>
+      <image src='{{image + logo_url}}'></image>
+      <view class='user_info'>
+        <text>{{name}}</text>
+        <text>{{timestamp}}</text>
+      </view>
+    </view>
+
+    <view class='box_content' wx:if="{{trendsData.type==1}}">
+      <view class='content_text'>{{trendsData.content}}</view>
+      <view class='images'>
+        <block wx:if='{{trendsData.images.length == 1}}'>
+          <image wx:for='{{trendsData.images}}' class='one' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='widthFix'  data-ind='{{ind}}' catchtap='viewImages'></image>
+        </block>
+        <block wx:elif='{{trendsData.images.length == 2}}'>
+          <image wx:for='{{trendsData.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='top'  data-ind='{{ind}}' catchtap='viewImages'></image>
+        </block>
+        <block wx:else>
+          <image wx:for='{{trendsData.images}}' class='more' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='aspectFill'  data-ind='{{ind}}' catchtap='viewImages'></image>
+        </block>
+        </view>
+      <view class='stati_data'>
+        <view class='stati_left'>
+          <view><image src='../../imgs/Browse_icon@2x.png'></image><text>{{trendsData.pv_browse}}</text></view>
+          <view bindtap='commentVisi'><image src='../../imgs/Comment_icon@2x.png'></image><text>{{trendsData.comment_success_count}}</text></view>
+        </view>
+        <view  wx:if='{{voted}}' bindtap='cancledVote'><image class='voted_img' src='../../imgs/Zan_gary_red@2x.png'></image><text>{{trendsData.pv_vote}}</text></view> 
+        <view bindtap='vote' wx:else><image src='../../imgs/Zan_gary_icon@2x.png'></image><text>{{trendsData.pv_vote}}</text></view>
+      </view>
+      </view>
+    </view>
+    <view class='box_content' wx:if="{{trendsData.type==2}}">
+        <rich-text  nodes="{{content}}"></rich-text>
+        <view class='stati_data'>
+        <view class='stati_left'>
+          <view><image src='../../imgs/Browse_icon@2x.png'></image><text>{{trendsData.pv_browse}}</text></view>
+          <view bindtap='commentVisi' data-id='{{trendsData.id}}'><image src='../../imgs/Comment_icon@2x.png'></image><text>{{trendsData.pv_share}}</text></view>
+        </view>
+        <view  wx:if='{{voted}}' data-id='{{trendsData.id}}' bindtap='cancledVote'><image src='../../imgs/Zan_gary_red@2x.png'></image><text>{{trendsData.pv_vote}}</text></view> 
+        <view bindtap='vote' data-id='{{trendsData.id}}' wx:else><image src='../../imgs/Zan_gary_icon@2x.png'></image><text>{{trendsData.pv_vote}}</text></view>
+      </view>
+    </view>
+    <view wx:if='{{comments.length>0}}' class='comments'>
+        <view wx:for='{{comments}}' wx:for-item='ite' wx:for-index='ind' wx:key='{{ind}}'>
+          <view wx:if='{{ite.type == 1}}' class='comment'>
+              <view style='width:75%'>
+                  <text class='user'>{{ite.nick_name}} : </text>{{ite.content}}
+              </view>
+              <view style='text-align:right'>{{ite.time}}</view>
+          </view>
+          <view wx:else class='comment'>
+                <view style='width:75%'>
+                <text class='user'>{{name}}</text> 回复 <text class='store'>{{ite.nick_name}} : </text>{{ite.content}}
+                </view>
+                <view style='text-align:right'>{{ite.time}}</view>
+          </view>          
+        </view>
+       <view class='top'></view>  
+  </view>
+  
+  <!-- <view class='bottom'>到底啦，去别处逛逛吧</view> -->
+</view>
+ <view class='input_outer' wx:if='{{inputVisi}}'>
+      <input bindinput='userInput' bindblur='userBlur' placeholder='回复{{name}}' maxlength='100' auto-focus='{{autoFocus}}' bindconfirm='comment'></input>
+      <text class='{{value ? "active" : ""}}' bindtap='comment'>发送</text>  
+</view>

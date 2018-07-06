@@ -15,8 +15,6 @@ Page({
   onLoad: function (options) {
     var that=this;
     var id=options.id;
-    // var apiKeys = wx.getStorageSync('Api-Key');
-    // var apiSecrets = wx.getStorageSync('Api-Secret')
     wx.request({
       url: app.globalData.http +'/mpa/order/'+id+'/express',
       method:'GET',
@@ -28,59 +26,32 @@ Page({
       },
       success:function(data){
         var datas=data.data;
-        that.setData({
-          list:datas
+        var code=data.statusCode.toString()
+        if (code >= 200 && code<=300) {
+          that.setData({
+            list:datas
+          })
+        } else if(code>= 300 && code < 500){
+          wx.showToast({
+            title: data.data.message,
+            icon:'none',
+            duration:2000
+          })
+        }else{
+          wx.showToast({
+            title:"网络错误",
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      },
+      fail:function(res){
+        wx.showToast({
+          title: "网络错误",
+          icon: 'none',
+          duration: 2000
         })
-      }
+      } 
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
   }
 })

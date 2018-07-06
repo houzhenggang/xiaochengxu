@@ -24,7 +24,8 @@ Page({
       '其他'
     ],
     value:'',
-    items:''
+    items:'',
+    disabled:false
   },
 
   /**
@@ -50,9 +51,11 @@ Page({
         var item = data.data.items
         var sale=[]
         for(var i=0;i<item.length;i++){
-          item[i].isSelect=true
-          newArr.push(item[i])
-          sale.push(item[i].id)
+          if(item[i].is_select){
+            item[i].isSelect = true
+            newArr.push(item[i])
+            sale.push(item[i].id)
+          }
         }
         that.setData({
           items: data.data,
@@ -63,6 +66,16 @@ Page({
       }
     })
 
+  },
+  bindPickerChange:function(e){
+    var id=e.detail.value
+    var ids=id+1
+    this.setData({
+      reasonID: ids,
+      reasonText: this.data.reason[id] + ' >',
+      isShow: true,
+      disabled: false
+    })
   },
   callPhone: () => {
     wx.makePhoneCall({
@@ -148,36 +161,37 @@ Page({
       })
     }
   },
-  /*选择原因*/
-  selectReason:function(){
-      var that=this;
-      that.setData({
-        isShow:false
-      })
-  },
-  /*关闭选择原因*/
-  closeReason:function(){
-      this.setData({
-        isShow:true
-      })
-  },
+  // /*选择原因*/
+  // selectReason:function(){
+  //     var that=this;
+  //     that.setData({
+  //       isShow:false,
+  //       disabled:true
+  //     })
+  // },
+  // /*关闭选择原因*/
+  // closeReason:function(){
+  //     this.setData({
+  //       isShow:true,
+  //       disabled: false
+  //     })
+  // },
 
   remark:function(event){
-    console.log('222' + event.detail.value)
     var value = event.detail.value
     this.setData({
         value:value
     })
   },
-  /*选择退货原因*/
-  chooseReason:function(event){
-      var that=this;
-      var id=event.target.dataset.reasonid;
-      console.log(id);
-      this.setData({
-        reasonID:id,
-        reasonText: that.data.reason[id]+' >',
-        isShow: true
-      })
-  }
+  // /*选择退货原因*/
+  // chooseReason:function(event){
+  //     var that=this;
+  //     var id=event.target.dataset.reasonid;
+  //     this.setData({
+  //       reasonID:id,
+  //       reasonText: that.data.reason[id-1]+' >',
+  //       isShow: true,
+  //       disabled: false
+  //     })
+  // }
 })

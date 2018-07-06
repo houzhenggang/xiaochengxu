@@ -17,7 +17,9 @@
 .on{ color: #EA2534;  
     border-bottom: 3rpx solid #EA2534;
   }  
-
+.bottom view label{
+  margin-left: 30rpx;
+}
 .swiper-box{ display: block; height: 100%; width: 100%; overflow: hidden; }   
 .container{
   width: 750rpx;
@@ -128,7 +130,7 @@ line-height: 40rpx;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height:86rpx;
+  height:90rpx;
 }
 .bottom label{
   font-family: PingFangSC-Regular;
@@ -146,7 +148,6 @@ line-height: 40rpx;
   color: #fff;
   font-family: PingFangSC-Regular;
   border-radius: 3px;
-  margin-left: 30rpx;
 }
 .bottom view{
   display: flex;

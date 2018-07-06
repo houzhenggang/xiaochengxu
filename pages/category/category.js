@@ -29,7 +29,8 @@ Page({
     })
     if (category.length){      
 			that.setData({
-				category:category
+				category:category,
+        second: 1
 			});
 		}else{
       wx.showLoading({
@@ -41,12 +42,15 @@ Page({
           'Api-Ext': app.globalData.apiExt
         },
         data: {
-          category_id: tempArr[select].id
+          category_id: tempArr[select].id,
+          page:0,
+          order_by:"created_at desc"
         },
         success(res) {
           that.setData({
             goods: res.data,
-            category: category
+            category: category,
+            second:2
           })
           wx.hideLoading();
         }
@@ -65,21 +69,10 @@ Page({
       url: '/pages/detail/detail?id='+e.currentTarget.dataset.id,
 		})
 	},
-
-  // onLoad:function(){
-  //   var that=this
-  //   wx.getSystemInfo({
-  //     success: function (res) {
-  //       that.setData({
-  //         winHeight: res.windowHeight
-  //       });
-  //     }
-  //   });
-  // },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onShow: function () {
     let that = this;
 		wx.showLoading({
 			title: '加载中',
@@ -92,11 +85,10 @@ Page({
       }
     });
     that.setData({
-      select: app.globalData.classIdx 
+      select: app.globalData.classIdx,
+      keyword: app.globalData.keyword,
+      leftTapArray:[]
     })
-		wx.setNavigationBarTitle({
-			title: '搜索',
-		})
 		//请求一级分类，设置data数据
 		wx.request({
       url: app.globalData.http + '/mpa/category',
@@ -104,14 +96,24 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
 			success(res){
-        console.log(res)
 				let leftSelectedIdx = app.globalData.classIdx;
-        res.data[leftSelectedIdx].selected = true
+        
+        if (leftSelectedIdx > res.data.length-1){
+          res.data[0].selected = true
+          leftSelectedIdx = 0,
+          app.globalData.classIdx=0
+          that.setData({
+            select:0,
+          })
+        }else{
+          res.data[leftSelectedIdx].selected = true
+        }
 				that.setData({
 					category:res.data[leftSelectedIdx].children,
-					leftTapArray:res.data
+					leftTapArray:res.data,
+          second:1
 				})
-        if (!res.data[leftSelectedIdx].children.length){
+        if (res.data[leftSelectedIdx].children.length==0){
           wx.request({
             url: app.globalData.http + '/mpa/goods/search',
             data: {
@@ -122,7 +124,8 @@ Page({
             },
             success(data) {
               that.setData({
-                goods: data.data
+                goods: data.data,
+                second:2
               })
             }
           })
