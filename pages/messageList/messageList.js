@@ -45,12 +45,12 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
       success: function (data) {
-        if (data.data.length) {
+        if (data.data && data.data.length) {
           wx.hideLoading();
         } else {
           wx.hideLoading();
           wx.showToast({
-            title: '暂无未查看消息',
+            title: '暂无评论',
             icon: 'none'
           })
           setTimeout(function () {

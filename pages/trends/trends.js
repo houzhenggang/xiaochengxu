@@ -256,14 +256,7 @@ Page({
         if (res.data.length) {
           wx.hideLoading();
         } else {
-          wx.hideLoading();          
-          wx.showToast({
-            title: '暂无动态数据',
-            icon:'none'
-          })
-          setTimeout(function(){
-            wx.hideToast()
-          },2000)
+          wx.hideLoading();
         }
         that.setData({
           trendsData: res.data,
