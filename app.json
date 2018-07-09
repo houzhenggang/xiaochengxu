@@ -1,26 +1,28 @@
 {
   "pages": [
-   
-    "pages/index/index",
+    "pages/index/index",    
+    "pages/afterSale/afterSale",
+    "pages/trends/trends",    
+    "pages/user/user",    
+    "pages/trendsDetail/trendsDetail",
+    "pages/messageList/messageList",
     "pages/regMob/regMob",
+    "pages/orders/orders",
     "pages/category/category",
     "pages/shoppingCar/shoppingCar",
-    "pages/user/user",
     "pages/search/search",
     "pages/address/address",
     "pages/surePay/surePay",
     "pages/detail/detail",
     "pages/result/result",
-    "pages/afterSale/afterSale",
     "pages/refundDetail/refundDetail",
     "pages/logistics/logistics",
     "pages/orderDetail/orderDetail",
     "pages/special/special",
     "pages/recommend/recommend",
-    "pages/orders/orders",
     "pages/cart/cart",
-    "pages/categoryList/categoryList",
-    "pages/shareDetail/shareDetail"
+    "pages/shareDetail/shareDetail",
+    "pages/categoryList/categoryList"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -38,6 +40,12 @@
         "iconPath": "imgs/index.png",
         "selectedIconPath": "imgs/index_active.png",
         "text": "首页"
+      },
+      {
+        "pagePath": "pages/trends/trends",
+        "iconPath": "imgs/trends.png",
+        "selectedIconPath": "imgs/trends_active.png",
+        "text": "动态"
       },
       {
         "pagePath": "pages/category/category",

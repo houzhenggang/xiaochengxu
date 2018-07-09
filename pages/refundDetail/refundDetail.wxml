@@ -13,7 +13,7 @@
     </view> -->
     <view class='orderID'>订单编号:{{data.no}}</view>
      <view  class='menus' wx:for="{{data.items}}" wx:key='{{index}}'>
-        <image src='{{image}}{{item.order_items.cover_url}}'></image>
+        <image src='{{image}}{{item.order_items.cover_url}}?imageslim'></image>
         <view class='desc'>
             <label>{{item.name}}</label>
             <label>{{item.order_items.sku_description}}</label>
@@ -25,6 +25,6 @@
     </view>
 </view>
 <view class='refundMoney'>退款金额 ¥{{filters.toFix(data.refund_amount/100)}}</view>
-<view class='bottom' >
+<view class='bottom' wx:if="{{data.status==1}}" >
     <view class='cancel' data-id='1' bindtap='cancel'>取消申请</view>
 </view>

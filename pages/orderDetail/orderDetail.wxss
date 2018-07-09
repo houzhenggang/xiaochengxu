@@ -1,39 +1,74 @@
-.address{
+.state,.address{
   border-top:20rpx solid  #F6F7F7;
   border-bottom:20rpx solid  #F6F7F7;
-  height: 122rpx;
+  /* height: 122rpx; */
   position: relative;
-  padding-left:60rpx;
+  padding: 20rpx 0 20rpx 60rpx;
+}
+.state{
+  border-bottom: 0;
 }
 page{
   width: 100%;
   min-height:100%;
   position: relative;
 }
+.clearfix{  
+        zoom:1;  
+    }  
+.clearfix:after{  
+        content: "";  
+        display: block;  
+        clear: both;  
+    } 
+ /* .name{
+   margin-top:10rpx; 
+ } */
 .address image{
   width: 24rpx;
   height: 30rpx;
   position: absolute;
-  top:20rpx;
+  top:28rpx;
   left:20rpx;
+}
+.state image{
+  width: 30rpx;
+  height: 30rpx;
+  position: absolute;
+  top:28rpx;
+  left:20rpx;
+}
+.state .name{
+  font-size:24rpx; 
+  color: #333333;
+  font-weight: bold;
+}
+.state text{
+  color:#F02417;
 }
 .name label:nth-child(1){
   font-family: PingFangSC-Medium;
   font-size: 24rpx;
   color: #333333;
   font-weight: bold;
+  line-height: 36rpx;
+  float: left;
 }
 .name label:nth-child(2){
   font-family: PingFangSC-Regular;
   font-size: 24rpx;
+  line-height: 36rpx;  
   color: #333333;
   margin-left:40rpx;
+   float: left;
 }
 .addr{
-  font-family: PingFangSC-Regular;
-  font-size: 24rpx; 
-  color: #333333;
-  margin-top:16rpx;
+  font-family:PingFangSC-Regular;
+  font-size:24rpx;
+  color:#333333;
+  margin-top:4rpx;
+  padding-right:20rpx;
+  line-height:36rpx;
 }
 .detail{
   width: 100%;
@@ -94,8 +129,12 @@ text-align: right;
 .info{
   border-bottom:1rpx solid #E3E3E3;
 }
-.detail .info:last-child{
-    border-bottom:none;
+.orderMoney{
+  color: #F02417;
+  text-align: right;
+  font-size: 26rpx;
+  margin-top: 20rpx; 
+  margin-bottom: 96rpx; 
 }
 .info view{
   display: flex;
@@ -151,11 +190,12 @@ text-align: right;
   height: 50rpx;
   border-radius: 3px;
   box-sizing: border-box;
-  border: 1rpx solid #EA2534;
+  border: 1rpx solid #d9d9d9;
+
   line-height:48rpx;
   text-align: center;
   display: block;
-  color: #EA2534;
+  color: #666;
   font-family: PingFangSC-Regular;
   font-size: 22rpx;
 }

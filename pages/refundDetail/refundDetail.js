@@ -7,7 +7,8 @@ Page({
    */
   data: {
     image: 'http://image.yiqixuan.com/',
-    data:''
+    data:'',
+    id:''
   },
 
   /**
@@ -16,6 +17,9 @@ Page({
   onLoad: function (options) {
       var that=this
       var id=options.id;
+      that.setData({
+        id: options.id
+      })
       wx.request({
         url: app.globalData.http + '/mpa/after_sale/'+id,
         method:'GET',
@@ -48,13 +52,14 @@ Page({
   },
   cancel:function(e){
     var id=e.target.dataset.id
+    var that=this
     wx.showModal({
       title: '提示',
       content: '确定要取消申请吗？',
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: app.globalData.http + '/mpa/after_sale/' + id,
+            url: app.globalData.http + '/mpa/after_sale/' +that.data.id,
             method: 'PUT',
             dataType: 'JSON',
             header: {

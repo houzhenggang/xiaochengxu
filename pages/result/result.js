@@ -52,53 +52,56 @@ Page({
 
   },
   // //排序方式点击
-  // bindRank(e) {
-  //   //当前所点击排序方式
-  //   var that = this
-  //   var currIndex = e.currentTarget.dataset.id;
-  //   var flag = this.data.flag;
-  //   //判断价格排序方式
-  //   if (currIndex == 2) {
-  //     if (flag == 0 || flag == 2) {
-  //       flag = 1
-  //       //按价格降序
-  //       that.setData({
-  //         order_by: 'price desc',
-  //         page: 0
-  //       })
-  //       this.getList()
+  bindRank(e) {
+    //当前所点击排序方式
+    var that = this
+    var currIndex = e.currentTarget.dataset.id;
+    var flag = this.data.flag;
+    that.setData({
+      produList: []
+    })
+    //判断价格排序方式
+    if (currIndex == 2) {
+      if (flag == 0 || flag == 2) {
+        flag = 1
+        //按价格降序
+        that.setData({
+          order_by: 'price desc',
+          page: 0
+        })
+        this.getList()
 
-  //     } else if (flag == 1) {
-  //       flag = 2
-  //       //按价格升序
-  //       that.setData({
-  //         order_by: 'price asc',
-  //         page: 0
-  //       })
-  //       this.getList()
-  //     }
-  //   } else if (currIndex == 1) {
-  //     //按销量排序
-  //     that.setData({
-  //       order_by: 'sales_count desc',
-  //       page: 0
-  //     })
-  //     this.getList()
-  //     flag = 0
-  //   } else {
-  //     that.setData({
-  //       order_by: 'created_at desc',
-  //       page: 0
-  //     })
-  //     this.getList()
-  //     flag = 0
-  //   }
-  //   //存入data
-  //   this.setData({
-  //     rank: currIndex,
-  //     flag: flag
-  //   })
-  // },
+      } else if (flag == 1) {
+        flag = 2
+        //按价格升序
+        that.setData({
+          order_by: 'price asc',
+          page: 0
+        })
+        this.getList()
+      }
+    } else if (currIndex == 1) {
+      //按销量排序
+      that.setData({
+        order_by: 'sales_count desc',
+        page: 0
+      })
+      this.getList()
+      flag = 0
+    } else {
+      that.setData({
+        order_by: 'created_at desc',
+        page: 0
+      })
+      this.getList()
+      flag = 0
+    }
+    //存入data
+    this.setData({
+      rank: currIndex,
+      flag: flag
+    })
+  },
   goTop: function () {
     wx.pageScrollTo({
       scrollTop: 0,

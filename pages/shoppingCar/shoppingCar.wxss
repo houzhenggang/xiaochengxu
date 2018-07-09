@@ -3,6 +3,7 @@
 }
 .content{
   padding-bottom: 120rpx;
+  border-top:20rpx solid #f6f7f7;
 }
 page{
   height: 100%;
@@ -62,26 +63,58 @@ view.carInfo{
   width:100%;
   align-items: center;
 	overflow: hidden;
-  border-top:20rpx solid #f6f7f7;
+  border-bottom:20rpx solid #f6f7f7;
   display: flex;
   justify-content: flex-start;
 }
+
 .carInfo .select{
   width: 40rpx;
   height: 40rpx;
-	float: left;
-  margin: 98rpx 18rpx 0 28rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #d9d9d9;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%)
+}
+.carInfo .cur{
+  background: #F02417;
+  border:1rpx solid #F02417;
+}
+.carInfo .cur::before{
+  background: #fff;
+  content:'';
+  display: block;
+  width: 4rpx;
+  height: 24rpx;
+  top: 8rpx;
+  left: 21rpx;
+  transform: rotate(45deg);
+  position: absolute;
+}
+.carInfo .cur::after{
+  background: #fff;
+  content:'';
+  display: block;
+  width: 4rpx;
+  top:14rpx;
+  left: 9rpx;
+  height: 16rpx;
+  transform: rotate(-45deg);  
+  position: absolute;
 }
 .goodsInfo{
   padding-left:20rpx;
-  width: 448rpx;
+  width: 460rpx;
 	margin-top: 22rpx;
 	float: left;
 }
 .carInfo .goodImg{
   width: 160rpx;
   height: 160rpx;
-	margin-top: 48rpx;
+	margin-top: 38rpx;
 	display: block;
 	float: left;
 }
@@ -92,10 +125,14 @@ view.carInfo{
   line-height: 36rpx;
   height: 72rpx;
 }
-.goodsInfo label{
+.goodsInfo>label{
   font-family: PingFangSC-Regular;
   font-size: 26rpx;
   color: #666666;
+  margin-top:10rpx;
+    height:34rpx;
+  display:block;
+
   line-height: 34rpx;
 }
 .goodsInfo navigator label{
@@ -165,6 +202,7 @@ view.carInfo{
 .sel{
   width: 86rpx;
   float:left;
+  position: relative;
   height:100%
 }
 .delete{  
@@ -196,11 +234,41 @@ view.carInfo{
 	bottom: 0;
 	background: #F7F7F7;
 }
-.bottom image{
+.bottom .select{
   width: 40rpx;
+  box-sizing: border-box;
+  border: 1rpx solid #e3e3e3;
+  border-radius: 50%;
+  position: relative;
   height: 40rpx;
 	float: left;
   margin: 34rpx 18rpx 0 28rpx;
+}
+.bottom .cur{
+  background: #F02417;
+  border:1rpx solid #F02417;
+}
+.bottom .cur::before{
+  background: #fff;
+  content:'';
+  display: block;
+  width: 4rpx;
+  height: 24rpx;
+  top: 8rpx;
+  left: 21rpx;
+  transform: rotate(45deg);
+  position: absolute;
+}
+.bottom .cur::after{
+  background: #fff;
+  content:'';
+  display: block;
+  width: 4rpx;
+  top:14rpx;
+  left: 9rpx;
+  height: 16rpx;
+  transform: rotate(-45deg);  
+  position: absolute;
 }
 .bottom .total_text{
 	float: left;
@@ -235,4 +303,6 @@ view.carInfo{
 	color: #FFFFFF;
 	font-size: 32rpx;
 	line-height: 100rpx;
+  border-radius:0;
+  padding:0;
 }

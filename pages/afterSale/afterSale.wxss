@@ -18,6 +18,12 @@
   float: left;
   width: 422rpx;
 }
+.tip{
+  font-family: PingFangSC-Regular;
+  font-size: 24rpx;
+  color: #333333;
+  margin-top: 24rpx;
+}
 .select{
   width: 44rpx;
   height: 44rpx;
@@ -65,7 +71,6 @@ textarea{
   font-family: PingFangSC-Regular;
   font-size: 22rpx;
   color: #999999;
-  margin-top: 
 }
 .clearfix:after{content:"";display:block;clear:both;}
 .clearfix{
@@ -85,7 +90,7 @@ textarea{
   font-family: PingFangSC-Regular;
   font-size: 26rpx;
   color: #666666;
-  line-height: 36rpx;
+  /* line-height: 36rpx; */
 } 
 .desc label:nth-child(2){
   color: #333;
@@ -123,6 +128,7 @@ page{
 .afterReason>view{
   position: absolute;
   bottom:0;
+  z-index: 101;
   width: 100%;
   left: 0;
   background: #fff;
@@ -136,6 +142,9 @@ page{
   color: #333333;
   padding-left: 20rpx;
   border-bottom:1rpx solid #E3E3E3;
+}
+.disable{
+  pointer-events:none;
 }
 .selectReason view:nth-child(2){
     padding-left: 0;
@@ -163,6 +172,13 @@ page{
   left: 35%;
   transform: rotate(45deg);
 }
+.selectReason .rea{
+  position: relative;
+  z-index: 8999;
+}
+.selectReason .disabel{
+  pointer-events:none;
+}
 .selectReason .clear::after{
   content:'';
   display: block;
@@ -173,4 +189,14 @@ page{
   width: 30rpx;
   height: 2rpx;
   transform: rotate(-45deg);
+}
+picker{
+  border-bottom:1rpx solid #E3E3E3;
+  height: 76rpx;
+}
+picker label{
+  font-family:PingFangSC-Regular;
+  font-size:26rpx;
+  color:#666666;
+  line-height: 76rpx;
 }
