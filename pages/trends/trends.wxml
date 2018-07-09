@@ -1,5 +1,5 @@
 <!--pages/trends/trends.wxml-->
-<view>
+<view wx:if='{{trendsData.length}}'>
   <view class='item_box' wx:for='{{trendsData}}' wx:key='{{index}}'>
 
     <view class='box_header'>
@@ -35,7 +35,7 @@
             <image src='../../imgs/Comment_icon@2x.png'></image><text>{{item.comment_success_count}}</text>
           </view>
         </view>
-        <view  wx:if='{{item.vote}}' data-id='{{item.id}}' data-index="{{index}}" bindtap='cancledVote'><image class='voted_img' src='../../imgs/Zan_gary_red@2x.png'></image><text>{{item.pv_vote}}</text></view> 
+        <view  wx:if='{{item.vote}}' data-id='{{item.id}}' data-index="{{index}}" bindtap='cancledVote'><image class='voted_img' src='../../imgs/Zan_gary_red@2x.png'></image><text>{{item.pv_vote}}</text></view>
         <view bindtap='vote' data-id='{{item.id}}' data-index="{{index}}" wx:else><image src='../../imgs/Zan_gary_icon@2x.png'></image><text>{{item.pv_vote}}</text></view>
       </view>
 
@@ -53,4 +53,8 @@
 <view class='input_outer' wx:if='{{inputVisi}}'>
       <input bindinput='userInput' bindblur='userBlur' placeholder='{{"回复" + name}}' maxlength='100' auto-focus='{{autoFocus}}' bindconfirm='comment'></input>
       <text class='{{value ? "active" : ""}}' bindtap='comment'>发送</text>  
+  </view>
+  <view class='no_data' wx:else>
+    <image src='{{image}}dynamic_img_empty@2x.png'></image>
+    <view>最近还没有新的动态哦</view>
   </view>

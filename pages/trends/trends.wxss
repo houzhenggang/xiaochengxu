@@ -225,3 +225,14 @@ input {
 		top: 70rpx;
 		right: 156rpx;
 }
+
+.no_data {
+  font-size: 36rpx;
+  margin-top: 82rpx;
+  color: #333333;
+  text-align: center;
+}
+.no_data image {
+  width:260rpx;
+  height: 260rpx;
+}
