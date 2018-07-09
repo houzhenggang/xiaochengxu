@@ -45,6 +45,8 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
       success: function (data) {
+        console.log(data.data)
+        console.log(Boolean(data.data))
         if (data.data && data.data.length) {
           wx.hideLoading();
         } else {
@@ -57,7 +59,6 @@ Page({
             wx.hideToast()
           }, 2000)
         }
-        console.log(data)
         for (let i = 0; i < data.data.length; i++) {
           data.data[i].time_stamp = that.getTime(data.data[i].updated_at)
           if (data.data[i].feed) {

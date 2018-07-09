@@ -15,13 +15,13 @@
       <view class='content_text'>{{trendsData.content}}</view>
       <view class='images'>
         <block wx:if='{{trendsData.images.length == 1}}'>
-          <image wx:for='{{trendsData.images}}' class='one' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='widthFix'  data-ind='{{ind}}' catchtap='viewImages'></image>
+          <image wx:for='{{trendsData.images}}' class='one' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/imageslim' wx:key='{{ind}}' mode='widthFix'  data-ind='{{ind}}' catchtap='viewImages'></image>
         </block>
         <block wx:elif='{{trendsData.images.length == 2}}'>
-          <image wx:for='{{trendsData.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='top'  data-ind='{{ind}}' catchtap='viewImages'></image>
+          <image wx:for='{{trendsData.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/North/crop/500x500/imageslim' wx:key='{{ind}}' mode='aspectFill'  data-ind='{{ind}}' catchtap='viewImages'></image>
         </block>
         <block wx:else>
-          <image wx:for='{{trendsData.images}}' class='more' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='aspectFill'  data-ind='{{ind}}' catchtap='viewImages'></image>
+          <image wx:for='{{trendsData.images}}' class='more' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/North/crop/500x500/imageslim' wx:key='{{ind}}' mode='aspectFill'  data-ind='{{ind}}' catchtap='viewImages'></image>
         </block>
         </view>
       <view class='stati_data'>

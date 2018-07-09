@@ -1,4 +1,4 @@
-<view class='container'>
+<view class='container' wx:if='{{data.length}}'>
     <view class='message clearfix' wx:for='{{data}}' wx:key='index' data-id='{{item.feed ? item.feed.id : 0}}' data-index='{{index}}' bindtap='trendsDetail'>
         <image class='head' src='{{image + logo_url}}'></image>
         <view class='info'> 

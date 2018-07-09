@@ -18,13 +18,13 @@
         </view>
         <view class='images' wx:if='{{item.type == 1}}'>
           <block wx:if='{{item.images.length == 1}}'>
-            <image wx:for='{{item.images}}' class='one' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='widthFix' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
+            <image wx:for='{{item.images}}' class='one' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/imageslim' wx:key='{{ind}}' mode='widthFix' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
           </block>
           <block wx:elif='{{item.images.length == 2}}'>
-            <image wx:for='{{item.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='top' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
+            <image wx:for='{{item.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/North/crop/500x500/imageslim' wx:key='{{ind}}' mode='aspectFill' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
           </block>
           <block wx:else>
-            <image wx:for='{{item.images}}' class='more' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!99p/imageslim' wx:key='{{ind}}' mode='aspectFill' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
+            <image wx:for='{{item.images}}' class='more' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/North/crop/500x500/imageslim' wx:key='{{ind}}' mode='aspectFill' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
           </block>
         </view>
       </view>
@@ -50,11 +50,11 @@
   </view>
   <!-- <view class='bottom' wx:if='{{trendsData.length}}'>到底啦，去别处逛逛吧</view> -->
 </view>
+<view class='no_data' wx:else>
+  <image src='{{image}}dynamic_img_empty@2x.png'></image>
+  <view>最近还没有新的动态哦</view>
+</view>
 <view class='input_outer' wx:if='{{inputVisi}}'>
-      <input bindinput='userInput' bindblur='userBlur' placeholder='{{"回复" + name}}' maxlength='100' auto-focus='{{autoFocus}}' bindconfirm='comment'></input>
-      <text class='{{value ? "active" : ""}}' bindtap='comment'>发送</text>  
-  </view>
-  <view class='no_data' wx:else>
-    <image src='{{image}}dynamic_img_empty@2x.png'></image>
-    <view>最近还没有新的动态哦</view>
-  </view>
+  <input bindinput='userInput' bindblur='userBlur' placeholder='{{"回复" + name}}' maxlength='100' auto-focus='{{autoFocus}}' bindconfirm='comment'></input>
+  <text class='{{value ? "active" : ""}}' bindtap='comment'>发送</text>  
+</view>
