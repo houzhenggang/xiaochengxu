@@ -23,7 +23,7 @@
         <image src='{{image}}{{item.cover_url}}?imageslim'></image>
         <view class='desc'>
             <label>{{item.name}}</label>
-            <label wx:if="{{item.sku_description!=0}}">{{item.sku_description}}</label>
+            <label>{{item.sku_description!=0?item.sku_description:''}}</label>
             <view>
                 <label>￥{{filters.toFix(item.price/100)}}</label>
                 <label>x{{item.count}}</label>

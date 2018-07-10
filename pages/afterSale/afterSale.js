@@ -13,7 +13,6 @@ Page({
     orderId:'',
     image: 'http://image.yiqixuan.com/',
     info:'',
-    num:0,
     reasonText:'其它 >',
     reason:[
       '物流太慢/收货太迟',
@@ -60,7 +59,6 @@ Page({
         that.setData({
           items: data.data,
           info:newArr,
-          num: newArr.length,
           saleArr:sale
         })
       }
@@ -87,7 +85,6 @@ Page({
     var index=event.target.dataset.index
     var num = 'info[' + index + '].isSelect'
     var s=that.data.info[index].isSelect
-    var n=that.data.num
     var sale = that.data.saleArr
     var newSale=[]
     if (that.data.info[index].isSelect){
@@ -107,7 +104,6 @@ Page({
     }
     that.setData({
       [num]:!s,
-      num:n,
       saleArr:sale
     })
   },

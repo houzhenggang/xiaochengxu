@@ -28,7 +28,7 @@
 
     <!-- 远程购物车 -->
     <view wx:for="{{datalist}}"   data-index="{{index}}"   wx:key="{{index}}" class="carInfo">
-      <navigator class='contents'  url='/pages/detail/detail?id={{item.goods_id}}' hover-class='none'>
+      <navigator class='contents clearfix' url='/pages/detail/detail?id={{item.goods_id}}' hover-class='none'>
         <view  catchtap='selSession' class='sel' data-index="{{index}}" data-id="{{item.id}}">
                <view class='select {{item.isSelect?"cur":""}}'></view> 
         </view>
@@ -46,9 +46,9 @@
               </view>
       </view>
       </navigator>
-      <view class='delete' catchtap='del' data-index="{{index}}" data-id='{{item.id}}'>
+      <!-- <view class='delete' catchtap='del' data-index="{{index}}" data-id='{{item.id}}'>
         删除
-      </view>
+      </view> -->
     </view>
 
 

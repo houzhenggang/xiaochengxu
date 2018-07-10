@@ -3,9 +3,31 @@ App({
   onLaunch: function () {
     var that=this
     this.globalData.apiExt = wx.getExtConfigSync().data
-    if (wx.getStorageSync('huzan_avatarUrl')){
-      this.globalData.userInfo = wx.getStorageSync('huzan_avatarUrl')
-    }
+    wx.getStorage({
+      key: 'apiKey',
+      success: function (res) {
+        that.globalData.apiKey = res.data
+      }
+    })
+    wx.getStorage({
+      key: 'apiSecret',
+      success: function (res) {
+        that.globalData.apiSecret = res.data
+      }
+    })
+    wx.getStorage({
+      key: 'userId',
+      success: function (res) {
+        if (res.data){
+          that.globalData.userId = true
+        }else{
+          that.globalData.userId = false
+        }
+        console.log(that.globalData.userId)
+      }
+    })
+  },
+  login:function(){
     wx.login({
       success(code) {
         //向后台发起请求，传code
@@ -21,7 +43,7 @@ App({
           success: function (res) {
             //保存响应头信息
             var code = res.statusCode.toString()
-            if (code>=200&& code<300) {
+            if (code >= 200 && code < 300) {
               if (res.header["api-key"] && res.header["api-secret"]) {
                 var apiKey = res.header["api-key"],
                   apiSecret = res.header["api-secret"];
@@ -31,25 +53,20 @@ App({
               }
               that.globalData.apiKey = apiKey
               that.globalData.apiSecret = apiSecret
-              if (res.data.user_id){
-                that.globalData.userId=true
+
+              if (res.data.user_id) {
+                that.globalData.userId = true
               }
             }
           },
           fail: function (res) {
-            console.log(res)
-            console.log(that.globalData.apiKey)
-            console.log(that.globalData.apiSecret)
-            console.log(that.globalData.apiExt)
           }
         })
       },
       fail: function (res) {
-        console.log(res)
       }
     })
   },
-
   globalData: {
     userInfo: false,
 		classIdx:0,
@@ -65,7 +82,6 @@ App({
     apiKey:'',
     apiSecret:'',
     login:false,
-    timeStamp:'',
     http:'https://develop.yiqixuan.com'
   }
 })

@@ -216,7 +216,7 @@ swiper{
   border-top:1rpx #D7D7D7 solid;
   box-sizing: border-box;
 	background: #FFEEEE;
-	font-size: 28rpx;
+	font-size: 32rpx;
 	color: #FB4F4F;
 	text-align: center;
 	line-height: 100rpx;
@@ -235,7 +235,7 @@ swiper{
 	width: 42%;
 	height: 100rpx;
 	background: #EA2534;
-	font-size: 28rpx;
+	font-size: 32rpx;
 	text-align: center;
 	line-height: 100rpx;
 	color: #FFFFFF;

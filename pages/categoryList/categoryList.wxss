@@ -134,6 +134,8 @@ page{
 	width: 344rpx;
 	height: 344rpx;
 	display: block;
+  border-bottom-left-radius:0;
+  border-bottom-right-radius:0;
 }
 .item_box .item_text{
 	display: block;

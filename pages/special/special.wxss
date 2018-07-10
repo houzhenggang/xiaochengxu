@@ -27,6 +27,8 @@ page{
 	width: 344rpx;
 	height: 344rpx;
 	position: relative;
+  border-bottom-left-radius:0;
+  border-bottom-right-radius:0;
 	display: block;
 }
 .item_box .item_text{

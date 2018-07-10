@@ -25,7 +25,67 @@ Page({
     special:2,
   },
   onLoad: function () {
-    let that = this;   
+    let that = this;
+    var nowtime=new Date().getTime()
+    var timestamp = wx.getStorageSync('timestamp')
+    if (nowtime > timestamp+23*60*60*1000){
+      wx.login({
+        success(code) {
+          //向后台发起请求，传code
+          wx.request({
+            url: app.globalData.http + '/mpa/wechat/auth',
+            method: 'POST',
+            data: {
+              code: code.code
+            },
+            header: {
+              'Api-Ext': app.globalData.apiExt
+            },
+            success: function (res) {
+              //保存响应头信息
+              var code = res.statusCode.toString()
+              if (code >= 200 && code < 300) {
+                if (res.header["api-key"] && res.header["api-secret"]) {
+                  var apiKey = res.header["api-key"],
+                    apiSecret = res.header["api-secret"];
+                } else if (res.header["Api-Key"] && res.header["Api-Secret"]) {
+                  var apiKey = res.header["Api-Key"],
+                    apiSecret = res.header["Api-Secret"];
+                }
+                app.globalData.apiKey = apiKey
+                app.globalData.apiSecret = apiSecret
+                var timestamp = new Date().getTime()
+                wx.setStorage({
+                  key: 'timestamp',
+                  data: timestamp,
+                })
+                wx.setStorage({
+                  key: 'apiKey',
+                  data: apiKey,
+                })
+                wx.setStorage({
+                  key: 'apiSecret',
+                  data: apiSecret,
+                })
+                wx.setStorage({
+                  key: 'userId',
+                  data: res.data.user_id,
+                })
+                if (res.data.user_id) {
+                  app.globalData.userId = true
+                }else{
+                  app.globalData.userId=false
+                }
+              }
+            },
+            fail: function (res) {
+            }
+          })
+        },
+        fail: function (res) {
+        }
+      }) 
+    }  
     //获取店家描述数据
     wx.request({
       url: app.globalData.http + '/mpa/index',

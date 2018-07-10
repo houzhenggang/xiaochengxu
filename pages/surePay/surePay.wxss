@@ -90,7 +90,7 @@ page{
   font-family: PingFangSC-Regular;
   font-size: 24rpx; 
   color: #333333;
-  margin-top:14rpx;
+  margin-top:10rpx;
   padding-right:20rpx;
   line-height:36rpx;
   margin-bottom:14rpx;
@@ -104,13 +104,14 @@ page{
 .menus{
   display: flex;
   border-bottom:1rpx solid #E3E3E3;
-  height: 236rpx;
+  /* height: 236rpx; */
+  padding:20rpx 0;
   align-items: center;
 
 }
 .menus image{
-  height: 200rpx;
-  width:200rpx; 
+  height: 160rpx;
+  width:160rpx; 
   margin-right: 20rpx;
 }
 .desc>label:nth-child(1){
@@ -119,21 +120,22 @@ page{
   color: #333333;
   height: 72rpx;
   line-height: 36rpx;
-  width: 474rpx;
+  width: 530rpx;
   display: block;
 }
 .desc>label:nth-child(2){
   font-family: PingFangSC-Regular;
   font-size: 24rpx;
   color: #999999;
-  margin-top:28rpx;
+  height: 30rpx;
+  margin-top:8rpx;
   display: block;
 }
 .desc view{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 40rpx;
+  margin-top: 20rpx;
 }
 .desc view label{
     font-family: PingFangSC-Regular;
@@ -158,6 +160,10 @@ page{
   line-height: 36rpx;
   margin-top:18rpx;
 }
+.info view label:last-child{
+  color: #000;
+}
+
 .info view:last-child{
   margin-bottom: 18rpx;
 }
@@ -196,7 +202,7 @@ page{
     background: #EA2534;
     color:#fff;
     font-family: PingFangSC-Regular;
-    font-size: 30rpx;
+    font-size: 32rpx;
     border-radius: 0;
 }
 .confirmPay button:after{

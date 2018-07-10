@@ -31,6 +31,8 @@ page{
 .item_box image{
 	width: 344rpx;
 	height: 344rpx;
+  border-bottom-left-radius:0;
+  border-bottom-right-radius:0;
 	display: block;
 }
 .item_box .item_text{

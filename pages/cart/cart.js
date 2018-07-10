@@ -36,7 +36,7 @@ Page({
       //已选择商品数组
       var seleArr = [];
       //本地购物车已选中的商品
-      var localArr=[];
+      var localArr = [];
       for (var i = 0; i < good.length; i++) {
         if (good[i].isSelect) {
           seleArr.push(good[i])
@@ -176,6 +176,7 @@ Page({
           data: _this.data.locallist,
         })
       })
+
     } else if (parseInt(_this.data.locallist[index].count) == 1) {//当删除数量等于1时，调用DELETE接口删除所选
       wx.showModal({
         // title: '删除',
@@ -611,6 +612,19 @@ Page({
                 }
                 app.globalData.apiKey = apiKey
                 app.globalData.apiSecret = apiSecret
+                var timestamp = new Date().getTime()
+                wx.setStorage({
+                  key: 'timestamp',
+                  data: timestamp,
+                })
+                wx.setStorage({
+                  key: 'apiKey',
+                  data: apiKey,
+                })
+                wx.setStorage({
+                  key: 'apiSecret',
+                  data: apiSecret,
+                })
                 wx.request({
                   url: app.globalData.http + '/mpa/user/login',
                   method: 'post',
@@ -620,7 +634,7 @@ Page({
                   },
                   dataType: 'json',
                   header: {
-                    "Api-Key":apiKey,
+                    "Api-Key": apiKey,
                     "Api-Secret": apiSecret,
                     'Api-Ext': app.globalData.apiExt
                   },
@@ -637,6 +651,23 @@ Page({
                       app.globalData.apiKey = apiKey
                       app.globalData.apiSecret = apiSecret
                       app.globalData.userId = true
+                      var timestamp = new Date().getTime()
+                      wx.setStorage({
+                        key: 'userId',
+                        data: true,
+                      })
+                      wx.setStorage({
+                        key: 'timestamp',
+                        data: timestamp,
+                      })
+                      wx.setStorage({
+                        key: 'apiKey',
+                        data: apiKey,
+                      })
+                      wx.setStorage({
+                        key: 'apiSecret',
+                        data: apiSecret,
+                      })
                       that.setData({
                         userId: true
                       })
@@ -650,6 +681,7 @@ Page({
                     }
                   },
                   fail: function () {
+
                   }
                 })
               } else {
@@ -764,7 +796,7 @@ Page({
         })
       } else {
         that.setData({
-          locallist:[],
+          locallist: [],
           local: false,
           userId: app.globalData.userId
         })
