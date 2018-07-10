@@ -203,6 +203,7 @@ Page({
   },
 
   onLoad: function (options) {
+    console.log(options)
     let that = this;
     // 动态列表数据
     wx.request({

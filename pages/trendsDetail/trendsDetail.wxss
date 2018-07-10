@@ -73,7 +73,7 @@ input {
 }
 .item_box .box_header .user_info text:first-child {
   color: #333333;
-  font-size: 24rpx;
+  font-size: 28rpx;
   font-family: PingFangSC-Regular;
 }
 .user_info  text:nth-child(2){
@@ -176,7 +176,7 @@ input {
   border-color:transparent transparent #F5F5F7 transparent;
   position:absolute;
   left:20%;
-  top:-30rpx;
+  top:-20rpx;
 }
 .box_content .comments view {
   margin-top: 30rpx;
@@ -219,7 +219,7 @@ input {
 }
 .top{
   position: absolute;
-  top:-40rpx;
+  top:-30rpx;
   left:150rpx;
   width: 0;
   height:0;
