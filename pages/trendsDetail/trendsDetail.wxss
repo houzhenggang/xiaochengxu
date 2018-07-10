@@ -42,6 +42,7 @@ input {
   color: #222222;
   font-size: 24rpx;
   border-radius: 4rpx;
+  cursor-spacing: 0;
 }
 /* .item_box {
   background: white;
@@ -142,7 +143,7 @@ input {
   margin-right: 54rpx;
 }
 .box_content .stati_data .stati_left view:first-child image {
-  height: 22rpx;
+  width: 40rpx;
 }
 .box_content .stati_data view {
   display: flex;
@@ -150,7 +151,7 @@ input {
 }
 .box_content .stati_data view image {
   display: block;
-  width: 30rpx;
+  width: 36rpx;
   height: 30rpx;
   margin-right: 20rpx;
 }
@@ -247,11 +248,21 @@ input {
   font-family: PingFangSC-Regular;
   font-size: 28rpx;
   color: #3F3F3F;
-  display: flex;
-  justify-content: space-between;
-  align-items:center;
   padding: 20rpx 20rpx;
   border-bottom: 1rpx solid #FDFDFD;
+  overflow: hidden;
+}
+.comment view {
+  color: #999999;
+  overflow: hidden;
+  float: left;
+}
+.comment view:last-child {
+  float: right;
+}
+.comment view text {
+  float: left;
+  margin-right: 4rpx;
 }
 .time{
   position: absolute;
@@ -264,7 +275,6 @@ input {
 .comment view {
   word-break: break-all;
   word-wrap: break-word;
-  white-space: pre-wrap;
 }
 .user{
   font-family: PingFangSC-Regular;
