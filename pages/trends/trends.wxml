@@ -2,7 +2,7 @@
 <view wx:if='{{trendsData.length}}'>
   <view class='item_box' wx:for='{{trendsData}}' wx:key='{{index}}'>
 
-    <view class='box_header'>
+    <view class='box_header' data-id='{{item.id}}' data-index='{{index}}' catchtap='commentDetail'>
       <image src='{{image + logo_url}}'></image>
       <view class='user_info'>
         <text>{{name}}</text>
@@ -21,28 +21,28 @@
             <image wx:for='{{item.images}}' class='one' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/imageslim' wx:key='{{ind}}' mode='widthFix' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
           </block>
           <block wx:elif='{{item.images.length == 2}}'>
-            <image wx:for='{{item.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/North/crop/500x500/imageslim' wx:key='{{ind}}' mode='aspectFill' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
+            <image wx:for='{{item.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/Center/crop/500x500/imageslim' wx:key='{{ind}}' mode='aspectFill' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
           </block>
           <block wx:else>
-            <image wx:for='{{item.images}}' class='more' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/North/crop/500x500/imageslim' wx:key='{{ind}}' mode='aspectFill' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
+            <image wx:for='{{item.images}}' class='more' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/Center/crop/200x200/imageslim' wx:key='{{ind}}' mode='aspectFill' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
           </block>
         </view>
       </view>
-      <view class='stati_data'>
+      <view class='stati_data' data-id='{{item.id}}' data-index='{{index}}' catchtap='commentDetail'>
         <view class='stati_left'>
-          <view><image src='../../imgs/Browse_icon@2x.png'></image><text>{{item.pv_browse}}</text></view>
-          <view bindtap='commentVisi' data-id='{{item.id}}'>
-            <image src='../../imgs/Comment_icon@2x.png'></image><text>{{item.comment_success_count}}</text>
+          <view><image src='../../imgs/dynamic_icon_browse@2x.png' mode='widthFix'></image><text>{{item.pv_browse}}</text></view>
+          <view catchtap='commentVisi' data-id='{{item.id}}'>
+            <image src='../../imgs/dynamic_icon_comment@2x.png' mode='widthFix'></image><text>{{item.comment_success_count}}</text>
           </view>
         </view>
-        <view  wx:if='{{item.vote}}' data-id='{{item.id}}' data-index="{{index}}" bindtap='cancledVote'><image class='voted_img' src='../../imgs/Zan_gary_red@2x.png'></image><text>{{item.pv_vote}}</text></view>
-        <view bindtap='vote' data-id='{{item.id}}' data-index="{{index}}" wx:else><image src='../../imgs/Zan_gary_icon@2x.png'></image><text>{{item.pv_vote}}</text></view>
+        <view  wx:if='{{item.vote}}' data-id='{{item.id}}' data-index="{{index}}" catchtap='cancledVote'><image class='voted_img' src='../../imgs/dynamic_icon_thumbs_s@2x.png' mode='widthFix'></image><text>{{item.pv_vote}}</text></view>
+        <view catchtap='vote' data-id='{{item.id}}' data-index="{{index}}" wx:else><image src='../../imgs/dynamic_icon_thumbs@2x@2x.png' mode='widthFix'></image><text>{{item.pv_vote}}</text></view>
       </view>
 
-      <view wx:if='{{item.comments.length}}' class='comments'>
+      <view wx:if='{{item.comments.length}}' class='comments' data-id='{{item.id}}' data-index='{{index}}' catchtap='commentDetail'>
         <block wx:for='{{item.comments}}' wx:for-item='ite' wx:for-index='ind' wx:key='{{ind}}'>
           <view wx:if='{{ite.type == 1}}'><text>{{ite.nick_name}} : </text>{{ite.content}}</view>
-          <view wx:else><text>{{name}}</text><text>回复</text><text>{{ite.nick_name}} : </text> {{ite.content}}</view>          
+          <view wx:else><text>{{name}}</text><text> 回复 </text><text>{{ite.nick_name}} : </text> {{ite.content}}</view>          
         </block>
         <view class='comments_count' wx:if='{{item.comment_success_count > 10}}' >共{{item.comment_success_count}}条回复></view>
       </view>
@@ -55,6 +55,6 @@
   <view>最近还没有新的动态哦</view>
 </view>
 <view class='input_outer' wx:if='{{inputVisi}}'>
-  <input bindinput='userInput' bindblur='userBlur' placeholder='{{"回复" + name}}' maxlength='100' auto-focus='{{autoFocus}}' bindconfirm='comment'></input>
+  <input bindinput='userInput' bindblur='userBlur' placeholder='{{"评论" + name}}' maxlength='100' auto-focus='{{autoFocus}}' bindconfirm='comment'  adjust-position='false'></input>
   <text class='{{value ? "active" : ""}}' bindtap='comment'>发送</text>  
 </view>
