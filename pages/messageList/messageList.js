@@ -45,20 +45,7 @@ Page({
         'Api-Ext': app.globalData.apiExt
       },
       success: function (data) {
-        console.log(data.data)
-        console.log(Boolean(data.data))
-        if (data.data && data.data.length) {
-          wx.hideLoading();
-        } else {
-          wx.hideLoading();
-          wx.showToast({
-            title: '暂无评论',
-            icon: 'none'
-          })
-          setTimeout(function () {
-            wx.hideToast()
-          }, 2000)
-        }
+        wx.hideLoading();
         for (let i = 0; i < data.data.length; i++) {
           data.data[i].time_stamp = that.getTime(data.data[i].updated_at)
           if (data.data[i].feed) {

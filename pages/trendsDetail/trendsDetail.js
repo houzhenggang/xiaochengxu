@@ -39,7 +39,6 @@ Page({
         success(res) {
           if (res.statusCode >= 200 && res.statusCode < 300) {
             var voteCount = that.data.trendsData.pv_vote;
-            console.log(voteCount)
             voteCount++
             var vote = 'trendsData.pv_vote'
             that.setData({
@@ -82,7 +81,6 @@ Page({
       success(res) {
         if (res.statusCode >= 200 && res.statusCode < 300) {
           var voteCount = that.data.trendsData.pv_vote;
-          console.log(voteCount)
           voteCount--
           var vote ='trendsData.pv_vote'
           that.setData({
@@ -128,7 +126,7 @@ Page({
         wx.switchTab({
           url: '/pages/user/user'
         })
-      }, 2000)
+      }, 1000)
     } 
     
   },
@@ -163,7 +161,6 @@ Page({
         content: that.data.value
       },
       success(res) {
-        console.log(res)
       }
     })
   },

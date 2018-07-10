@@ -12,3 +12,7 @@
         <image class='banner' wx:elif='{{item.feed}}' src='{{image + item.images[0].img_url}}?imageMogr2/thumbnail/!220x140/imageslim'></image>
     </view>
 </view>
+<view wx:else class='no_data' >
+  <image src='{{image}}messages_mine.png'></image>
+  <view>太低调了，没有新的消息通知！</view>
+</view>
