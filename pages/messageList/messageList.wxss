@@ -81,3 +81,17 @@ view{
   width: 220rpx;
   transform: translateY(-50%);
 }
+
+.no_data {
+  font-size: 36rpx;
+  margin-top: 82rpx;
+  color: #333333;
+  text-align: center;
+}
+.no_data image {
+  width:260rpx;
+  height: 260rpx;
+}
+.no_data view {
+  margin-top: 20rpx;
+}

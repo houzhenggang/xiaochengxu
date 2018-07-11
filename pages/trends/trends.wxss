@@ -137,7 +137,7 @@ input {
   margin-right: 54rpx;
 }
 .box_content .stati_data .stati_left view:first-child image {
-  height: 22rpx;
+  width: 40rpx;
 }
 .box_content .stati_data view {
   display: flex;
@@ -145,7 +145,7 @@ input {
 }
 .box_content .stati_data view image {
   display: block;
-  width: 30rpx;
+  width: 36rpx;
   height: 30rpx;
   margin-right: 20rpx;
 }
