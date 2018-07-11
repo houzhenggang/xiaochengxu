@@ -165,23 +165,21 @@ Page({
             'Api-Ext': app.globalData.apiExt
           },
           success: function (data) {
-            if (data.data.status == 205) {
-              // console.log(666)             
-              clearInterval(time)
-              wx.hideLoading()
-              wx.showToast({
-                title: '支付成功',
-                icon: 'success',
-                duration: 1000,
-                complete: function () {
-                  wx.navigateTo({
-                    url: '/pages/orderDetail/orderDetail?id=' + id,
-                  })
-                }
-              })
-
+            if(data.statusCode>=200 && data.statusCode<300){
+              if (data.data.status == 205) {           
+                clearInterval(time)
+                wx.hideLoading()
+                wx.showToast({
+                  title: '支付成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+                var str='info.status'
+                that.setData({
+                  [str]:205
+                })
+              }
             }
-
           },
           fail: function () {
             wx.hideLoading()
