@@ -64,6 +64,6 @@
   <!-- <view class='bottom'>到底啦，去别处逛逛吧</view> -->
 </view>
  <view class='input_outer' wx:if='{{inputVisi}}'>
-      <input bindinput='userInput' placeholder='回复{{name}}' maxlength='100' value='{{value}}' auto-focus='{{autoFocus}}' bindconfirm='comment' adjust-position='false'></input>
+      <input bindinput='userInput' placeholder='评论{{name}}' maxlength='100' value='{{value}}' auto-focus='{{autoFocus}}' bindconfirm='comment' adjust-position='false'></input>
       <text class='{{value ? "active" : ""}}' bindtap='comment'>发送</text>  
 </view>
