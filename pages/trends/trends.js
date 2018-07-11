@@ -178,25 +178,26 @@ Page({
   },
   // 动态评论
   comment(e) {
-    this.setData({
-      autoFocus:false
-    })
     let that = this;
-    wx.request({
-      url: app.globalData.http + '/mpa/feed/' + that.data.commentId + '/comment',
-      method: 'POST',
-      header: {
-        "Api-Key": app.globalData.apiKey,
-        "Api-Secret": app.globalData.apiSecret,
-        'Api-Ext': app.globalData.apiExt
-      },
-      data: {
-        content: that.data.value
-      },
-      success(res) {
-        console.log(res)
-      }
-    })
+    if (that.data.value) {
+      that.setData({
+        autoFocus: false
+      })
+      wx.request({
+        url: app.globalData.http + '/mpa/feed/' + that.data.commentId + '/comment',
+        method: 'POST',
+        header: {
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
+          'Api-Ext': app.globalData.apiExt
+        },
+        data: {
+          content: that.data.value
+        },
+        success(res) {
+        }
+      })
+    }
   },
   // 跳转动态详情,若存在goods_id,跳转商品详情
   commentDetail (e) {

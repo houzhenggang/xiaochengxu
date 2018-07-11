@@ -21,7 +21,7 @@
             <image wx:for='{{item.images}}' class='one' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/imageslim' wx:key='{{ind}}' mode='widthFix' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
           </block>
           <block wx:elif='{{item.images.length == 2}}'>
-            <image wx:for='{{item.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/Center/crop/500x500/imageslim' wx:key='{{ind}}' mode='aspectFill' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
+            <image wx:for='{{item.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/Center/crop/200x200/imageslim' wx:key='{{ind}}' mode='aspectFill' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
           </block>
           <block wx:else>
             <image wx:for='{{item.images}}' class='more' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/Center/crop/200x200/imageslim' wx:key='{{ind}}' mode='aspectFill' data-index='{{index}}' data-ind='{{ind}}' catchtap='viewImages'></image>
@@ -35,8 +35,8 @@
             <image src='../../imgs/dynamic_icon_comment@2x.png' mode='widthFix'></image><text>{{item.comment_success_count}}</text>
           </view>
         </view>
-        <view  wx:if='{{item.vote}}' data-id='{{item.id}}' data-index="{{index}}" catchtap='cancledVote'><image class='voted_img' src='../../imgs/dynamic_icon_thumbs_s@2x.png' mode='widthFix'></image><text>{{item.pv_vote}}</text></view>
-        <view catchtap='vote' data-id='{{item.id}}' data-index="{{index}}" wx:else><image src='../../imgs/dynamic_icon_thumbs@2x@2x.png' mode='widthFix'></image><text>{{item.pv_vote}}</text></view>
+        <view  wx:if='{{item.vote}}' data-id='{{item.id}}' data-index="{{index}}" catchtap='cancledVote'><image class='voted_img' src='../../imgs/dynamic_icon_thumbs_s@2x.png'></image><text>{{item.pv_vote}}</text></view>
+        <view catchtap='vote' data-id='{{item.id}}' data-index="{{index}}" wx:else><image src='../../imgs/dynamic_icon_thumbs@2x@2x.png'></image><text>{{item.pv_vote}}</text></view>
       </view>
 
       <view wx:if='{{item.comments.length}}' class='comments' data-id='{{item.id}}' data-index='{{index}}' catchtap='commentDetail'>

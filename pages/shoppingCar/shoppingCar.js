@@ -625,6 +625,10 @@ Page({
                   key: 'apiSecret',
                   data: apiSecret,
                 })
+                wx.setStorage({
+                  key: 'userId',
+                  data: res.data.user_id,
+                })
                 wx.request({
                   url: app.globalData.http + '/mpa/user/login',
                   method: 'post',

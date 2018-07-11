@@ -23,7 +23,6 @@ App({
         }else{
           that.globalData.userId = false
         }
-        console.log(that.globalData.userId)
       }
     })
   },
