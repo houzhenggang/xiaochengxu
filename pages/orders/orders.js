@@ -109,30 +109,32 @@ Page({
           },
           success: function (data) {
             var code = data.statusCode.toString()
-            if (code.indexOf('20') > -1) {
-              clearInterval(time)
-              wx.hideLoading()
-              wx.showToast({
-                title: '支付成功',
-                icon: 'success',
-                duration: 1000
-              })
-              var num = 'allOrder[' + index + '].status'
-              that.setData({
-                [num]: 205
-              })
-              setTimeout(function () {
-                wx.navigateTo({
-                  url: '/pages/orderDetail/orderDetail?id=' + id,
+            if (code >= 200 && code<300) {
+              if(data.data.status==205){
+                clearInterval(time)
+                wx.hideLoading()
+                wx.showToast({
+                  title: '支付成功',
+                  icon: 'success',
+                  duration: 1000
                 })
-              }, 1000)
+                var num = 'allOrder[' + index + '].status'
+                that.setData({
+                  [num]: 205
+                })
+                setTimeout(function () {
+                  wx.navigateTo({
+                    url: '/pages/orderDetail/orderDetail?id=' + id,
+                  })
+                }, 1000)
+              }
             } else {
               clearInterval(time)
               wx.hideLoading()
               var tip = data.data.message.toString()
               wx.showToast({
                 title: tip,
-                icon: 'success',
+                icon: 'none',
                 duration: 1000
               })
               setTimeout(function () {

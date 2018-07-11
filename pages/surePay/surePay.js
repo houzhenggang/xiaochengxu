@@ -130,44 +130,30 @@ Page({
             'Api-Ext': app.globalData.apiExt
           },
           success: function (data) {
-            var code=data.statusCode.toString()
-            if(code.indexOf('20')>-1){          
-              clearInterval(time)
-              wx.hideLoading()
-              wx.showToast({
-                title: '支付成功',
-                icon: 'success',
-                duration: 1000
-              })
-              setTimeout(function(){
+            if (data.statusCode >= 200 && data.statusCode<300){
+              var code = data.data.status
+              if (code == 205) {
+                clearInterval(time)
+                wx.hideLoading()
+                wx.showToast({
+                  title: '支付成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+                setTimeout(function () {
                   wx.navigateTo({
                     url: '/pages/orderDetail/orderDetail?id=' + id,
                   })
-              },1000)
-            }else{
-              clearInterval(time)
-              wx.hideLoading()
-              var tip = data.data.message.toString()
-              wx.showToast({
-                title:tip,
-                icon: 'success',
-                duration: 2000
-              })
-              setTimeout(function () {
-                wx.navigateTo({
-                  url: '/pages/orderDetail/orderDetail?id=' + id,
-                })
-              }, 1000)
+                }, 1000)
+              }
             }
-           
           },
           fail:function(res){
-            console.log(res)
             wx.hideLoading()
             wx.showToast({
               title: '支付失败',
               icon: 'none',
-              duration: 500
+              duration: 1000
             })
             clearInterval(time)
             that.setData({
@@ -183,7 +169,7 @@ Page({
       } else {
         wx.hideLoading() 
         wx.showToast({
-          title: '网络错误',
+          title: '支付失败',
           icon: 'none',
           duration: 1000
         })

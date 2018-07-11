@@ -41,7 +41,7 @@ swiper{
 	height: auto;
 	margin: 0 auto;
 	margin-top: 22rpx;
-	border-radius: 8rpx;
+	border-radius: 10rpx;
 }
 
 .index_classify{
@@ -104,7 +104,7 @@ swiper{
   min-height:200rpx;
   width:710rpx;
 	margin: 0 auto;
-	margin-top: 62rpx;
+	margin-top: 20rpx;
 	position: relative;
 	background: #EDEDED;
 	overflow: hidden;
@@ -192,7 +192,7 @@ box-sizing:border-box;
 
 }
 .index_recommend>text:nth-child(1){
-	margin-left: 290rpx;
+	margin-left: 292rpx;
 }
 .index_recommend>text:nth-child(2){
 	margin-left: 42rpx;
@@ -224,7 +224,7 @@ text-align:right;
 	position: absolute;
 	width: 338rpx;
 	height: 36rpx;
-	left:50%;
+	left:49%;
   transform:translateX(-50%);
 }
 .index_recommend image:nth-child(5){
@@ -312,15 +312,18 @@ text-align:right;
 }
 .item_box{
 	width: 344rpx;
-	height: 484rpx;
-	margin-bottom: 22rpx;
+	/* height: 484rpx; */
+	margin-bottom: 20rpx;
 }
 .item_box image{
 	width: 344rpx;
 	height: 344rpx;
 	display: block;
+  border-bottom-left-radius:0;
+  border-bottom-right-radius:0;
 }
 .item_box .item_text{
+  word-break:break-all;
 	display: block;
 	font-size: 24rpx;
 	font-family: PingFangSC-Regular;

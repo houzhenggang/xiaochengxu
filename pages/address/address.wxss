@@ -62,7 +62,7 @@ page{
   text-align: center;
   line-height: 88rpx;
   font-family: PingFangSC-Regular;
-  font-size: 36rpx;
+  font-size: 32rpx;
   border-radius: 0;
   padding: 0;
   color: #FFFFFF;

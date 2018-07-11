@@ -109,6 +109,13 @@ Page({
     this.setData({
       value: e.detail.value
     })
+    let str = e.detail.value;
+    if (str.length >= 100) {
+      wx.showToast({
+        title: '已达输入长度上限',
+        icon: 'none'
+      })
+    }
   },
   // input框失去焦点
   userBlur (e) {
@@ -171,26 +178,26 @@ Page({
   },
   // 动态评论
   comment(e) {
-    console.log(e)
-    this.setData({
-      autoFocus:false
-    })
     let that = this;
-    wx.request({
-      url: app.globalData.http + '/mpa/feed/' + that.data.commentId + '/comment',
-      method: 'POST',
-      header: {
-        "Api-Key": app.globalData.apiKey,
-        "Api-Secret": app.globalData.apiSecret,
-        'Api-Ext': app.globalData.apiExt
-      },
-      data: {
-        content: that.data.value
-      },
-      success(res) {
-        console.log(res)
-      }
-    })
+    if (that.data.value) {
+      that.setData({
+        autoFocus: false
+      })
+      wx.request({
+        url: app.globalData.http + '/mpa/feed/' + that.data.commentId + '/comment',
+        method: 'POST',
+        header: {
+          "Api-Key": app.globalData.apiKey,
+          "Api-Secret": app.globalData.apiSecret,
+          'Api-Ext': app.globalData.apiExt
+        },
+        data: {
+          content: that.data.value
+        },
+        success(res) {
+        }
+      })
+    }
   },
   // 跳转动态详情,若存在goods_id,跳转商品详情
   commentDetail (e) {
@@ -233,6 +240,9 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
+    if (wx.getStorageSync('huzan_avatarUrl')) {
+      app.globalData.userInfo = wx.getStorageSync('huzan_avatarUrl')
+    }
     let that = this;
     // 动态列表数据
     wx.request({
@@ -252,7 +262,6 @@ Page({
           }
           res.data[i].time_stamp = that.getTime(res.data[i].created_at)
         }
-        console.log(res.data)
         if (res.data.length) {
           wx.hideLoading();
         } else {
@@ -278,7 +287,6 @@ Page({
   },
   // 下拉刷新
   onPullDownRefresh: function () {
-    console.log(111)
     wx.showLoading({
       title: '加载中',
     })
@@ -372,7 +380,6 @@ Page({
           })
         }
         let newArr = that.data.trendsData.concat(res.data)
-        console.log(newArr)
         that.setData({
           trendsData: newArr,
           page:pages

@@ -11,10 +11,10 @@
             <label class='price'>￥{{filters.toFix(item.price/100)}}</label>
         </view>
     </view>
-    <view class='desc'>
+    <!-- <view class='desc'>
       <label>退货数量</label> 
       <label>{{num}}</label>
-    </view>
+    </view> -->
      <!-- <view  class='desc' bindtap='selectReason'>
       <label>退货理由</label> 
       <label>{{reasonText}}</label>

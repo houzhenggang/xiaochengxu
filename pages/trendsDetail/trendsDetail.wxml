@@ -18,19 +18,19 @@
           <image wx:for='{{trendsData.images}}' class='one' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/imageslim' wx:key='{{ind}}' mode='widthFix'  data-ind='{{ind}}' catchtap='viewImages'></image>
         </block>
         <block wx:elif='{{trendsData.images.length == 2}}'>
-          <image wx:for='{{trendsData.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/North/crop/500x500/imageslim' wx:key='{{ind}}' mode='aspectFill'  data-ind='{{ind}}' catchtap='viewImages'></image>
+          <image wx:for='{{trendsData.images}}' class='two' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/Center/crop/200x200/imageslim' wx:key='{{ind}}' mode='aspectFill'  data-ind='{{ind}}' catchtap='viewImages'></image>
         </block>
         <block wx:else>
-          <image wx:for='{{trendsData.images}}' class='more' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/North/crop/500x500/imageslim' wx:key='{{ind}}' mode='aspectFill'  data-ind='{{ind}}' catchtap='viewImages'></image>
+          <image wx:for='{{trendsData.images}}' class='more' wx:for-item='ite' wx:for-index='ind' src='{{image + ite.img_url}}?imageMogr2/thumbnail/!50p/gravity/Center/crop/200x200/imageslim' wx:key='{{ind}}' mode='aspectFill'  data-ind='{{ind}}' catchtap='viewImages'></image>
         </block>
         </view>
       <view class='stati_data'>
         <view class='stati_left'>
-          <view><image src='../../imgs/Browse_icon@2x.png'></image><text>{{trendsData.pv_browse}}</text></view>
-          <view bindtap='commentVisi'><image src='../../imgs/Comment_icon@2x.png'></image><text>{{trendsData.comment_success_count}}</text></view>
+          <view><image src='../../imgs/dynamic_icon_browse@2x.png' mode='widthFix'></image><text>{{trendsData.pv_browse}}</text></view>
+          <view><image src='../../imgs/dynamic_icon_comment@2x.png' mode='widthFix'></image><text>{{trendsData.comment_success_count}}</text></view>
         </view>
-        <view  wx:if='{{voted}}' bindtap='cancledVote'><image class='voted_img' src='../../imgs/Zan_gary_red@2x.png'></image><text>{{trendsData.pv_vote}}</text></view> 
-        <view bindtap='vote' wx:else><image src='../../imgs/Zan_gary_icon@2x.png'></image><text>{{trendsData.pv_vote}}</text></view>
+        <view  wx:if='{{voted}}' bindtap='cancledVote'><image class='voted_img' src='../../imgs/dynamic_icon_thumbs_s@2x.png' mode='widthFix'></image><text>{{trendsData.pv_vote}}</text></view> 
+        <view bindtap='vote' wx:else><image src='../../imgs/dynamic_icon_thumbs@2x@2x.png' mode='widthFix'></image><text>{{trendsData.pv_vote}}</text></view>
       </view>
       </view>
     </view>
@@ -38,11 +38,11 @@
         <rich-text  nodes="{{content}}"></rich-text>
         <view class='stati_data'>
         <view class='stati_left'>
-          <view><image src='../../imgs/Browse_icon@2x.png'></image><text>{{trendsData.pv_browse}}</text></view>
-          <view bindtap='commentVisi' data-id='{{trendsData.id}}'><image src='../../imgs/Comment_icon@2x.png'></image><text>{{trendsData.pv_share}}</text></view>
+          <view><image src='../../imgs/dynamic_icon_browse@2x.png' mode='widthFix'></image><text>{{trendsData.pv_browse}}</text></view>
+          <view data-id='{{trendsData.id}}'><image src='../../imgs/dynamic_icon_comment@2x.png' mode='widthFix'></image><text>{{trendsData.pv_share}}</text></view>
         </view>
-        <view  wx:if='{{voted}}' data-id='{{trendsData.id}}' bindtap='cancledVote'><image src='../../imgs/Zan_gary_red@2x.png'></image><text>{{trendsData.pv_vote}}</text></view> 
-        <view bindtap='vote' data-id='{{trendsData.id}}' wx:else><image src='../../imgs/Zan_gary_icon@2x.png'></image><text>{{trendsData.pv_vote}}</text></view>
+        <view  wx:if='{{voted}}' data-id='{{trendsData.id}}' bindtap='cancledVote'><image src='../../imgs/dynamic_icon_thumbs_s@2x.png'></image><text>{{trendsData.pv_vote}}</text></view> 
+        <view catchtap='vote' data-id='{{trendsData.id}}' wx:else><image src='../../imgs/dynamic_icon_thumbs@2x@2x.png'></image><text>{{trendsData.pv_vote}}</text></view>
       </view>
     </view>
     <view wx:if='{{comments.length>0}}' class='comments'>
@@ -54,10 +54,8 @@
               <view style='text-align:right'>{{ite.time}}</view>
           </view>
           <view wx:else class='comment'>
-                <view style='width:75%'>
-                <text class='user'>{{name}}</text> 回复 <text class='store'>{{ite.nick_name}} : </text>{{ite.content}}
-                </view>
-                <view style='text-align:right'>{{ite.time}}</view>
+            <view style='width:75%'><text class='user'>{{name}} </text><text> 回复 </text><text class='store'> {{ite.nick_name}} :</text>{{ite.content}}</view>
+            <view style='text-align:right'>{{ite.time}}</view>
           </view>          
         </view>
        <view class='top'></view>  
@@ -66,6 +64,6 @@
   <!-- <view class='bottom'>到底啦，去别处逛逛吧</view> -->
 </view>
  <view class='input_outer' wx:if='{{inputVisi}}'>
-      <input bindinput='userInput' bindblur='userBlur' placeholder='回复{{name}}' maxlength='100' auto-focus='{{autoFocus}}' bindconfirm='comment'></input>
+      <input bindinput='userInput' placeholder='评论{{name}}' maxlength='100' value='{{value}}' auto-focus='{{autoFocus}}' bindconfirm='comment' adjust-position='false'></input>
       <text class='{{value ? "active" : ""}}' bindtap='comment'>发送</text>  
 </view>

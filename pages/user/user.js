@@ -71,11 +71,6 @@ Page({
       url: '/pages/address/address'
     })
   },
-  // order: function (curTab){
-  //   wx.navigateTo({
-  //     url: '/pages/orders/orders?curTab=' + curTab
-  //   })
-  // },
   toOrder:function(e){
     wx.navigateTo({
       url: '/pages/orders/orders?curTab=' + e.currentTarget.dataset.curtab
@@ -133,6 +128,23 @@ Page({
                       }
                       app.globalData.apiKey = apiKey
                       app.globalData.apiSecret = apiSecret
+                      var timestamp = new Date().getTime()
+                      wx.setStorage({
+                        key: 'timestamp',
+                        data: timestamp,
+                      })
+                      wx.setStorage({
+                        key: 'apiKey',
+                        data: apiKey,
+                      })
+                      wx.setStorage({
+                        key: 'apiSecret',
+                        data: apiSecret,
+                      })
+                      wx.setStorage({
+                        key: 'userId',
+                        data: true,
+                      })
                       app.globalData.userId = true
                       that.setData({
                         userId: true

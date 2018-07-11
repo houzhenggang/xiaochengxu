@@ -12,7 +12,7 @@ Page({
     comments: [1],
     trendsData: [],
     name: '',
-    inputVisi: false,
+    inputVisi: true,
     inputValue: '',
     voted: false,
     autoFocus: false,
@@ -39,7 +39,6 @@ Page({
         success(res) {
           if (res.statusCode >= 200 && res.statusCode < 300) {
             var voteCount = that.data.trendsData.pv_vote;
-            console.log(voteCount)
             voteCount++
             var vote = 'trendsData.pv_vote'
             that.setData({
@@ -82,7 +81,6 @@ Page({
       success(res) {
         if (res.statusCode >= 200 && res.statusCode < 300) {
           var voteCount = that.data.trendsData.pv_vote;
-          console.log(voteCount)
           voteCount--
           var vote ='trendsData.pv_vote'
           that.setData({
@@ -103,34 +101,13 @@ Page({
     this.setData({
       value: e.detail.value
     })
-  },
-  // input框失去焦点
-  userBlur(e) {
-    this.setData({
-      inputVisi: false,
-      autoFocus: false
-    })
-  },
-  // 点击评论
-  commentVisi(e) {
-    if (app.globalData.userId && app.globalData.userInfo){
-      this.setData({
-        inputVisi: true,
-        autoFocus: true
-      })
-    }else{
+    let str = e.detail.value;
+    if (str.length >= 100) {
       wx.showToast({
-        title: '请完成微信和手机号授权',
-        icon: 'none',
-        duration: 2000
+        title: '已达输入长度上限',
+        icon: 'none'
       })
-      setTimeout(function () {
-        wx.switchTab({
-          url: '/pages/user/user'
-        })
-      }, 2000)
-    } 
-    
+    }
   },
   // 图片预览
   viewImages(e) {
@@ -147,25 +124,46 @@ Page({
   },
   // 动态评论
   comment(e) {
-    this.setData({
-      autoFocus: false
-    })
-    let that = this;
-    wx.request({
-      url: app.globalData.http + '/mpa/feed/' + that.data.commentId + '/comment',
-      method: 'POST',
-      header: {
-        'Api-Key': app.globalData.apiKey,
-        'Api-Secret': app.globalData.apiSecret,
-        'Api-Ext': app.globalData.apiExt
-      },
-      data: {
-        content: that.data.value
-      },
-      success(res) {
-        console.log(res)
+    let that = this;    
+    if (app.globalData.userId && app.globalData.userInfo) {
+      if (that.data.value) {
+        that.setData({
+          autoFocus: false
+        })
+        wx.request({
+          url: app.globalData.http + '/mpa/feed/' + that.data.commentId + '/comment',
+          method: 'POST',
+          header: {
+            'Api-Key': app.globalData.apiKey,
+            'Api-Secret': app.globalData.apiSecret,
+            'Api-Ext': app.globalData.apiExt
+          },
+          data: {
+            content: that.data.value
+          },
+          success(res) {
+            that.setData({
+              value: ''
+            })
+            wx.showToast({
+              title: '评论成功',
+            })
+          }
+        })
       }
-    })
+    } else {
+      console.log(app.globalData.userInfo)
+      wx.showToast({
+        title: '请完成微信和手机号授权',
+        icon: 'none',
+        duration: 2000
+      })
+      setTimeout(function () {
+        wx.switchTab({
+          url: '/pages/user/user'
+        })
+      }, 1000)
+    }
   },
   /**
    * 生命周期函数--监听页面加载

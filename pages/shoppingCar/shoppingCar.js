@@ -612,6 +612,23 @@ Page({
                 }
                 app.globalData.apiKey = apiKey
                 app.globalData.apiSecret = apiSecret
+                var timestamp = new Date().getTime()
+                wx.setStorage({
+                  key: 'timestamp',
+                  data: timestamp,
+                })
+                wx.setStorage({
+                  key: 'apiKey',
+                  data: apiKey,
+                })
+                wx.setStorage({
+                  key: 'apiSecret',
+                  data: apiSecret,
+                })
+                wx.setStorage({
+                  key: 'userId',
+                  data: res.data.user_id,
+                })
                 wx.request({
                   url: app.globalData.http + '/mpa/user/login',
                   method: 'post',
@@ -638,6 +655,23 @@ Page({
                       app.globalData.apiKey = apiKey
                       app.globalData.apiSecret = apiSecret
                       app.globalData.userId = true
+                      var timestamp = new Date().getTime()
+                      wx.setStorage({
+                        key: 'userId',
+                        data: true,
+                      })
+                      wx.setStorage({
+                        key: 'timestamp',
+                        data: timestamp,
+                      })
+                      wx.setStorage({
+                        key: 'apiKey',
+                        data: apiKey,
+                      })
+                      wx.setStorage({
+                        key: 'apiSecret',
+                        data: apiSecret,
+                      })
                       that.setData({
                         userId: true
                       })
