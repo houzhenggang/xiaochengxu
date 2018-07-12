@@ -171,7 +171,7 @@ box-sizing:border-box;
 
 .index_recommend{
 	position: relative;
-	margin-top: 20rpx;
+	margin-top: 30rpx;
 	width: 750rpx;
 	display: flex;
 	align-items: center;
