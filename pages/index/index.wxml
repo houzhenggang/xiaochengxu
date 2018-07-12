@@ -31,7 +31,7 @@
           <text class='contact_h4'>Hi 亲爱的小主</text>
           <text class='contact_p'  wx:if="{{description.description}}">{{description.description}}</text> 
     </view>
-    <button open-type='contact'><image    src='/imgs/Content_icon_WeChat@2x.png'></image></button>
+    <button bindtap='callPhone'><image src='/imgs/Content_icon_phone@2x.png'></image></button>
 		
 	</view>
 

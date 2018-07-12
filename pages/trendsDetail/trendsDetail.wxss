@@ -28,6 +28,11 @@ page {
 .input_outer text.active {
   color: #EA2534;
 }
+.title{
+  margin-bottom:20rpx;
+  font-size: 28rpx;
+  color: #333;
+}
 .content{
   width: 100%;
   height: 90%;

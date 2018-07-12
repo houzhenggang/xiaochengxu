@@ -211,6 +211,11 @@ Page({
       }
     })
   },
+  callPhone: function () {
+    wx.makePhoneCall({
+      phoneNumber: app.globalData.mobile
+    })
+  },
   //下拉刷新
   onPullDownRefresh: function () {
     let that = this;

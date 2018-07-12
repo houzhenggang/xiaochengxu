@@ -53,6 +53,7 @@ Page({
   },
   getPhoneNumber: function (e) {
     console.log(e)
+    var that = this
     if (e.detail.encryptedData && e.detail.iv) {
       wx.login({
         success(code) {
@@ -87,13 +88,22 @@ Page({
                   },
                   dataType: 'json',
                   header: {
-                    "Api-Key":apiKey,
-                    "Api-Secret":apiSecret,
+                    "Api-Key": app.globalData.apiKey,
+                    "Api-Secret": app.globalData.apiSecret,
                     'Api-Ext': app.globalData.apiExt
                   },
                   success: function (data) {
                     var datas = data.statusCode.toString()
                     if (datas >= 200 && datas < 300) {
+                      if (data.header["api-key"] && data.header["api-secret"]) {
+                        var apiKey = data.header["api-key"],
+                          apiSecret = data.header["api-secret"];
+                      } else if (data.header["Api-Key"] && data.header["Api-Secret"]) {
+                        var apiKey = data.header["Api-Key"],
+                          apiSecret = data.header["Api-Secret"];
+                      }
+                      app.globalData.apiKey = apiKey
+                      app.globalData.apiSecret = apiSecret
                       app.globalData.userId = true
                       that.setData({
                         userId: true
@@ -342,129 +352,131 @@ Page({
     //跳转页面,携带参数
     let clickId = e.currentTarget.dataset.id;
 
-    //如果来源为加入购物车，即flag为1
-    let flag = that.data.flag;
-    if (clickId == 1 && flag == 1) {
-      //绑定手机号
-      if (that.data.userId) {
-        wx.request({
-          url: app.globalData.http + '/mpa/cart',
-          method: "POST",
-          header: {
-            'Api-Ext': app.globalData.apiExt,
-            "Api-Key": app.globalData.apiKey,
-            "Api-Secret": app.globalData.apiSecret,
-          },
-          data: {
-            goods_sku_id: that.data.good.id,
-            count: that.data.num
-          },
-          success(res) {
-            var code = res.statusCode.toString()
-            if (code >= 200 && code < 300) {
-              wx.showToast({
-                title: '加入购物车成功',
-                icon: "success"
-              })
-              wx.request({
-                url: app.globalData.http + '/mpa/cart/count', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
-                header: {
-                  'Api-Ext': app.globalData.apiExt,
-                  "Api-Key": app.globalData.apiKey,
-                  "Api-Secret": app.globalData.apiSecret,
-                },
-                method: 'get',
-                success(res) {
-                  that.setData({
-                    cartNum: res.data
-                  })
-                }
-              })
-            } else {
-              var tip = res.data.message.toString()
-              wx.showToast({
-                title: tip,
-                icon: 'none',
-                duration: 1000
-              })
-            }
-          }
-        })
-      } else {
-        var goods = that.data.good
-        var local = wx.getStorageSync('good')
-        var cartNum = that.data.cartNum
-        goods.count = that.data.num
-        goods.goods_sku_id = goods.id
-        goods.name = that.data.goods.name
-        goods.isSelect = false
-        if (that.data.chooseSpec.length == 1) {
-          goods.sku_description = goods.spec_a + ':' + goods.property_a
-        } else if (that.data.chooseSpec.length == 2) {
-          goods.sku_description = goods.spec_b + ':' + goods.property_b + ',' + goods.spec_a + ':' + goods.property_a
-        } else if (that.data.chooseSpec.length == 3) {
-          goods.sku_description = goods.spec_b + ':' + goods.property_b + ',' + goods.spec_a + ':' + goods.property_a + ',' + goods.spec_c + ':' + goods.property_c
-        }
-
-        if (local.length > 0) {
-          var ishava = local.every(function (v, i) {
-            return v.id != that.data.good.id
-          })
-          if (ishava) {
-            local.push(goods)
-            cartNum++
-          }
-          else {
-            for (var i = 0; i < local.length; i++) {
-              if (local[i].id == goods.goods_sku_id) {
-                local[i].count = parseInt(local[i].count) + goods.count
+    if (JSON.stringify(that.data.good) != '{}') {
+      //如果来源为加入购物车，即flag为1
+      let flag = that.data.flag;
+      if (clickId == 1 && flag == 1) {
+        //绑定手机号
+        if (that.data.userId) {
+          wx.request({
+            url: app.globalData.http + '/mpa/cart',
+            method: "POST",
+            header: {
+              'Api-Ext': app.globalData.apiExt,
+              "Api-Key": app.globalData.apiKey,
+              "Api-Secret": app.globalData.apiSecret,
+            },
+            data: {
+              goods_sku_id: that.data.good.id,
+              count: that.data.num
+            },
+            success(res) {
+              var code = res.statusCode.toString()
+              if (code >= 200 && code < 300) {
+                wx.showToast({
+                  title: '加入购物车成功',
+                  icon: "success"
+                })
+                wx.request({
+                  url: app.globalData.http + '/mpa/cart/count', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
+                  header: {
+                    'Api-Ext': app.globalData.apiExt,
+                    "Api-Key": app.globalData.apiKey,
+                    "Api-Secret": app.globalData.apiSecret,
+                  },
+                  method: 'get',
+                  success(res) {
+                    that.setData({
+                      cartNum: res.data
+                    })
+                  }
+                })
+              } else {
+                var tip = res.data.message.toString()
+                wx.showToast({
+                  title: tip,
+                  icon: 'none',
+                  duration: 1000
+                })
               }
             }
-          }
-          wx.setStorage({
-            key: 'good',
-            data: local,
-          })
-          that.setData({
-            cartNum: cartNum
           })
         } else {
-          var goodlist = []
-          goodlist.push(goods)
-          wx.setStorage({
-            key: 'good',
-            data: goodlist,
-          })
-          that.setData({
-            cartNum: 1
+          var goods = that.data.good
+          var local = wx.getStorageSync('good')
+          var cartNum = that.data.cartNum
+          goods.count = that.data.num
+          goods.goods_sku_id = goods.id
+          goods.name = that.data.goods.name
+          goods.isSelect = false
+          if (that.data.chooseSpec.length == 1) {
+            goods.sku_description = goods.spec_a + ':' + goods.property_a
+          } else if (that.data.chooseSpec.length == 2) {
+            goods.sku_description = goods.spec_b + ':' + goods.property_b + ',' + goods.spec_a + ':' + goods.property_a
+          } else if (that.data.chooseSpec.length == 3) {
+            goods.sku_description = goods.spec_b + ':' + goods.property_b + ',' + goods.spec_a + ':' + goods.property_a + ',' + goods.spec_c + ':' + goods.property_c
+          }
+
+          if (local.length > 0) {
+            var ishava = local.every(function (v, i) {
+              return v.id != that.data.good.id
+            })
+            if (ishava) {
+              local.push(goods)
+              cartNum++
+            }
+            else {
+              for (var i = 0; i < local.length; i++) {
+                if (local[i].id == goods.goods_sku_id) {
+                  local[i].count = parseInt(local[i].count) + goods.count
+                }
+              }
+            }
+            wx.setStorage({
+              key: 'good',
+              data: local,
+            })
+            that.setData({
+              cartNum: cartNum
+            })
+          } else {
+            var goodlist = []
+            goodlist.push(goods)
+            wx.setStorage({
+              key: 'good',
+              data: goodlist,
+            })
+            that.setData({
+              cartNum: 1
+            })
+          }
+          wx.showToast({
+            title: '加入购物车成功',
+            icon: "success"
           })
         }
-        wx.showToast({
-          title: '加入购物车成功',
-          icon: "success"
+      } else if (clickId == 1 && flag == 2) {//来源为立即购买，即flag为2
+        //将商品信息、数量保存到app
+        let good = that.data.good;
+        good.count = that.data.num;
+        good.goods_sku_id = that.data.good.id;
+        good.name = that.data.name;
+        if (that.data.chooseSpec.length == 1) {
+          good.sku_description = good.spec_a + ':' + good.property_a
+        } else if (that.data.chooseSpec.length == 2) {
+          good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a
+        } else if (that.data.chooseSpec.length == 3) {
+          good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a + ',' + good.spec_c + ':' + good.property_c
+        }
+        if (flag == false) {
+          gloGood.push(good)
+        }
+        app.globalData.good = []
+        app.globalData.good.push(good)
+        wx.navigateTo({
+          url: '/pages/surePay/surePay',
         })
       }
-    } else if (clickId == 1 && flag == 2) {//来源为立即购买，即flag为2
-      //将商品信息、数量保存到app
-      let good = that.data.good;
-      good.count = that.data.num;
-      good.goods_sku_id = that.data.good.id;
-      good.name = that.data.name;
-      if (that.data.chooseSpec.length == 1) {
-        good.sku_description = good.spec_a + ':' + good.property_a
-      } else if (that.data.chooseSpec.length == 2) {
-        good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a
-      } else if (that.data.chooseSpec.length == 3) {
-        good.sku_description = good.spec_b + ':' + good.property_b + ',' + good.spec_a + ':' + good.property_a + ',' + good.spec_c + ':' + good.property_c
-      }
-      if (flag == false) {
-        gloGood.push(good)
-      }
-      app.globalData.good = []
-      app.globalData.good.push(good)
-      wx.navigateTo({
-        url: '/pages/surePay/surePay',
-      })
     }
   },
   /* 点击减号 */
@@ -511,43 +523,56 @@ Page({
     var textSpec = 'chooseSpec[' + aIndex + ']'
     that.setData({
       [textSpec]: bIndex,
+      good: {},
       num: 1
     }, function () {
-      wx.request({
-        url: app.globalData.http + '/mpa/goods/' + that.data.goods.id + '/skus',//////////////////////////////////////请求路径需改动
-        method: "GET",
-        header: {
-          'Api-Ext': app.globalData.apiExt
-        },
-        success(res) {
-          var good;
-          var ress = res.data
-          for (var i = 0; i < that.data.chooseSpec.length; i++) {
-            for (var j = 0; j < ress.length; j++) {
-              if (that.data.chooseSpec.length == 1) {
-                if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]]) {
-                  good = ress[j];
-                }
-              } else if (that.data.chooseSpec.length == 2) {
-                if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]] && ress[j].property_b == bArr[1]['propertis'][that.data.chooseSpec[1]]) {
-                  good = ress[j];
-                }
-              } else {
-                if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]] && ress[j].property_b == bArr[1]['propertis'][that.data.chooseSpec[1]] && ress[j].property_c == bArr[2]['propertis'][that.data.chooseSpec[2]]) {
-                  good = ress[j];
+      var chooseAll = that.data.chooseSpec.every(function (v) {
+        return v > -1
+      })
+      if (chooseAll) {
+        wx.request({
+          url: app.globalData.http + '/mpa/goods/' + that.data.goods.id + '/skus',//////////////////////////////////////请求路径需改动
+          method: "GET",
+          header: {
+            'Api-Ext': app.globalData.apiExt
+          },
+          success(res) {
+            //判断是否所有规格都选择了
+            var good;
+            var ress = res.data
+            for (var i = 0; i < that.data.chooseSpec.length; i++) {
+              for (var j = 0; j < ress.length; j++) {
+                if (that.data.chooseSpec.length == 1) {
+                  if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]]) {
+                    good = ress[j];
+                  }
+                } else if (that.data.chooseSpec.length == 2) {
+                  if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]] && ress[j].property_b == bArr[1]['propertis'][that.data.chooseSpec[1]]) {
+                    good = ress[j];
+                  }
+                } else if (that.data.chooseSpec.length == 3) {
+                  if (ress[j].property_a == bArr[0]['propertis'][that.data.chooseSpec[0]] && ress[j].property_b == bArr[1]['propertis'][that.data.chooseSpec[1]] && ress[j].property_c == bArr[2]['propertis'][that.data.chooseSpec[2]]) {
+                    good = ress[j];
+                  }
                 }
               }
             }
+            if (good.stock_count > 0) {
+              that.setData({
+                good: good,
+                goodUrl: good.cover_url,
+                goodPrice: good.price
+              })
+            } else {
+              wx.showToast({
+                title: '该规格库存不足',
+                icon: 'none',
+                duration: 2000
+              })
+            }
           }
-          if (good) {
-            that.setData({
-              good: good,
-              goodUrl: good.cover_url,
-              goodPrice: good.price
-            })
-          }
-        }
-      })
+        })
+      }
     })
   },
 
@@ -576,6 +601,9 @@ Page({
     var that = this
     //获取购物车数量
     var goodlist = wx.getStorageSync('good')
+    that.setData({
+      userId: app.globalData.userId
+    })
     if (app.globalData.userId) {
       wx.request({
         url: app.globalData.http + '/mpa/cart/count', /////////////////////////////////////////////////goods后的传参需为 options.id，测试参数
@@ -602,11 +630,27 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    that.setData({
-      userId: app.globalData.userId
-    })
     app.globalData.apiExt = wx.getExtConfigSync().data
-    //获取商品规格详情
+    //获取店家描述数据
+    wx.request({
+      url: app.globalData.http + '/mpa/index',
+      method: 'GET',
+      header: {
+        'Api-Ext': app.globalData.apiExt
+      },
+      success(res) {
+        app.globalData.mobile = res.data.customer_service_mobile
+        app.globalData.logo_url = res.data.logo_url
+        app.globalData.name = res.data.name
+        that.setData({
+          description: res.data
+        })
+        app.globalData.keyword = res.data.search_default_text
+      },
+      fail: function (res) {
+        console.log(res)
+      }
+    })
     wx.request({
       url: app.globalData.http + '/mpa/goods/' + options.id + '/specs',///////////////////////////////测试路径，1需改为 that.data.goods.id
       header: {
@@ -661,11 +705,11 @@ Page({
               content: res.data.detail.content.replace(/\<img style="max-width:750.0px;"/gi, '<img style="width:100%;height:auto" ').replace(/750.0px/gi, '100%').replace(/width="\d+"/gi, '').replace(/height="\d+"/gi, '').replace(/\s+id/gi, ' class').replace(/\<img/gi, '<img style="width:100%;height:auto" ').replace(/<p/gi, '<p style="font-size:12px;line-height:16px;"'),
             })
           }
-        }else{
+        } else {
           wx.showToast({
             title: '该商品已找不到',
-            icon:'none',
-            duration:2000
+            icon: 'none',
+            duration: 2000
           })
         }
       },

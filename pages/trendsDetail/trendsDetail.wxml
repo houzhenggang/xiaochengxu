@@ -35,11 +35,12 @@
       </view>
     </view>
     <view class='box_content' wx:if="{{trendsData.type==2}}">
+        <view  class='title'>{{trendsData.title}}</view>
         <rich-text  nodes="{{content}}"></rich-text>
         <view class='stati_data'>
         <view class='stati_left'>
           <view><image src='../../imgs/dynamic_icon_browse@2x.png' mode='widthFix'></image><text>{{trendsData.pv_browse}}</text></view>
-          <view data-id='{{trendsData.id}}'><image src='../../imgs/dynamic_icon_comment@2x.png' mode='widthFix'></image><text>{{trendsData.pv_share}}</text></view>
+          <view data-id='{{trendsData.id}}'><image src='../../imgs/dynamic_icon_comment@2x.png' mode='widthFix'></image><text>{{trendsData.comment_success_count}}</text></view>
         </view>
         <view  wx:if='{{voted}}' data-id='{{trendsData.id}}' bindtap='cancledVote'><image src='../../imgs/dynamic_icon_thumbs_s@2x.png'></image><text>{{trendsData.pv_vote}}</text></view> 
         <view catchtap='vote' data-id='{{trendsData.id}}' wx:else><image src='../../imgs/dynamic_icon_thumbs@2x@2x.png'></image><text>{{trendsData.pv_vote}}</text></view>
