@@ -37,9 +37,6 @@ Page({
 				})
 			}
 		})
-		wx.setNavigationBarTitle({
-			title: '推荐',
-		})
   },
   //返回顶部
   goTop: function () {

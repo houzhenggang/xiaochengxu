@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/index/index",    
+    "pages/index/index",
+    "pages/recommend/recommend",
     "pages/afterSale/afterSale",
     "pages/trends/trends",    
     "pages/user/user",    
@@ -19,7 +20,6 @@
     "pages/logistics/logistics",
     "pages/orderDetail/orderDetail",
     "pages/special/special",
-    "pages/recommend/recommend",
     "pages/cart/cart",
     "pages/shareDetail/shareDetail",
     "pages/categoryList/categoryList"

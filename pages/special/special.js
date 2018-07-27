@@ -43,9 +43,7 @@ Page({
 				})
 			}
 		})
-		wx.setNavigationBarTitle({
-			title: '特价',
-		})
+
   },
   onPullDownRefresh: function () {
     let that = this;

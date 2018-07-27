@@ -1,4 +1,5 @@
 {
   "enablePullDownRefresh": true,
-  "backgroundTextStyle": "light"
+  "backgroundTextStyle": "light",
+  "navigationBarTitleText": "推荐"
 }
